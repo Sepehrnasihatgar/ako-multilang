@@ -10,7 +10,7 @@ Most bilingual WordPress sites use WPML for one thing: linking the English page 
 - **Designers and freelancers** building Farsi/English or Arabic/English client sites, often with Elementor.
 
 ## Principles
-1. **Lightweight.** Zero JavaScript on the front end. CSS loads only on pages that actually render a switcher. At most one extra DB query per page.
+1. **Lightweight.** No front-end JavaScript except a < 1 KB keyboard enhancement for the Dropdown/Floating styles. CSS loads only on pages that actually render a switcher. At most one extra DB query per page.
 2. **SEO-first.** Every output follows Google's multilingual guidelines.
 3. **RTL-first.** Farsi, Arabic, and Hebrew pages render correctly with no hand-written CSS.
 4. **Hands off your URLs and theme.** Install on a live site; nothing breaks.
