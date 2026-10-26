@@ -1,0 +1,199 @@
+/**
+ * Cedar admin design tokens.
+ *
+ * Generated from the Figma variables (file "Cedar", collections Primitives and
+ * Admin) — names match each variable's Web code syntax. Do not edit values by
+ * hand; change them in Figma and regenerate.
+ *
+ * Rule: components use only the Admin tokens (--cedar-admin-*), text styles
+ * (--cedar-text-*) and elevation (--cedar-shadow-*). Primitives are private.
+ */
+
+@font-face {
+	font-family: "Cedar Inter";
+	src: url(../../assets/fonts/Inter-Variable.woff2) format("woff2");
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Cedar Vazirmatn";
+	src: url(../../assets/fonts/Vazirmatn-Variable.woff2) format("woff2");
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+.cedar-ml {
+
+	/* Font families (Figma: font/family/*) */
+	--cedar-font-sans: "Cedar Inter", "Cedar Vazirmatn", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, sans-serif;
+	--cedar-font-arabic: "Cedar Vazirmatn", "Cedar Inter", tahoma, sans-serif;
+	--cedar-font-mono: ui-monospace, sfmono-regular, menlo, consolas, monospace;
+
+	/* Primitives — private. Never use these directly in components. */
+	--cedar-amber-50: #fff5ea;
+	--cedar-amber-200: #fcd3a4;
+	--cedar-amber-500: #b87501;
+	--cedar-amber-700: #774a00;
+	--cedar-blue-50: #f2f7ff;
+	--cedar-blue-300: #9ac3ff;
+	--cedar-blue-600: #1f68cc;
+	--cedar-blue-700: #1051a8;
+	--cedar-cedar-50: #f0f9f4;
+	--cedar-cedar-100: #e0f2e7;
+	--cedar-cedar-200: #c0e5cf;
+	--cedar-cedar-400: #60ae85;
+	--cedar-cedar-500: #3d8c64;
+	--cedar-cedar-700: #1c4a33;
+	--cedar-cedar-800: #133624;
+	--cedar-cedar-900: #0f271b;
+	--cedar-green-50: #eefbef;
+	--cedar-green-300: #8ad695;
+	--cedar-green-600: #008232;
+	--cedar-green-700: #016826;
+	--cedar-neutral-0: #fff;
+	--cedar-neutral-25: #fcfcfa;
+	--cedar-neutral-50: #f7f8f5;
+	--cedar-neutral-100: #f0f0ec;
+	--cedar-neutral-200: #e3e3df;
+	--cedar-neutral-300: #cececa;
+	--cedar-neutral-400: #a5a5a1;
+	--cedar-neutral-500: #73736f;
+	--cedar-neutral-800: #2c2c28;
+	--cedar-neutral-900: #181815;
+	--cedar-neutral-950: #0d0d0c;
+	--cedar-red-50: #fff4f2;
+	--cedar-red-600: #c22826;
+	--cedar-red-700: #9e1618;
+	--cedar-wp-chrome: #1d2327;
+	--cedar-wp-chrome-muted: #a7aaad;
+	--cedar-wp-chrome-raised: #2c3338;
+	--cedar-wp-chrome-text: #f0f0f1;
+	--cedar-dimension-1: 1px;
+	--cedar-dimension-2: 2px;
+	--cedar-dimension-4: 4px;
+	--cedar-dimension-6: 6px;
+	--cedar-dimension-8: 8px;
+	--cedar-dimension-12: 12px;
+	--cedar-dimension-16: 16px;
+	--cedar-dimension-20: 20px;
+	--cedar-dimension-24: 24px;
+	--cedar-dimension-32: 32px;
+	--cedar-dimension-40: 40px;
+	--cedar-dimension-48: 48px;
+	--cedar-dimension-64: 64px;
+	--cedar-dimension-full: 999px;
+	--cedar-font-size-11: 11px;
+	--cedar-font-size-12: 12px;
+	--cedar-font-size-13: 13px;
+	--cedar-font-size-16: 16px;
+	--cedar-font-size-24: 24px;
+	--cedar-font-size-28: 28px;
+	--cedar-line-height-16: 16px;
+	--cedar-line-height-20: 20px;
+	--cedar-line-height-24: 24px;
+	--cedar-line-height-32: 32px;
+	--cedar-line-height-36: 36px;
+	--cedar-font-weight-400: 400;
+	--cedar-font-weight-500: 500;
+	--cedar-font-weight-600: 600;
+	--cedar-tracking-normal: 0;
+	--cedar-tracking-tight: -0.4px;
+	--cedar-tracking-wide: 0.6px;
+
+	/* Admin tokens — the only variables components may use. */
+	--cedar-admin-bg-canvas: var(--cedar-neutral-50);
+	--cedar-admin-bg-surface: var(--cedar-neutral-0);
+	--cedar-admin-bg-subtle: var(--cedar-neutral-100);
+	--cedar-admin-bg-elevated: var(--cedar-neutral-25);
+	--cedar-admin-bg-accent: var(--cedar-cedar-700);
+	--cedar-admin-bg-accent-hover: var(--cedar-cedar-800);
+	--cedar-admin-bg-accent-subtle: var(--cedar-cedar-50);
+	--cedar-admin-bg-success-subtle: var(--cedar-green-50);
+	--cedar-admin-bg-warning-subtle: var(--cedar-amber-50);
+	--cedar-admin-bg-danger-subtle: var(--cedar-red-50);
+	--cedar-admin-bg-info-subtle: var(--cedar-blue-50);
+	--cedar-admin-bg-brand: var(--cedar-cedar-900);
+	--cedar-admin-bg-brand-subtle: var(--cedar-cedar-100);
+	--cedar-admin-bg-overlay: var(--cedar-neutral-950);
+	--cedar-admin-text-primary: var(--cedar-neutral-900);
+	--cedar-admin-text-secondary: var(--cedar-neutral-500);
+	--cedar-admin-text-tertiary: var(--cedar-neutral-400);
+	--cedar-admin-text-on-accent: var(--cedar-neutral-0);
+	--cedar-admin-text-accent: var(--cedar-cedar-700);
+	--cedar-admin-text-brand: var(--cedar-cedar-700);
+	--cedar-admin-text-danger: var(--cedar-red-700);
+	--cedar-admin-text-success: var(--cedar-green-700);
+	--cedar-admin-text-warning: var(--cedar-amber-700);
+	--cedar-admin-text-info: var(--cedar-blue-700);
+	--cedar-admin-border-default: var(--cedar-neutral-200);
+	--cedar-admin-border-subtle: var(--cedar-neutral-100);
+	--cedar-admin-border-accent: var(--cedar-cedar-500);
+	--cedar-admin-border-success: var(--cedar-green-300);
+	--cedar-admin-border-warning: var(--cedar-amber-500);
+	--cedar-admin-border-danger: var(--cedar-red-600);
+	--cedar-admin-border-info: var(--cedar-blue-300);
+	--cedar-admin-icon-success: var(--cedar-green-600);
+	--cedar-admin-icon-warning: var(--cedar-amber-500);
+	--cedar-admin-icon-danger: var(--cedar-red-600);
+	--cedar-admin-icon-info: var(--cedar-blue-600);
+	--cedar-admin-icon-on-brand: var(--cedar-cedar-200);
+	--cedar-admin-chrome-bg: var(--cedar-wp-chrome);
+	--cedar-admin-chrome-bg-raised: var(--cedar-wp-chrome-raised);
+	--cedar-admin-chrome-text: var(--cedar-wp-chrome-text);
+	--cedar-admin-chrome-muted: var(--cedar-wp-chrome-muted);
+	--cedar-admin-code-bg: var(--cedar-neutral-950);
+	--cedar-admin-code-bg-subtle: var(--cedar-neutral-900);
+	--cedar-admin-code-border: var(--cedar-neutral-800);
+	--cedar-admin-code-text: var(--cedar-neutral-300);
+	--cedar-admin-code-text-strong: var(--cedar-neutral-50);
+	--cedar-admin-code-muted: var(--cedar-neutral-400);
+	--cedar-admin-code-attribute: var(--cedar-cedar-200);
+	--cedar-admin-code-value: var(--cedar-amber-200);
+	--cedar-admin-code-success: var(--cedar-cedar-400);
+	--cedar-admin-space-3xs: var(--cedar-dimension-2);
+	--cedar-admin-space-2xs: var(--cedar-dimension-4);
+	--cedar-admin-space-xs: var(--cedar-dimension-6);
+	--cedar-admin-space-sm: var(--cedar-dimension-8);
+	--cedar-admin-space-md: var(--cedar-dimension-12);
+	--cedar-admin-space-lg: var(--cedar-dimension-16);
+	--cedar-admin-space-xl: var(--cedar-dimension-20);
+	--cedar-admin-space-2xl: var(--cedar-dimension-24);
+	--cedar-admin-space-3xl: var(--cedar-dimension-32);
+	--cedar-admin-space-4xl: var(--cedar-dimension-48);
+	--cedar-admin-space-5xl: var(--cedar-dimension-40);
+	--cedar-admin-space-6xl: var(--cedar-dimension-64);
+	--cedar-admin-radius-tile: var(--cedar-dimension-4);
+	--cedar-admin-radius-control: var(--cedar-dimension-8);
+	--cedar-admin-radius-surface: var(--cedar-dimension-12);
+	--cedar-admin-radius-pill: var(--cedar-dimension-full);
+	--cedar-admin-border-width: var(--cedar-dimension-1);
+	--cedar-admin-border-width-strong: var(--cedar-dimension-2);
+
+	/* Text styles (Figma: Admin/*): use with `font:` + matching tracking. */
+	--cedar-text-page-title: var(--cedar-font-weight-600) var(--cedar-font-size-24) / var(--cedar-line-height-32) var(--cedar-font-sans);
+	--cedar-text-page-title-tracking: var(--cedar-tracking-tight);
+	--cedar-text-section-title: var(--cedar-font-weight-600) var(--cedar-font-size-16) / var(--cedar-line-height-24) var(--cedar-font-sans);
+	--cedar-text-section-title-tracking: var(--cedar-tracking-tight);
+	--cedar-text-body: var(--cedar-font-weight-400) var(--cedar-font-size-13) / var(--cedar-line-height-20) var(--cedar-font-sans);
+	--cedar-text-body-tracking: var(--cedar-tracking-normal);
+	--cedar-text-body-strong: var(--cedar-font-weight-600) var(--cedar-font-size-13) / var(--cedar-line-height-20) var(--cedar-font-sans);
+	--cedar-text-body-strong-tracking: var(--cedar-tracking-normal);
+	--cedar-text-label: var(--cedar-font-weight-500) var(--cedar-font-size-12) / var(--cedar-line-height-16) var(--cedar-font-sans);
+	--cedar-text-label-tracking: var(--cedar-tracking-normal);
+	--cedar-text-help: var(--cedar-font-weight-400) var(--cedar-font-size-12) / var(--cedar-line-height-16) var(--cedar-font-sans);
+	--cedar-text-help-tracking: var(--cedar-tracking-normal);
+	--cedar-text-code: var(--cedar-font-weight-400) var(--cedar-font-size-12) / var(--cedar-line-height-16) var(--cedar-font-mono);
+	--cedar-text-code-tracking: var(--cedar-tracking-normal);
+	--cedar-text-metric: var(--cedar-font-weight-600) var(--cedar-font-size-28) / var(--cedar-line-height-36) var(--cedar-font-sans);
+	--cedar-text-metric-tracking: var(--cedar-tracking-tight);
+	--cedar-text-overline: var(--cedar-font-weight-600) var(--cedar-font-size-11) / var(--cedar-line-height-16) var(--cedar-font-sans);
+	--cedar-text-overline-tracking: var(--cedar-tracking-wide);
+
+	/* Elevation (Figma: Elevation/*) */
+	--cedar-shadow-menu: 0 2px 4px 0 rgb(0 0 0 / 8%), 0 12px 24px -4px rgb(0 0 0 / 12%);
+	--cedar-shadow-floating: 0 4px 8px 0 rgb(0 0 0 / 10%), 0 16px 32px -8px rgb(0 0 0 / 16%);
+	--cedar-shadow-card: 0 1px 1px 0 rgb(0 0 0 / 4%);
+}

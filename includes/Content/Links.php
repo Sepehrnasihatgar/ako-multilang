@@ -194,6 +194,73 @@ final class Links {
 	}
 
 	/**
+	 * Makes $target_id the $code translation of $source_id, assigning
+	 * languages where missing: the source gets the default language, the
+	 * target gets $code. Everything is validated before anything is written.
+	 *
+	 * @param int    $source_id Source post ID.
+	 * @param int    $target_id Target post ID.
+	 * @param string $code      Language the target is a translation into.
+	 * @return true|WP_Error
+	 */
+	public static function link_as( $source_id, $target_id, $code ) {
+		$source = self::valid_post( $source_id );
+		$target = self::valid_post( $target_id );
+		if ( is_wp_error( $source ) ) {
+			return $source;
+		}
+		if ( is_wp_error( $target ) ) {
+			return $target;
+		}
+		if ( $source->ID === $target->ID ) {
+			return new WP_Error( 'cedar_ml_same_post', __( 'A page can’t be its own translation.', 'cedar-multilang' ) );
+		}
+		if ( $source->post_type !== $target->post_type ) {
+			return new WP_Error( 'cedar_ml_type_mismatch', __( 'Only content of the same type can be linked.', 'cedar-multilang' ) );
+		}
+
+		$code = sanitize_key( (string) $code );
+		if ( ! Registry::exists( $code ) ) {
+			return new WP_Error( 'cedar_ml_unknown_language', __( 'That language isn’t set up yet.', 'cedar-multilang' ) );
+		}
+
+		$source_lang = self::get_language( $source->ID );
+		$target_lang = self::get_language( $target->ID );
+
+		if ( null !== $target_lang && $target_lang !== $code ) {
+			$found = Registry::get( $target_lang );
+			return new WP_Error(
+				'cedar_ml_wrong_language',
+				/* translators: %s: Language name, e.g. "Arabic". */
+				sprintf( __( 'That page is in %s. Pick a page in this language.', 'cedar-multilang' ), $found ? $found['name'] : $target_lang )
+			);
+		}
+		if ( ( null === $source_lang ? Registry::default_code() : $source_lang ) === $code ) {
+			return new WP_Error( 'cedar_ml_same_language', __( 'Both pages are in the same language.', 'cedar-multilang' ) );
+		}
+
+		$members = self::get_translations( $source->ID );
+		if ( isset( $members[ $code ] ) && $members[ $code ] !== $target->ID ) {
+			return new WP_Error( 'cedar_ml_language_taken', __( 'This page already has a translation in that language. Unlink it first.', 'cedar-multilang' ) );
+		}
+
+		if ( null === $source_lang ) {
+			$set = self::set_language( $source->ID, Registry::default_code() );
+			if ( is_wp_error( $set ) ) {
+				return $set;
+			}
+		}
+		if ( null === $target_lang ) {
+			$set = self::set_language( $target->ID, $code );
+			if ( is_wp_error( $set ) ) {
+				return $set;
+			}
+		}
+
+		return self::link( $source->ID, $target->ID );
+	}
+
+	/**
 	 * Removes a post from its group. The rest of the group stays linked;
 	 * a group left with fewer than two members is deleted.
 	 *
@@ -228,6 +295,79 @@ final class Links {
 		do_action( 'cedar_ml_unlinked', $post_id, $group_id );
 
 		return true;
+	}
+
+	/**
+	 * Dissolves a post's whole group: every member is unlinked from every other.
+	 * Posts and their languages are kept.
+	 *
+	 * @param int $post_id Any member of the group.
+	 * @return true
+	 */
+	public static function dissolve( $post_id ) {
+		$group_id = self::get_group_id( $post_id );
+		if ( ! $group_id ) {
+			return true;
+		}
+
+		foreach ( self::rebuild_members( $group_id ) as $member_id ) {
+			self::unlink( $member_id );
+		}
+		return true;
+	}
+
+	/**
+	 * Unlinks every post in a language from its group, e.g. before the
+	 * language is removed. The posts keep their language term, so they stay
+	 * out of other languages' lists and come back if the language is re-added.
+	 *
+	 * @param string $code Language code.
+	 * @return int Number of posts unlinked.
+	 */
+	public static function detach_language( $code ) {
+		$code  = sanitize_key( (string) $code );
+		$count = 0;
+
+		$group_ids = get_terms(
+			array(
+				'taxonomy'   => Taxonomies::GROUP,
+				'hide_empty' => false,
+				'fields'     => 'ids',
+			)
+		);
+		if ( is_wp_error( $group_ids ) ) {
+			return 0;
+		}
+
+		foreach ( $group_ids as $group_id ) {
+			$members = self::read_members( (int) $group_id );
+			if ( isset( $members[ $code ] ) ) {
+				self::unlink( $members[ $code ] );
+				++$count;
+			}
+		}
+		return $count;
+	}
+
+	/**
+	 * Members of many groups at once, primed with one meta query.
+	 *
+	 * @param int[] $group_ids Group term IDs.
+	 * @return array<int,array<string,int>> Group ID => members.
+	 */
+	public static function members_of_groups( array $group_ids ) {
+		$group_ids = array_values( array_unique( array_filter( array_map( 'absint', $group_ids ) ) ) );
+		if ( ! $group_ids ) {
+			return array();
+		}
+
+		update_meta_cache( 'term', $group_ids );
+
+		$out = array();
+		foreach ( $group_ids as $group_id ) {
+			$out[ $group_id ] = self::read_members( $group_id );
+		}
+		return $out;
 	}
 
 	/**

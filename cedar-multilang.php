@@ -3,7 +3,7 @@
  * Plugin Name:       Cedar Multilang
  * Description:       Link your pages across languages — hreflang, RTL and a language switcher, without changing your URLs.
  * Version:           1.0.0
- * Requires at least: 6.5
+ * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            Sepehr Nasihatgar
  * License:           GPL-2.0-or-later

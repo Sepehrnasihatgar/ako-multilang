@@ -7,7 +7,7 @@
 | | |
 |---|---|
 | Plugin slug / text domain | `cedar-multilang` |
-| Requires WordPress | 6.5+ (block apiVersion 3, current editor plugin APIs) |
+| Requires WordPress | 6.6+ (block apiVersion 3, current editor plugin APIs, `react-jsx-runtime` used by @wordpress/scripts builds) |
 | Requires PHP | 7.4+ (tested on 7.4 → 8.4) |
 | Tested up to | latest stable WordPress at submission time |
 | License | GPLv2 or later — every bundled file GPL-compatible |

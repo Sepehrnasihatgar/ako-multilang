@@ -1,0 +1,58 @@
+/**
+ * REST client for cedar/v1. Authentication (cookie + nonce) is handled by
+ * `@wordpress/api-fetch`, which WordPress preconfigures in the admin.
+ */
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+
+const BASE = '/cedar/v1';
+
+export const getLinks = ( query ) =>
+	apiFetch( { path: addQueryArgs( `${ BASE }/links`, query ) } );
+
+export const getCandidates = ( query ) =>
+	apiFetch( { path: addQueryArgs( `${ BASE }/links/candidates`, query ) } );
+
+export const linkPost = ( id, target, language ) =>
+	apiFetch( {
+		path: `${ BASE }/links/${ id }`,
+		method: 'PUT',
+		data: { target, language },
+	} );
+
+export const unlinkPost = ( id, scope = 'post' ) =>
+	apiFetch( {
+		path: addQueryArgs( `${ BASE }/links/${ id }`, { scope } ),
+		method: 'DELETE',
+	} );
+
+export const getLanguages = () => apiFetch( { path: `${ BASE }/languages` } );
+
+export const getCatalog = () =>
+	apiFetch( { path: `${ BASE }/languages/catalog` } );
+
+export const addLanguage = ( data ) =>
+	apiFetch( { path: `${ BASE }/languages`, method: 'POST', data } );
+
+export const updateLanguage = ( code, data ) =>
+	apiFetch( { path: `${ BASE }/languages/${ code }`, method: 'PUT', data } );
+
+export const removeLanguage = ( code ) =>
+	apiFetch( { path: `${ BASE }/languages/${ code }`, method: 'DELETE' } );
+
+export const reorderLanguages = ( order ) =>
+	apiFetch( {
+		path: `${ BASE }/languages/order`,
+		method: 'PUT',
+		data: { order },
+	} );
+
+/**
+ * A readable message from a failed request.
+ *
+ * @param {Object} error    apiFetch error.
+ * @param {string} fallback Message when the server sent none.
+ * @return {string} Message.
+ */
+export const errorMessage = ( error, fallback ) =>
+	( error && error.message ) || fallback;

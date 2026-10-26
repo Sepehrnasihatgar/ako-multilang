@@ -1,0 +1,1238 @@
+/**
+ * Translations screen (Figma: Admin screens / Daily work / Translations — *).
+ */
+import {
+	useCallback,
+	useEffect,
+	useId,
+	useRef,
+	useState,
+} from '@wordpress/element';
+import { __, _n, sprintf } from '@wordpress/i18n';
+import Icon from '../../components/Icon';
+import {
+	Badge,
+	Button,
+	Checkbox,
+	LanguageTag,
+	Tabs,
+	TextInput,
+} from '../../components/controls';
+import {
+	CoverageCard,
+	EmptyState,
+	PageTitle,
+	SkeletonRow,
+} from '../../components/display';
+import { Menu } from '../../components/overlays';
+import {
+	errorMessage,
+	getCandidates,
+	getLinks,
+	linkPost,
+	unlinkPost,
+} from '../api';
+
+const PER_PAGE = 20;
+const DRAFT_STATUSES = [ 'draft', 'pending', 'future' ];
+
+/**
+ * Debounced copy of a value.
+ *
+ * @param {*}      value Value.
+ * @param {number} delay Milliseconds.
+ * @return {*} Value after the delay.
+ */
+function useDebounced( value, delay ) {
+	const [ debounced, setDebounced ] = useState( value );
+	useEffect( () => {
+		const timer = setTimeout( () => setDebounced( value ), delay );
+		return () => clearTimeout( timer );
+	}, [ value, delay ] );
+	return debounced;
+}
+
+export default function Translations( { config, notify } ) {
+	const [ query, setQuery ] = useState( {
+		post_type: '',
+		filter: 'all',
+		page: 1,
+	} );
+	const [ searchText, setSearchText ] = useState( '' );
+	const search = useDebounced( searchText.trim(), 300 );
+	const [ data, setData ] = useState( null );
+	const [ loading, setLoading ] = useState( true );
+	const [ loadError, setLoadError ] = useState( null );
+	const [ reloadKey, setReloadKey ] = useState( 0 );
+	const [ selected, setSelected ] = useState( () => new Set() );
+	const [ linking, setLinking ] = useState( null );
+	const [ busy, setBusy ] = useState( false );
+
+	const reload = useCallback( () => setReloadKey( ( key ) => key + 1 ), [] );
+
+	// A new search starts from page 1.
+	useEffect( () => {
+		setQuery( ( current ) => ( { ...current, page: 1 } ) );
+	}, [ search ] );
+
+	useEffect( () => {
+		let ignore = false;
+		setLoading( true );
+		setLoadError( null );
+
+		getLinks( { ...query, search, per_page: PER_PAGE } )
+			.then( ( response ) => {
+				if ( ! ignore ) {
+					setData( response );
+				}
+			} )
+			.catch( ( error ) => {
+				if ( ! ignore ) {
+					setLoadError(
+						errorMessage(
+							error,
+							__(
+								'The list couldn’t be loaded.',
+								'cedar-multilang'
+							)
+						)
+					);
+				}
+			} )
+			.finally( () => {
+				if ( ! ignore ) {
+					setLoading( false );
+				}
+			} );
+
+		return () => {
+			ignore = true;
+		};
+	}, [ query, search, reloadKey ] );
+
+	// Selection and open editors belong to one result page.
+	useEffect( () => {
+		setSelected( new Set() );
+		setLinking( null );
+	}, [ query, search ] );
+
+	const languages = data ? data.languages : [];
+	const byCode = Object.fromEntries(
+		languages.map( ( language ) => [ language.code, language ] )
+	);
+	const source = data ? byCode[ data.default ] : null;
+	const targets = data
+		? data.target_codes.map( ( code ) => byCode[ code ] ).filter( Boolean )
+		: [];
+	const rows = data ? data.rows : [];
+	const currentType = data
+		? data.types.find( ( type ) => type.name === data.post_type )
+		: null;
+
+	const setFilter = ( filter ) =>
+		setQuery( ( current ) => ( { ...current, filter, page: 1 } ) );
+	const setType = ( postType ) =>
+		setQuery( ( current ) => ( {
+			...current,
+			post_type: postType,
+			page: 1,
+		} ) );
+	const setPage = ( page ) =>
+		setQuery( ( current ) => ( { ...current, page } ) );
+
+	/**
+	 * Unlinks with an Undo that re-creates the same links.
+	 *
+	 * @param {Array}  jobs    [{ id, scope, restore: [ [ sourceId, targetId, code ] ] }].
+	 * @param {string} message Toast message.
+	 */
+	const unlinkWithUndo = async ( jobs, message ) => {
+		setBusy( true );
+		try {
+			for ( const job of jobs ) {
+				await unlinkPost( job.id, job.scope );
+			}
+			notify( {
+				tone: 'success',
+				message,
+				action: {
+					label: __( 'Undo', 'cedar-multilang' ),
+					onClick: async () => {
+						try {
+							for ( const job of jobs ) {
+								for ( const [
+									sourceId,
+									targetId,
+									code,
+								] of job.restore ) {
+									await linkPost( sourceId, targetId, code );
+								}
+							}
+							notify( {
+								tone: 'success',
+								message: __(
+									'Links restored.',
+									'cedar-multilang'
+								),
+							} );
+						} catch ( error ) {
+							notify( {
+								tone: 'error',
+								message: errorMessage(
+									error,
+									__(
+										'The links couldn’t be restored.',
+										'cedar-multilang'
+									)
+								),
+							} );
+						}
+						reload();
+					},
+				},
+			} );
+		} catch ( error ) {
+			notify( {
+				tone: 'error',
+				message: errorMessage(
+					error,
+					__( 'Unlinking failed.', 'cedar-multilang' )
+				),
+			} );
+		}
+		setSelected( new Set() );
+		setBusy( false );
+		reload();
+	};
+
+	const restoreAll = ( row ) =>
+		Object.entries( row.translations ).map( ( [ code, translation ] ) => [
+			row.id,
+			translation.id,
+			code,
+		] );
+
+	const unlinkRow = ( row ) =>
+		unlinkWithUndo(
+			[ { id: row.id, scope: 'group', restore: restoreAll( row ) } ],
+			sprintf(
+				/* translators: %s: Page title. */
+				__( 'Unlinked the translations of “%s”.', 'cedar-multilang' ),
+				row.title
+			)
+		);
+
+	const unlinkTranslation = ( row, code ) => {
+		const translation = row.translations[ code ];
+		unlinkWithUndo(
+			[
+				{
+					id: translation.id,
+					scope: 'post',
+					restore: [ [ row.id, translation.id, code ] ],
+				},
+			],
+			sprintf(
+				/* translators: 1: Translation title, 2: Page title. */
+				__( 'Unlinked “%1$s” from “%2$s”.', 'cedar-multilang' ),
+				translation.title,
+				row.title
+			)
+		);
+	};
+
+	const unlinkSelected = () => {
+		const chosen = rows.filter(
+			( row ) =>
+				selected.has( row.id ) && Object.keys( row.translations ).length
+		);
+		if ( ! chosen.length ) {
+			notify( {
+				tone: 'info',
+				message: __(
+					'The selected pages have no translations to unlink.',
+					'cedar-multilang'
+				),
+			} );
+			return;
+		}
+		unlinkWithUndo(
+			chosen.map( ( row ) => ( {
+				id: row.id,
+				scope: 'group',
+				restore: restoreAll( row ),
+			} ) ),
+			sprintf(
+				/* translators: %d: Number of pages. */
+				_n(
+					'Unlinked %d page.',
+					'Unlinked %d pages.',
+					chosen.length,
+					'cedar-multilang'
+				),
+				chosen.length
+			)
+		);
+	};
+
+	const onLinked = ( row, code, candidate ) => {
+		setLinking( null );
+		notify( {
+			tone: 'success',
+			message: sprintf(
+				/* translators: 1: Page title, 2: Language name, 3: Page title. */
+				__(
+					'Linked “%1$s” as the %2$s version of “%3$s”.',
+					'cedar-multilang'
+				),
+				candidate.title,
+				byCode[ code ].name,
+				row.title
+			),
+		} );
+		reload();
+	};
+
+	const toggleRow = ( id, on ) =>
+		setSelected( ( current ) => {
+			const next = new Set( current );
+			if ( on ) {
+				next.add( id );
+			} else {
+				next.delete( id );
+			}
+			return next;
+		} );
+
+	const allOnPage =
+		rows.length > 0 && rows.every( ( row ) => selected.has( row.id ) );
+	const someOnPage = rows.some( ( row ) => selected.has( row.id ) );
+	const toggleAll = ( on ) =>
+		setSelected(
+			on ? new Set( rows.map( ( row ) => row.id ) ) : new Set()
+		);
+
+	const columns = `var(--cedar-checkbox-size) minmax(200px, 384fr) repeat(${ Math.max(
+		targets.length,
+		1
+	) }, minmax(200px, 260fr)) 96px 60px`;
+
+	return (
+		<>
+			<PageTitle
+				title={ __( 'Translations', 'cedar-multilang' ) }
+				description={ __(
+					'Every page, in every language.',
+					'cedar-multilang'
+				) }
+			/>
+
+			{ data && source && targets.length > 0 && (
+				<section
+					className="cedar-overview"
+					aria-label={ __( 'Coverage', 'cedar-multilang' ) }
+				>
+					<CoverageCard
+						source
+						language={ source }
+						value={ data.counts.all - data.counts.missing }
+						total={ data.counts.all }
+						caption={ sprintf(
+							/* translators: %d: Number of pages. */
+							_n(
+								'%d page',
+								'%d pages',
+								data.source_total,
+								'cedar-multilang'
+							),
+							data.source_total
+						) }
+					/>
+					{ targets.map( ( language ) => (
+						<CoverageCard
+							key={ language.code }
+							language={ language }
+							value={ data.coverage[ language.code ] || 0 }
+							total={ data.source_total }
+							caption={ sprintf(
+								/* translators: 1: Linked pages, 2: All pages. */
+								__( '%1$d of %2$d linked', 'cedar-multilang' ),
+								data.coverage[ language.code ] || 0,
+								data.source_total
+							) }
+						/>
+					) ) }
+				</section>
+			) }
+
+			<section
+				className="cedar-table"
+				aria-label={ __( 'Translations', 'cedar-multilang' ) }
+				style={ { '--cedar-table-columns': columns } }
+			>
+				{ selected.size > 0 ? (
+					<div className="cedar-bulkbar">
+						<Checkbox
+							checked={ allOnPage }
+							indeterminate={ ! allOnPage }
+							label={ __( 'Clear selection', 'cedar-multilang' ) }
+							onChange={ () => setSelected( new Set() ) }
+						/>
+						<span
+							className="cedar-bulkbar__count"
+							aria-live="polite"
+						>
+							{ sprintf(
+								/* translators: %d: Number of selected pages. */
+								_n(
+									'%d selected',
+									'%d selected',
+									selected.size,
+									'cedar-multilang'
+								),
+								selected.size
+							) }
+						</span>
+						<span className="cedar-bulkbar__spacer" />
+						<Button
+							size="small"
+							icon="close"
+							onClick={ unlinkSelected }
+							disabled={ busy }
+						>
+							{ __( 'Unlink', 'cedar-multilang' ) }
+						</Button>
+						<button
+							type="button"
+							className="cedar-bulkbar__clear"
+							onClick={ () => setSelected( new Set() ) }
+						>
+							{ __( 'Clear', 'cedar-multilang' ) }
+						</button>
+					</div>
+				) : (
+					<div className="cedar-toolbar">
+						<Tabs
+							label={ __( 'Filter', 'cedar-multilang' ) }
+							value={ query.filter }
+							onChange={ setFilter }
+							items={ [
+								{
+									value: 'all',
+									label: __( 'All', 'cedar-multilang' ),
+									count: data?.counts.all,
+								},
+								{
+									value: 'missing',
+									label: __( 'Missing', 'cedar-multilang' ),
+									count: data?.counts.missing,
+								},
+								{
+									value: 'drafts',
+									label: __( 'Drafts', 'cedar-multilang' ),
+									count: data?.counts.drafts,
+								},
+							] }
+						/>
+						<div className="cedar-toolbar__end">
+							{ data && (
+								<Menu
+									label={ __(
+										'Content type',
+										'cedar-multilang'
+									) }
+									renderTrigger={ ( props ) => (
+										<button
+											type="button"
+											className="cedar-input is-select is-trigger"
+											{ ...props }
+										>
+											<span>
+												{ currentType
+													? sprintf(
+															/* translators: 1: Content type, e.g. "Pages". 2: Count. */
+															__(
+																'%1$s · %2$d',
+																'cedar-multilang'
+															),
+															currentType.label,
+															currentType.count
+														)
+													: data.post_type }
+											</span>
+											<Icon name="chevron-down" />
+										</button>
+									) }
+									items={ data.types.map( ( type ) => ( {
+										id: type.name,
+										label: type.label,
+										meta: type.enabled
+											? String( type.count )
+											: __(
+													'Off — enable in Settings',
+													'cedar-multilang'
+												),
+										checked: type.name === data.post_type,
+										disabled: ! type.enabled,
+										onSelect: () => setType( type.name ),
+									} ) ) }
+								/>
+							) }
+							<TextInput
+								search
+								className="cedar-toolbar__search"
+								value={ searchText }
+								onChange={ ( event ) =>
+									setSearchText( event.target.value )
+								}
+								placeholder={ __(
+									'Search titles or slugs…',
+									'cedar-multilang'
+								) }
+								aria-label={ __(
+									'Search titles or slugs',
+									'cedar-multilang'
+								) }
+							/>
+						</div>
+					</div>
+				) }
+
+				<div className="cedar-table__scroll">
+					<div
+						className="cedar-grid"
+						role="table"
+						aria-label={ __(
+							'Pages and their translations',
+							'cedar-multilang'
+						) }
+						aria-busy={ loading }
+						aria-rowcount={ data ? data.total + 1 : -1 }
+					>
+						<div className="cedar-row is-header" role="row">
+							<span role="columnheader">
+								<Checkbox
+									checked={ allOnPage }
+									indeterminate={ someOnPage && ! allOnPage }
+									label={ __(
+										'Select all on this page',
+										'cedar-multilang'
+									) }
+									onChange={ toggleAll }
+									disabled={ ! rows.length }
+								/>
+							</span>
+							<span
+								role="columnheader"
+								className="cedar-overline"
+							>
+								{ source
+									? sprintf(
+											/* translators: 1: Content type, e.g. "Page". 2: Language name. */
+											__(
+												'%1$s · %2$s (source)',
+												'cedar-multilang'
+											),
+											data.post_type_tag,
+											source.name
+										)
+									: __( 'Page', 'cedar-multilang' ) }
+							</span>
+							{ targets.map( ( language ) => (
+								<span role="columnheader" key={ language.code }>
+									<LanguageTag
+										code={ language.code }
+										name={ language.native }
+									/>
+								</span>
+							) ) }
+							<span
+								role="columnheader"
+								className="cedar-overline"
+							>
+								{ __( 'Updated', 'cedar-multilang' ) }
+							</span>
+							<span role="columnheader">
+								<span className="screen-reader-text">
+									{ __( 'Actions', 'cedar-multilang' ) }
+								</span>
+							</span>
+						</div>
+
+						<Rows
+							data={ data }
+							loading={ loading }
+							loadError={ loadError }
+							rows={ rows }
+							targets={ targets }
+							search={ search }
+							filter={ query.filter }
+							config={ config }
+							selected={ selected }
+							linking={ linking }
+							setLinking={ setLinking }
+							toggleRow={ toggleRow }
+							onLinked={ onLinked }
+							onUnlinkRow={ unlinkRow }
+							onUnlinkTranslation={ unlinkTranslation }
+							onClearSearch={ () => setSearchText( '' ) }
+							onRetry={ reload }
+							notify={ notify }
+						/>
+					</div>
+				</div>
+
+				{ data && data.total > 0 && (
+					<div className="cedar-table__footer">
+						<span>
+							{ sprintf(
+								/* translators: 1: First row number, 2: Last row number, 3: Total rows. */
+								__(
+									'Showing %1$d–%2$d of %3$d',
+									'cedar-multilang'
+								),
+								( data.page - 1 ) * PER_PAGE + 1,
+								( data.page - 1 ) * PER_PAGE + rows.length,
+								data.total
+							) }
+						</span>
+						<span className="cedar-table__pager">
+							<Button
+								size="small"
+								onClick={ () => setPage( data.page - 1 ) }
+								disabled={ data.page <= 1 || loading }
+							>
+								{ __( 'Previous', 'cedar-multilang' ) }
+							</Button>
+							<Button
+								size="small"
+								onClick={ () => setPage( data.page + 1 ) }
+								disabled={
+									data.page >= data.total_pages || loading
+								}
+							>
+								{ __( 'Next', 'cedar-multilang' ) }
+							</Button>
+						</span>
+					</div>
+				) }
+			</section>
+		</>
+	);
+}
+
+/**
+ * Table body: skeleton, empty states or rows.
+ *
+ * @param {Object} props See Translations.
+ */
+function Rows( props ) {
+	const { data, loading, loadError, rows, targets, search, filter, config } =
+		props;
+
+	if ( loading ) {
+		return Array.from( { length: 6 } ).map( ( unused, index ) => (
+			<SkeletonRow
+				key={ index }
+				columns={ Math.max( targets.length, 1 ) }
+			/>
+		) );
+	}
+
+	let empty = null;
+	if ( loadError ) {
+		empty = (
+			<EmptyState
+				icon="alert"
+				title={ __( 'Couldn’t load translations', 'cedar-multilang' ) }
+				description={ loadError }
+				actions={
+					<Button variant="primary" onClick={ props.onRetry }>
+						{ __( 'Try again', 'cedar-multilang' ) }
+					</Button>
+				}
+			/>
+		);
+	} else if ( data && ! targets.length ) {
+		empty = (
+			<EmptyState
+				icon="plus"
+				title={ __( 'Add a second language', 'cedar-multilang' ) }
+				description={
+					config.canManage
+						? __(
+								'Translations show up here once your site has at least two languages.',
+								'cedar-multilang'
+							)
+						: __(
+								'Translations show up here once a site administrator adds a second language.',
+								'cedar-multilang'
+							)
+				}
+				actions={
+					config.canManage &&
+					config.urls.languages && (
+						<Button
+							variant="primary"
+							icon="plus"
+							href={ config.urls.languages }
+						>
+							{ __( 'Add language', 'cedar-multilang' ) }
+						</Button>
+					)
+				}
+			/>
+		);
+	} else if ( data && ! rows.length ) {
+		if ( search ) {
+			let title;
+			if ( 'page' === data.post_type ) {
+				title = sprintf(
+					/* translators: %s: Search text. */
+					__( 'No pages match “%s”', 'cedar-multilang' ),
+					search
+				);
+			} else if ( 'post' === data.post_type ) {
+				title = sprintf(
+					/* translators: %s: Search text. */
+					__( 'No posts match “%s”', 'cedar-multilang' ),
+					search
+				);
+			} else {
+				title = sprintf(
+					/* translators: %s: Search text. */
+					__( 'Nothing matches “%s”', 'cedar-multilang' ),
+					search
+				);
+			}
+			empty = (
+				<EmptyState
+					icon="search"
+					title={ title }
+					description={ __(
+						'Check the spelling, or search in another content type.',
+						'cedar-multilang'
+					) }
+					actions={
+						<Button
+							variant="primary"
+							onClick={ props.onClearSearch }
+						>
+							{ __( 'Clear search', 'cedar-multilang' ) }
+						</Button>
+					}
+				/>
+			);
+		} else if ( 'missing' === filter ) {
+			empty = (
+				<EmptyState
+					icon="circle-check"
+					title={ __( 'Nothing is missing', 'cedar-multilang' ) }
+					description={ __(
+						'Every page here has a translation in every language.',
+						'cedar-multilang'
+					) }
+				/>
+			);
+		} else if ( 'drafts' === filter ) {
+			empty = (
+				<EmptyState
+					icon="circle-check"
+					title={ __( 'No drafts', 'cedar-multilang' ) }
+					description={ __(
+						'Every page and translation here is published.',
+						'cedar-multilang'
+					) }
+				/>
+			);
+		} else {
+			empty = (
+				<EmptyState
+					icon="file-plus"
+					title={ __(
+						'Nothing to translate yet',
+						'cedar-multilang'
+					) }
+					description={ __(
+						'Content you write in your default language shows up here, ready to link.',
+						'cedar-multilang'
+					) }
+				/>
+			);
+		}
+	}
+
+	if ( empty ) {
+		return (
+			<div role="row" className="cedar-row is-empty">
+				<div role="cell">{ empty }</div>
+			</div>
+		);
+	}
+
+	return rows.map( ( row ) => (
+		<Row key={ row.id } row={ row } { ...props } />
+	) );
+}
+
+/**
+ * One source page and its translations.
+ *
+ * @param {Object}   props
+ * @param {Object}   props.row
+ * @param {Array}    props.targets
+ * @param {Object}   props.selected
+ * @param {Object}   props.linking
+ * @param {Function} props.setLinking
+ * @param {Function} props.toggleRow
+ * @param {Function} props.onLinked
+ * @param {Function} props.onUnlinkRow
+ * @param {Function} props.onUnlinkTranslation
+ * @param {Function} props.notify
+ * @param {Object}   props.data
+ */
+function Row( {
+	row,
+	targets,
+	selected,
+	linking,
+	setLinking,
+	toggleRow,
+	onLinked,
+	onUnlinkRow,
+	onUnlinkTranslation,
+	notify,
+	data,
+} ) {
+	const isSelected = selected.has( row.id );
+	const linkedCodes = Object.keys( row.translations );
+
+	const moreItems = [];
+	if ( row.editUrl ) {
+		moreItems.push( {
+			id: 'edit',
+			label: __( 'Edit page', 'cedar-multilang' ),
+			onSelect: () => window.location.assign( row.editUrl ),
+		} );
+	}
+	targets.forEach( ( language ) => {
+		const translation = row.translations[ language.code ];
+		if ( translation && translation.canEdit ) {
+			moreItems.push( {
+				id: `unlink-${ language.code }`,
+				label: sprintf(
+					/* translators: %s: Language name in that language, e.g. "فارسی". */
+					__( 'Unlink %s', 'cedar-multilang' ),
+					language.native
+				),
+				onSelect: () => onUnlinkTranslation( row, language.code ),
+			} );
+		}
+	} );
+	if ( linkedCodes.length > 1 ) {
+		moreItems.push( {
+			id: 'unlink-all',
+			label: __( 'Unlink all translations', 'cedar-multilang' ),
+			onSelect: () => onUnlinkRow( row ),
+		} );
+	}
+
+	return (
+		<div
+			role="row"
+			className={ `cedar-row ${ isSelected ? 'is-selected' : '' }` }
+		>
+			<span role="cell">
+				<Checkbox
+					checked={ isSelected }
+					label={ sprintf(
+						/* translators: %s: Page title. */
+						__( 'Select “%s”', 'cedar-multilang' ),
+						row.title
+					) }
+					onChange={ ( on ) => toggleRow( row.id, on ) }
+				/>
+			</span>
+			<span role="cell" className="cedar-row__page">
+				<span className="cedar-row__title">
+					<span dir="auto">{ row.title }</span>
+					{ DRAFT_STATUSES.includes( row.status ) && (
+						<Badge tone="draft">
+							{ __( 'Draft', 'cedar-multilang' ) }
+						</Badge>
+					) }
+				</span>
+				<span className="cedar-row__slug" dir="ltr">
+					{ row.path }
+				</span>
+			</span>
+			{ targets.map( ( language ) => (
+				<span role="cell" key={ language.code }>
+					<TranslationCell
+						row={ row }
+						language={ language }
+						postType={ data.post_type }
+						translation={ row.translations[ language.code ] }
+						isLinking={
+							linking &&
+							linking.rowId === row.id &&
+							linking.code === language.code
+						}
+						onStartLinking={ () =>
+							setLinking( { rowId: row.id, code: language.code } )
+						}
+						onCancelLinking={ () => setLinking( null ) }
+						onLinked={ ( candidate ) =>
+							onLinked( row, language.code, candidate )
+						}
+						notify={ notify }
+					/>
+				</span>
+			) ) }
+			<span role="cell" className="cedar-row__date">
+				{ row.modified }
+			</span>
+			<span role="cell" className="cedar-row__actions">
+				{ row.viewUrl && (
+					<Button
+						variant="ghost"
+						size="small"
+						icon="external-link"
+						href={ row.viewUrl }
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label={ sprintf(
+							/* translators: %s: Page title. */
+							__(
+								'View “%s” (opens in a new tab)',
+								'cedar-multilang'
+							),
+							row.title
+						) }
+					/>
+				) }
+				{ moreItems.length > 0 && (
+					<Menu
+						align="end"
+						label={ sprintf(
+							/* translators: %s: Page title. */
+							__( 'Actions for “%s”', 'cedar-multilang' ),
+							row.title
+						) }
+						renderTrigger={ ( props ) => (
+							<Button
+								variant="ghost"
+								size="small"
+								icon="more"
+								aria-label={ sprintf(
+									/* translators: %s: Page title. */
+									__(
+										'More actions for “%s”',
+										'cedar-multilang'
+									),
+									row.title
+								) }
+								{ ...props }
+							/>
+						) }
+						items={ moreItems }
+					/>
+				) }
+			</span>
+		</div>
+	);
+}
+
+/**
+ * Translation cell. Status=Linked|Draft|Missing, plus the inline Linking state.
+ *
+ * @param {Object}   props
+ * @param {Object}   props.row
+ * @param {Object}   props.language
+ * @param {string}   props.postType
+ * @param {Object}   props.translation
+ * @param {boolean}  props.isLinking
+ * @param {Function} props.onStartLinking
+ * @param {Function} props.onCancelLinking
+ * @param {Function} props.onLinked
+ * @param {Function} props.notify
+ */
+function TranslationCell( {
+	row,
+	language,
+	postType,
+	translation,
+	isLinking,
+	onStartLinking,
+	onCancelLinking,
+	onLinked,
+	notify,
+} ) {
+	if ( isLinking ) {
+		return (
+			<LinkSearch
+				row={ row }
+				language={ language }
+				postType={ postType }
+				onCancel={ onCancelLinking }
+				onLinked={ onLinked }
+				notify={ notify }
+			/>
+		);
+	}
+
+	if ( ! translation ) {
+		if ( ! row.canEdit ) {
+			return (
+				<span className="cedar-cell is-empty">
+					{ __( 'Not translated', 'cedar-multilang' ) }
+				</span>
+			);
+		}
+		return (
+			<Menu
+				variant="rich"
+				label={ sprintf(
+					/* translators: %s: Language name. */
+					__( 'Add a %s translation', 'cedar-multilang' ),
+					language.name
+				) }
+				renderTrigger={ ( props ) => (
+					<button
+						type="button"
+						className="cedar-cell is-missing"
+						aria-label={ sprintf(
+							/* translators: 1: Language name, 2: Page title. */
+							__(
+								'Add %1$s translation of “%2$s”',
+								'cedar-multilang'
+							),
+							language.name,
+							row.title
+						) }
+						{ ...props }
+					>
+						<Icon name="plus" size={ 14 } />
+						<span>
+							{ __( 'Add translation', 'cedar-multilang' ) }
+						</span>
+					</button>
+				) }
+				items={ [
+					{
+						id: 'link',
+						icon: 'link',
+						label: __( 'Link an existing page', 'cedar-multilang' ),
+						description: __(
+							'Search pages in this language and connect one.',
+							'cedar-multilang'
+						),
+						onSelect: onStartLinking,
+					},
+				] }
+			/>
+		);
+	}
+
+	const isDraft = DRAFT_STATUSES.includes( translation.status );
+	const title = translation.editUrl ? (
+		<a
+			href={ translation.editUrl }
+			dir="auto"
+			lang={ language.code }
+			className="cedar-cell__title"
+		>
+			{ translation.title }
+		</a>
+	) : (
+		<span dir="auto" lang={ language.code } className="cedar-cell__title">
+			{ translation.title }
+		</span>
+	);
+
+	return (
+		<span
+			className={ `cedar-cell ${ isDraft ? 'is-draft' : 'is-linked' }` }
+		>
+			{ isDraft ? (
+				<span className="cedar-cell__dot" aria-hidden="true" />
+			) : (
+				<Icon name="circle-check" className="cedar-cell__check" />
+			) }
+			{ title }
+			{ isDraft && (
+				<span className="cedar-cell__badge">
+					{ __( 'Draft', 'cedar-multilang' ) }
+				</span>
+			) }
+		</span>
+	);
+}
+
+/**
+ * Inline combobox to pick an existing page as the translation.
+ *
+ * @param {Object}   props
+ * @param {Object}   props.row
+ * @param {Object}   props.language
+ * @param {string}   props.postType
+ * @param {Function} props.onCancel
+ * @param {Function} props.onLinked
+ * @param {Function} props.notify
+ */
+function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
+	const [ text, setText ] = useState( '' );
+	const term = useDebounced( text.trim(), 250 );
+	const [ results, setResults ] = useState( null );
+	const [ active, setActive ] = useState( 0 );
+	const [ saving, setSaving ] = useState( false );
+	const inputRef = useRef();
+	const wrapRef = useRef();
+	const listId = useId();
+
+	useEffect( () => {
+		inputRef.current.focus();
+	}, [] );
+
+	useEffect( () => {
+		let ignore = false;
+		getCandidates( {
+			post_type: postType,
+			language: language.code,
+			search: term,
+			exclude: row.id,
+		} )
+			.then( ( list ) => {
+				if ( ! ignore ) {
+					setResults( list );
+					setActive( 0 );
+				}
+			} )
+			.catch( () => ! ignore && setResults( [] ) );
+		return () => {
+			ignore = true;
+		};
+	}, [ term, postType, language.code, row.id ] );
+
+	useEffect( () => {
+		const onPointer = ( event ) => {
+			if (
+				wrapRef.current &&
+				! wrapRef.current.contains( event.target )
+			) {
+				onCancel();
+			}
+		};
+		document.addEventListener( 'mousedown', onPointer );
+		return () => document.removeEventListener( 'mousedown', onPointer );
+	}, [ onCancel ] );
+
+	const choose = async ( candidate ) => {
+		if ( ! candidate || saving ) {
+			return;
+		}
+		setSaving( true );
+		try {
+			await linkPost( row.id, candidate.id, language.code );
+			onLinked( candidate );
+		} catch ( error ) {
+			setSaving( false );
+			notify( {
+				tone: 'error',
+				message: errorMessage(
+					error,
+					__( 'Those pages couldn’t be linked.', 'cedar-multilang' )
+				),
+			} );
+		}
+	};
+
+	const onKeyDown = ( event ) => {
+		const count = results ? results.length : 0;
+		if ( 'ArrowDown' === event.key && count ) {
+			event.preventDefault();
+			setActive( ( active + 1 ) % count );
+		} else if ( 'ArrowUp' === event.key && count ) {
+			event.preventDefault();
+			setActive( ( active - 1 + count ) % count );
+		} else if ( 'Enter' === event.key ) {
+			event.preventDefault();
+			choose( results && results[ active ] );
+		} else if ( 'Escape' === event.key ) {
+			event.preventDefault();
+			onCancel();
+		}
+	};
+
+	const optionId = ( index ) => `${ listId }-${ index }`;
+
+	return (
+		<div className="cedar-link-search" ref={ wrapRef }>
+			<TextInput
+				search
+				ref={ inputRef }
+				value={ text }
+				onChange={ ( event ) => setText( event.target.value ) }
+				onKeyDown={ onKeyDown }
+				role="combobox"
+				aria-expanded={ !! results }
+				aria-controls={ listId }
+				aria-autocomplete="list"
+				aria-activedescendant={
+					results && results.length ? optionId( active ) : undefined
+				}
+				aria-busy={ saving || undefined }
+				placeholder={ sprintf(
+					/* translators: %s: Language name in that language. */
+					__( 'Search %s pages…', 'cedar-multilang' ),
+					language.native
+				) }
+				aria-label={ sprintf(
+					/* translators: %s: Language name. */
+					__( 'Search %s pages to link', 'cedar-multilang' ),
+					language.name
+				) }
+			/>
+			<ul
+				className="cedar-menu is-list cedar-link-search__list"
+				id={ listId }
+				role="listbox"
+				aria-label={ __( 'Pages', 'cedar-multilang' ) }
+			>
+				{ results && ! results.length && (
+					<li className="cedar-menu__empty" role="presentation">
+						{ __(
+							'No pages found. Pages already in another language aren’t listed.',
+							'cedar-multilang'
+						) }
+					</li>
+				) }
+				{ results &&
+					results.map( ( candidate, index ) => (
+						// Keyboard interaction lives on the combobox input (aria-activedescendant).
+						// eslint-disable-next-line jsx-a11y/click-events-have-key-events
+						<li
+							key={ candidate.id }
+							id={ optionId( index ) }
+							role="option"
+							aria-selected={ index === active }
+							className={ `cedar-menu__item ${ index === active ? 'is-active' : '' }` }
+							onMouseEnter={ () => setActive( index ) }
+							onMouseDown={ ( event ) => event.preventDefault() }
+							onClick={ () => choose( candidate ) }
+						>
+							<span className="cedar-menu__label" dir="auto">
+								{ candidate.title }
+							</span>
+							<span className="cedar-menu__meta">
+								{ candidate.language
+									? candidate.linked &&
+										__( 'Linked', 'cedar-multilang' )
+									: __( 'No language', 'cedar-multilang' ) }
+							</span>
+						</li>
+					) ) }
+			</ul>
+		</div>
+	);
+}

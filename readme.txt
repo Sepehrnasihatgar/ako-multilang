@@ -1,7 +1,7 @@
 === Cedar Multilang ===
 Contributors: sepehrnasihatgar
 Tags: multilingual, hreflang, rtl, language switcher, translation
-Requires at least: 6.5
+Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
 Stable tag: 1.0.0

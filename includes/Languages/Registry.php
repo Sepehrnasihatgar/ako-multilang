@@ -229,6 +229,71 @@ final class Registry {
 	}
 
 	/**
+	 * Updates one language in place. The code never changes: it identifies
+	 * the language on every linked post.
+	 *
+	 * @param string $code Language code.
+	 * @param array  $raw  New values (locale, hreflang, name, native, dir).
+	 * @return true|WP_Error
+	 */
+	public static function update( $code, array $raw ) {
+		$code      = sanitize_key( (string) $code );
+		$languages = self::all();
+		if ( ! isset( $languages[ $code ] ) ) {
+			return new WP_Error( 'cedar_ml_unknown_language', __( 'That language isn’t set up yet.', 'cedar-multilang' ), array( 'status' => 404 ) );
+		}
+
+		$languages[ $code ] = array_merge( $languages[ $code ], $raw, array( 'code' => $code ) );
+		return self::save( array_values( $languages ), self::default_code() );
+	}
+
+	/**
+	 * Removes a language from the list. Callers unlink its posts first
+	 * (see Links::detach_language()); posts themselves are never deleted.
+	 *
+	 * @param string $code Language code.
+	 * @return true|WP_Error
+	 */
+	public static function remove( $code ) {
+		$code      = sanitize_key( (string) $code );
+		$languages = self::all();
+		if ( ! isset( $languages[ $code ] ) ) {
+			return new WP_Error( 'cedar_ml_unknown_language', __( 'That language isn’t set up yet.', 'cedar-multilang' ), array( 'status' => 404 ) );
+		}
+		if ( self::default_code() === $code ) {
+			return new WP_Error( 'cedar_ml_remove_default', __( 'The default language can’t be removed.', 'cedar-multilang' ), array( 'status' => 400 ) );
+		}
+
+		unset( $languages[ $code ] );
+		return self::save( array_values( $languages ), self::default_code() );
+	}
+
+	/**
+	 * Saves a new display order.
+	 *
+	 * @param string[] $codes Every language code, exactly once, in the new order.
+	 * @return true|WP_Error
+	 */
+	public static function reorder( array $codes ) {
+		$languages = self::all();
+		$codes     = array_map( 'sanitize_key', $codes );
+
+		$sorted_new = $codes;
+		$sorted_old = array_keys( $languages );
+		sort( $sorted_new );
+		sort( $sorted_old );
+		if ( $sorted_new !== $sorted_old ) {
+			return new WP_Error( 'cedar_ml_invalid_order', __( 'The order must list every language once.', 'cedar-multilang' ), array( 'status' => 400 ) );
+		}
+
+		$ordered = array();
+		foreach ( $codes as $code ) {
+			$ordered[] = $languages[ $code ];
+		}
+		return self::save( $ordered, self::default_code() );
+	}
+
+	/**
 	 * Clears the per-request cache.
 	 */
 	public static function flush() {

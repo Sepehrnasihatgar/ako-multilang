@@ -1,0 +1,1492 @@
+/**
+ * Cedar admin styles. Values come only from tokens.css (Figma variables);
+ * layout uses logical properties so right-to-left admin works unchanged.
+ */
+@import "../tokens/tokens.css";
+
+/* ---------- WordPress page integration (Cedar screens only) ---------- */
+
+body.cedar-ml-screen #wpcontent {
+	padding-inline-start: 0;
+}
+
+body.cedar-ml-screen #wpbody-content {
+	padding-block-end: 0;
+}
+
+body.cedar-ml-screen,
+body.cedar-ml-screen #wpwrap {
+	background: var(--cedar-admin-bg-canvas);
+}
+
+.cedar-ml-notices {
+	margin: 0 var(--cedar-admin-space-5xl);
+}
+
+.cedar-ml-notices:empty {
+	display: none;
+}
+
+/* ---------- Root ---------- */
+
+.cedar-ml {
+	--cedar-checkbox-size: 18px;
+	--cedar-control-height: 36px;
+	--cedar-control-height-small: 28px;
+	--cedar-panel-width: 400px;
+
+	color: var(--cedar-admin-text-primary);
+	font: var(--cedar-text-body);
+	letter-spacing: var(--cedar-text-body-tracking);
+	-webkit-font-smoothing: antialiased;
+}
+
+.cedar-ml *,
+.cedar-ml *::before,
+.cedar-ml *::after {
+	box-sizing: border-box;
+}
+
+.cedar-ml h1,
+.cedar-ml h2,
+.cedar-ml p {
+	margin: 0;
+	padding: 0;
+	color: inherit;
+}
+
+.cedar-ml a {
+	color: inherit;
+}
+
+.cedar-ml :focus {
+	box-shadow: none;
+	outline: none;
+}
+
+.cedar-ml :focus-visible {
+	outline: var(--cedar-admin-border-width-strong) solid var(--cedar-admin-border-accent);
+	outline-offset: var(--cedar-admin-space-3xs);
+}
+
+.cedar-ml [hidden] {
+	display: none !important;
+}
+
+.cedar-overline {
+	color: var(--cedar-admin-text-tertiary);
+	font: var(--cedar-text-overline);
+	letter-spacing: var(--cedar-text-overline-tracking);
+	text-transform: uppercase;
+}
+
+/* ---------- Cedar / Header ---------- */
+
+.cedar-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-3xl);
+	background: var(--cedar-admin-bg-surface);
+	border-block-end: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+}
+
+.cedar-header__brand,
+.cedar-header__name {
+	display: flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-md);
+}
+
+.cedar-header__name {
+	align-items: baseline;
+	gap: var(--cedar-admin-space-xs);
+}
+
+.cedar-logo__tile {
+	fill: var(--cedar-admin-bg-brand);
+}
+
+.cedar-logo__mark {
+	fill: var(--cedar-admin-icon-on-brand);
+}
+
+.cedar-header__product {
+	font: var(--cedar-text-section-title);
+	letter-spacing: var(--cedar-text-section-title-tracking);
+}
+
+.cedar-header__version {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-label);
+}
+
+/* ---------- Page ---------- */
+
+.cedar-body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-2xl);
+	padding: var(--cedar-admin-space-3xl) var(--cedar-admin-space-5xl);
+}
+
+.cedar-page-title {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-lg);
+}
+
+.cedar-page-title__copy {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-2xs);
+}
+
+.cedar-page-title h1 {
+	font: var(--cedar-text-page-title);
+	letter-spacing: var(--cedar-text-page-title-tracking);
+}
+
+.cedar-page-title p {
+	color: var(--cedar-admin-text-secondary);
+}
+
+.cedar-page-title__actions {
+	display: flex;
+	gap: var(--cedar-admin-space-sm);
+}
+
+.cedar-card {
+	background: var(--cedar-admin-bg-surface);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	border-radius: var(--cedar-admin-radius-surface);
+	box-shadow: var(--cedar-shadow-card);
+	padding: var(--cedar-admin-space-xl);
+}
+
+/* ---------- Button ---------- */
+
+.cedar-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--cedar-admin-space-xs);
+	min-block-size: var(--cedar-control-height);
+	margin: 0;
+	padding: var(--cedar-admin-space-sm) var(--cedar-admin-space-lg);
+	border: var(--cedar-admin-border-width) solid transparent;
+	border-radius: var(--cedar-admin-radius-control);
+	background: transparent;
+	color: var(--cedar-admin-text-primary);
+	font: var(--cedar-text-body-strong);
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.cedar-button.is-small {
+	min-block-size: var(--cedar-control-height-small);
+	padding: var(--cedar-admin-space-2xs) var(--cedar-admin-space-md);
+}
+
+.cedar-button.is-icon-only {
+	inline-size: var(--cedar-control-height);
+	padding: 0;
+}
+
+.cedar-button.is-icon-only.is-small {
+	inline-size: var(--cedar-control-height-small);
+}
+
+.cedar-button.is-primary {
+	background: var(--cedar-admin-bg-accent);
+	color: var(--cedar-admin-text-on-accent);
+}
+
+.cedar-button.is-primary:hover {
+	background: var(--cedar-admin-bg-accent-hover);
+	color: var(--cedar-admin-text-on-accent);
+}
+
+.cedar-button.is-secondary {
+	background: var(--cedar-admin-bg-surface);
+	border-color: var(--cedar-admin-border-default);
+}
+
+.cedar-button.is-secondary:hover,
+.cedar-button.is-ghost:hover {
+	background: var(--cedar-admin-bg-subtle);
+	color: var(--cedar-admin-text-primary);
+}
+
+.cedar-button.is-danger {
+	background: var(--cedar-admin-icon-danger);
+	color: var(--cedar-admin-text-on-accent);
+}
+
+.cedar-button.is-danger:hover {
+	background: var(--cedar-admin-text-danger);
+	color: var(--cedar-admin-text-on-accent);
+}
+
+.cedar-button:disabled,
+.cedar-button:disabled:hover {
+	background: var(--cedar-admin-bg-subtle);
+	border-color: transparent;
+	color: var(--cedar-admin-text-tertiary);
+	cursor: not-allowed;
+}
+
+.cedar-button.is-secondary:disabled {
+	border-color: var(--cedar-admin-border-subtle);
+}
+
+.cedar-button.is-ghost:disabled {
+	background: transparent;
+}
+
+/* ---------- Badge ---------- */
+
+.cedar-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-xs);
+	padding: var(--cedar-admin-space-3xs) var(--cedar-admin-space-sm);
+	border-radius: var(--cedar-admin-radius-pill);
+	font: var(--cedar-text-label);
+	white-space: nowrap;
+}
+
+.cedar-badge__dot {
+	inline-size: var(--cedar-admin-space-xs);
+	block-size: var(--cedar-admin-space-xs);
+	border-radius: var(--cedar-admin-radius-pill);
+	background: currentcolor;
+}
+
+.cedar-badge.is-linked {
+	background: var(--cedar-admin-bg-success-subtle);
+	color: var(--cedar-admin-text-success);
+}
+
+.cedar-badge.is-missing {
+	background: var(--cedar-admin-bg-warning-subtle);
+	color: var(--cedar-admin-text-warning);
+}
+
+.cedar-badge.is-draft {
+	background: var(--cedar-admin-bg-subtle);
+	color: var(--cedar-admin-text-secondary);
+}
+
+.cedar-badge.is-info {
+	background: var(--cedar-admin-bg-info-subtle);
+	color: var(--cedar-admin-text-info);
+}
+
+.cedar-badge.is-error {
+	background: var(--cedar-admin-bg-danger-subtle);
+	color: var(--cedar-admin-text-danger);
+}
+
+.cedar-badge.is-pro {
+	background: var(--cedar-admin-bg-brand);
+	color: var(--cedar-admin-text-on-accent);
+}
+
+/* ---------- Language tag ---------- */
+
+.cedar-language-tag {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	min-inline-size: 0;
+}
+
+.cedar-language-tag__code {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	inline-size: 22px;
+	block-size: 22px;
+	border-radius: var(--cedar-admin-radius-tile);
+	background: var(--cedar-admin-bg-brand-subtle);
+	color: var(--cedar-admin-text-brand);
+	font: var(--cedar-text-overline);
+}
+
+.cedar-language-tag__name {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cedar-language-tag.is-large {
+	gap: var(--cedar-admin-space-md);
+}
+
+.cedar-language-tag.is-large .cedar-language-tag__code {
+	inline-size: 32px;
+	block-size: 32px;
+	border-radius: var(--cedar-admin-radius-control);
+	font: var(--cedar-text-label);
+	font-weight: var(--cedar-font-weight-600);
+}
+
+.cedar-language-tag.is-large .cedar-language-tag__name {
+	font: var(--cedar-text-body-strong);
+}
+
+/* ---------- Tabs ---------- */
+
+.cedar-tabs {
+	display: inline-flex;
+	gap: var(--cedar-admin-space-3xs);
+	padding: var(--cedar-admin-space-2xs);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-subtle);
+}
+
+.cedar-tab {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-xs);
+	margin: 0;
+	padding: var(--cedar-admin-space-xs) var(--cedar-admin-space-md);
+	border: var(--cedar-admin-border-width) solid transparent;
+	border-radius: var(--cedar-admin-radius-control);
+	background: transparent;
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-body);
+	cursor: pointer;
+}
+
+.cedar-tab:hover {
+	color: var(--cedar-admin-text-primary);
+}
+
+.cedar-tab.is-active {
+	background: var(--cedar-admin-bg-surface);
+	border-color: var(--cedar-admin-border-subtle);
+	color: var(--cedar-admin-text-primary);
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-tab__count {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-label);
+}
+
+.cedar-tab.is-active .cedar-tab__count {
+	padding: 0 var(--cedar-admin-space-xs);
+	border-radius: var(--cedar-admin-radius-pill);
+	background: var(--cedar-admin-bg-subtle);
+}
+
+/* ---------- Input ---------- */
+
+.cedar-input {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	inline-size: 100%;
+	min-block-size: var(--cedar-control-height);
+	padding: 0 var(--cedar-admin-space-md);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-default);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-surface);
+	color: var(--cedar-admin-text-primary);
+}
+
+.cedar-input .cedar-icon {
+	flex: none;
+	color: var(--cedar-admin-text-tertiary);
+}
+
+.cedar-ml .cedar-input input,
+.cedar-ml .cedar-input select {
+	flex: 1;
+	min-inline-size: 0;
+	min-block-size: calc(var(--cedar-control-height) - 2 * var(--cedar-admin-border-width));
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+	color: inherit;
+	font: var(--cedar-text-body);
+	line-height: inherit;
+	appearance: none;
+}
+
+.cedar-ml .cedar-input input::placeholder {
+	color: var(--cedar-admin-text-tertiary);
+}
+
+.cedar-ml .cedar-input input:focus,
+.cedar-ml .cedar-input select:focus {
+	box-shadow: none;
+	outline: none;
+}
+
+.cedar-ml .cedar-input input[type="search"]::-webkit-search-cancel-button {
+	appearance: none;
+}
+
+.cedar-ml .cedar-input.is-select select {
+	padding-inline-end: var(--cedar-admin-space-2xl);
+	cursor: pointer;
+}
+
+.cedar-input.is-select > .cedar-icon {
+	position: absolute;
+	inset-inline-end: var(--cedar-admin-space-md);
+	pointer-events: none;
+}
+
+.cedar-input:focus-within {
+	border-color: var(--cedar-admin-border-accent);
+	box-shadow: 0 0 0 var(--cedar-admin-border-width) var(--cedar-admin-border-accent);
+}
+
+.cedar-input.is-invalid {
+	border-color: var(--cedar-admin-border-danger);
+	box-shadow: 0 0 0 var(--cedar-admin-border-width) var(--cedar-admin-border-danger);
+}
+
+.cedar-input.is-disabled {
+	border-color: var(--cedar-admin-border-subtle);
+	background: var(--cedar-admin-bg-subtle);
+	color: var(--cedar-admin-text-tertiary);
+}
+
+/* Select-styled menu trigger (content type). */
+button.cedar-input.is-trigger {
+	justify-content: space-between;
+	inline-size: auto;
+	min-inline-size: 180px;
+	margin: 0;
+	font: var(--cedar-text-body);
+	text-align: start;
+	cursor: pointer;
+}
+
+button.cedar-input.is-trigger > .cedar-icon {
+	position: static;
+}
+
+button.cedar-input.is-trigger[aria-expanded="true"] {
+	border-color: var(--cedar-admin-border-accent);
+	box-shadow: 0 0 0 var(--cedar-admin-border-width) var(--cedar-admin-border-accent);
+}
+
+/* ---------- Field ---------- */
+
+.cedar-field {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-xs);
+}
+
+.cedar-field__label {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-label);
+}
+
+.cedar-field__help {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--cedar-admin-space-2xs);
+	color: var(--cedar-admin-text-tertiary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-field.is-error .cedar-field__help {
+	color: var(--cedar-admin-text-danger);
+}
+
+.cedar-field__help .cedar-icon {
+	flex: none;
+	margin-block-start: var(--cedar-admin-space-3xs);
+	color: var(--cedar-admin-icon-danger);
+}
+
+/* ---------- Checkbox ---------- */
+
+.cedar-checkbox {
+	position: relative;
+	display: inline-flex;
+	inline-size: var(--cedar-checkbox-size);
+	block-size: var(--cedar-checkbox-size);
+}
+
+.cedar-ml .cedar-checkbox input {
+	position: absolute;
+	inset: 0;
+	inline-size: 100%;
+	block-size: 100%;
+	margin: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.cedar-checkbox__box {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: 100%;
+	block-size: 100%;
+	border: var(--cedar-admin-border-width-strong) solid var(--cedar-admin-border-default);
+	border-radius: var(--cedar-admin-radius-tile);
+	background: var(--cedar-admin-bg-surface);
+	color: var(--cedar-admin-text-on-accent);
+	pointer-events: none;
+}
+
+.cedar-checkbox__box .cedar-icon {
+	visibility: hidden;
+	stroke-width: 2.5;
+}
+
+.cedar-checkbox:hover .cedar-checkbox__box {
+	border-color: var(--cedar-admin-border-accent);
+}
+
+.cedar-checkbox input:checked + .cedar-checkbox__box,
+.cedar-checkbox input:indeterminate + .cedar-checkbox__box {
+	border-color: transparent;
+	background: var(--cedar-admin-bg-accent);
+}
+
+.cedar-checkbox:hover input:checked + .cedar-checkbox__box,
+.cedar-checkbox:hover input:indeterminate + .cedar-checkbox__box {
+	background: var(--cedar-admin-bg-accent-hover);
+}
+
+.cedar-checkbox input:checked + .cedar-checkbox__box .cedar-icon,
+.cedar-checkbox input:indeterminate + .cedar-checkbox__box .cedar-icon {
+	visibility: visible;
+}
+
+.cedar-checkbox input:focus-visible + .cedar-checkbox__box {
+	outline: var(--cedar-admin-border-width-strong) solid var(--cedar-admin-border-accent);
+	outline-offset: var(--cedar-admin-space-3xs);
+}
+
+.cedar-checkbox input:disabled + .cedar-checkbox__box {
+	border-color: var(--cedar-admin-border-default);
+	background: var(--cedar-admin-bg-canvas);
+}
+
+/* ---------- Toggle ---------- */
+
+.cedar-toggle {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	inline-size: 36px;
+	block-size: 20px;
+	margin: 0;
+	padding: 0 var(--cedar-admin-space-3xs);
+	border: 0;
+	border-radius: var(--cedar-admin-radius-pill);
+	background: var(--cedar-admin-border-default);
+	cursor: pointer;
+	transition: background-color 120ms ease;
+}
+
+.cedar-toggle__knob {
+	inline-size: 16px;
+	block-size: 16px;
+	border-radius: var(--cedar-admin-radius-pill);
+	background: var(--cedar-admin-bg-surface);
+	transition: transform 120ms ease;
+}
+
+.cedar-toggle[aria-checked="true"] {
+	background: var(--cedar-admin-bg-accent);
+}
+
+.cedar-toggle[aria-checked="true"] .cedar-toggle__knob {
+	transform: translateX(16px);
+}
+
+[dir="rtl"] .cedar-toggle[aria-checked="true"] .cedar-toggle__knob {
+	transform: translateX(-16px);
+}
+
+.cedar-toggle:disabled {
+	background: var(--cedar-admin-bg-subtle);
+	cursor: not-allowed;
+}
+
+.cedar-toggle[aria-checked="true"]:disabled {
+	background: var(--cedar-admin-bg-brand-subtle);
+}
+
+/* ---------- Menu ---------- */
+
+.cedar-menu-wrap {
+	position: relative;
+	display: inline-flex;
+}
+
+.cedar-menu {
+	position: absolute;
+	z-index: 50;
+	inset-block-start: calc(100% + var(--cedar-admin-space-xs));
+	inset-inline-start: 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-3xs);
+	min-inline-size: 260px;
+	margin: 0;
+	padding: var(--cedar-admin-space-2xs);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-surface);
+	box-shadow: var(--cedar-shadow-menu);
+	list-style: none;
+}
+
+.cedar-menu.is-align-end {
+	inset-inline-start: auto;
+	inset-inline-end: 0;
+}
+
+.cedar-menu.is-static {
+	position: static;
+	min-inline-size: 0;
+}
+
+.cedar-menu.is-rich {
+	inline-size: 300px;
+}
+
+.cedar-menu__item {
+	display: flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	margin: 0;
+	padding: var(--cedar-admin-space-sm) var(--cedar-admin-space-md);
+	border-radius: var(--cedar-admin-radius-control);
+	color: var(--cedar-admin-text-primary);
+	cursor: pointer;
+}
+
+.cedar-menu__item:hover,
+.cedar-menu__item:focus,
+.cedar-menu__item.is-active {
+	background: var(--cedar-admin-bg-subtle);
+	outline: none;
+}
+
+.cedar-menu__item:focus-visible {
+	box-shadow: inset 0 0 0 var(--cedar-admin-border-width-strong) var(--cedar-admin-border-accent);
+}
+
+.cedar-menu__item.is-selected .cedar-menu__label {
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-menu__item.is-disabled {
+	color: var(--cedar-admin-text-tertiary);
+	cursor: default;
+}
+
+.cedar-menu__label {
+	flex: 1;
+	min-inline-size: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cedar-menu__meta,
+.cedar-menu__end {
+	flex: none;
+	color: var(--cedar-admin-text-tertiary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-menu__end {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-2xs);
+}
+
+.cedar-menu__item[aria-disabled="true"] .cedar-menu__end {
+	color: var(--cedar-admin-text-success);
+}
+
+.cedar-menu__empty {
+	padding: var(--cedar-admin-space-sm) var(--cedar-admin-space-md);
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-menu.is-rich .cedar-menu__item {
+	align-items: flex-start;
+	gap: var(--cedar-admin-space-md);
+	padding: var(--cedar-admin-space-md);
+}
+
+.cedar-menu__tile {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	inline-size: 32px;
+	block-size: 32px;
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-accent-subtle);
+	color: var(--cedar-admin-text-accent);
+}
+
+.cedar-menu__copy {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-3xs);
+}
+
+.cedar-menu.is-rich .cedar-menu__label {
+	font: var(--cedar-text-body-strong);
+	white-space: normal;
+}
+
+.cedar-menu__description {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+/* ---------- Dialog ---------- */
+
+.cedar-dialog-backdrop {
+	position: fixed;
+	z-index: 100000;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--cedar-admin-space-lg);
+	background: color-mix(in srgb, var(--cedar-admin-bg-overlay) 40%, transparent);
+}
+
+.cedar-dialog {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-lg);
+	inline-size: min(440px, 100%);
+	padding: var(--cedar-admin-space-2xl);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-surface);
+	box-shadow: var(--cedar-shadow-floating);
+}
+
+.cedar-dialog__head {
+	display: flex;
+	gap: var(--cedar-admin-space-md);
+}
+
+.cedar-dialog__tile {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	inline-size: 36px;
+	block-size: 36px;
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-info-subtle);
+	color: var(--cedar-admin-icon-info);
+}
+
+.cedar-dialog.is-danger .cedar-dialog__tile {
+	background: var(--cedar-admin-bg-danger-subtle);
+	color: var(--cedar-admin-icon-danger);
+}
+
+.cedar-dialog__copy {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-xs);
+}
+
+.cedar-dialog__title {
+	font: var(--cedar-text-section-title);
+	letter-spacing: var(--cedar-text-section-title-tracking);
+}
+
+.cedar-dialog__description {
+	color: var(--cedar-admin-text-secondary);
+}
+
+.cedar-dialog__actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--cedar-admin-space-sm);
+}
+
+/* ---------- Toast ---------- */
+
+.cedar-toast-region {
+	position: fixed;
+	z-index: 100001;
+	inset-block-end: var(--cedar-admin-space-2xl);
+	inset-inline-end: var(--cedar-admin-space-2xl);
+}
+
+.cedar-toast {
+	display: flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	max-inline-size: 480px;
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-lg);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-surface);
+	box-shadow: var(--cedar-shadow-menu);
+}
+
+.cedar-toast > .cedar-icon {
+	flex: none;
+}
+
+.cedar-toast.is-success > .cedar-icon {
+	color: var(--cedar-admin-icon-success);
+}
+
+.cedar-toast.is-error > .cedar-icon {
+	color: var(--cedar-admin-icon-danger);
+}
+
+.cedar-toast.is-info > .cedar-icon {
+	color: var(--cedar-admin-icon-info);
+}
+
+.cedar-toast__message {
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-toast__action,
+.cedar-toast__close,
+.cedar-bulkbar__clear,
+.cedar-link {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	cursor: pointer;
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-toast__action {
+	color: var(--cedar-admin-text-accent);
+	text-decoration: underline;
+}
+
+.cedar-toast__close {
+	display: inline-flex;
+	color: var(--cedar-admin-text-tertiary);
+}
+
+.cedar-link {
+	color: var(--cedar-admin-text-accent);
+	font: var(--cedar-text-label);
+}
+
+.cedar-link:hover {
+	text-decoration: underline;
+}
+
+/* ---------- Empty state & skeleton ---------- */
+
+.cedar-empty {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--cedar-admin-space-md);
+	padding: var(--cedar-admin-space-4xl);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-canvas);
+	text-align: center;
+}
+
+.cedar-empty__tile {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: 56px;
+	block-size: 56px;
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-surface);
+}
+
+.cedar-empty__title {
+	font: var(--cedar-text-section-title);
+	letter-spacing: var(--cedar-text-section-title-tracking);
+}
+
+.cedar-empty__description {
+	max-inline-size: 440px;
+	color: var(--cedar-admin-text-secondary);
+}
+
+.cedar-empty__actions {
+	display: flex;
+	gap: var(--cedar-admin-space-sm);
+}
+
+.cedar-skeleton {
+	display: block;
+	block-size: var(--cedar-admin-space-md);
+	border-radius: var(--cedar-admin-radius-tile);
+	background: var(--cedar-admin-bg-subtle);
+}
+
+.cedar-skeleton.is-box {
+	inline-size: var(--cedar-checkbox-size);
+	block-size: var(--cedar-checkbox-size);
+}
+
+.cedar-skeleton.is-title {
+	inline-size: 180px;
+}
+
+.cedar-skeleton.is-slug {
+	inline-size: 110px;
+	block-size: var(--cedar-admin-space-sm);
+}
+
+.cedar-skeleton.is-cell {
+	inline-size: 80%;
+}
+
+.cedar-skeleton.is-date {
+	inline-size: 72px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+	.cedar-skeleton {
+		animation: cedar-pulse 1.4s ease-in-out infinite;
+	}
+}
+
+@keyframes cedar-pulse {
+
+	50% {
+		opacity: 0.55;
+	}
+}
+
+/* ---------- Coverage ---------- */
+
+.cedar-overview {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: var(--cedar-admin-space-lg);
+}
+
+.cedar-coverage-card {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-md);
+	padding: var(--cedar-admin-space-lg) var(--cedar-admin-space-xl);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-surface);
+}
+
+.cedar-coverage-card__top {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-sm);
+}
+
+.cedar-coverage-card__value {
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-coverage-card__caption {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-progress {
+	overflow: hidden;
+	block-size: var(--cedar-admin-space-xs);
+	border-radius: var(--cedar-admin-radius-pill);
+	background: var(--cedar-admin-bg-subtle);
+}
+
+.cedar-progress__value {
+	display: block;
+	block-size: 100%;
+	border-radius: var(--cedar-admin-radius-tile);
+	background: var(--cedar-admin-bg-accent);
+}
+
+/* ---------- Translations table ---------- */
+
+.cedar-table {
+	position: relative;
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-surface);
+	box-shadow: var(--cedar-shadow-card);
+}
+
+.cedar-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-md);
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-lg);
+}
+
+.cedar-toolbar__end {
+	display: flex;
+	gap: var(--cedar-admin-space-sm);
+}
+
+.cedar-toolbar__search {
+	inline-size: 260px;
+}
+
+.cedar-bulkbar {
+	display: flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-md);
+	min-block-size: 66px;
+	padding: var(--cedar-admin-space-sm) var(--cedar-admin-space-lg);
+	border-start-start-radius: var(--cedar-admin-radius-surface);
+	border-start-end-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-brand);
+	color: var(--cedar-admin-text-on-accent);
+}
+
+.cedar-bulkbar__count {
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-bulkbar__spacer {
+	flex: 1;
+}
+
+.cedar-bulkbar__clear {
+	color: var(--cedar-admin-text-on-accent);
+}
+
+.cedar-table__scroll {
+	overflow-x: auto;
+}
+
+.cedar-row {
+	display: grid;
+	grid-template-columns: var(--cedar-table-columns);
+	align-items: center;
+	gap: var(--cedar-admin-space-lg);
+	min-inline-size: max-content;
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-xl);
+	border-block-start: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	background: var(--cedar-admin-bg-surface);
+}
+
+.cedar-row > [role="cell"],
+.cedar-row > [role="columnheader"] {
+	display: flex;
+	align-items: center;
+	min-inline-size: 0;
+}
+
+.cedar-row.is-header {
+	padding-block: var(--cedar-admin-space-sm);
+	background: var(--cedar-admin-bg-canvas);
+}
+
+.cedar-row:not(.is-header, .is-skeleton, .is-empty):hover {
+	background: var(--cedar-admin-bg-canvas);
+}
+
+.cedar-row.is-selected,
+.cedar-row.is-selected:hover {
+	background: var(--cedar-admin-bg-accent-subtle);
+}
+
+.cedar-row.is-empty {
+	display: block;
+	padding: var(--cedar-admin-space-xl);
+}
+
+.cedar-row.is-empty > [role="cell"] {
+	display: block;
+}
+
+.cedar-ml .cedar-row__page {
+	flex-direction: column;
+	align-items: flex-start;
+	gap: var(--cedar-admin-space-3xs);
+}
+
+.cedar-row__title {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	max-inline-size: 100%;
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-row__title > span:first-child {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cedar-row__slug {
+	max-inline-size: 100%;
+	overflow: hidden;
+	color: var(--cedar-admin-text-tertiary);
+	font: var(--cedar-text-help);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cedar-row__date {
+	color: var(--cedar-admin-text-secondary);
+}
+
+.cedar-row__actions {
+	gap: var(--cedar-admin-space-2xs);
+	justify-content: flex-end;
+	opacity: 0;
+}
+
+.cedar-row:hover .cedar-row__actions,
+.cedar-row:focus-within .cedar-row__actions,
+.cedar-row.is-selected .cedar-row__actions {
+	opacity: 1;
+}
+
+@media (hover: none) {
+
+	.cedar-row__actions {
+		opacity: 1;
+	}
+}
+
+/* Translation cell */
+
+.cedar-cell {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	inline-size: 100%;
+	min-block-size: var(--cedar-control-height);
+	padding: 0 var(--cedar-admin-space-md);
+	border-radius: var(--cedar-admin-radius-control);
+}
+
+.cedar-cell__title {
+	flex: 1;
+	min-inline-size: 0;
+	overflow: hidden;
+	text-decoration: none;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+a.cedar-cell__title:hover {
+	text-decoration: underline;
+}
+
+.cedar-cell__check {
+	flex: none;
+	color: var(--cedar-admin-icon-success);
+}
+
+.cedar-cell__dot {
+	flex: none;
+	inline-size: var(--cedar-admin-space-sm);
+	block-size: var(--cedar-admin-space-sm);
+	border-radius: var(--cedar-admin-radius-pill);
+	background: var(--cedar-admin-text-warning);
+}
+
+.cedar-cell__badge {
+	flex: none;
+	padding: 0 var(--cedar-admin-space-xs);
+	border-radius: var(--cedar-admin-radius-pill);
+	background: var(--cedar-admin-bg-warning-subtle);
+	color: var(--cedar-admin-text-warning);
+	font: var(--cedar-text-label);
+}
+
+.cedar-cell.is-empty {
+	color: var(--cedar-admin-text-tertiary);
+}
+
+button.cedar-cell.is-missing {
+	margin: 0;
+	border: var(--cedar-admin-border-width) dashed var(--cedar-admin-border-default);
+	background: transparent;
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-label);
+	cursor: pointer;
+}
+
+button.cedar-cell.is-missing:hover,
+button.cedar-cell.is-missing[aria-expanded="true"] {
+	border-color: var(--cedar-admin-border-accent);
+	background: var(--cedar-admin-bg-accent-subtle);
+	color: var(--cedar-admin-text-accent);
+}
+
+.cedar-row .cedar-menu-wrap {
+	display: flex;
+	inline-size: 100%;
+}
+
+.cedar-row__actions .cedar-menu-wrap {
+	inline-size: auto;
+}
+
+.cedar-link-search {
+	position: relative;
+	inline-size: 100%;
+}
+
+.cedar-link-search__list {
+	inline-size: 100%;
+	min-inline-size: 260px;
+	max-block-size: 280px;
+	overflow-y: auto;
+}
+
+.cedar-table__footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-md);
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-xl);
+	border-block-start: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	color: var(--cedar-admin-text-secondary);
+}
+
+.cedar-table__pager {
+	display: flex;
+	gap: var(--cedar-admin-space-sm);
+}
+
+/* ---------- Languages ---------- */
+
+.cedar-columns {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	align-items: start;
+	gap: var(--cedar-admin-space-2xl);
+}
+
+.cedar-columns.has-panel {
+	grid-template-columns: minmax(0, 1fr) var(--cedar-panel-width);
+}
+
+.cedar-language-list {
+	overflow: hidden;
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-surface);
+	box-shadow: var(--cedar-shadow-card);
+}
+
+.cedar-ml .cedar-language-list__rows {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cedar-language-row {
+	display: grid;
+	grid-template-columns: auto minmax(160px, 240px) minmax(100px, 160px) 80px 80px 1fr;
+	align-items: center;
+	gap: var(--cedar-admin-space-lg);
+	margin: 0;
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-xl);
+	border-block-end: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	background: var(--cedar-admin-bg-surface);
+}
+
+.cedar-language-row:hover {
+	background: var(--cedar-admin-bg-canvas);
+}
+
+.cedar-language-row.is-selected {
+	background: var(--cedar-admin-bg-accent-subtle);
+}
+
+.cedar-language-row.is-dragging {
+	position: relative;
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-accent);
+	border-radius: var(--cedar-admin-radius-control);
+	box-shadow: var(--cedar-shadow-floating);
+}
+
+.cedar-language-row > .cedar-button {
+	justify-self: end;
+}
+
+.cedar-language-row__handle {
+	display: inline-flex;
+	margin: 0;
+	padding: var(--cedar-admin-space-2xs);
+	border: 0;
+	border-radius: var(--cedar-admin-radius-tile);
+	background: none;
+	color: var(--cedar-admin-text-tertiary);
+	cursor: grab;
+}
+
+.cedar-language-row__handle:hover {
+	background: var(--cedar-admin-bg-subtle);
+	color: var(--cedar-admin-text-primary);
+}
+
+.cedar-ml .cedar-language-row__locale {
+	margin: 0;
+	padding: 0;
+	background: none;
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-code);
+	direction: ltr;
+}
+
+.cedar-language-row .cedar-language-tag .cedar-badge {
+	margin-inline-start: var(--cedar-admin-space-2xs);
+}
+
+.cedar-language-row.is-skeleton {
+	padding-block: var(--cedar-admin-space-xl);
+}
+
+.cedar-ml .cedar-language-list__note {
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-xl);
+	background: var(--cedar-admin-bg-canvas);
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-panel {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-xl);
+	padding: var(--cedar-admin-space-2xl);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-surface);
+	box-shadow: var(--cedar-shadow-menu);
+}
+
+.cedar-panel__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-md);
+}
+
+.cedar-panel__title {
+	font: var(--cedar-text-section-title);
+	letter-spacing: var(--cedar-text-section-title-tracking);
+}
+
+.cedar-panel__form {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-xl);
+}
+
+.cedar-panel__actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-sm);
+	padding-block-start: var(--cedar-admin-space-lg);
+	border-block-start: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+}
+
+.cedar-panel__hint,
+.cedar-panel__foot {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-setting {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-lg);
+}
+
+.cedar-setting__copy {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-3xs);
+}
+
+.cedar-setting__label {
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-setting__help {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+/* ---------- Narrow screens ---------- */
+
+@media (max-width: 1100px) {
+
+	.cedar-columns.has-panel {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.cedar-language-row {
+		grid-template-columns: auto minmax(140px, 1fr) auto auto;
+	}
+
+	.cedar-language-row__locale,
+	.cedar-language-row__count {
+		display: none !important;
+	}
+}
+
+@media (max-width: 782px) {
+
+	.cedar-body {
+		padding: var(--cedar-admin-space-xl) var(--cedar-admin-space-lg);
+	}
+
+	.cedar-header {
+		padding-inline: var(--cedar-admin-space-lg);
+	}
+
+	.cedar-page-title {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.cedar-toolbar__end {
+		flex-wrap: wrap;
+		inline-size: 100%;
+	}
+
+	.cedar-toolbar__search {
+		inline-size: 100%;
+	}
+}

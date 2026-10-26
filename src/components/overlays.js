@@ -1,0 +1,384 @@
+/**
+ * Overlays — Figma sections "Controls / Menu item", "Feedback / Add translation
+ * menu, Dialog" and "Settings patterns / Toast". Keyboard behavior follows the
+ * WAI-ARIA Authoring Practices (menu button, modal dialog, status message).
+ */
+import {
+	useCallback,
+	useEffect,
+	useId,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import Icon from './Icon';
+import { Button } from './controls';
+
+/**
+ * Menu button.
+ *
+ * @param {Object}   props
+ * @param {Function} props.renderTrigger ( triggerProps ) => element. Spread the props on a button.
+ * @param {Array}    props.items         [{ id, label, meta, description, icon, checked, disabled, onSelect }].
+ * @param {string}   props.label         Accessible menu label.
+ * @param {string}   [props.variant]     list|rich.
+ * @param {string}   [props.align]       start|end.
+ */
+export function Menu( {
+	renderTrigger,
+	items,
+	label,
+	variant = 'list',
+	align = 'start',
+} ) {
+	const [ open, setOpen ] = useState( false );
+	const [ active, setActive ] = useState( 0 );
+	const menuId = useId();
+	const wrapRef = useRef();
+	const triggerRef = useRef();
+	const itemRefs = useRef( [] );
+
+	const close = useCallback( ( returnFocus = true ) => {
+		setOpen( false );
+		if ( returnFocus && triggerRef.current ) {
+			triggerRef.current.focus();
+		}
+	}, [] );
+
+	const openAt = ( index ) => {
+		setActive( index );
+		setOpen( true );
+	};
+
+	const firstIndex = () => {
+		const checked = items.findIndex( ( item ) => item.checked );
+		return checked >= 0 ? checked : 0;
+	};
+
+	useLayoutEffect( () => {
+		if ( open && itemRefs.current[ active ] ) {
+			itemRefs.current[ active ].focus();
+		}
+	}, [ open, active ] );
+
+	useEffect( () => {
+		if ( ! open ) {
+			return undefined;
+		}
+		const onPointer = ( event ) => {
+			if (
+				wrapRef.current &&
+				! wrapRef.current.contains( event.target )
+			) {
+				close( false );
+			}
+		};
+		document.addEventListener( 'mousedown', onPointer );
+		return () => document.removeEventListener( 'mousedown', onPointer );
+	}, [ open, close ] );
+
+	const onTriggerKeyDown = ( event ) => {
+		if ( 'ArrowDown' === event.key || 'ArrowUp' === event.key ) {
+			event.preventDefault();
+			openAt( 'ArrowUp' === event.key ? items.length - 1 : firstIndex() );
+		}
+	};
+
+	const onMenuKeyDown = ( event ) => {
+		const last = items.length - 1;
+		const moves = {
+			ArrowDown: active === last ? 0 : active + 1,
+			ArrowUp: 0 === active ? last : active - 1,
+			Home: 0,
+			End: last,
+		};
+		if ( event.key in moves ) {
+			event.preventDefault();
+			setActive( moves[ event.key ] );
+		} else if ( 'Escape' === event.key ) {
+			event.preventDefault();
+			close();
+		} else if ( 'Tab' === event.key ) {
+			close( false );
+		}
+	};
+
+	const choose = ( item ) => {
+		if ( item.disabled ) {
+			return;
+		}
+		close();
+		item.onSelect();
+	};
+
+	return (
+		<div className="cedar-menu-wrap" ref={ wrapRef }>
+			{ renderTrigger( {
+				ref: triggerRef,
+				'aria-haspopup': 'menu',
+				'aria-expanded': open,
+				'aria-controls': open ? menuId : undefined,
+				onClick: () =>
+					open ? close( false ) : openAt( firstIndex() ),
+				onKeyDown: onTriggerKeyDown,
+			} ) }
+			{ open && (
+				<div
+					id={ menuId }
+					role="menu"
+					tabIndex={ -1 }
+					aria-label={ label }
+					className={ `cedar-menu is-${ variant } is-align-${ align }` }
+					onKeyDown={ onMenuKeyDown }
+				>
+					{ items.map( ( item, index ) => (
+						<div
+							key={ item.id }
+							ref={ ( node ) =>
+								( itemRefs.current[ index ] = node )
+							}
+							role={
+								undefined === item.checked
+									? 'menuitem'
+									: 'menuitemradio'
+							}
+							aria-checked={
+								undefined === item.checked
+									? undefined
+									: item.checked
+							}
+							aria-disabled={ item.disabled || undefined }
+							tabIndex={ index === active ? 0 : -1 }
+							className={ `cedar-menu__item ${ item.checked ? 'is-selected' : '' } ${
+								item.disabled ? 'is-disabled' : ''
+							}` }
+							onClick={ () => choose( item ) }
+							onKeyDown={ ( event ) => {
+								if (
+									'Enter' === event.key ||
+									' ' === event.key
+								) {
+									event.preventDefault();
+									choose( item );
+								}
+							} }
+							onMouseEnter={ () => setActive( index ) }
+						>
+							{ 'rich' === variant ? (
+								<>
+									<span
+										className="cedar-menu__tile"
+										aria-hidden="true"
+									>
+										<Icon name={ item.icon } />
+									</span>
+									<span className="cedar-menu__copy">
+										<span className="cedar-menu__label">
+											{ item.label }
+										</span>
+										<span className="cedar-menu__description">
+											{ item.description }
+										</span>
+									</span>
+								</>
+							) : (
+								<>
+									{ item.icon && <Icon name={ item.icon } /> }
+									<span
+										className="cedar-menu__label"
+										dir="auto"
+									>
+										{ item.label }
+									</span>
+									{ item.meta && (
+										<span className="cedar-menu__meta">
+											{ item.meta }
+										</span>
+									) }
+									{ item.checked && (
+										<Icon name="check" size={ 14 } />
+									) }
+								</>
+							) }
+						</div>
+					) ) }
+				</div>
+			) }
+		</div>
+	);
+}
+
+/**
+ * Modal dialog. Tone=Default|Danger. Focus moves to the least destructive
+ * action, Tab is trapped, Escape cancels, and focus returns on close.
+ *
+ * @param {Object}   props
+ * @param {string}   [props.tone]       default|danger.
+ * @param {string}   props.icon         Icon name.
+ * @param {string}   props.title        Title.
+ * @param {string}   props.description  Description.
+ * @param {string}   props.confirmLabel Confirm button label.
+ * @param {Function} props.onConfirm    Confirm handler.
+ * @param {Function} props.onCancel     Cancel handler.
+ * @param {boolean}  [props.busy]       Disable actions while working.
+ */
+export function Dialog( {
+	tone = 'default',
+	icon,
+	title,
+	description,
+	confirmLabel,
+	onConfirm,
+	onCancel,
+	busy = false,
+} ) {
+	const titleId = useId();
+	const descId = useId();
+	const panelRef = useRef();
+	const cancelRef = useRef();
+
+	useEffect( () => {
+		const previous = panelRef.current.ownerDocument.activeElement;
+		cancelRef.current.focus();
+		return () => {
+			if ( previous && previous.focus ) {
+				previous.focus();
+			}
+		};
+	}, [] );
+
+	const onKeyDown = ( event ) => {
+		if ( 'Escape' === event.key && ! busy ) {
+			event.stopPropagation();
+			onCancel();
+			return;
+		}
+		if ( 'Tab' !== event.key ) {
+			return;
+		}
+		const focusable = panelRef.current.querySelectorAll(
+			'button:not([disabled])'
+		);
+		const first = focusable[ 0 ];
+		const last = focusable[ focusable.length - 1 ];
+		const current = panelRef.current.ownerDocument.activeElement;
+		if ( event.shiftKey && current === first ) {
+			event.preventDefault();
+			last.focus();
+		} else if ( ! event.shiftKey && current === last ) {
+			event.preventDefault();
+			first.focus();
+		}
+	};
+
+	return (
+		<div className="cedar-dialog-backdrop">
+			<div
+				ref={ panelRef }
+				className={ `cedar-dialog is-${ tone }` }
+				role={ 'danger' === tone ? 'alertdialog' : 'dialog' }
+				aria-modal="true"
+				aria-labelledby={ titleId }
+				aria-describedby={ descId }
+				onKeyDown={ onKeyDown }
+			>
+				<div className="cedar-dialog__head">
+					<span className="cedar-dialog__tile" aria-hidden="true">
+						<Icon name={ icon } size={ 18 } />
+					</span>
+					<div className="cedar-dialog__copy">
+						<h2 id={ titleId } className="cedar-dialog__title">
+							{ title }
+						</h2>
+						<p id={ descId } className="cedar-dialog__description">
+							{ description }
+						</p>
+					</div>
+				</div>
+				<div className="cedar-dialog__actions">
+					<Button
+						ref={ cancelRef }
+						variant="ghost"
+						onClick={ onCancel }
+						disabled={ busy }
+					>
+						{ __( 'Cancel', 'cedar-multilang' ) }
+					</Button>
+					<Button
+						variant={ 'danger' === tone ? 'danger' : 'primary' }
+						onClick={ onConfirm }
+						disabled={ busy }
+						aria-busy={ busy || undefined }
+					>
+						{ confirmLabel }
+					</Button>
+				</div>
+			</div>
+		</div>
+	);
+}
+
+/**
+ * Toast. Tone=Success|Error|Info. Announced politely (errors assertively),
+ * dismissed by the close button or after a delay. An optional action
+ * (e.g. Undo) keeps it open longer.
+ *
+ * @param {Object}   props
+ * @param {Object}   props.toast     { tone, message, action: { label, onClick } } or null.
+ * @param {Function} props.onDismiss Called when it should disappear.
+ */
+export function Toast( { toast, onDismiss } ) {
+	useEffect( () => {
+		if ( ! toast ) {
+			return undefined;
+		}
+		const timer = setTimeout( onDismiss, toast.action ? 10000 : 5000 );
+		return () => clearTimeout( timer );
+	}, [ toast, onDismiss ] );
+
+	const icons = {
+		success: 'circle-check',
+		error: 'alert',
+		info: 'arrows-left-right',
+	};
+
+	return (
+		<div
+			className="cedar-toast-region"
+			role={ toast && 'error' === toast.tone ? 'alert' : 'status' }
+			aria-live={
+				toast && 'error' === toast.tone ? 'assertive' : 'polite'
+			}
+		>
+			{ toast && (
+				<div className={ `cedar-toast is-${ toast.tone }` }>
+					<Icon name={ icons[ toast.tone ] } />
+					<span className="cedar-toast__message">
+						{ toast.message }
+					</span>
+					{ toast.action && (
+						<button
+							type="button"
+							className="cedar-toast__action"
+							onClick={ () => {
+								onDismiss();
+								toast.action.onClick();
+							} }
+						>
+							{ toast.action.label }
+						</button>
+					) }
+					<button
+						type="button"
+						className="cedar-toast__close"
+						onClick={ onDismiss }
+						aria-label={ __( 'Dismiss', 'cedar-multilang' ) }
+					>
+						<Icon name="close" size={ 14 } />
+					</button>
+				</div>
+			) }
+		</div>
+	);
+}

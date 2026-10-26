@@ -8,6 +8,29 @@
 		"node": ">=20"
 	},
 	"scripts": {
+		"build": "wp-scripts build src/admin/index.js --output-path=build/admin",
+		"start": "wp-scripts start src/admin/index.js --output-path=build/admin",
+		"lint:js": "wp-scripts lint-js src",
+		"lint:css": "wp-scripts lint-style \"src/**/*.css\"",
+		"plugin-zip": "wp-scripts plugin-zip",
 		"playground": "npx @wp-playground/cli@latest server --mount=.:/wordpress/wp-content/plugins/cedar-multilang --login"
+	},
+	"files": [
+		"assets",
+		"build",
+		"includes",
+		"languages",
+		"src",
+		"cedar-multilang.php",
+		"uninstall.php",
+		"readme.txt"
+	],
+	"devDependencies": {
+		"@wordpress/api-fetch": "8.0.0",
+		"@wordpress/dom-ready": "5.0.0",
+		"@wordpress/element": "10.0.0",
+		"@wordpress/i18n": "7.0.0",
+		"@wordpress/scripts": "37.0.0",
+		"@wordpress/url": "5.0.0"
 	}
 }

@@ -7,10 +7,12 @@
 
 namespace Cedar\Multilang;
 
+use Cedar\Multilang\Admin\Admin;
 use Cedar\Multilang\Content\Links;
 use Cedar\Multilang\Content\Taxonomies;
 use Cedar\Multilang\Migration\Legacy62;
 use Cedar\Multilang\Rtl\Locale;
+use Cedar\Multilang\Rest\Rest;
 use Cedar\Multilang\Seo\Hreflang;
 
 defined( 'ABSPATH' ) || exit;
@@ -46,7 +48,8 @@ final class Plugin {
 		}
 		self::$booted = true;
 
-		add_action( 'init', array( Taxonomies::class, 'register' ), 5 );
+		// Late on init, so post types registered at the default priority exist.
+		add_action( 'init', array( Taxonomies::class, 'register' ), 99 );
 
 		// Keep groups consistent when content is permanently deleted.
 		add_action( 'before_delete_post', array( Links::class, 'unlink' ) );
@@ -62,6 +65,11 @@ final class Plugin {
 		}
 
 		Legacy62::register();
+		Rest::register();
+
+		if ( is_admin() ) {
+			Admin::register();
+		}
 
 		/**
 		 * Fires once Cedar Multilang has registered its hooks.
