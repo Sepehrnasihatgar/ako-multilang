@@ -1,0 +1,13 @@
+{
+	"name": "cedar-multilang",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Link your pages across languages — hreflang, RTL and a language switcher, without changing your URLs.",
+	"license": "GPL-2.0-or-later",
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"playground": "npx @wp-playground/cli@latest server --mount=.:/wordpress/wp-content/plugins/cedar-multilang --login"
+	}
+}
