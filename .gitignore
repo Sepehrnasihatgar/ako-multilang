@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Dependencies & builds
+node_modules/
+vendor/
+build/
+dist/
+*.zip
+
+# Local environment
+.wp-env.override.json
+.env
