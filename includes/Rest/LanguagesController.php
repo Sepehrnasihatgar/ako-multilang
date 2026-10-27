@@ -268,7 +268,7 @@ final class LanguagesController {
 	 *
 	 * @return array
 	 */
-	private static function payload() {
+	public static function payload() {
 		$default   = Registry::default_code();
 		$languages = array();
 

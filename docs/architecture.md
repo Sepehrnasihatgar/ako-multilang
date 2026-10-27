@@ -30,14 +30,16 @@ cedar-multilang/
 │  ├─ Seo/Hreflang.php        # <link rel="alternate">, x-default, <html lang dir>
 │  ├─ Seo/Integrations/*.php  # Yoast, Rank Math, AIOSEO, WP core sitemap
 │  ├─ Rtl/Locale.php          # Per-request locale → is_rtl(), theme rtl.css, .mo files
-│  ├─ Rtl/Compat/*.php        # Small, opt-in CSS fixes (Elementor + 5 themes)
+│  ├─ Rtl/Compat.php          # Small CSS fixes (assets/rtl/*.css), loaded on RTL pages only when the builder/theme is in use
 │  ├─ Switcher/Renderer.php   # One renderer → block, shortcode, menu item, PHP tag
 │  ├─ Switcher/Profiles.php   # Saved switcher styles ("Header switcher", …)
 │  ├─ Switcher/Shortcode.php  # [cedar_switcher] + legacy [lang_switch]
 │  ├─ Switcher/MenuItem.php   # Appearance → Menus integration
 │  ├─ Rest/*.php              # REST controllers (namespace cedar/v1)
 │  ├─ Admin/*.php             # Menu, assets, notices, plugin row links
-│  └─ Migration/*.php         # Cedar 6.2, Polylang, WPML (read-only importers)
+│  ├─ Migration/Legacy62.php  # Cedar 6.2 data, migrated once automatically
+│  ├─ Import/*.php            # WPML + Polylang: read straight from the database, batched, never write to their data
+│  └─ Setup/*.php             # Setup wizard steps + suggested pairs (slug / title / language folder)
 ├─ src/                       # JS/SCSS sources (shipped — wp.org requires readable source)
 │  ├─ admin/                  # React admin app (screens from Figma)
 │  ├─ components/             # React components = Figma components, same names & variants
@@ -96,12 +98,13 @@ No cookies, no redirects, no per-visitor output → full-page-cache safe.
 | `/links/{post_id}/language` | PUT | `edit_post` |
 | `/links/{post_id}/duplicate` | POST | `edit_post` source + `create_posts` for the post type |
 | `/links/candidates` | GET | `edit_posts` for the post type; only editable posts listed |
-| `/suggestions` | GET | `manage_options` |
 | `/switchers` | GET | `edit_posts` (the block lists them) |
 | `/switchers`, `/switchers/{id}` | POST, PUT, DELETE | `manage_options` |
-| `/settings` | GET, PUT | `manage_options` |
+| `/settings`, `/settings/export`, `/settings/import` | GET, PUT; GET; POST | `manage_options` |
+| `/system` | GET (About: versions, cached update info) | `manage_options` |
 | `/seo`, `/seo/preview`, `/seo/scan`, `/seo/fix` | GET, PUT; GET; POST; POST | `manage_options` |
-| `/import/{source}` | GET (preview), POST (run) | `manage_options` |
+| `/setup`, `/setup/languages`, `/setup/suggestions`, `/setup/pairs`, `/setup/switcher`, `/setup/summary`, `/setup/complete` | GET; PUT; GET; POST; POST; GET; POST | `manage_options` (+ `edit_post` on both pages of each pair, `edit_theme_options` to add a menu item) |
+| `/import`, `/import/{wpml\|polylang}` | GET (sources), POST (one batch: `offset`, `limit` ≤ 50) | `manage_options` |
 
 Every route has a `permission_callback` (never `__return_true`), a JSON schema with `sanitize_callback` + `validate_callback`, enums for every choice, and integer bounds. Auth is cookie + `X-WP-Nonce` via `api-fetch`.
 

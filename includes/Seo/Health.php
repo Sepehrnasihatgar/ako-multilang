@@ -238,7 +238,7 @@ final class Health {
 	 *
 	 * @return int
 	 */
-	private static function linked_count() {
+	public static function linked_count() {
 		$count = 0;
 		foreach ( self::group_ids() as $group_id ) {
 			$count += count( self::actual_members( $group_id ) );

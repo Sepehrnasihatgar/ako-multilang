@@ -30,6 +30,7 @@ import {
 	reorderLanguages,
 	updateLanguage,
 } from '../api';
+import { searchCatalog } from '../catalog';
 
 const CODE_PATTERN = /^[a-z]{2,3}(-[a-z0-9]{2,4})?$/;
 const LOCALE_PATTERN = /^[a-z]{2,3}(_[A-Z]{2})?(_[a-z0-9]+)?$/;
@@ -39,7 +40,10 @@ export default function Languages( { notify } ) {
 	const [ data, setData ] = useState( null );
 	const [ catalog, setCatalog ] = useState( [] );
 	const [ loadError, setLoadError ] = useState( null );
-	const [ panel, setPanel ] = useState( null );
+	// Setup links here with #custom when a language isn't in the list.
+	const [ panel, setPanel ] = useState( () =>
+		'#custom' === window.location.hash ? { mode: 'custom' } : null
+	);
 	const [ removing, setRemoving ] = useState( null );
 	const [ busy, setBusy ] = useState( false );
 	const [ announcement, setAnnouncement ] = useState( '' );
@@ -540,35 +544,10 @@ function AddPanel( {
 		[ languages ]
 	);
 
-	const matches = useMemo( () => {
-		const needle = text.trim().toLowerCase();
-		if ( ! needle ) {
-			return [];
-		}
-		const scored = [];
-		catalog.forEach( ( entry ) => {
-			const fields = [ entry.name, entry.native, entry.locale ].map(
-				( value ) => value.toLowerCase()
-			);
-			if ( fields.some( ( value ) => value.startsWith( needle ) ) ) {
-				scored.push( [ 0, entry ] );
-			} else if ( fields.some( ( value ) => value.includes( needle ) ) ) {
-				scored.push( [ 1, entry ] );
-			}
-		} );
-		return (
-			scored
-				// Prefix matches first, then the plainest name ("Deutsch" before
-				// "Deutsch (Schweiz)").
-				.sort(
-					( a, b ) =>
-						a[ 0 ] - b[ 0 ] ||
-						a[ 1 ].native.length - b[ 1 ].native.length
-				)
-				.slice( 0, 6 )
-				.map( ( item ) => item[ 1 ] )
-		);
-	}, [ text, catalog ] );
+	const matches = useMemo(
+		() => searchCatalog( catalog, text ),
+		[ text, catalog ]
+	);
 
 	const add = async ( entry ) => {
 		if ( ! entry || taken.has( entry.locale ) || saving ) {

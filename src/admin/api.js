@@ -73,3 +73,44 @@ export const reorderLanguages = ( order ) =>
  */
 export const errorMessage = ( error, fallback ) =>
 	( error && error.message ) || fallback;
+
+export const getSetup = () => apiFetch( { path: `${ BASE }/setup` } );
+
+export const saveSetupLanguages = ( defaultLocale, locales ) =>
+	apiFetch( {
+		path: `${ BASE }/setup/languages`,
+		method: 'PUT',
+		data: { default: defaultLocale, languages: locales },
+	} );
+
+export const getSuggestions = () =>
+	apiFetch( { path: `${ BASE }/setup/suggestions` } );
+
+export const connectPairs = ( pairs ) =>
+	apiFetch( {
+		path: `${ BASE }/setup/pairs`,
+		method: 'POST',
+		data: { pairs },
+	} );
+
+export const placeSwitcher = ( look, placement ) =>
+	apiFetch( {
+		path: `${ BASE }/setup/switcher`,
+		method: 'POST',
+		data: { look, placement },
+	} );
+
+export const getSetupSummary = () =>
+	apiFetch( { path: `${ BASE }/setup/summary` } );
+
+export const completeSetup = () =>
+	apiFetch( { path: `${ BASE }/setup/complete`, method: 'POST' } );
+
+export const getImportSources = () => apiFetch( { path: `${ BASE }/import` } );
+
+export const importBatch = ( source, offset, limit = 25 ) =>
+	apiFetch( {
+		path: `${ BASE }/import/${ source }`,
+		method: 'POST',
+		data: { offset, limit },
+	} );

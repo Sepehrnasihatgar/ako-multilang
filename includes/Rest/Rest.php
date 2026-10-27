@@ -44,6 +44,8 @@ final class Rest {
 		LinksController::register_routes();
 		SwitchersController::register_routes();
 		SeoController::register_routes();
+		SettingsController::register_routes();
+		SetupController::register_routes();
 	}
 
 	/**

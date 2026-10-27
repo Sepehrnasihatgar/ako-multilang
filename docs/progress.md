@@ -44,8 +44,19 @@ Done
 - Translations: Needs review tab (rows show the real pages with a One-way badge), SEO health card, `#missing` / `#review` / `#drafts` deep links.
 - Tested with Yoast SEO 28.7 in Playground.
 
+## Milestone 6 — Setup, Settings, About, importers (done)
+
+- Setup wizard (hidden screen, reached from notices / plugin row): languages with catalog search (combobox), connect pages (WPML / Polylang import in batches + suggested pairs by language folder, suffix, slug and title), switcher look and placement (adds a menu item to the theme's primary menu, or the floating button), summary with next steps. Reaching the summary finishes setup.
+- Importers read WPML (`icl_translations`, `icl_languages`) and Polylang (`language`, `post_translations` terms) straight from the database — work while the other plugin is deactivated, never write to its data, skip groups whose pages are gone or already linked differently, and report why.
+- Settings: modules, content types, RTL compatibility toggles, delete-on-uninstall with export reminder, settings export/import (JSON; "delete on uninstall" is never imported; languages pages use are never removed).
+- About: version, update notice from WordPress's own cached update check, changelog, system status (PHP check read from WordPress's cache — Cedar makes no remote requests), copy system info, credits.
+- Notices: "Cedar is active — set it up" (Plugins), "Cedar is almost ready" (Dashboard), "Cedar 6.2 data was moved over"; manage_options only, dismissed per user with a nonce-checked link.
+- Translations: Import and Link pages header buttons, first-run card.
+- Tested in Playground (real Polylang 3.9 + simulated WPML tables, Twenty Twenty-One): notices; every setup step (language search / no match, both import sources, WPML 2 linked + 1 skipped with review, Polylang 2 linked, re-import is safe, 5 suggested pairs incl. /fa/ folder pages connected, switcher added to the primary menu, summary 18 pages / 36 hreflang); default language locked once pages have languages; Settings save / export / import (bad file, unknown keys and unavailable content types rejected); About; front end after deactivating Polylang (RTL, hreflang, switcher in the menu).
+- RTL compatibility stylesheets (Elementor, Hello Elementor, Astra, GeneratePress, Kadence) move to M7: each needs testing in its theme. Until a stylesheet ships, its toggle isn't shown.
+
 Next
-1. Milestone 6 — Onboarding, Settings, About, importers (WPML / Polylang), admin notices.
+1. Milestone 7 — QA and release: RTL compatibility stylesheets (tested per theme), Plugin Check, accessibility pass, performance, readme, screenshots and wp.org assets.
 2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.
 3. Later milestones add: Needs review tab + SEO health card (M5), Import / Link pages header buttons and first-run empty state (M6), Duplicate as draft (M3), Get Pro / Docs header links (when URLs exist).
 
