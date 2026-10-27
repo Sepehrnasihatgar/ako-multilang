@@ -93,7 +93,7 @@ export default function DoneStep( { config, notify } ) {
 				<p>
 					{ live
 						? __(
-								'hreflang, lang/dir and the switcher are on. Here’s what Cedar set up — and what’s left.',
+								'hreflang, lang and dir, and the switcher are on. Here’s what Cedar set up and what’s left to do.',
 								'cedar-multilang'
 							)
 						: __(
@@ -174,7 +174,7 @@ export default function DoneStep( { config, notify } ) {
 								'cedar-multilang'
 							) }
 							description={ __(
-								'Pick a page and its translation — takes a minute.',
+								'Pick a page and its translation. It takes about a minute.',
 								'cedar-multilang'
 							) }
 							action={ __( 'Connect', 'cedar-multilang' ) }
@@ -232,7 +232,7 @@ export default function DoneStep( { config, notify } ) {
 								'cedar-multilang'
 							) }
 							description={ __(
-								'Colors, radius, codes vs. names — previewed live.',
+								'Change colors, corners, and labels with a live preview.',
 								'cedar-multilang'
 							) }
 							action={ __( 'Customize', 'cedar-multilang' ) }

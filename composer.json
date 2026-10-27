@@ -1,6 +1,6 @@
 {
 	"name": "sepehrnasihatgar/cedar-multilang",
-	"description": "Link your pages across languages — hreflang, RTL and a language switcher, without changing your URLs.",
+	"description": "Link your pages across languages with hreflang, right-to-left support, and a language switcher. Your URLs stay the same.",
 	"type": "wordpress-plugin",
 	"license": "GPL-2.0-or-later",
 	"require": {

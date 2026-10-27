@@ -469,7 +469,7 @@ export default function Translations( { config, notify } ) {
 							'cedar-multilang'
 						) }
 						description={ __(
-							'Link a page to its translation and Cedar writes hreflang, sets lang/dir and shows the switcher — automatically.',
+							'Link a page to its translation, and Cedar adds hreflang, sets lang and dir, and shows the switcher for you.',
 							'cedar-multilang'
 						) }
 						actions={
@@ -706,7 +706,7 @@ export default function Translations( { config, notify } ) {
 										meta: type.enabled
 											? String( type.count )
 											: __(
-													'Off — enable in Settings',
+													'Off. Turn it on in Settings.',
 													'cedar-multilang'
 												),
 										checked: type.name === data.post_type,
@@ -837,7 +837,7 @@ export default function Translations( { config, notify } ) {
 							{ sprintf(
 								/* translators: 1: First row number, 2: Last row number, 3: Total rows. */
 								__(
-									'Showing %1$d–%2$d of %3$d',
+									'Showing %1$d to %2$d of %3$d',
 									'cedar-multilang'
 								),
 								( data.page - 1 ) * PER_PAGE + 1,
@@ -1299,7 +1299,7 @@ function TranslationCell( {
 						icon: 'file-plus',
 						label: __( 'Duplicate as draft', 'cedar-multilang' ),
 						description: __(
-							'Copies content, images, SEO fields and builder layout.',
+							'Copies the content, images, SEO fields, and builder layout.',
 							'cedar-multilang'
 						),
 						disabled: busy,
@@ -1590,7 +1590,7 @@ function HealthCard( { health, url } ) {
 								__( '%d%%', 'cedar-multilang' ),
 								health.score
 							)
-						: '—' }
+						: __( 'None yet', 'cedar-multilang' ) }
 				</span>
 			</div>
 			<div

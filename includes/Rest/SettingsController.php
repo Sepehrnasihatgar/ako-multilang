@@ -415,7 +415,7 @@ final class SettingsController {
 		$checks[] = array(
 			'key'    => 'seo',
 			'label'  => __( 'SEO plugin', 'cedar-multilang' ),
-			'value'  => $seo ? $seo['name'] . ' ' . self::short_version( $seo['version'] ) : __( 'None — Cedar prints hreflang itself', 'cedar-multilang' ),
+			'value'  => $seo ? $seo['name'] . ' ' . self::short_version( $seo['version'] ) : __( 'None. Cedar adds hreflang itself.', 'cedar-multilang' ),
 			'status' => 'ok',
 		);
 
@@ -438,16 +438,16 @@ final class SettingsController {
 				? array(
 					'key'    => $key,
 					'label'  => $source->name(),
-					'value'  => __( 'Still active — safe to deactivate', 'cedar-multilang' ),
+					'value'  => __( 'Still active. You can deactivate it.', 'cedar-multilang' ),
 					'status' => 'none',
 				)
 				: array(
 					'key'     => $key,
 					'label'   => $source->name(),
-					'value'   => __( 'Active — import its links first', 'cedar-multilang' ),
+					'value'   => __( 'Active. Import its links first.', 'cedar-multilang' ),
 					'status'  => 'warning',
 					/* translators: %s: Plugin name, e.g. "WPML". */
-					'title'   => sprintf( __( '%s is still in charge', 'cedar-multilang' ), $source->name() ),
+					'title'   => sprintf( __( '%s is still active', 'cedar-multilang' ), $source->name() ),
 					'message' => sprintf(
 						/* translators: %s: Plugin name, e.g. "WPML". */
 						__( 'Both plugins add language tags while %s is active. Import its links from Translations, then deactivate it.', 'cedar-multilang' ),
@@ -480,13 +480,13 @@ final class SettingsController {
 			$recommended = ! empty( $response['recommended_version'] ) ? (string) $response['recommended_version'] : '';
 
 			/* translators: %s: PHP version, e.g. "7.4". */
-			$check['value'] = sprintf( __( '%s — update recommended', 'cedar-multilang' ), $version );
+			$check['value'] = sprintf( __( '%s (update recommended)', 'cedar-multilang' ), $version );
 			/* translators: %s: PHP version, e.g. "7.4". */
 			$check['title']   = sprintf( __( 'PHP %s no longer gets security updates', 'cedar-multilang' ), $version );
 			$check['message'] = '' === $recommended
-				? __( 'Cedar keeps working, but your site is safer on a newer PHP. Ask your host — it’s usually one click.', 'cedar-multilang' )
+				? __( 'Cedar keeps working, but your site is safer on a newer PHP version. Ask your host. It’s usually one click.', 'cedar-multilang' )
 				/* translators: %s: Recommended PHP version, e.g. "8.3". */
-				: sprintf( __( 'Cedar keeps working, but your site is safer on PHP %s or newer. Ask your host — it’s usually one click.', 'cedar-multilang' ), $recommended );
+				: sprintf( __( 'Cedar keeps working, but your site is safer on PHP %s or newer. Ask your host. It’s usually one click.', 'cedar-multilang' ), $recommended );
 		}
 		return $check;
 	}

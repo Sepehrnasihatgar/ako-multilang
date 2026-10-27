@@ -226,7 +226,7 @@ export default function LanguagePanel( {
 
 	const defaultLabel = ( name ) =>
 		/* translators: %s: Language name. */
-		sprintf( __( '%s — default', 'cedar-multilang' ), name );
+		sprintf( __( '%s (default)', 'cedar-multilang' ), name );
 	const options = detail.languages.map( ( language ) => ( {
 		value: language.code,
 		label:
@@ -436,7 +436,7 @@ function TranslationCard( {
 				</div>
 				<p className="cedar-lp-card__note">
 					{ __(
-						'Copying content, images and SEO fields…',
+						'Copying the content, images, and SEO fields…',
 						'cedar-multilang'
 					) }
 				</p>

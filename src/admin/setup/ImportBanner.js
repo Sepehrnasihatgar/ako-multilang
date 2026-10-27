@@ -156,15 +156,15 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 					? sprintf(
 							/* translators: %d: Number of groups already imported. */
 							_n(
-								'%d group was imported before it stopped — retry to finish. Links already made are kept.',
-								'%d groups were imported before it stopped — retry to finish. Links already made are kept.',
+								'%d group was imported before it stopped. Retry to finish. Links you already have are kept.',
+								'%d groups were imported before it stopped. Retry to finish. Links you already have are kept.',
 								done,
 								'cedar-multilang'
 							),
 							done
 						)
 					: __(
-							'Nothing was changed — retry, or skip and link pages later.',
+							'Nothing was changed. Retry, or skip this and link pages later.',
 							'cedar-multilang'
 						) }
 			</Callout>
@@ -184,8 +184,8 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 			description = sprintf(
 				/* translators: 1: Linked groups, 2: Skipped groups. */
 				_n(
-					'%1$d linked automatically. %2$d points to pages that no longer exist — review it before you continue.',
-					'%1$d linked automatically. %2$d point to pages that no longer exist — review them before you continue.',
+					'%1$d linked automatically. %2$d points to pages that no longer exist. Review it before you continue.',
+					'%1$d linked automatically. %2$d point to pages that no longer exist. Review them before you continue.',
 					skipped,
 					'cedar-multilang'
 				),
@@ -196,8 +196,8 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 			description = sprintf(
 				/* translators: 1: Linked groups, 2: Skipped groups. */
 				_n(
-					'%1$d linked automatically. %2$d couldn’t be linked — review it before you continue.',
-					'%1$d linked automatically. %2$d couldn’t be linked — review them before you continue.',
+					'%1$d linked automatically. %2$d couldn’t be linked. Review it before you continue.',
+					'%1$d linked automatically. %2$d couldn’t be linked. Review them before you continue.',
 					skipped,
 					'cedar-multilang'
 				),
@@ -294,8 +294,8 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 			title={ sprintf(
 				/* translators: 1: Plugin name, e.g. "WPML", 2: Number of groups. */
 				_n(
-					'%1$s data detected — %2$d translation group',
-					'%1$s data detected — %2$d translation groups',
+					'Found %1$s data: %2$d translation group',
+					'Found %1$s data: %2$d translation groups',
 					source.groups,
 					'cedar-multilang'
 				),
@@ -320,7 +320,7 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 			{ sprintf(
 				/* translators: %s: Plugin name, e.g. "WPML". */
 				__(
-					'Import them now. %s stays untouched, so you can switch back anytime.',
+					'Import them now. %s isn’t changed, so you can switch back anytime.',
 					'cedar-multilang'
 				),
 				source.name

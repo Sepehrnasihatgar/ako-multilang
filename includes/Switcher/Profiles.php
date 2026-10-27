@@ -145,7 +145,7 @@ final class Profiles {
 
 		$id = isset( $raw['id'] ) ? sanitize_key( (string) $raw['id'] ) : '';
 		if ( '' === $id || strlen( $id ) > 40 ) {
-			return new WP_Error( 'cedar_ml_invalid_switcher', __( 'Use a short ID with letters, numbers and dashes.', 'cedar-multilang' ) );
+			return new WP_Error( 'cedar_ml_invalid_switcher', __( 'Use a short ID with letters, numbers, and hyphens.', 'cedar-multilang' ) );
 		}
 		$clean['id'] = $id;
 

@@ -1,6 +1,7 @@
 /**
- * Icons from Lucide (ISC License, https://lucide.dev), inlined so nothing is
- * loaded from a third-party server. Names match the Figma "Icon/*" components.
+ * Icons from Lucide (ISC License, https://lucide.dev; full text in
+ * assets/icons/LICENSE-lucide.txt), inlined so nothing is loaded from a
+ * third-party server. Names match the Figma "Icon/*" components.
  */
 
 const PATHS = {

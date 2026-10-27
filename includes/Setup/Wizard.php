@@ -117,7 +117,7 @@ final class Wizard {
 
 		$default_code = $list[0]['code'];
 		if ( '' !== Registry::default_code() && Registry::default_code() !== $default_code && self::has_tagged_posts() ) {
-			return new WP_Error( 'cedar_ml_default_locked', __( 'Your pages already have languages, so the default can’t change here. Pages without a language would switch to the new default.', 'cedar-multilang' ), array( 'status' => 409 ) );
+			return new WP_Error( 'cedar_ml_default_locked', __( 'Your pages already have languages, so you can’t change the default here. Pages without a language would move to the new default.', 'cedar-multilang' ), array( 'status' => 409 ) );
 		}
 
 		foreach ( array_keys( $current ) as $code ) {
@@ -403,11 +403,11 @@ final class Wizard {
 		if ( ! $menu ) {
 			// Turn WordPress's fallback (the page list) into a saved menu first.
 			if ( ! class_exists( 'WP_Navigation_Fallback' ) ) {
-				return new WP_Error( 'cedar_ml_no_menu', __( 'Your theme has no menu to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
+				return new WP_Error( 'cedar_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
 			}
 			$fallback = \WP_Navigation_Fallback::get_fallback();
 			if ( ! $fallback instanceof \WP_Post ) {
-				return new WP_Error( 'cedar_ml_no_menu', __( 'Your theme has no menu to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
+				return new WP_Error( 'cedar_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
 			}
 			$menu = (int) $fallback->ID;
 		}
@@ -482,7 +482,7 @@ final class Wizard {
 		}
 		$location = self::menu_location();
 		if ( ! $location ) {
-			return new WP_Error( 'cedar_ml_no_menu', __( 'Your theme has no menu to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'cedar_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
 		}
 
 		if ( 'block' === $location['type'] ) {

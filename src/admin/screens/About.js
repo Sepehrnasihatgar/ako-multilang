@@ -25,10 +25,13 @@ const CHANGELOG = [
 			),
 			__( 'Five switcher styles plus inherit mode', 'cedar-multilang' ),
 			__(
-				'hreflang and og:locale that work with Yoast SEO, Rank Math and AIOSEO',
+				'hreflang and og:locale that work with Yoast SEO, Rank Math, and AIOSEO',
 				'cedar-multilang'
 			),
-			__( 'Import from WPML, Polylang and Cedar 6.2', 'cedar-multilang' ),
+			__(
+				'Import from WPML, Polylang, and Cedar 6.2',
+				'cedar-multilang'
+			),
 		],
 	},
 	{

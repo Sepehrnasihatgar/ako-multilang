@@ -519,7 +519,7 @@ export default function Switcher( { config, notify } ) {
 						{ 'inherit' === draft.styling ? (
 							<p className="cedar-note is-info">
 								{ __(
-									'Uses your theme’s font, colors and spacing. Fine-tune with --cedar-switcher-* in your CSS.',
+									'Uses your theme’s font, colors, and spacing. Fine-tune it with --cedar-switcher-* in your CSS.',
 									'cedar-multilang'
 								) }
 							</p>
@@ -664,7 +664,7 @@ export default function Switcher( { config, notify } ) {
 						saved.name
 					) }
 					description={ __(
-						'Blocks, shortcodes and menu items that use it will show your first switcher instead.',
+						'Blocks, shortcodes, and menu items that use it will show your first switcher instead.',
 						'cedar-multilang'
 					) }
 					confirmLabel={ __( 'Delete switcher', 'cedar-multilang' ) }
@@ -971,15 +971,15 @@ function EmbedCard( { profile, notify } ) {
 		menu: {
 			label: __( 'Menu item', 'cedar-multilang' ),
 			text: __(
-				'In Appearance → Menus, open “Language switcher” (Screen Options). In the Site Editor, add a custom link to:',
+				'In Appearance → Menus, add it from the “Language switcher” box. If you don’t see the box, turn it on in Screen Options. On block themes, add the “Language Switcher” block to your navigation in the Site Editor.',
 				'cedar-multilang'
 			),
-			code: `#cedar-switcher-${ profile.id }`,
+			code: null,
 		},
 		shortcode: {
 			label: __( 'Shortcode', 'cedar-multilang' ),
 			text: __(
-				'Works in Elementor, widgets and any text field.',
+				'Works in Elementor, widgets, and any text field.',
 				'cedar-multilang'
 			),
 			code: `[cedar_switcher id="${ profile.id }"]`,

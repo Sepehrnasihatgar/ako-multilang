@@ -2,7 +2,7 @@
 	"name": "cedar-multilang",
 	"version": "1.0.0",
 	"private": true,
-	"description": "Link your pages across languages — hreflang, RTL and a language switcher, without changing your URLs.",
+	"description": "Link your pages across languages with hreflang, right-to-left support, and a language switcher. Your URLs stay the same.",
 	"license": "GPL-2.0-or-later",
 	"engines": {
 		"node": ">=20"

@@ -70,7 +70,7 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 	);
 	if ( ! state.menu ) {
 		menuHelp = __(
-			'Your theme has no menu location — use the floating button or place a block.',
+			'We couldn’t find a menu in your theme. Use the floating button or add the block.',
 			'cedar-multilang'
 		);
 	} else if ( ! state.canEditMenus ) {
@@ -94,7 +94,7 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 			value: 'floating',
 			label: __( 'Floating button', 'cedar-multilang' ),
 			help: __(
-				'Bottom corner of every page. Zero theme changes.',
+				'Sits in the bottom corner of every page. No theme changes.',
 				'cedar-multilang'
 			),
 			recommended: ! menuReady,
@@ -103,7 +103,7 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 			value: 'manual',
 			label: __( 'I’ll place it myself', 'cedar-multilang' ),
 			help: __(
-				'Use the block, the shortcode or the PHP tag.',
+				'Use the block, the shortcode, or the PHP tag.',
 				'cedar-multilang'
 			),
 		},
@@ -117,7 +117,7 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 				</h1>
 				<p>
 					{ __(
-						'Choose a look and where it goes. You can fine-tune colors, labels and placement later in Switcher.',
+						'Choose a look and where it goes. You can fine-tune colors, labels, and placement later in Switcher.',
 						'cedar-multilang'
 					) }
 				</p>
