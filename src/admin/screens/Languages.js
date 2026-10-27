@@ -556,10 +556,18 @@ function AddPanel( {
 				scored.push( [ 1, entry ] );
 			}
 		} );
-		return scored
-			.sort( ( a, b ) => a[ 0 ] - b[ 0 ] )
-			.slice( 0, 6 )
-			.map( ( item ) => item[ 1 ] );
+		return (
+			scored
+				// Prefix matches first, then the plainest name ("Deutsch" before
+				// "Deutsch (Schweiz)").
+				.sort(
+					( a, b ) =>
+						a[ 0 ] - b[ 0 ] ||
+						a[ 1 ].native.length - b[ 1 ].native.length
+				)
+				.slice( 0, 6 )
+				.map( ( item ) => item[ 1 ] )
+		);
 	}, [ text, catalog ] );
 
 	const add = async ( entry ) => {

@@ -47,15 +47,13 @@ body.cedar-ml-screen #wpwrap {
 	box-sizing: border-box;
 }
 
-.cedar-ml h1,
-.cedar-ml h2,
-.cedar-ml p {
+.cedar-ml :where(h1, h2, p) {
 	margin: 0;
 	padding: 0;
 	color: inherit;
 }
 
-.cedar-ml a {
+.cedar-ml :where(a) {
 	color: inherit;
 }
 
@@ -637,10 +635,7 @@ button.cedar-input.is-trigger[aria-expanded="true"] {
 }
 
 .cedar-menu {
-	position: absolute;
 	z-index: 50;
-	inset-block-start: calc(100% + var(--cedar-admin-space-xs));
-	inset-inline-start: 0;
 	display: flex;
 	flex-direction: column;
 	gap: var(--cedar-admin-space-3xs);
@@ -652,11 +647,6 @@ button.cedar-input.is-trigger[aria-expanded="true"] {
 	background: var(--cedar-admin-bg-surface);
 	box-shadow: var(--cedar-shadow-menu);
 	list-style: none;
-}
-
-.cedar-menu.is-align-end {
-	inset-inline-start: auto;
-	inset-inline-end: 0;
 }
 
 .cedar-menu.is-static {
@@ -700,18 +690,28 @@ button.cedar-input.is-trigger[aria-expanded="true"] {
 }
 
 .cedar-menu__label {
-	flex: 1;
+	flex: 1 0 auto;
+	max-inline-size: 100%;
 	min-inline-size: 0;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
-.cedar-menu__meta,
 .cedar-menu__end {
 	flex: none;
 	color: var(--cedar-admin-text-tertiary);
 	font: var(--cedar-text-help);
+}
+
+.cedar-menu__meta {
+	flex: 0 1 auto;
+	min-inline-size: 0;
+	overflow: hidden;
+	color: var(--cedar-admin-text-tertiary);
+	font: var(--cedar-text-help);
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .cedar-menu__end {
@@ -989,7 +989,7 @@ button.cedar-input.is-trigger[aria-expanded="true"] {
 
 .cedar-overview {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	gap: var(--cedar-admin-space-lg);
 }
 
@@ -1161,6 +1161,7 @@ button.cedar-input.is-trigger[aria-expanded="true"] {
 
 .cedar-row__date {
 	color: var(--cedar-admin-text-secondary);
+	white-space: nowrap;
 }
 
 .cedar-row__actions {
@@ -1195,7 +1196,7 @@ button.cedar-input.is-trigger[aria-expanded="true"] {
 }
 
 .cedar-cell__title {
-	flex: 1;
+	flex: 0 1 auto;
 	min-inline-size: 0;
 	overflow: hidden;
 	text-decoration: none;
@@ -1222,6 +1223,7 @@ a.cedar-cell__title:hover {
 
 .cedar-cell__badge {
 	flex: none;
+	margin-inline-start: auto;
 	padding: 0 var(--cedar-admin-space-xs);
 	border-radius: var(--cedar-admin-radius-pill);
 	background: var(--cedar-admin-bg-warning-subtle);
@@ -1264,7 +1266,6 @@ button.cedar-cell.is-missing[aria-expanded="true"] {
 }
 
 .cedar-link-search__list {
-	inline-size: 100%;
 	min-inline-size: 260px;
 	max-block-size: 280px;
 	overflow-y: auto;

@@ -336,7 +336,8 @@ final class Overview {
 	 */
 	private static function path( WP_Post $post ) {
 		if ( 'publish' === $post->post_status ) {
-			return (string) wp_make_link_relative( get_permalink( $post ) );
+			$path = (string) wp_make_link_relative( get_permalink( $post ) );
+			return '/' === $path ? $path : untrailingslashit( $path );
 		}
 		if ( '' === $post->post_name ) {
 			return '';
@@ -352,7 +353,7 @@ final class Overview {
 	 * @return string
 	 */
 	private static function relative_date( WP_Post $post ) {
-		$then = (int) get_post_modified_time( 'U', true, $post );
+		$then = (int) get_post_timestamp( $post, 'modified' );
 		$diff = time() - $then;
 
 		if ( $diff < DAY_IN_SECONDS ) {

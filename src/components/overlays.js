@@ -16,6 +16,75 @@ import Icon from './Icon';
 import { Button } from './controls';
 
 /**
+ * Positions a popover next to its anchor with `position: fixed`, so it is
+ * never clipped by a scrolling container (the table scrolls sideways when a
+ * site has many languages). Opens upward when there is no room below, and
+ * follows scrolling and resizing.
+ *
+ * @param {Object}  anchorRef  Ref of the element the popover belongs to.
+ * @param {Object}  popoverRef Ref of the popover.
+ * @param {boolean} open       Whether the popover is shown.
+ * @param {string}  [align]    start|end edge of the anchor to align with.
+ * @return {Object} Inline style for the popover.
+ */
+export function usePopoverStyle(
+	anchorRef,
+	popoverRef,
+	open,
+	align = 'start'
+) {
+	const [ style, setStyle ] = useState( {
+		position: 'fixed',
+		top: 0,
+		left: 0,
+		opacity: 0,
+	} );
+
+	useLayoutEffect( () => {
+		if ( ! open || ! anchorRef.current ) {
+			return undefined;
+		}
+		const view = anchorRef.current.ownerDocument.defaultView;
+		const gap = 6;
+
+		const place = () => {
+			const anchor = anchorRef.current;
+			const popover = popoverRef.current;
+			if ( ! anchor || ! popover ) {
+				return;
+			}
+			const rect = anchor.getBoundingClientRect();
+			const height = popover.offsetHeight;
+			const rtl = 'rtl' === view.getComputedStyle( anchor ).direction;
+			const below = rect.bottom + gap;
+			const fitsBelow = below + height <= view.innerHeight;
+			const fitsAbove = rect.top - gap - height >= 0;
+			const next = {
+				position: 'fixed',
+				top: ! fitsBelow && fitsAbove ? rect.top - gap - height : below,
+				minWidth: rect.width,
+			};
+			if ( ( 'start' === align ) !== rtl ) {
+				next.left = rect.left;
+			} else {
+				next.right = view.innerWidth - rect.right;
+			}
+			setStyle( next );
+		};
+
+		place();
+		view.addEventListener( 'scroll', place, true );
+		view.addEventListener( 'resize', place );
+		return () => {
+			view.removeEventListener( 'scroll', place, true );
+			view.removeEventListener( 'resize', place );
+		};
+	}, [ open, align, anchorRef, popoverRef ] );
+
+	return style;
+}
+
+/**
  * Menu button.
  *
  * @param {Object}   props
@@ -38,6 +107,8 @@ export function Menu( {
 	const wrapRef = useRef();
 	const triggerRef = useRef();
 	const itemRefs = useRef( [] );
+	const menuRef = useRef();
+	const menuStyle = usePopoverStyle( wrapRef, menuRef, open, align );
 
 	const close = useCallback( ( returnFocus = true ) => {
 		setOpen( false );
@@ -58,7 +129,7 @@ export function Menu( {
 
 	useLayoutEffect( () => {
 		if ( open && itemRefs.current[ active ] ) {
-			itemRefs.current[ active ].focus();
+			itemRefs.current[ active ].focus( { preventScroll: true } );
 		}
 	}, [ open, active ] );
 
@@ -125,9 +196,11 @@ export function Menu( {
 			} ) }
 			{ open && (
 				<div
+					ref={ menuRef }
 					id={ menuId }
 					role="menu"
 					tabIndex={ -1 }
+					style={ menuStyle }
 					aria-label={ label }
 					className={ `cedar-menu is-${ variant } is-align-${ align }` }
 					onKeyDown={ onMenuKeyDown }

@@ -24,7 +24,7 @@ import {
 	PageTitle,
 	SkeletonRow,
 } from '../../components/display';
-import { Menu } from '../../components/overlays';
+import { Menu, usePopoverStyle } from '../../components/overlays';
 import {
 	errorMessage,
 	getCandidates,
@@ -158,6 +158,13 @@ export default function Translations( { config, notify } ) {
 				action: {
 					label: __( 'Undo', 'cedar-multilang' ),
 					onClick: async () => {
+						notify( {
+							tone: 'info',
+							message: __(
+								'Restoring links…',
+								'cedar-multilang'
+							),
+						} );
 						try {
 							for ( const job of jobs ) {
 								for ( const [
@@ -1070,6 +1077,23 @@ function TranslationCell( {
 }
 
 /**
+ * Best matches first: pages already in the language and free to link, then
+ * pages without a language, then pages linked elsewhere (linking moves them).
+ *
+ * @param {Array} list Candidates from the API (newest first).
+ * @return {Array} Sorted candidates.
+ */
+function sortCandidates( list ) {
+	const rank = ( candidate ) => {
+		if ( ! candidate.language ) {
+			return 1;
+		}
+		return candidate.linked ? 2 : 0;
+	};
+	return [ ...list ].sort( ( a, b ) => rank( a ) - rank( b ) );
+}
+
+/**
  * Inline combobox to pick an existing page as the translation.
  *
  * @param {Object}   props
@@ -1088,6 +1112,8 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 	const [ saving, setSaving ] = useState( false );
 	const inputRef = useRef();
 	const wrapRef = useRef();
+	const listRef = useRef();
+	const listStyle = usePopoverStyle( wrapRef, listRef, !! results );
 	const listId = useId();
 
 	useEffect( () => {
@@ -1104,7 +1130,7 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 		} )
 			.then( ( list ) => {
 				if ( ! ignore ) {
-					setResults( list );
+					setResults( sortCandidates( list ) );
 					setActive( 0 );
 				}
 			} )
@@ -1194,6 +1220,9 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 				) }
 			/>
 			<ul
+				ref={ listRef }
+				style={ listStyle }
+				hidden={ ! results }
 				className="cedar-menu is-list cedar-link-search__list"
 				id={ listId }
 				role="listbox"
