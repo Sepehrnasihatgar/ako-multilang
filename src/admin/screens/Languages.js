@@ -312,8 +312,8 @@ export default function Languages( { notify } ) {
 					description={ sprintf(
 						/* translators: 1: Number of pages, 2: Language name. */
 						_n(
-							'%1$d %2$s page stays published but loses its links, hreflang and switcher entry. You can add %2$s back anytime.',
-							'%1$d %2$s pages stay published but lose their links, hreflang and switcher entry. You can add %2$s back anytime.',
+							'%1$d %2$s page stays published but loses its links, hreflang, and switcher entry. You can add %2$s back anytime.',
+							'%1$d %2$s pages stay published but lose their links, hreflang, and switcher entry. You can add %2$s back anytime.',
 							removing.count,
 							'ako-multilang'
 						),
