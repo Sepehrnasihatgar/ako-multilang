@@ -55,8 +55,8 @@ The switcher has to fit *any* site, not force its own look on it. Two layers:
 **b) Bring-your-own-style — so it never fights the user's design**
 - **Shortcode** with attributes, usable anywhere (page builders, widgets, template parts):
   `[cedar_switcher type="dropdown" show="name" style="inherit" class="my-class"]`
-- **`style="inherit"` / unstyled mode:** clean semantic markup (`nav > ul > li > a`) with BEM classes. Inherits the theme's font, color, and sizing — no fixed widths, no layout shifts.
-- **Low-specificity CSS:** every rule is scoped under `.cedar-switcher` and wrapped in `:where()`, so any theme or custom CSS overrides it with zero `!important`.
+- **`style="inherit"` / unstyled mode:** clean semantic markup (`nav` with a `role="list"` group of links) with BEM classes. Inherits the theme's font, color, and sizing, with no fixed widths and no layout shifts.
+- **Low-specificity looks, protected layout:** colors, borders, and radii are wrapped in `:where()`, so any theme or custom CSS overrides them. Layout (display, spacing, box sizing) has real specificity, because testing on 10 themes showed theme resets and menu rules break a zero-specificity switcher. (Changed after the 1.0 theme compatibility pass.)
 - **PHP template tag** `cedar_switcher( $args )` for theme developers.
 - **Template override:** copy `templates/switcher.php` into `yourtheme/cedar/` to fully customize the markup.
 - **Filters** on the language list and on the output markup.
