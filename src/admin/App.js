@@ -6,10 +6,12 @@ import { Header } from '../components/display';
 import { Toast } from '../components/overlays';
 import Translations from './screens/Translations';
 import Languages from './screens/Languages';
+import Switcher from './screens/Switcher';
 
 const SCREENS = {
 	translations: Translations,
 	languages: Languages,
+	switcher: Switcher,
 };
 
 export default function App( { config } ) {

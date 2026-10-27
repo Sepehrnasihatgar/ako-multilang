@@ -287,14 +287,16 @@ export function Menu( {
  * action, Tab is trapped, Escape cancels, and focus returns on close.
  *
  * @param {Object}   props
- * @param {string}   [props.tone]       default|danger.
- * @param {string}   props.icon         Icon name.
- * @param {string}   props.title        Title.
- * @param {string}   props.description  Description.
- * @param {string}   props.confirmLabel Confirm button label.
- * @param {Function} props.onConfirm    Confirm handler.
- * @param {Function} props.onCancel     Cancel handler.
- * @param {boolean}  [props.busy]       Disable actions while working.
+ * @param {string}   [props.tone]         default|danger.
+ * @param {string}   props.icon           Icon name.
+ * @param {string}   props.title          Title.
+ * @param {string}   props.description    Description.
+ * @param {string}   props.confirmLabel   Confirm button label.
+ * @param {Function} props.onConfirm      Confirm handler.
+ * @param {Function} props.onCancel       Cancel handler.
+ * @param {boolean}  [props.busy]         Disable actions while working.
+ * @param {Object}   [props.children]     Extra content, e.g. a field.
+ * @param {string}   [props.initialFocus] Selector to focus first.
  */
 export function Dialog( {
 	tone = 'default',
@@ -305,6 +307,8 @@ export function Dialog( {
 	onConfirm,
 	onCancel,
 	busy = false,
+	children,
+	initialFocus,
 } ) {
 	const titleId = useId();
 	const descId = useId();
@@ -313,7 +317,10 @@ export function Dialog( {
 
 	useEffect( () => {
 		const previous = panelRef.current.ownerDocument.activeElement;
-		cancelRef.current.focus();
+		const first = initialFocus
+			? panelRef.current.querySelector( initialFocus )
+			: null;
+		( first || cancelRef.current ).focus();
 		return () => {
 			if ( previous && previous.focus ) {
 				previous.focus();
@@ -331,7 +338,7 @@ export function Dialog( {
 			return;
 		}
 		const focusable = panelRef.current.querySelectorAll(
-			'button:not([disabled])'
+			'button:not([disabled]), input:not([disabled])'
 		);
 		const first = focusable[ 0 ];
 		const last = focusable[ focusable.length - 1 ];
@@ -369,6 +376,7 @@ export function Dialog( {
 						</p>
 					</div>
 				</div>
+				{ children }
 				<div className="cedar-dialog__actions">
 					<Button
 						ref={ cancelRef }

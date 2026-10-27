@@ -30,8 +30,13 @@ Done
 - CSS 2.0 KB and keyboard script 0.65 KB gzipped; dropdown works without JS.
 - Tested on PHP 7.4 with Twenty Twenty-Five: every style, RTL mirroring, keyboard (Enter, arrows, Escape), invalid shortcode values ignored, classic menu, Navigation block, block registration.
 
+## Milestone 4b — Switcher designer (done)
+
+- Cedar → Switcher: style tiles (radio group, arrow keys), Content and Look settings, live preview (Desktop/Mobile, Light/Dark, EN/FA page with RTL) rendered with the real front-end CSS and markup (`SwitcherMarkup.js` mirrors `templates/switcher.php`), "Add it to your site" with Copy, save bar with Discard, create / delete switchers, unsaved-changes guard.
+- Tested in Playground: style change, accent color, RTL + dark preview, save → front end uses the new accent.
+
 Next
-1. Milestone 4b — Switcher designer screen (Figma: Configure / Switcher — *).
+1. Milestone 5 — SEO & health: SEO plugin integrations (Yoast, Rank Math, AIOSEO), sitemap, og:locale, health checks, Needs review tab, SEO health card, SEO screen.
 2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.
 3. Later milestones add: Needs review tab + SEO health card (M5), Import / Link pages header buttons and first-run empty state (M6), Duplicate as draft (M3), Get Pro / Docs header links (when URLs exist).
 

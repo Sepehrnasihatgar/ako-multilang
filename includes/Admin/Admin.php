@@ -7,6 +7,8 @@
 
 namespace Cedar\Multilang\Admin;
 
+use Cedar\Multilang\Settings;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -42,7 +44,7 @@ final class Admin {
 	 * @return array<string,array{slug:string,title:string,cap:string}>
 	 */
 	public static function screens() {
-		return array(
+		$screens = array(
 			'translations' => array(
 				'slug'  => self::SLUG,
 				'title' => __( 'Translations', 'cedar-multilang' ),
@@ -53,7 +55,17 @@ final class Admin {
 				'title' => __( 'Languages', 'cedar-multilang' ),
 				'cap'   => 'manage_options',
 			),
+			'switcher'     => array(
+				'slug'  => self::SLUG . '-switcher',
+				'title' => __( 'Switcher', 'cedar-multilang' ),
+				'cap'   => 'manage_options',
+			),
 		);
+
+		if ( empty( Settings::get()['modules']['switcher'] ) ) {
+			unset( $screens['switcher'] );
+		}
+		return $screens;
 	}
 
 	/**
@@ -122,6 +134,7 @@ final class Admin {
 			'version'   => CEDAR_ML_VERSION,
 			'urls'      => $nav,
 			'canManage' => current_user_can( 'manage_options' ),
+			'siteName'  => wp_strip_all_tags( get_bloginfo( 'name' ) ),
 		);
 
 		echo '<div class="wrap cedar-ml-notices"><hr class="wp-header-end"></div>';
@@ -168,6 +181,11 @@ final class Admin {
 			$asset['version']
 		);
 		wp_style_add_data( self::SCRIPT, 'rtl', 'replace' );
+
+		// The designer previews the real front-end stylesheet.
+		if ( isset( self::$hooks['switcher'] ) && self::$hooks['switcher'] === $hook_suffix ) {
+			wp_enqueue_style( 'cedar-ml-switcher' );
+		}
 	}
 
 	/**

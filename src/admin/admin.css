@@ -612,3 +612,387 @@ button.cedar-cell.is-missing[aria-expanded="true"] {
 		inline-size: 100%;
 	}
 }
+
+/* ---------- Switcher designer ---------- */
+
+.cedar-editing {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-label);
+}
+
+.cedar-editing .cedar-input.is-trigger {
+	min-inline-size: 180px;
+	color: var(--cedar-admin-text-primary);
+}
+
+.cedar-designer {
+	display: grid;
+	grid-template-columns: minmax(0, 432fr) minmax(0, 545fr);
+	align-items: start;
+	gap: var(--cedar-admin-space-2xl);
+	padding-block-end: var(--cedar-admin-space-6xl);
+}
+
+.cedar-designer__column {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-lg);
+}
+
+.cedar-designer .cedar-card {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-lg);
+}
+
+.cedar-card__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-md);
+}
+
+.cedar-ml .cedar-card__title {
+	font: var(--cedar-text-section-title);
+	letter-spacing: var(--cedar-text-section-title-tracking);
+}
+
+.cedar-ml .cedar-card__text {
+	color: var(--cedar-admin-text-secondary);
+}
+
+.cedar-ml .cedar-note {
+	padding: var(--cedar-admin-space-md);
+	border-radius: var(--cedar-admin-radius-control);
+	font: var(--cedar-text-help);
+}
+
+.cedar-note.is-info {
+	background: var(--cedar-admin-bg-info-subtle);
+	color: var(--cedar-admin-text-info);
+}
+
+/* Setting row (Figma: Settings patterns / Setting row) */
+
+.cedar-setting-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-lg);
+	padding-block: var(--cedar-admin-space-md);
+	border-block-start: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+}
+
+.cedar-setting-row__copy {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-3xs);
+}
+
+.cedar-setting-row__label {
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-setting-row__help {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-setting-row__control {
+	display: flex;
+	flex: none;
+	justify-content: flex-end;
+	inline-size: 200px;
+}
+
+.cedar-setting-row__control .cedar-toggle {
+	margin-inline-start: auto;
+}
+
+/* Preset tiles (Figma: Onboarding patterns / Preset tile) */
+
+.cedar-tiles {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+	gap: var(--cedar-admin-space-md);
+}
+
+.cedar-tile {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-sm);
+	margin: 0;
+	padding: var(--cedar-admin-space-md);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-surface);
+	color: var(--cedar-admin-text-primary);
+	font: var(--cedar-text-body);
+	text-align: start;
+	cursor: pointer;
+}
+
+.cedar-tile:hover {
+	border-color: var(--cedar-admin-border-default);
+}
+
+.cedar-tile.is-selected {
+	border: var(--cedar-admin-border-width-strong) solid var(--cedar-admin-border-accent);
+	background: var(--cedar-admin-bg-accent-subtle);
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-tile__thumb {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	block-size: 64px;
+	border-radius: var(--cedar-admin-radius-tile);
+	background: var(--cedar-admin-bg-canvas);
+	pointer-events: none;
+}
+
+.cedar-tile__label {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.cedar-tile__label .cedar-icon {
+	color: var(--cedar-admin-icon-success);
+}
+
+/* Live preview */
+
+.cedar-preview-card__bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-md);
+}
+
+.cedar-preview-card__live {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-preview-card__dot {
+	inline-size: var(--cedar-admin-space-sm);
+	block-size: var(--cedar-admin-space-sm);
+	border-radius: var(--cedar-admin-radius-pill);
+	background: var(--cedar-admin-icon-success);
+}
+
+.cedar-preview-card__toggles {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--cedar-admin-space-sm);
+}
+
+.cedar-preview {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-block-size: 200px;
+	padding: var(--cedar-admin-space-3xl) var(--cedar-admin-space-lg);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-subtle);
+}
+
+.cedar-preview__site {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-lg);
+	inline-size: 100%;
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-lg);
+	border: var(--cedar-admin-border-width) solid var(--cedar-mock-site-border);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-mock-site-bg);
+	box-shadow: var(--cedar-shadow-floating);
+	color: var(--cedar-mock-site-text);
+}
+
+.cedar-preview.is-mobile .cedar-preview__site {
+	max-inline-size: 300px;
+}
+
+.cedar-preview__brand {
+	font: var(--cedar-text-section-title);
+}
+
+.cedar-preview__nav {
+	display: flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-lg);
+}
+
+.cedar-preview__link {
+	inline-size: 44px;
+	block-size: var(--cedar-admin-space-sm);
+	border-radius: var(--cedar-admin-radius-pill);
+	background: var(--cedar-mock-site-border);
+}
+
+.cedar-preview__floating {
+	position: absolute;
+	inset-block-end: var(--cedar-admin-space-lg);
+	inset-inline-end: var(--cedar-admin-space-lg);
+}
+
+.cedar-preview .cedar-switcher--floating,
+.cedar-tile__thumb .cedar-switcher--floating {
+	position: relative;
+	inset: auto;
+}
+
+.cedar-preview .is-preview-icon-only .cedar-switcher__code {
+	display: none;
+}
+
+.cedar-preview.is-dark .cedar-preview__site {
+	border-color: transparent;
+	background: var(--cedar-mock-site-dark-bg);
+	color: var(--cedar-mock-site-dark-text);
+}
+
+.cedar-preview.is-dark .cedar-preview__link {
+	background: var(--cedar-mock-site-dark-text-muted);
+}
+
+/* Dark values of the Figma Switcher collection, as a theme would set them. */
+.cedar-preview.is-dark .cedar-switcher {
+	--cedar-switcher-bg: #181815;
+	--cedar-switcher-bg-hover: #2c2c28;
+	--cedar-switcher-surface: #2c2c28;
+	--cedar-switcher-accent: #fff;
+	--cedar-switcher-on-accent: #181815;
+	--cedar-switcher-fg: #f0f0ec;
+	--cedar-switcher-fg-muted: #a5a5a1;
+	--cedar-switcher-fg-disabled: #585854;
+	--cedar-switcher-border: #41413e;
+	--cedar-switcher-focus-ring: #91ceab;
+}
+
+/* Color input (Figma: Settings patterns / Color input) */
+
+.cedar-color {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	inline-size: 100%;
+	min-block-size: var(--cedar-control-height);
+	padding: 0 var(--cedar-admin-space-sm);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-default);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-surface);
+}
+
+.cedar-color:focus-within {
+	border-color: var(--cedar-admin-border-accent);
+	box-shadow: 0 0 0 var(--cedar-admin-border-width) var(--cedar-admin-border-accent);
+}
+
+.cedar-color.is-invalid {
+	border-color: var(--cedar-admin-border-danger);
+}
+
+.cedar-color__swatch {
+	position: relative;
+	flex: none;
+	inline-size: 20px;
+	block-size: 20px;
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-default);
+	border-radius: var(--cedar-admin-radius-tile);
+	cursor: pointer;
+}
+
+.cedar-ml .cedar-color__swatch input {
+	position: absolute;
+	inset: 0;
+	inline-size: 100%;
+	block-size: 100%;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.cedar-ml .cedar-color__hex {
+	flex: 1;
+	min-inline-size: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	box-shadow: none;
+	font: var(--cedar-text-code);
+	direction: ltr;
+}
+
+.cedar-ml .cedar-color__hex:focus {
+	box-shadow: none;
+	outline: none;
+}
+
+/* Code + copy */
+
+.cedar-code {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-md);
+	padding: var(--cedar-admin-space-sm) var(--cedar-admin-space-sm) var(--cedar-admin-space-sm) var(--cedar-admin-space-md);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-subtle);
+}
+
+.cedar-ml .cedar-code code {
+	padding: 0;
+	overflow-x: auto;
+	background: none;
+	font: var(--cedar-text-code);
+	white-space: nowrap;
+}
+
+/* Save bar (Figma: Settings patterns / Save bar) */
+
+.cedar-savebar {
+	position: fixed;
+	z-index: 100;
+	inset-block-end: var(--cedar-admin-space-2xl);
+	inset-inline-start: 50%;
+	display: flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-md);
+	inline-size: min(720px, calc(100% - 2 * var(--cedar-admin-space-2xl)));
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-xl);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-brand);
+	box-shadow: var(--cedar-shadow-floating);
+	color: var(--cedar-admin-text-on-accent);
+	transform: translateX(-50%);
+}
+
+[dir="rtl"] .cedar-savebar {
+	transform: translateX(50%);
+}
+
+.cedar-savebar__message {
+	flex: 1;
+	font: var(--cedar-text-body-strong);
+}
+
+@media (max-width: 1100px) {
+
+	.cedar-designer {
+		grid-template-columns: minmax(0, 1fr);
+	}
+}
