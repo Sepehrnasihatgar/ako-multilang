@@ -37,7 +37,7 @@ ako-multilang/
 │  ├─ Switcher/MenuItem.php   # Appearance → Menus integration
 │  ├─ Rest/*.php              # REST controllers (namespace ako/v1)
 │  ├─ Admin/*.php             # Menu, assets, notices, plugin row links
-│  ├─ Migration/Legacy62.php  # Cedar 6.2 data, migrated once automatically
+│  ├─ Migration/Legacy62.php  # version 6.2 data, migrated once automatically
 │  ├─ Import/*.php            # WPML + Polylang: read straight from the database, batched, never write to their data
 │  └─ Setup/*.php             # Setup wizard steps + suggested pairs (slug / title / language folder)
 ├─ src/                       # JS/SCSS sources (shipped — wp.org requires readable source)

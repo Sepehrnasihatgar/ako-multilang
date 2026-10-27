@@ -28,7 +28,7 @@ const CHANGELOG = [
 				'hreflang and og:locale that work with Yoast SEO, Rank Math, and AIOSEO',
 				'ako-multilang'
 			),
-			__( 'Import from WPML, Polylang, and Cedar 6.2', 'ako-multilang' ),
+			__( 'Import from WPML, Polylang, and version 6.2', 'ako-multilang' ),
 		],
 	},
 	{

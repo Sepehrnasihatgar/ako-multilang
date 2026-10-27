@@ -1,6 +1,6 @@
 <?php
 /**
- * [ako_switcher] and the legacy [lang_switch] shortcode from Cedar 6.2.
+ * [ako_switcher] and the legacy [lang_switch] shortcode from version 6.2.
  *
  * @package Ako\Multilang
  */
@@ -60,7 +60,7 @@ final class Shortcode {
 	}
 
 	/**
-	 * [lang_switch] from Cedar 6.2: a link to the other language.
+	 * [lang_switch] from version 6.2: a link to the other language.
 	 *
 	 * @return string
 	 */

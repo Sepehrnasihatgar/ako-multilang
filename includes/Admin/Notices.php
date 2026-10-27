@@ -94,7 +94,7 @@ final class Notices {
 		if ( 'legacy62' === $key ) {
 			$legacy = get_option( Legacy62::STATUS_OPTION, array() );
 			$pairs  = isset( $legacy['pairs'] ) ? (int) $legacy['pairs'] : 0;
-			$title  = __( 'Your Cedar 6.2 data was moved over', 'ako-multilang' );
+			$title  = __( 'Your data from version 6.2 was moved over', 'ako-multilang' );
 			$text   = sprintf(
 				/* translators: %d: Number of linked page pairs. */
 				_n( '%d page pair now uses the new format. Your [lang_switch] shortcodes keep working.', '%d page pairs now use the new format. Your [lang_switch] shortcodes keep working.', $pairs, 'ako-multilang' ),

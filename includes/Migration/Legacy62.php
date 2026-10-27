@@ -1,6 +1,6 @@
 <?php
 /**
- * Moves data from the private Cedar 6.2 plugin to the v1 model.
+ * Moves data from the private 6.2 plugin to the v1 model.
  *
  * @package Ako\Multilang
  */

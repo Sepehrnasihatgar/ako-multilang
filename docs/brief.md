@@ -65,7 +65,7 @@ The switcher has to fit *any* site, not force its own look on it. Two layers:
 - The legacy `[lang_switch]` shortcode keeps working.
 
 ### 5. Migration
-- **Cedar 6.2:** data migrates automatically on update.
+- **Version 6.2:** data migrates automatically on update.
 - **Polylang & WPML:** translation links are read straight from the database, even after the other plugin is deactivated. WPML import is tested against simulated data.
 
 ## Free vs Pro
@@ -78,7 +78,7 @@ The switcher has to fit *any* site, not force its own look on it. Two layers:
 | SEO | Everything in §2 + inline health warnings | Scheduled SEO health reports (email/PDF) |
 | RTL | Everything in §3 | — |
 | Switcher | All presets, inherit mode, every insertion method, live preview | Custom saved presets, per-location styles, custom icons/flags, "Also available in your language" banner |
-| Migration | Cedar 6.2, Polylang, WPML | — |
+| Migration | Version 6.2, Polylang, WPML | — |
 | WooCommerce | Link products across languages | Sync price, stock and attributes between linked products |
 | Other | — | Multisite |
 

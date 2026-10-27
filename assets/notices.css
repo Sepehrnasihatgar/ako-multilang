@@ -1,6 +1,6 @@
 /*
  * Ako notices on the Dashboard and Plugins screens (Figma: WordPress
- * integration / Finish setup notice, Migrated from Cedar 6.2). Values mirror
+ * integration / Finish setup notice, Migrated from 6.2). Values mirror
  * the admin tokens; the token stylesheet only loads on Ako screens.
  */
 .ako-ml-notice {
