@@ -16,7 +16,7 @@ Done
 
 Next
 1. Milestone 3 — Editor: block-editor panel + classic metabox (same component), Duplicate as draft.
-2. Run PHPCS once PHP + Composer are installed (`brew install php composer`, then `composer install`, `composer lint`).
+2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.
 3. Later milestones add: Needs review tab + SEO health card (M5), Import / Link pages header buttons and first-run empty state (M6), Duplicate as draft (M3), Get Pro / Docs header links (when URLs exist).
 
 Run locally

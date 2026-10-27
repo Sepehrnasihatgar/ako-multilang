@@ -1,6 +1,6 @@
 <?php
 /**
- * hreflang links and the <html lang dir> attributes.
+ * The hreflang links and the <html lang dir> attributes.
  *
  * @package Cedar\Multilang
  */

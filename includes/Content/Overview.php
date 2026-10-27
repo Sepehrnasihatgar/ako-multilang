@@ -265,7 +265,7 @@ final class Overview {
 					'update_post_term_cache' => false,
 				)
 			);
-			$out = array_merge( $out, array_map( 'intval', $query->posts ) );
+			$out   = array_merge( $out, array_map( 'intval', $query->posts ) );
 		}
 		return $out;
 	}

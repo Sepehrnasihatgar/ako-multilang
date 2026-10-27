@@ -12,16 +12,11 @@ use WP_Error;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Stores languages in the `cedar_ml_languages` option:
+ * Stores languages in the option `cedar_ml_languages`.
  *
- *     array(
- *         'default'   => 'en',
- *         'languages' => array(
- *             array( 'code' => 'en', 'locale' => 'en_US', 'hreflang' => 'en-US',
- *                    'name' => 'English', 'native' => 'English', 'dir' => 'ltr' ),
- *             …
- *         ),
- *     )
+ * Shape: `array( 'default' => 'en', 'languages' => array( array( 'code' => 'en',
+ * 'locale' => 'en_US', 'hreflang' => 'en-US', 'name' => 'English',
+ * 'native' => 'English', 'dir' => 'ltr' ), … ) )`.
  *
  * Order in the array is the order shown in the switcher.
  */
@@ -40,7 +35,7 @@ final class Registry {
 	const LOCALE_PATTERN = '/^[a-z]{2,3}(_[A-Z]{2})?(_[a-z0-9]+)?$/';
 
 	/**
-	 * hreflang values: language, optionally followed by script or region.
+	 * Valid hreflang values: language, optionally followed by script or region.
 	 */
 	const HREFLANG_PATTERN = '/^[a-z]{2,3}(-[A-Za-z]{2,4})?$/';
 
@@ -70,13 +65,13 @@ final class Registry {
 				}
 			}
 
-			$default = ( is_array( $stored ) && isset( $stored['default'] ) ) ? sanitize_key( $stored['default'] ) : '';
-			if ( ! isset( $languages[ $default ] ) ) {
-				$default = $languages ? (string) array_key_first( $languages ) : '';
+			$default_code = ( is_array( $stored ) && isset( $stored['default'] ) ) ? sanitize_key( $stored['default'] ) : '';
+			if ( ! isset( $languages[ $default_code ] ) ) {
+				$default_code = $languages ? (string) array_key_first( $languages ) : '';
 			}
 
 			self::$cache = array(
-				'default'   => $default,
+				'default'   => $default_code,
 				'languages' => $languages,
 			);
 		}
@@ -170,10 +165,10 @@ final class Registry {
 	 * Replaces the whole language list.
 	 *
 	 * @param array  $languages List of raw language arrays, in display order.
-	 * @param string $default   Default language code.
+	 * @param string $default_code Default language code.
 	 * @return true|WP_Error
 	 */
-	public static function save( array $languages, $default ) {
+	public static function save( array $languages, $default_code ) {
 		$clean = array();
 		foreach ( $languages as $raw ) {
 			$language = is_array( $raw ) ? self::sanitize_language( $raw ) : new WP_Error( 'cedar_ml_invalid_language', __( 'Invalid language.', 'cedar-multilang' ) );
@@ -186,15 +181,15 @@ final class Registry {
 			$clean[ $language['code'] ] = $language;
 		}
 
-		$default = sanitize_key( (string) $default );
-		if ( $clean && ! isset( $clean[ $default ] ) ) {
+		$default_code = sanitize_key( (string) $default_code );
+		if ( $clean && ! isset( $clean[ $default_code ] ) ) {
 			return new WP_Error( 'cedar_ml_invalid_default', __( 'The default language must be one of your languages.', 'cedar-multilang' ) );
 		}
 
 		update_option(
 			self::OPTION,
 			array(
-				'default'   => $default,
+				'default'   => $default_code,
 				'languages' => array_values( $clean ),
 			),
 			true
@@ -205,9 +200,9 @@ final class Registry {
 		 * Fires after the language list changed.
 		 *
 		 * @param array  $languages Sanitized languages keyed by code.
-		 * @param string $default   Default language code.
+		 * @param string $default_code Default language code.
 		 */
-		do_action( 'cedar_ml_languages_saved', $clean, $default );
+		do_action( 'cedar_ml_languages_saved', $clean, $default_code );
 
 		return true;
 	}
@@ -219,13 +214,13 @@ final class Registry {
 	 * @return true|WP_Error
 	 */
 	public static function add( array $raw ) {
-		$languages   = array_values( self::all() );
-		$languages[] = $raw;
-		$default     = self::default_code();
-		if ( '' === $default && isset( $raw['code'] ) ) {
-			$default = $raw['code'];
+		$languages    = array_values( self::all() );
+		$languages[]  = $raw;
+		$default_code = self::default_code();
+		if ( '' === $default_code && isset( $raw['code'] ) ) {
+			$default_code = $raw['code'];
 		}
-		return self::save( $languages, $default );
+		return self::save( $languages, $default_code );
 	}
 
 	/**
