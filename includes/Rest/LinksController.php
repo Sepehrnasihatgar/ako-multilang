@@ -1,17 +1,17 @@
 <?php
 /**
- * REST: /cedar/v1/links
+ * REST: /ako/v1/links
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Rest;
+namespace Ako\Multilang\Rest;
 
-use Cedar\Multilang\Content\Duplicate;
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Overview;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Registry;
+use Ako\Multilang\Content\Duplicate;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Overview;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Registry;
 use WP_Error;
 use WP_Query;
 use WP_REST_Request;
@@ -201,7 +201,7 @@ final class LinksController {
 		if ( is_string( $value ) && Taxonomies::supports( self::resolve_post_type( $value ) ) ) {
 			return true;
 		}
-		return new WP_Error( 'rest_invalid_param', __( 'Cedar isn’t enabled for this content type.', 'cedar-multilang' ), array( 'status' => 400 ) );
+		return new WP_Error( 'rest_invalid_param', __( 'Ako isn’t enabled for this content type.', 'ako-multilang' ), array( 'status' => 400 ) );
 	}
 
 	/**
@@ -214,7 +214,7 @@ final class LinksController {
 		if ( is_string( $value ) && Registry::exists( $value ) ) {
 			return true;
 		}
-		return new WP_Error( 'rest_invalid_param', __( 'That language isn’t set up yet.', 'cedar-multilang' ), array( 'status' => 400 ) );
+		return new WP_Error( 'rest_invalid_param', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 400 ) );
 	}
 
 	/**
@@ -394,7 +394,7 @@ final class LinksController {
 	public static function show( WP_REST_Request $request ) {
 		$post = get_post( (int) $request['id'] );
 		if ( ! $post || ! Taxonomies::supports( $post->post_type ) ) {
-			return new WP_Error( 'cedar_ml_unsupported_type', __( 'Cedar isn’t enabled for this content type.', 'cedar-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ako_ml_unsupported_type', __( 'Ako isn’t enabled for this content type.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 		return rest_ensure_response( Overview::detail( $post ) );
 	}
@@ -447,7 +447,7 @@ final class LinksController {
 	public static function unlink( WP_REST_Request $request ) {
 		$id = (int) $request['id'];
 		if ( ! get_post( $id ) ) {
-			return new WP_Error( 'cedar_ml_invalid_post', __( 'That page doesn’t exist.', 'cedar-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ako_ml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 
 		if ( 'group' === $request['scope'] ) {

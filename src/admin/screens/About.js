@@ -11,27 +11,24 @@ import { Callout, EmptyState, Logo } from '../../components/display';
 import { errorMessage } from '../api';
 
 const REVIEWS_URL =
-	'https://wordpress.org/support/plugin/cedar-multilang/reviews/#new-post';
+	'https://wordpress.org/support/plugin/ako-multilang/reviews/#new-post';
 
 const CHANGELOG = [
 	{
 		version: '1.0.0',
 		date: '2026-10-01',
 		changes: () => [
-			__( 'Any number of languages, every post type', 'cedar-multilang' ),
+			__( 'Any number of languages, every post type', 'ako-multilang' ),
 			__(
 				'Language panel for the Block and Classic editors',
-				'cedar-multilang'
+				'ako-multilang'
 			),
-			__( 'Five switcher styles plus inherit mode', 'cedar-multilang' ),
+			__( 'Five switcher styles plus inherit mode', 'ako-multilang' ),
 			__(
 				'hreflang and og:locale that work with Yoast SEO, Rank Math, and AIOSEO',
-				'cedar-multilang'
+				'ako-multilang'
 			),
-			__(
-				'Import from WPML, Polylang, and Cedar 6.2',
-				'cedar-multilang'
-			),
+			__( 'Import from WPML, Polylang, and Cedar 6.2', 'ako-multilang' ),
 		],
 	},
 	{
@@ -40,7 +37,7 @@ const CHANGELOG = [
 		changes: () => [
 			__(
 				'Private release for one Persian/English site. Data migrates automatically.',
-				'cedar-multilang'
+				'ako-multilang'
 			),
 		],
 	},
@@ -77,7 +74,7 @@ const STATUS_ICONS = {
  */
 function report( system ) {
 	return [
-		`Cedar Multilang ${ system.version }`,
+		`Ako Multilang ${ system.version }`,
 		...system.checks.map(
 			( check ) => `${ check.label }: ${ check.value }`
 		),
@@ -90,7 +87,7 @@ export default function About( { config, notify } ) {
 
 	const load = useCallback( () => {
 		setLoadError( null );
-		apiFetch( { path: '/cedar/v1/system' } )
+		apiFetch( { path: '/ako/v1/system' } )
 			.then( setSystem )
 			.catch( ( error ) =>
 				setLoadError(
@@ -98,7 +95,7 @@ export default function About( { config, notify } ) {
 						error,
 						__(
 							'System status couldn’t be loaded.',
-							'cedar-multilang'
+							'ako-multilang'
 						)
 					)
 				)
@@ -112,14 +109,14 @@ export default function About( { config, notify } ) {
 			await window.navigator.clipboard.writeText( report( system ) );
 			notify( {
 				tone: 'success',
-				message: __( 'System info copied.', 'cedar-multilang' ),
+				message: __( 'System info copied.', 'ako-multilang' ),
 			} );
 		} catch {
 			notify( {
 				tone: 'error',
 				message: __(
 					'Your browser blocked copying. Select the rows and copy them instead.',
-					'cedar-multilang'
+					'ako-multilang'
 				),
 			} );
 		}
@@ -130,18 +127,15 @@ export default function About( { config, notify } ) {
 		: [];
 
 	return (
-		<div className="cedar-designer is-about">
-			<div className="cedar-designer__column">
-				<section className="cedar-card cedar-product">
-					<div className="cedar-product__head">
-						<Logo size={ 56 } className="cedar-product__logo" />
+		<div className="ako-designer is-about">
+			<div className="ako-designer__column">
+				<section className="ako-card ako-product">
+					<div className="ako-product__head">
+						<Logo size={ 56 } className="ako-product__logo" />
 						<div>
-							<div className="cedar-product__title">
+							<div className="ako-product__title">
 								<h1>
-									{ __(
-										'Cedar Multilang',
-										'cedar-multilang'
-									) }
+									{ __( 'Ako Multilang', 'ako-multilang' ) }
 								</h1>
 								{ system &&
 									( system.update ? (
@@ -150,7 +144,7 @@ export default function About( { config, notify } ) {
 												/* translators: %s: Version number. */
 												__(
 													'%s available',
-													'cedar-multilang'
+													'ako-multilang'
 												),
 												system.update.version
 											) }
@@ -159,17 +153,17 @@ export default function About( { config, notify } ) {
 										<Badge tone="linked" dot>
 											{ __(
 												'Up to date',
-												'cedar-multilang'
+												'ako-multilang'
 											) }
 										</Badge>
 									) ) }
 							</div>
-							<p className="cedar-product__meta">
+							<p className="ako-product__meta">
 								{ sprintf(
 									/* translators: %s: Version number. */
 									__(
 										'Version %s · GPLv2 or later',
-										'cedar-multilang'
+										'ako-multilang'
 									),
 									config.version
 								) }
@@ -181,16 +175,13 @@ export default function About( { config, notify } ) {
 							icon="arrows-left-right"
 							title={ sprintf(
 								/* translators: %s: Version number. */
-								__( 'Version %s is ready', 'cedar-multilang' ),
+								__( 'Version %s is ready', 'ako-multilang' ),
 								system.update.version
 							) }
 							action={
 								system.update.url && (
 									<Button href={ system.update.url }>
-										{ __(
-											'Update now',
-											'cedar-multilang'
-										) }
+										{ __( 'Update now', 'ako-multilang' ) }
 									</Button>
 								)
 							}
@@ -198,18 +189,18 @@ export default function About( { config, notify } ) {
 							{ system.update.notice }
 						</Callout>
 					) }
-					<div className="cedar-product__links">
+					<div className="ako-product__links">
 						<Button
 							icon="external-link"
 							href={ REVIEWS_URL }
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							{ __( 'Rate on WordPress.org', 'cedar-multilang' ) }
+							{ __( 'Rate on WordPress.org', 'ako-multilang' ) }
 							<span className="screen-reader-text">
 								{ __(
 									'(opens in a new tab)',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 							</span>
 						</Button>
@@ -217,21 +208,21 @@ export default function About( { config, notify } ) {
 				</section>
 
 				<section
-					className="cedar-card"
-					aria-labelledby="cedar-changes-title"
+					className="ako-card"
+					aria-labelledby="ako-changes-title"
 				>
-					<h2 id="cedar-changes-title" className="cedar-card__title">
-						{ __( 'What’s new', 'cedar-multilang' ) }
+					<h2 id="ako-changes-title" className="ako-card__title">
+						{ __( 'What’s new', 'ako-multilang' ) }
 					</h2>
 					{ CHANGELOG.map( ( release ) => (
-						<div key={ release.version } className="cedar-release">
-							<h3 className="cedar-release__head">
+						<div key={ release.version } className="ako-release">
+							<h3 className="ako-release__head">
 								{ release.version }
-								<span className="cedar-release__date">
+								<span className="ako-release__date">
 									{ monthYear( release.date ) }
 								</span>
 							</h3>
-							<ul className="cedar-release__list">
+							<ul className="ako-release__list">
 								{ release.changes().map( ( change ) => (
 									<li key={ change }>{ change }</li>
 								) ) }
@@ -241,20 +232,17 @@ export default function About( { config, notify } ) {
 				</section>
 			</div>
 
-			<div className="cedar-designer__column">
+			<div className="ako-designer__column">
 				<section
-					className="cedar-card"
-					aria-labelledby="cedar-system-title"
+					className="ako-card"
+					aria-labelledby="ako-system-title"
 				>
-					<div className="cedar-card__head">
-						<h2
-							id="cedar-system-title"
-							className="cedar-card__title"
-						>
-							{ __( 'System status', 'cedar-multilang' ) }
+					<div className="ako-card__head">
+						<h2 id="ako-system-title" className="ako-card__title">
+							{ __( 'System status', 'ako-multilang' ) }
 						</h2>
 						{ system && (
-							<p className="cedar-card__text">
+							<p className="ako-card__text">
 								{ warnings.length
 									? sprintf(
 											/* translators: %d: Number of problems. */
@@ -262,13 +250,13 @@ export default function About( { config, notify } ) {
 												'%d thing needs attention',
 												'%d things need attention',
 												warnings.length,
-												'cedar-multilang'
+												'ako-multilang'
 											),
 											warnings.length
 										)
 									: __(
-											'Everything Cedar needs is in place.',
-											'cedar-multilang'
+											'Everything Ako needs is in place.',
+											'ako-multilang'
 										) }
 							</p>
 						) }
@@ -278,19 +266,19 @@ export default function About( { config, notify } ) {
 							icon="alert"
 							title={ __(
 								'Couldn’t load system status',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 							description={ loadError }
 							actions={
 								<Button variant="primary" onClick={ load }>
-									{ __( 'Try again', 'cedar-multilang' ) }
+									{ __( 'Try again', 'ako-multilang' ) }
 								</Button>
 							}
 						/>
 					) }
 					{ system && (
 						<>
-							<dl className="cedar-status">
+							<dl className="ako-status">
 								{ system.checks.map( ( check ) => {
 									const icon =
 										STATUS_ICONS[ check.status ] ||
@@ -298,7 +286,7 @@ export default function About( { config, notify } ) {
 									return (
 										<div
 											key={ check.key }
-											className="cedar-status__row"
+											className="ako-status__row"
 										>
 											<dt>{ check.label }</dt>
 											<dd>
@@ -311,7 +299,7 @@ export default function About( { config, notify } ) {
 														check.status
 															? __(
 																	'Needs attention',
-																	'cedar-multilang'
+																	'ako-multilang'
 																)
 															: undefined
 													}
@@ -335,7 +323,7 @@ export default function About( { config, notify } ) {
 								<Button icon="copy" onClick={ copy }>
 									{ __(
 										'Copy system info',
-										'cedar-multilang'
+										'ako-multilang'
 									) }
 								</Button>
 							</div>
@@ -344,22 +332,19 @@ export default function About( { config, notify } ) {
 				</section>
 
 				<section
-					className="cedar-card"
-					aria-labelledby="cedar-credits-title"
+					className="ako-card"
+					aria-labelledby="ako-credits-title"
 				>
-					<h2 id="cedar-credits-title" className="cedar-card__title">
-						{ __( 'Credits', 'cedar-multilang' ) }
+					<h2 id="ako-credits-title" className="ako-card__title">
+						{ __( 'Credits', 'ako-multilang' ) }
 					</h2>
-					<p className="cedar-card__text">
-						{ __(
-							'Built by Sepehr Nasihatgar',
-							'cedar-multilang'
-						) }
+					<p className="ako-card__text">
+						{ __( 'Built by Sepehr Nasihatgar', 'ako-multilang' ) }
 					</p>
-					<p className="cedar-card__text">
+					<p className="ako-card__text">
 						{ __(
 							'Icons: Lucide (ISC) · Fonts: Inter and Vazirmatn (OFL)',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 					</p>
 				</section>

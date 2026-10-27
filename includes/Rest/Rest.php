@@ -1,11 +1,11 @@
 <?php
 /**
- * REST API bootstrap (namespace cedar/v1).
+ * REST API bootstrap (namespace ako/v1).
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Rest;
+namespace Ako\Multilang\Rest;
 
 use WP_Error;
 
@@ -17,10 +17,10 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Rest {
 
-	const NAMESPACE = 'cedar/v1';
+	const NAMESPACE = 'ako/v1';
 
 	/**
-	 * Statuses shown in Cedar's lists (never trash or auto-draft).
+	 * Statuses shown in Ako's lists (never trash or auto-draft).
 	 */
 	const CONTENT_STATUSES = array( 'publish', 'future', 'draft', 'pending', 'private' );
 

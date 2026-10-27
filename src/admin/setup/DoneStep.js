@@ -11,24 +11,22 @@ import { completeSetup, errorMessage, getSetupSummary } from '../api';
 
 function Stat( { value, label, tone } ) {
 	return (
-		<div className={ `cedar-stat is-${ tone }` }>
-			<span className="cedar-stat__value">{ value }</span>
-			<span className="cedar-stat__label">{ label }</span>
+		<div className={ `ako-stat is-${ tone }` }>
+			<span className="ako-stat__value">{ value }</span>
+			<span className="ako-stat__label">{ label }</span>
 		</div>
 	);
 }
 
 function NextStep( { icon, title, description, action, href } ) {
 	return (
-		<li className="cedar-check">
-			<span className="cedar-check__tile is-neutral" aria-hidden="true">
+		<li className="ako-check">
+			<span className="ako-check__tile is-neutral" aria-hidden="true">
 				<Icon name={ icon } />
 			</span>
-			<span className="cedar-check__copy">
-				<span className="cedar-check__title">{ title }</span>
-				<span className="cedar-check__description">
-					{ description }
-				</span>
+			<span className="ako-check__copy">
+				<span className="ako-check__title">{ title }</span>
+				<span className="ako-check__description">{ description }</span>
 			</span>
 			<Button size="small" href={ href }>
 				{ action }
@@ -54,7 +52,7 @@ export default function DoneStep( { config, notify } ) {
 					tone: 'error',
 					message: errorMessage(
 						error,
-						__( 'Setup couldn’t be finished.', 'cedar-multilang' )
+						__( 'Setup couldn’t be finished.', 'ako-multilang' )
 					),
 				} );
 				setSummary( false );
@@ -63,8 +61,8 @@ export default function DoneStep( { config, notify } ) {
 
 	if ( null === summary ) {
 		return (
-			<p className="cedar-setup__loading" role="status">
-				{ __( 'Wrapping up…', 'cedar-multilang' ) }
+			<p className="ako-setup__loading" role="status">
+				{ __( 'Wrapping up…', 'ako-multilang' ) }
 			</p>
 		);
 	}
@@ -75,7 +73,7 @@ export default function DoneStep( { config, notify } ) {
 
 	return (
 		<>
-			<div className="cedar-setup__intro">
+			<div className="ako-setup__intro">
 				<h1 tabIndex={ -1 }>
 					{ live
 						? sprintf(
@@ -84,34 +82,34 @@ export default function DoneStep( { config, notify } ) {
 									'You’re live in %d language',
 									'You’re live in %d languages',
 									summary.languages,
-									'cedar-multilang'
+									'ako-multilang'
 								),
 								summary.languages
 							)
-						: __( 'Almost there', 'cedar-multilang' ) }
+						: __( 'Almost there', 'ako-multilang' ) }
 				</h1>
 				<p>
 					{ live
 						? __(
-								'hreflang, lang and dir, and the switcher are on. Here’s what Cedar set up and what’s left to do.',
-								'cedar-multilang'
+								'hreflang, lang and dir, and the switcher are on. Here’s what Ako set up and what’s left to do.',
+								'ako-multilang'
 							)
 						: __(
 								'Languages and the switcher are set. Link at least two pages and hreflang turns on automatically.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 				</p>
 			</div>
 
 			{ summary && (
-				<div className="cedar-stats">
+				<div className="ako-stats">
 					<Stat
 						value={ summary.languages }
 						label={ _n(
 							'language',
 							'languages',
 							summary.languages,
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						tone={ live ? 'success' : 'neutral' }
 					/>
@@ -121,7 +119,7 @@ export default function DoneStep( { config, notify } ) {
 							'page linked',
 							'pages linked',
 							summary.linked,
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						tone={ zeroTone }
 					/>
@@ -131,7 +129,7 @@ export default function DoneStep( { config, notify } ) {
 							'hreflang link',
 							'hreflang links',
 							summary.hreflang,
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						tone={ zeroTone }
 					/>
@@ -141,7 +139,7 @@ export default function DoneStep( { config, notify } ) {
 							'switcher placed',
 							'switchers placed',
 							summary.switchers,
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						tone={ live ? 'success' : 'neutral' }
 					/>
@@ -152,32 +150,32 @@ export default function DoneStep( { config, notify } ) {
 				<Callout
 					tone="warning"
 					icon="alert"
-					title={ __( 'No pages are linked yet', 'cedar-multilang' ) }
+					title={ __( 'No pages are linked yet', 'ako-multilang' ) }
 				>
 					{ __(
 						'Until two pages are linked, no hreflang is written and the switcher sends every language to your home page.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				</Callout>
 			) }
 
-			<div className="cedar-field">
-				<h2 className="cedar-field__label">
-					{ __( 'Next steps', 'cedar-multilang' ) }
+			<div className="ako-field">
+				<h2 className="ako-field__label">
+					{ __( 'Next steps', 'ako-multilang' ) }
 				</h2>
-				<ul className="cedar-checks cedar-next-steps">
+				<ul className="ako-checks ako-next-steps">
 					{ summary && ! live && (
 						<NextStep
 							icon="link"
 							title={ __(
 								'Connect your first pages',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 							description={ __(
 								'Pick a page and its translation. It takes about a minute.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
-							action={ __( 'Connect', 'cedar-multilang' ) }
+							action={ __( 'Connect', 'ako-multilang' ) }
 							href={ urls.translations }
 						/>
 					) }
@@ -190,37 +188,34 @@ export default function DoneStep( { config, notify } ) {
 									'%1$d page has no %2$s version',
 									'%1$d pages have no %2$s version',
 									summary.missing.count,
-									'cedar-multilang'
+									'ako-multilang'
 								),
 								summary.missing.count,
 								summary.missing.name
 							) }
 							description={ __(
 								'Duplicate them as drafts in one click.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
-							action={ __( 'Review', 'cedar-multilang' ) }
+							action={ __( 'Review', 'ako-multilang' ) }
 							href={ `${ urls.translations }#missing` }
 						/>
 					) }
 					{ summary && summary.oneWay > 0 && urls.seo && (
 						<NextStep
 							icon="alert"
-							title={ __(
-								'Check SEO health',
-								'cedar-multilang'
-							) }
+							title={ __( 'Check SEO health', 'ako-multilang' ) }
 							description={ sprintf(
 								/* translators: %d: Number of one-way links. */
 								_n(
 									'%d one-way link was found.',
 									'%d one-way links were found.',
 									summary.oneWay,
-									'cedar-multilang'
+									'ako-multilang'
 								),
 								summary.oneWay
 							) }
-							action={ __( 'Open SEO', 'cedar-multilang' ) }
+							action={ __( 'Open SEO', 'ako-multilang' ) }
 							href={ urls.seo }
 						/>
 					) }
@@ -229,23 +224,23 @@ export default function DoneStep( { config, notify } ) {
 							icon="settings-2"
 							title={ __(
 								'Make the switcher yours',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 							description={ __(
 								'Change colors, corners, and labels with a live preview.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
-							action={ __( 'Customize', 'cedar-multilang' ) }
+							action={ __( 'Customize', 'ako-multilang' ) }
 							href={ urls.switcher }
 						/>
 					) }
 				</ul>
 			</div>
 
-			<div className="cedar-setup__footer">
+			<div className="ako-setup__footer">
 				<span />
 				<Button variant="primary" href={ urls.translations }>
-					{ __( 'Go to Translations', 'cedar-multilang' ) }
+					{ __( 'Go to Translations', 'ako-multilang' ) }
 				</Button>
 			</div>
 		</>

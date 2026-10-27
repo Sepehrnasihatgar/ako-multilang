@@ -2,28 +2,28 @@
 /**
  * Admin menu, screens and assets.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Admin;
+namespace Ako\Multilang\Admin;
 
-use Cedar\Multilang\Settings;
-use Cedar\Multilang\Setup\Wizard;
+use Ako\Multilang\Settings;
+use Ako\Multilang\Setup\Wizard;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * One top-level "Cedar" menu. Each submenu renders the same React root with a
+ * One top-level "Ako" menu. Each submenu renders the same React root with a
  * different screen; scripts and styles load only on these screens.
  */
 final class Admin {
 
-	const SLUG = 'cedar-multilang';
+	const SLUG = 'ako-multilang';
 
-	const SCRIPT = 'cedar-ml-admin';
+	const SCRIPT = 'ako-ml-admin';
 
 	/**
-	 * Hook suffixes of Cedar screens, keyed by screen ID.
+	 * Hook suffixes of Ako screens, keyed by screen ID.
 	 *
 	 * @var array<string,string>
 	 */
@@ -37,7 +37,7 @@ final class Admin {
 		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue' ) );
 		add_filter( 'admin_body_class', array( self::class, 'body_class' ) );
 		add_action( 'admin_head', array( self::class, 'hide_setup_entry' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( CEDAR_ML_FILE ), array( self::class, 'action_links' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( AKO_ML_FILE ), array( self::class, 'action_links' ) );
 	}
 
 	/**
@@ -49,35 +49,35 @@ final class Admin {
 		$screens = array(
 			'translations' => array(
 				'slug'  => self::SLUG,
-				'title' => __( 'Translations', 'cedar-multilang' ),
+				'title' => __( 'Translations', 'ako-multilang' ),
 				'cap'   => 'edit_posts',
 			),
 			'languages'    => array(
 				'slug'  => self::SLUG . '-languages',
-				'title' => __( 'Languages', 'cedar-multilang' ),
+				'title' => __( 'Languages', 'ako-multilang' ),
 				'cap'   => 'manage_options',
 			),
 			'switcher'     => array(
 				'slug'  => self::SLUG . '-switcher',
-				'title' => __( 'Switcher', 'cedar-multilang' ),
+				'title' => __( 'Switcher', 'ako-multilang' ),
 				'cap'   => 'manage_options',
 			),
 		);
 
 		$screens['seo'] = array(
 			'slug'  => self::SLUG . '-seo',
-			'title' => __( 'SEO', 'cedar-multilang' ),
+			'title' => __( 'SEO', 'ako-multilang' ),
 			'cap'   => 'manage_options',
 		);
 
 		$screens['settings'] = array(
 			'slug'  => self::SLUG . '-settings',
-			'title' => __( 'Settings', 'cedar-multilang' ),
+			'title' => __( 'Settings', 'ako-multilang' ),
 			'cap'   => 'manage_options',
 		);
 		$screens['about']    = array(
 			'slug'  => self::SLUG . '-about',
-			'title' => __( 'About', 'cedar-multilang' ),
+			'title' => __( 'About', 'ako-multilang' ),
 			'cap'   => 'manage_options',
 		);
 
@@ -95,8 +95,8 @@ final class Admin {
 	 */
 	public static function menu() {
 		add_menu_page(
-			__( 'Cedar Multilang', 'cedar-multilang' ),
-			__( 'Cedar', 'cedar-multilang' ),
+			__( 'Ako Multilang', 'ako-multilang' ),
+			__( 'Ako', 'ako-multilang' ),
 			'edit_posts',
 			self::SLUG,
 			array( self::class, 'render' ),
@@ -107,7 +107,7 @@ final class Admin {
 		foreach ( self::screens() as $id => $screen ) {
 			$hook = add_submenu_page(
 				self::SLUG,
-				$screen['title'] . ' ‹ ' . __( 'Cedar Multilang', 'cedar-multilang' ),
+				$screen['title'] . ' ‹ ' . __( 'Ako Multilang', 'ako-multilang' ),
 				$screen['title'],
 				$screen['cap'],
 				$screen['slug'],
@@ -121,8 +121,8 @@ final class Admin {
 		// Setup has no menu entry: it's reached from notices and the Translations screen.
 		$hook = add_submenu_page(
 			self::SLUG,
-			__( 'Set up Cedar', 'cedar-multilang' ),
-			__( 'Set up Cedar', 'cedar-multilang' ),
+			__( 'Set up Ako', 'ako-multilang' ),
+			__( 'Set up Ako', 'ako-multilang' ),
 			'manage_options',
 			self::SLUG . '-setup',
 			array( self::class, 'render' )
@@ -162,7 +162,7 @@ final class Admin {
 		$cap       = 'setup' === $screen_id ? 'manage_options' : ( isset( $screens[ $screen_id ] ) ? $screens[ $screen_id ]['cap'] : '' );
 
 		if ( '' === $cap || ! current_user_can( $cap ) ) {
-			wp_die( esc_html__( 'Sorry, you are not allowed to access this page.', 'cedar-multilang' ), 403 );
+			wp_die( esc_html__( 'Sorry, you are not allowed to access this page.', 'ako-multilang' ), 403 );
 		}
 
 		$nav = array();
@@ -175,7 +175,7 @@ final class Admin {
 		$settings = Settings::get();
 		$config   = array(
 			'screen'     => $screen_id,
-			'version'    => CEDAR_ML_VERSION,
+			'version'    => AKO_ML_VERSION,
 			'urls'       => $nav,
 			'setupUrl'   => admin_url( 'admin.php?page=' . self::SLUG . '-setup' ),
 			'needsSetup' => Wizard::needs_setup(),
@@ -184,19 +184,19 @@ final class Admin {
 			'siteName'   => wp_strip_all_tags( get_bloginfo( 'name' ) ),
 		);
 
-		echo '<div class="wrap cedar-ml-notices"><hr class="wp-header-end"></div>';
+		echo '<div class="wrap ako-ml-notices"><hr class="wp-header-end"></div>';
 		printf(
-			'<div id="cedar-ml-root" class="cedar-ml cedar-ml-root" data-config="%s"></div>',
+			'<div id="ako-ml-root" class="ako-ml ako-ml-root" data-config="%s"></div>',
 			esc_attr( wp_json_encode( $config ) )
 		);
 		printf(
 			'<noscript><div class="notice notice-error"><p>%s</p></div></noscript>',
-			esc_html__( 'Cedar Multilang needs JavaScript to show this screen.', 'cedar-multilang' )
+			esc_html__( 'Ako Multilang needs JavaScript to show this screen.', 'ako-multilang' )
 		);
 	}
 
 	/**
-	 * Loads the admin app on Cedar screens only.
+	 * Loads the admin app on Ako screens only.
 	 *
 	 * @param string $hook_suffix Current admin page hook.
 	 */
@@ -205,7 +205,7 @@ final class Admin {
 			return;
 		}
 
-		$asset_file = CEDAR_ML_PATH . 'build/admin/index.asset.php';
+		$asset_file = AKO_ML_PATH . 'build/admin/index.asset.php';
 		if ( ! is_readable( $asset_file ) ) {
 			add_action( 'admin_notices', array( self::class, 'missing_build_notice' ) );
 			return;
@@ -214,16 +214,16 @@ final class Admin {
 
 		wp_enqueue_script(
 			self::SCRIPT,
-			CEDAR_ML_URL . 'build/admin/index.js',
+			AKO_ML_URL . 'build/admin/index.js',
 			$asset['dependencies'],
 			$asset['version'],
 			array( 'in_footer' => true )
 		);
-		wp_set_script_translations( self::SCRIPT, 'cedar-multilang', CEDAR_ML_PATH . 'languages' );
+		wp_set_script_translations( self::SCRIPT, 'ako-multilang', AKO_ML_PATH . 'languages' );
 
 		wp_enqueue_style(
 			self::SCRIPT,
-			CEDAR_ML_URL . 'build/admin/index.css',
+			AKO_ML_URL . 'build/admin/index.css',
 			array(),
 			$asset['version']
 		);
@@ -231,7 +231,7 @@ final class Admin {
 
 		// The designer and setup preview the real front-end stylesheet.
 		if ( in_array( array_search( $hook_suffix, self::$hooks, true ), array( 'switcher', 'setup' ), true ) ) {
-			wp_enqueue_style( 'cedar-ml-switcher' );
+			wp_enqueue_style( 'ako-ml-switcher' );
 		}
 	}
 
@@ -241,19 +241,19 @@ final class Admin {
 	public static function missing_build_notice() {
 		printf(
 			'<div class="notice notice-error"><p>%s</p></div>',
-			esc_html__( 'Cedar Multilang’s admin files are missing. Reinstall the plugin, or run “npm run build” in a development copy.', 'cedar-multilang' )
+			esc_html__( 'Ako Multilang’s admin files are missing. Reinstall the plugin, or run “npm run build” in a development copy.', 'ako-multilang' )
 		);
 	}
 
 	/**
-	 * Adds a body class on Cedar screens (for the page canvas).
+	 * Adds a body class on Ako screens (for the page canvas).
 	 *
 	 * @param string $classes Space-separated classes.
 	 * @return string
 	 */
 	public static function body_class( $classes ) {
 		if ( '' !== self::current_screen_id() ) {
-			$classes .= ' cedar-ml-screen';
+			$classes .= ' ako-ml-screen';
 		}
 		return $classes;
 	}
@@ -267,8 +267,8 @@ final class Admin {
 	public static function action_links( $links ) {
 		if ( current_user_can( 'manage_options' ) ) {
 			$link = Wizard::needs_setup()
-				? array( 'setup', __( 'Start setup', 'cedar-multilang' ) )
-				: array( 'settings', __( 'Settings', 'cedar-multilang' ) );
+				? array( 'setup', __( 'Start setup', 'ako-multilang' ) )
+				: array( 'settings', __( 'Settings', 'ako-multilang' ) );
 			array_unshift(
 				$links,
 				sprintf(
@@ -283,7 +283,7 @@ final class Admin {
 				sprintf(
 					'<a href="%s">%s</a>',
 					esc_url( admin_url( 'admin.php?page=' . self::SLUG ) ),
-					esc_html__( 'Translations', 'cedar-multilang' )
+					esc_html__( 'Translations', 'ako-multilang' )
 				)
 			);
 		}
@@ -291,7 +291,7 @@ final class Admin {
 	}
 
 	/**
-	 * The Cedar mark as a data URI (WordPress tints it to match the admin color scheme).
+	 * The Ako mark as a data URI (WordPress tints it to match the admin color scheme).
 	 *
 	 * @return string
 	 */

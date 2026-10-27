@@ -2,15 +2,15 @@
 /**
  * The hreflang links and the <html lang dir> attributes.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Seo;
+namespace Ako\Multilang\Seo;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Registry;
-use Cedar\Multilang\Settings;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Registry;
+use Ako\Multilang\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -92,7 +92,7 @@ final class Hreflang {
 		 * @param array<string,string> $out     hreflang => URL.
 		 * @param int                  $post_id Current post ID.
 		 */
-		return (array) apply_filters( 'cedar_ml_hreflang_links', $out, $post_id );
+		return (array) apply_filters( 'ako_ml_hreflang_links', $out, $post_id );
 	}
 
 	/**
@@ -112,7 +112,7 @@ final class Hreflang {
 		 * @param bool $ok      Whether the post is indexable.
 		 * @param int  $post_id Post ID.
 		 */
-		return (bool) apply_filters( 'cedar_ml_is_indexable', $ok, (int) $post_id );
+		return (bool) apply_filters( 'ako_ml_is_indexable', $ok, (int) $post_id );
 	}
 
 	/**
@@ -124,11 +124,11 @@ final class Hreflang {
 		$handled = defined( 'POLYLANG_VERSION' ) || defined( 'ICL_SITEPRESS_VERSION' );
 
 		/**
-		 * Filters whether Cedar should stay silent because hreflang is handled elsewhere.
+		 * Filters whether Ako should stay silent because hreflang is handled elsewhere.
 		 *
 		 * @param bool $handled Whether hreflang is handled by another plugin.
 		 */
-		return (bool) apply_filters( 'cedar_ml_hreflang_handled_elsewhere', $handled );
+		return (bool) apply_filters( 'ako_ml_hreflang_handled_elsewhere', $handled );
 	}
 
 	/**
@@ -178,7 +178,7 @@ final class Hreflang {
 	}
 
 	/**
-	 * Adds `cedar-lang-{code}` to <body> for theme authors.
+	 * Adds `ako-lang-{code}` to <body> for theme authors.
 	 *
 	 * @param string[] $classes Body classes.
 	 * @return string[]
@@ -186,7 +186,7 @@ final class Hreflang {
 	public static function body_class( $classes ) {
 		$language = self::current_language();
 		if ( $language ) {
-			$classes[] = 'cedar-lang-' . sanitize_html_class( $language['code'] );
+			$classes[] = 'ako-lang-' . sanitize_html_class( $language['code'] );
 		}
 		return $classes;
 	}

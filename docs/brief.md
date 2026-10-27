@@ -1,4 +1,4 @@
-# Cedar Multilang — Product Brief (v1.0)
+# Ako Multilang — Product Brief (v1.0)
 
 > **A lightweight bilingual plugin for RTL sites. Link your pages across languages — no WPML, no slowdown.**
 
@@ -54,11 +54,11 @@ The switcher has to fit *any* site, not force its own look on it. Two layers:
 
 **b) Bring-your-own-style — so it never fights the user's design**
 - **Shortcode** with attributes, usable anywhere (page builders, widgets, template parts):
-  `[cedar_switcher type="dropdown" show="name" style="inherit" class="my-class"]`
+  `[ako_switcher type="dropdown" show="name" style="inherit" class="my-class"]`
 - **`style="inherit"` / unstyled mode:** clean semantic markup (`nav` with a `role="list"` group of links) with BEM classes. Inherits the theme's font, color, and sizing, with no fixed widths and no layout shifts.
 - **Low-specificity looks, protected layout:** colors, borders, and radii are wrapped in `:where()`, so any theme or custom CSS overrides them. Layout (display, spacing, box sizing) has real specificity, because testing on 10 themes showed theme resets and menu rules break a zero-specificity switcher. (Changed after the 1.0 theme compatibility pass.)
-- **PHP template tag** `cedar_switcher( $args )` for theme developers.
-- **Template override:** copy `templates/switcher.php` into `yourtheme/cedar/` to fully customize the markup.
+- **PHP template tag** `ako_switcher( $args )` for theme developers.
+- **Template override:** copy `templates/switcher.php` into `yourtheme/ako-multilang/` to fully customize the markup.
 - **Filters** on the language list and on the output markup.
 - **Ways to add it:** Gutenberg block, nav menu item, shortcode, Elementor widget, PHP template tag.
 - **When there's no translation:** hide it, link to that language's homepage, or show it disabled.
@@ -69,7 +69,7 @@ The switcher has to fit *any* site, not force its own look on it. Two layers:
 - **Polylang & WPML:** translation links are read straight from the database, even after the other plugin is deactivated. WPML import is tested against simulated data.
 
 ## Free vs Pro
-**Rule:** the free plugin fully solves the problem — nothing locked, no limits, no trials (wordpress.org guideline 5). Pro is a separate add-on plugin (`cedar-multilang-pro`) that plugs into free via hooks, sold from our own site.
+**Rule:** the free plugin fully solves the problem — nothing locked, no limits, no trials (wordpress.org guideline 5). Pro is a separate add-on plugin (`ako-multilang-pro`) that plugs into free via hooks, sold from our own site.
 
 | Area | Free | Pro |
 |---|---|---|
@@ -82,7 +82,7 @@ The switcher has to fit *any* site, not force its own look on it. Two layers:
 | WooCommerce | Link products across languages | Sync price, stock and attributes between linked products |
 | Other | — | Multisite |
 
-Pro licenses are tiered by number of sites. UI rule: one "Cedar Pro" screen plus a few dismissible one-line hints — no disabled or locked controls in free.
+Pro licenses are tiered by number of sites. UI rule: one "Ako Pro" screen plus a few dismissible one-line hints — no disabled or locked controls in free.
 
 **Release phasing:** taxonomies/menus and auto-suggest ship in v1.1; everything else in free ships in v1.0.
 

@@ -13,13 +13,13 @@ import {
 const CONFIDENCE = {
 	high: {
 		tone: 'linked',
-		label: () => __( 'High match', 'cedar-multilang' ),
+		label: () => __( 'High match', 'ako-multilang' ),
 	},
 	medium: {
 		tone: 'info',
-		label: () => __( 'Medium match', 'cedar-multilang' ),
+		label: () => __( 'Medium match', 'ako-multilang' ),
 	},
-	low: { tone: 'missing', label: () => __( 'Low match', 'cedar-multilang' ) },
+	low: { tone: 'missing', label: () => __( 'Low match', 'ako-multilang' ) },
 };
 
 /**
@@ -57,13 +57,13 @@ function readablePath( path ) {
 
 function Page( { page, code } ) {
 	return (
-		<span className="cedar-pair__page">
+		<span className="ako-pair__page">
 			<LanguageTag code={ code } />
-			<span className="cedar-pair__copy">
-				<span className="cedar-pair__title" dir="auto">
+			<span className="ako-pair__copy">
+				<span className="ako-pair__title" dir="auto">
 					{ page.title }
 				</span>
-				<span className="cedar-pair__path" dir="auto">
+				<span className="ako-pair__path" dir="auto">
 					{ readablePath( page.path ) }
 				</span>
 			</span>
@@ -102,12 +102,12 @@ export default function PairList( {
 
 	return (
 		<section
-			className={ `cedar-pairs ${ disabled ? 'is-disabled' : '' }` }
-			aria-labelledby="cedar-pairs-title"
+			className={ `ako-pairs ${ disabled ? 'is-disabled' : '' }` }
+			aria-labelledby="ako-pairs-title"
 		>
-			<div className="cedar-pairs__head">
-				<h3 id="cedar-pairs-title" className="cedar-pairs__title">
-					{ __( 'Suggested pairs', 'cedar-multilang' ) }
+			<div className="ako-pairs__head">
+				<h3 id="ako-pairs-title" className="ako-pairs__title">
+					{ __( 'Suggested pairs', 'ako-multilang' ) }
 				</h3>
 				<Badge tone="linked">
 					{ sprintf(
@@ -116,7 +116,7 @@ export default function PairList( {
 							'%d matched by slug & title',
 							'%d matched by slug & title',
 							pairs.length,
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						pairs.length
 					) }
@@ -124,7 +124,7 @@ export default function PairList( {
 				<Button
 					variant="ghost"
 					size="small"
-					className="cedar-pairs__all"
+					className="ako-pairs__all"
 					disabled={ disabled }
 					onClick={ () =>
 						onChange(
@@ -133,16 +133,16 @@ export default function PairList( {
 					}
 				>
 					{ all
-						? __( 'Clear all', 'cedar-multilang' )
-						: __( 'Select all', 'cedar-multilang' ) }
+						? __( 'Clear all', 'ako-multilang' )
+						: __( 'Select all', 'ako-multilang' ) }
 				</Button>
 			</div>
-			<ul className="cedar-pairs__list">
+			<ul className="ako-pairs__list">
 				{ pairs.map( ( pair ) => {
 					const confidence =
 						CONFIDENCE[ pair.confidence ] || CONFIDENCE.low;
 					return (
-						<li key={ pairKey( pair ) } className="cedar-pair">
+						<li key={ pairKey( pair ) } className="ako-pair">
 							<Checkbox
 								checked={ selected.has( pairKey( pair ) ) }
 								disabled={ disabled }
@@ -150,7 +150,7 @@ export default function PairList( {
 									/* translators: 1: Page title, 2: Translation title. */
 									__(
 										'Connect “%1$s” and “%2$s”',
-										'cedar-multilang'
+										'ako-multilang'
 									),
 									pair.source.title,
 									pair.target.title
@@ -163,7 +163,7 @@ export default function PairList( {
 							/>
 							<Icon
 								name="arrows-left-right"
-								className="cedar-pair__arrows"
+								className="ako-pair__arrows"
 							/>
 							<Page page={ pair.target } code={ pair.language } />
 							<Badge tone={ confidence.tone } dot>

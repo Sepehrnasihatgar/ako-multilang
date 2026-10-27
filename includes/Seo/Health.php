@@ -2,21 +2,21 @@
 /**
  * SEO health checks.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Seo;
+namespace Ako\Multilang\Seo;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Overview;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Registry;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Overview;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Registry;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Scans translation groups and stores the result (option
- * `cedar_ml_health`, not autoloaded) so screens can show it instantly.
+ * `ako_ml_health`, not autoloaded) so screens can show it instantly.
  *
  * Checks:
  * - one-way: a group's stored member list disagrees with the posts actually
@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Health {
 
-	const OPTION = 'cedar_ml_health';
+	const OPTION = 'ako_ml_health';
 
 	/**
 	 * Per-request cache of real members, keyed by group ID.
@@ -69,7 +69,7 @@ final class Health {
 		 *
 		 * @param array $result Result.
 		 */
-		$result = (array) apply_filters( 'cedar_ml_health_checks', $result );
+		$result = (array) apply_filters( 'ako_ml_health_checks', $result );
 
 		update_option( self::OPTION, $result, false );
 		return $result;

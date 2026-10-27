@@ -110,7 +110,7 @@ const PATHS = {
 export default function Icon( { name, size = 16, label, className = '' } ) {
 	return (
 		<svg
-			className={ `cedar-icon ${ className }` }
+			className={ `ako-icon ${ className }` }
 			width={ size }
 			height={ size }
 			viewBox="0 0 24 24"

@@ -1,5 +1,5 @@
 /**
- * Cedar admin app entry.
+ * Ako admin app entry.
  */
 import domReady from '@wordpress/dom-ready';
 import { createRoot } from '@wordpress/element';
@@ -7,7 +7,7 @@ import App from './App';
 import './admin.css';
 
 domReady( () => {
-	const root = document.getElementById( 'cedar-ml-root' );
+	const root = document.getElementById( 'ako-ml-root' );
 	if ( ! root ) {
 		return;
 	}

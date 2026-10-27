@@ -3,22 +3,22 @@
  * The one renderer behind the block, shortcode, menu item, PHP tag and the
  * floating switcher.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Switcher;
+namespace Ako\Multilang\Switcher;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Renders a switcher through templates/switcher.php (overridable by themes at
- * `cedar-multilang/switcher.php`) and passes the result through wp_kses() with
+ * `ako-multilang/switcher.php`) and passes the result through wp_kses() with
  * a strict allow-list, so even an overridden template can't print scripts.
  */
 final class Renderer {
 
-	const STYLE_HANDLE  = 'cedar-ml-switcher';
-	const SCRIPT_HANDLE = 'cedar-ml-switcher';
+	const STYLE_HANDLE  = 'ako-ml-switcher';
+	const SCRIPT_HANDLE = 'ako-ml-switcher';
 
 	/**
 	 * Registers front-end assets and the floating switcher.
@@ -33,12 +33,12 @@ final class Renderer {
 	 * Registers the stylesheet (< 3 KB) and the keyboard enhancement (< 1 KB).
 	 */
 	public static function register_assets() {
-		wp_register_style( self::STYLE_HANDLE, CEDAR_ML_URL . 'assets/switcher.css', array(), CEDAR_ML_VERSION );
+		wp_register_style( self::STYLE_HANDLE, AKO_ML_URL . 'assets/switcher.css', array(), AKO_ML_VERSION );
 		wp_register_script(
 			self::SCRIPT_HANDLE,
-			CEDAR_ML_URL . 'assets/switcher.js',
+			AKO_ML_URL . 'assets/switcher.js',
 			array(),
-			CEDAR_ML_VERSION,
+			AKO_ML_VERSION,
 			array(
 				'in_footer' => true,
 				'strategy'  => 'defer',
@@ -56,7 +56,7 @@ final class Renderer {
 	}
 
 	/**
-	 * Accent colors as `--cedar-switcher-accent` overrides, one rule per profile.
+	 * Accent colors as `--ako-switcher-accent` overrides, one rule per profile.
 	 *
 	 * @return string
 	 */
@@ -67,7 +67,7 @@ final class Renderer {
 				continue;
 			}
 			$css .= sprintf(
-				'.cedar-switcher[data-switcher="%1$s"]{--cedar-switcher-accent:%2$s;--cedar-switcher-on-accent:%3$s;--cedar-switcher-focus-ring:%2$s}',
+				'.ako-switcher[data-switcher="%1$s"]{--ako-switcher-accent:%2$s;--ako-switcher-on-accent:%3$s;--ako-switcher-focus-ring:%2$s}',
 				sanitize_key( $profile['id'] ),
 				sanitize_hex_color( $profile['accent'] ),
 				self::is_light( $profile['accent'] ) ? '#181815' : '#ffffff'
@@ -132,9 +132,9 @@ final class Renderer {
 			wp_enqueue_script( self::SCRIPT_HANDLE );
 		}
 
-		$template = locate_template( 'cedar-multilang/switcher.php' );
+		$template = locate_template( 'ako-multilang/switcher.php' );
 		if ( '' === $template ) {
-			$template = CEDAR_ML_PATH . 'templates/switcher.php';
+			$template = AKO_ML_PATH . 'templates/switcher.php';
 		}
 
 		ob_start();
@@ -156,7 +156,7 @@ final class Renderer {
 		 * @param array  $profile Switcher profile.
 		 * @param string $context Where it renders.
 		 */
-		$html = (string) apply_filters( 'cedar_ml_switcher_markup', $html, $profile, $context );
+		$html = (string) apply_filters( 'ako_ml_switcher_markup', $html, $profile, $context );
 
 		return wp_kses( $html, self::allowed_html() );
 	}

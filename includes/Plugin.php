@@ -2,27 +2,27 @@
 /**
  * Plugin bootstrap: wires every module to WordPress hooks.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang;
+namespace Ako\Multilang;
 
-use Cedar\Multilang\Admin\Admin;
-use Cedar\Multilang\Admin\Editor;
-use Cedar\Multilang\Admin\Notices;
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Migration\Legacy62;
-use Cedar\Multilang\Rtl\Compat;
-use Cedar\Multilang\Rtl\Locale;
-use Cedar\Multilang\Rest\Rest;
-use Cedar\Multilang\Seo\Hreflang;
-use Cedar\Multilang\Seo\Integrations;
-use Cedar\Multilang\Setup\Wizard;
-use Cedar\Multilang\Switcher\Block;
-use Cedar\Multilang\Switcher\MenuItem;
-use Cedar\Multilang\Switcher\Renderer;
-use Cedar\Multilang\Switcher\Shortcode;
+use Ako\Multilang\Admin\Admin;
+use Ako\Multilang\Admin\Editor;
+use Ako\Multilang\Admin\Notices;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Migration\Legacy62;
+use Ako\Multilang\Rtl\Compat;
+use Ako\Multilang\Rtl\Locale;
+use Ako\Multilang\Rest\Rest;
+use Ako\Multilang\Seo\Hreflang;
+use Ako\Multilang\Seo\Integrations;
+use Ako\Multilang\Setup\Wizard;
+use Ako\Multilang\Switcher\Block;
+use Ako\Multilang\Switcher\MenuItem;
+use Ako\Multilang\Switcher\Renderer;
+use Ako\Multilang\Switcher\Shortcode;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -34,7 +34,7 @@ final class Plugin {
 	/**
 	 * Option that stores the installed data version (for migrations).
 	 */
-	const DB_VERSION_OPTION = 'cedar_ml_db_version';
+	const DB_VERSION_OPTION = 'ako_ml_db_version';
 
 	/**
 	 * Current data version.
@@ -92,11 +92,11 @@ final class Plugin {
 		}
 
 		/**
-		 * Fires once Cedar Multilang has registered its hooks.
+		 * Fires once Ako Multilang has registered its hooks.
 		 *
 		 * Pro and other extensions should attach to this action.
 		 */
-		do_action( 'cedar_ml_loaded' );
+		do_action( 'ako_ml_loaded' );
 	}
 
 	/**

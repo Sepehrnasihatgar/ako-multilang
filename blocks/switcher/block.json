@@ -1,13 +1,13 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "cedar-multilang/switcher",
+	"name": "ako-multilang/switcher",
 	"title": "Language Switcher",
 	"category": "widgets",
 	"icon": "translation",
 	"description": "Links to this page in your other languages.",
-	"keywords": [ "language", "translation", "multilingual", "cedar" ],
-	"textdomain": "cedar-multilang",
+	"keywords": [ "language", "translation", "multilingual", "ako" ],
+	"textdomain": "ako-multilang",
 	"attributes": {
 		"switcher": {
 			"type": "string",
@@ -18,6 +18,6 @@
 		"html": false,
 		"align": [ "left", "center", "right" ]
 	},
-	"editorScript": "cedar-ml-switcher-block",
-	"style": "cedar-ml-switcher"
+	"editorScript": "ako-ml-switcher-block",
+	"style": "ako-ml-switcher"
 }

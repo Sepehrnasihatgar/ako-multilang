@@ -1,13 +1,13 @@
 /**
  * Display — Figma sections "Data display", "Feedback / Empty state" and
- * "Layout & brand / Cedar / Header".
+ * "Layout & brand / Ako / Header".
  */
 import { __, _n, sprintf } from '@wordpress/i18n';
 import Icon from './Icon';
 import { Button, LanguageTag } from './controls';
 
 /**
- * The Cedar mark on its tile.
+ * The Ako mark on its tile.
  *
  * @param {Object} props
  * @param {number} [props.size]      Pixel size.
@@ -23,13 +23,13 @@ export function Logo( { size = 32, className = '' } ) {
 			aria-hidden="true"
 			focusable="false"
 		>
-			<rect width="32" height="32" rx="8" className="cedar-logo__tile" />
+			<rect width="32" height="32" rx="8" className="ako-logo__tile" />
 			<path
-				className="cedar-logo__mark"
+				className="ako-logo__mark"
 				d="M16 5.5 10.5 12h3L9 17.5h3.5l-5 6h17l-5-6H23L18.5 12h3L16 5.5Z"
 			/>
 			<path
-				className="cedar-logo__mark"
+				className="ako-logo__mark"
 				d="M15.55 23.5h.9c.44 0 .8.36.8.8v1.9c0 .44-.36.8-.8.8h-.9a.8.8 0 0 1-.8-.8v-1.9c0-.44.36-.8.8-.8Z"
 			/>
 		</svg>
@@ -37,24 +37,24 @@ export function Logo( { size = 32, className = '' } ) {
 }
 
 /**
- * Cedar / Header: logo, product name and version.
+ * Ako / Header: logo, product name and version.
  *
  * @param {Object} props
  * @param {string} props.version Plugin version.
  */
 export function Header( { version } ) {
 	return (
-		<div className="cedar-header">
-			<div className="cedar-header__brand">
-				<Logo className="cedar-header__logo" />
-				<span className="cedar-header__name">
-					<span className="cedar-header__product">
-						{ __( 'Cedar', 'cedar-multilang' ) }
+		<div className="ako-header">
+			<div className="ako-header__brand">
+				<Logo className="ako-header__logo" />
+				<span className="ako-header__name">
+					<span className="ako-header__product">
+						{ __( 'Ako', 'ako-multilang' ) }
 					</span>
-					<span className="cedar-header__version">
+					<span className="ako-header__version">
 						{ sprintf(
 							/* translators: %s: Plugin version number. */
-							__( 'Multilang · %s', 'cedar-multilang' ),
+							__( 'Multilang · %s', 'ako-multilang' ),
 							version.replace( /\.0$/, '' )
 						) }
 					</span>
@@ -84,16 +84,16 @@ export function Callout( {
 	role,
 } ) {
 	return (
-		<div className={ `cedar-callout is-${ tone }` } role={ role }>
-			<span className="cedar-callout__tile" aria-hidden="true">
+		<div className={ `ako-callout is-${ tone }` } role={ role }>
+			<span className="ako-callout__tile" aria-hidden="true">
 				<Icon name={ icon } />
 			</span>
-			<span className="cedar-callout__copy">
+			<span className="ako-callout__copy">
 				<strong>{ title }</strong>
 				{ children && <span>{ children }</span> }
 			</span>
 			{ action && (
-				<span className="cedar-callout__action">{ action }</span>
+				<span className="ako-callout__action">{ action }</span>
 			) }
 		</div>
 	);
@@ -109,13 +109,13 @@ export function Callout( {
  */
 export function PageTitle( { title, description, actions } ) {
 	return (
-		<div className="cedar-page-title">
-			<div className="cedar-page-title__copy">
+		<div className="ako-page-title">
+			<div className="ako-page-title__copy">
 				<h1>{ title }</h1>
 				<p>{ description }</p>
 			</div>
 			{ actions && (
-				<div className="cedar-page-title__actions">{ actions }</div>
+				<div className="ako-page-title__actions">{ actions }</div>
 			) }
 		</div>
 	);
@@ -141,21 +141,21 @@ export function CoverageCard( {
 	const percent = total ? Math.floor( ( value / total ) * 100 ) : 0;
 
 	return (
-		<div className="cedar-coverage-card">
-			<div className="cedar-coverage-card__top">
+		<div className="ako-coverage-card">
+			<div className="ako-coverage-card__top">
 				<LanguageTag code={ language.code } name={ language.native } />
-				<span className="cedar-coverage-card__value">
+				<span className="ako-coverage-card__value">
 					{ source
-						? __( 'Source', 'cedar-multilang' )
+						? __( 'Source', 'ako-multilang' )
 						: sprintf(
 								/* translators: %d: Percentage. */
-								__( '%d%%', 'cedar-multilang' ),
+								__( '%d%%', 'ako-multilang' ),
 								percent
 							) }
 				</span>
 			</div>
 			<div
-				className="cedar-progress"
+				className="ako-progress"
 				role="progressbar"
 				aria-valuemin={ 0 }
 				aria-valuemax={ total }
@@ -163,11 +163,11 @@ export function CoverageCard( {
 				aria-label={ caption }
 			>
 				<span
-					className="cedar-progress__value"
+					className="ako-progress__value"
 					style={ { inlineSize: `${ percent }%` } }
 				/>
 			</div>
-			<p className="cedar-coverage-card__caption">{ caption }</p>
+			<p className="ako-coverage-card__caption">{ caption }</p>
 		</div>
 	);
 }
@@ -183,15 +183,13 @@ export function CoverageCard( {
  */
 export function EmptyState( { icon, title, description, actions } ) {
 	return (
-		<div className="cedar-empty">
-			<span className="cedar-empty__tile" aria-hidden="true">
+		<div className="ako-empty">
+			<span className="ako-empty__tile" aria-hidden="true">
 				<Icon name={ icon } size={ 24 } />
 			</span>
-			<h2 className="cedar-empty__title">{ title }</h2>
-			<p className="cedar-empty__description">{ description }</p>
-			{ actions && (
-				<div className="cedar-empty__actions">{ actions }</div>
-			) }
+			<h2 className="ako-empty__title">{ title }</h2>
+			<p className="ako-empty__description">{ description }</p>
+			{ actions && <div className="ako-empty__actions">{ actions }</div> }
 		</div>
 	);
 }
@@ -204,16 +202,16 @@ export function EmptyState( { icon, title, description, actions } ) {
  */
 export function SkeletonRow( { columns } ) {
 	return (
-		<div className="cedar-row is-skeleton" aria-hidden="true">
-			<span className="cedar-skeleton is-box" />
-			<span className="cedar-row__page">
-				<span className="cedar-skeleton is-title" />
-				<span className="cedar-skeleton is-slug" />
+		<div className="ako-row is-skeleton" aria-hidden="true">
+			<span className="ako-skeleton is-box" />
+			<span className="ako-row__page">
+				<span className="ako-skeleton is-title" />
+				<span className="ako-skeleton is-slug" />
 			</span>
 			{ Array.from( { length: columns } ).map( ( unused, index ) => (
-				<span key={ index } className="cedar-skeleton is-cell" />
+				<span key={ index } className="ako-skeleton is-cell" />
 			) ) }
-			<span className="cedar-skeleton is-date" />
+			<span className="ako-skeleton is-date" />
 			<span />
 		</div>
 	);
@@ -231,18 +229,18 @@ export function SkeletonRow( { columns } ) {
 export function SaveBar( { saving, onSave, onDiscard } ) {
 	return (
 		<div
-			className="cedar-savebar"
+			className="ako-savebar"
 			role="region"
-			aria-label={ __( 'Unsaved changes', 'cedar-multilang' ) }
+			aria-label={ __( 'Unsaved changes', 'ako-multilang' ) }
 		>
 			<Icon name="alert" />
-			<span className="cedar-savebar__message">
+			<span className="ako-savebar__message">
 				{ saving
-					? __( 'Saving…', 'cedar-multilang' )
-					: __( 'You have unsaved changes', 'cedar-multilang' ) }
+					? __( 'Saving…', 'ako-multilang' )
+					: __( 'You have unsaved changes', 'ako-multilang' ) }
 			</span>
 			<Button size="small" onClick={ onDiscard } disabled={ saving }>
-				{ __( 'Discard', 'cedar-multilang' ) }
+				{ __( 'Discard', 'ako-multilang' ) }
 			</Button>
 			<Button
 				size="small"
@@ -250,7 +248,7 @@ export function SaveBar( { saving, onSave, onDiscard } ) {
 				disabled={ saving }
 				aria-busy={ saving || undefined }
 			>
-				{ __( 'Save changes', 'cedar-multilang' ) }
+				{ __( 'Save changes', 'ako-multilang' ) }
 			</Button>
 		</div>
 	);
@@ -265,13 +263,13 @@ export function SaveBar( { saving, onSave, onDiscard } ) {
 export function timeAgo( timestamp ) {
 	const seconds = Math.max( 0, Math.round( Date.now() / 1000 - timestamp ) );
 	if ( seconds < 60 ) {
-		return __( 'just now', 'cedar-multilang' );
+		return __( 'just now', 'ako-multilang' );
 	}
 	const minutes = Math.round( seconds / 60 );
 	if ( minutes < 60 ) {
 		return sprintf(
 			/* translators: %d: Number of minutes. */
-			_n( '%d minute ago', '%d minutes ago', minutes, 'cedar-multilang' ),
+			_n( '%d minute ago', '%d minutes ago', minutes, 'ako-multilang' ),
 			minutes
 		);
 	}
@@ -279,14 +277,14 @@ export function timeAgo( timestamp ) {
 	if ( hours < 24 ) {
 		return sprintf(
 			/* translators: %d: Number of hours. */
-			_n( '%d hour ago', '%d hours ago', hours, 'cedar-multilang' ),
+			_n( '%d hour ago', '%d hours ago', hours, 'ako-multilang' ),
 			hours
 		);
 	}
 	const days = Math.round( hours / 24 );
 	return sprintf(
 		/* translators: %d: Number of days. */
-		_n( '%d day ago', '%d days ago', days, 'cedar-multilang' ),
+		_n( '%d day ago', '%d days ago', days, 'ako-multilang' ),
 		days
 	);
 }

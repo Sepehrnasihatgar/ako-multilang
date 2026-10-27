@@ -2,12 +2,12 @@
 /**
  * Small RTL fixes for popular themes.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Rtl;
+namespace Ako\Multilang\Rtl;
 
-use Cedar\Multilang\Settings;
+use Ako\Multilang\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -74,7 +74,7 @@ final class Compat {
 		$out = array();
 		foreach ( self::known() as $key => $integration ) {
 			// Only integrations whose fixes ship (and were tested) get a toggle.
-			if ( ! is_readable( CEDAR_ML_PATH . 'assets/rtl/' . $key . '.css' ) ) {
+			if ( ! is_readable( AKO_ML_PATH . 'assets/rtl/' . $key . '.css' ) ) {
 				continue;
 			}
 			$out[] = array(
@@ -100,8 +100,8 @@ final class Compat {
 				continue;
 			}
 			$file = 'assets/rtl/' . $key . '.css';
-			if ( is_readable( CEDAR_ML_PATH . $file ) ) {
-				wp_enqueue_style( 'cedar-ml-rtl-' . $key, CEDAR_ML_URL . $file, array(), CEDAR_ML_VERSION );
+			if ( is_readable( AKO_ML_PATH . $file ) ) {
+				wp_enqueue_style( 'ako-ml-rtl-' . $key, AKO_ML_URL . $file, array(), AKO_ML_VERSION );
 			}
 		}
 	}

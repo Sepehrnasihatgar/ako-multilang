@@ -52,10 +52,7 @@ export default function ConnectStep( {
 				setLoadError(
 					errorMessage(
 						error,
-						__(
-							'Suggestions couldn’t be loaded.',
-							'cedar-multilang'
-						)
+						__( 'Suggestions couldn’t be loaded.', 'ako-multilang' )
 					)
 				);
 			} );
@@ -88,7 +85,7 @@ export default function ConnectStep( {
 							'%1$d pair connected. One couldn’t be: %2$s',
 							'%1$d pairs connected. One couldn’t be: %2$s',
 							result.linked,
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						result.linked,
 						result.errors[ 0 ].message
@@ -103,7 +100,7 @@ export default function ConnectStep( {
 							'%d pair connected.',
 							'%d pairs connected.',
 							result.linked,
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						result.linked
 					),
@@ -117,7 +114,7 @@ export default function ConnectStep( {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'The pairs couldn’t be connected.', 'cedar-multilang' )
+					__( 'The pairs couldn’t be connected.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -132,19 +129,19 @@ export default function ConnectStep( {
 
 	return (
 		<>
-			<div className="cedar-setup__intro">
+			<div className="ako-setup__intro">
 				<h1 tabIndex={ -1 }>
-					{ __( 'Connect your pages', 'cedar-multilang' ) }
+					{ __( 'Connect your pages', 'ako-multilang' ) }
 				</h1>
 				<p>
 					{ nothing
 						? __(
 								'We looked for WPML, Polylang, and Cedar 6.2 data, and for pages that look like translations of each other.',
-								'cedar-multilang'
+								'ako-multilang'
 							)
 						: __(
-								'Cedar found translations you already made. Review them, and we’ll set up hreflang and the switcher for every pair.',
-								'cedar-multilang'
+								'Ako found translations you already made. Review them, and we’ll set up hreflang and the switcher for every pair.',
+								'ako-multilang'
 							) }
 				</p>
 			</div>
@@ -159,8 +156,8 @@ export default function ConnectStep( {
 			) ) }
 
 			{ loading && (
-				<p className="cedar-setup__loading" role="status">
-					{ __( 'Looking for pages that match…', 'cedar-multilang' ) }
+				<p className="ako-setup__loading" role="status">
+					{ __( 'Looking for pages that match…', 'ako-multilang' ) }
 				</p>
 			) }
 
@@ -171,11 +168,11 @@ export default function ConnectStep( {
 					role="alert"
 					title={ __(
 						'Suggestions couldn’t be loaded',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 					action={
 						<Button onClick={ loadPairs }>
-							{ __( 'Retry', 'cedar-multilang' ) }
+							{ __( 'Retry', 'ako-multilang' ) }
 						</Button>
 					}
 				>
@@ -194,33 +191,33 @@ export default function ConnectStep( {
 			) }
 
 			{ nothing && ! loadError && (
-				<div className="cedar-setup__empty">
-					<span className="cedar-empty__tile" aria-hidden="true">
+				<div className="ako-setup__empty">
+					<span className="ako-empty__tile" aria-hidden="true">
 						<Icon name="link" size={ 20 } />
 					</span>
-					<h2 className="cedar-empty__title">
+					<h2 className="ako-empty__title">
 						{ __(
 							'No existing translations found',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 					</h2>
-					<p className="cedar-empty__description">
+					<p className="ako-empty__description">
 						{ __(
 							'That’s fine. Your languages are saved. Add the switcher now, or finish and link pages later from Translations or right in the editor.',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 					</p>
 				</div>
 			) }
 
-			<div className="cedar-setup__footer">
+			<div className="ako-setup__footer">
 				<Button variant="ghost" onClick={ onBack } disabled={ busy }>
-					{ __( 'Back', 'cedar-multilang' ) }
+					{ __( 'Back', 'ako-multilang' ) }
 				</Button>
-				<span className="cedar-setup__footer-end">
+				<span className="ako-setup__footer-end">
 					{ nothing ? (
 						<Button variant="ghost" onClick={ onFinish }>
-							{ __( 'Finish setup', 'cedar-multilang' ) }
+							{ __( 'Finish setup', 'ako-multilang' ) }
 						</Button>
 					) : (
 						count > 0 && (
@@ -229,7 +226,7 @@ export default function ConnectStep( {
 								onClick={ onNext }
 								disabled={ busy }
 							>
-								{ __( 'Skip for now', 'cedar-multilang' ) }
+								{ __( 'Skip for now', 'ako-multilang' ) }
 							</Button>
 						)
 					) }
@@ -246,7 +243,7 @@ export default function ConnectStep( {
 									'Connect %d pair',
 									'Connect %d pairs',
 									count,
-									'cedar-multilang'
+									'ako-multilang'
 								),
 								count
 							) }
@@ -257,7 +254,7 @@ export default function ConnectStep( {
 							onClick={ onNext }
 							disabled={ busy || loading }
 						>
-							{ __( 'Next: Switcher', 'cedar-multilang' ) }
+							{ __( 'Next: Switcher', 'ako-multilang' ) }
 						</Button>
 					) }
 				</span>

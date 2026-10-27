@@ -2,23 +2,23 @@
 /**
  * Hidden taxonomies that store a post's language and its translation group.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Content;
+namespace Ako\Multilang\Content;
 
-use Cedar\Multilang\Settings;
+use Ako\Multilang\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Registers `cedar_ml_language` and `cedar_ml_group`. Neither has a UI,
+ * Registers `ako_ml_language` and `ako_ml_group`. Neither has a UI,
  * REST route, query var or rewrite rule — they never create URLs.
  */
 final class Taxonomies {
 
-	const LANGUAGE = 'cedar_ml_language';
-	const GROUP    = 'cedar_ml_group';
+	const LANGUAGE = 'ako_ml_language';
+	const GROUP    = 'ako_ml_group';
 
 	/**
 	 * Registers both taxonomies for every enabled post type.
@@ -53,17 +53,17 @@ final class Taxonomies {
 		$enabled = Settings::get()['post_types'];
 
 		/**
-		 * Filters the post types Cedar links across languages.
+		 * Filters the post types Ako links across languages.
 		 *
 		 * @param string[] $post_types Post type slugs.
 		 */
-		$enabled = (array) apply_filters( 'cedar_ml_post_types', $enabled );
+		$enabled = (array) apply_filters( 'ako_ml_post_types', $enabled );
 
 		return array_values( array_filter( array_map( 'sanitize_key', $enabled ), 'post_type_exists' ) );
 	}
 
 	/**
-	 * Whether a post type is handled by Cedar.
+	 * Whether a post type is handled by Ako.
 	 *
 	 * @param string $post_type Post type slug.
 	 * @return bool

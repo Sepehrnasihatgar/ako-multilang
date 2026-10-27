@@ -26,7 +26,7 @@ export function isLight( hex ) {
 
 const Globe = () => (
 	<svg
-		className="cedar-switcher__icon"
+		className="ako-switcher__icon"
 		width="16"
 		height="16"
 		viewBox="0 0 24 24"
@@ -46,7 +46,7 @@ const Globe = () => (
 
 const Chevron = () => (
 	<svg
-		className="cedar-switcher__chevron"
+		className="ako-switcher__chevron"
 		width="14"
 		height="14"
 		viewBox="0 0 24 24"
@@ -67,13 +67,13 @@ function Label( { item, icon } ) {
 		<>
 			{ icon && <Globe /> }
 			<span
-				className="cedar-switcher__name"
+				className="ako-switcher__name"
 				lang={ item.hreflang }
 				dir={ item.dir }
 			>
 				{ item.native }
 			</span>
-			<span className="cedar-switcher__code" aria-hidden="true">
+			<span className="ako-switcher__code" aria-hidden="true">
 				{ item.code.toUpperCase() }
 			</span>
 		</>
@@ -83,10 +83,7 @@ function Label( { item, icon } ) {
 function Item( { item, icon } ) {
 	if ( item.current ) {
 		return (
-			<span
-				className="cedar-switcher__item is-current"
-				aria-current="true"
-			>
+			<span className="ako-switcher__item is-current" aria-current="true">
 				<Label item={ item } icon={ icon } />
 			</span>
 		);
@@ -94,9 +91,9 @@ function Item( { item, icon } ) {
 	if ( ! item.available ) {
 		return (
 			<span
-				className="cedar-switcher__item is-disabled"
+				className="ako-switcher__item is-disabled"
 				aria-disabled="true"
-				data-tooltip={ __( 'Not translated yet', 'cedar-multilang' ) }
+				data-tooltip={ __( 'Not translated yet', 'ako-multilang' ) }
 			>
 				<Label item={ item } icon={ icon } />
 			</span>
@@ -104,7 +101,7 @@ function Item( { item, icon } ) {
 	}
 	return (
 		<a
-			className="cedar-switcher__item"
+			className="ako-switcher__item"
 			href="#preview"
 			hrefLang={ item.hreflang }
 			lang={ item.hreflang }
@@ -133,17 +130,17 @@ export default function SwitcherMarkup( { profile, items, small = false } ) {
 	}
 
 	const classes = [
-		'cedar-switcher',
-		`cedar-switcher--${ profile.style }`,
-		`cedar-switcher--${ profile.shape }`,
-		`cedar-switcher--show-${ show }`,
-		'cedar-switcher--sm-same',
+		'ako-switcher',
+		`ako-switcher--${ profile.style }`,
+		`ako-switcher--${ profile.shape }`,
+		`ako-switcher--show-${ show }`,
+		'ako-switcher--sm-same',
 	];
 	if ( 'inherit' === profile.styling ) {
-		classes.push( 'cedar-switcher--inherit' );
+		classes.push( 'ako-switcher--inherit' );
 	}
 	if ( 'link' === profile.style ) {
-		classes.push( `cedar-switcher--look-${ profile.linkLook }` );
+		classes.push( `ako-switcher--look-${ profile.linkLook }` );
 	}
 	if ( hideCode ) {
 		classes.push( 'is-preview-icon-only' );
@@ -152,11 +149,11 @@ export default function SwitcherMarkup( { profile, items, small = false } ) {
 	const style =
 		profile.accent && 'inherit' !== profile.styling
 			? {
-					'--cedar-switcher-accent': profile.accent,
-					'--cedar-switcher-on-accent': isLight( profile.accent )
+					'--ako-switcher-accent': profile.accent,
+					'--ako-switcher-on-accent': isLight( profile.accent )
 						? '#181815'
 						: '#ffffff',
-					'--cedar-switcher-focus-ring': profile.accent,
+					'--ako-switcher-focus-ring': profile.accent,
 				}
 			: undefined;
 
@@ -168,19 +165,19 @@ export default function SwitcherMarkup( { profile, items, small = false } ) {
 		<nav
 			className={ classes.join( ' ' ) }
 			style={ style }
-			aria-label={ __( 'Language', 'cedar-multilang' ) }
+			aria-label={ __( 'Language', 'ako-multilang' ) }
 		>
 			{ dropdown && current ? (
-				<details className="cedar-switcher__details">
-					<summary className="cedar-switcher__toggle">
+				<details className="ako-switcher__details">
+					<summary className="ako-switcher__toggle">
 						<Label item={ current } icon={ icon } />
 						<Chevron />
 					</summary>
-					<div className="cedar-switcher__menu" role="list">
+					<div className="ako-switcher__menu" role="list">
 						{ items.map( ( item ) => (
 							<div
 								key={ item.code }
-								className="cedar-switcher__entry"
+								className="ako-switcher__entry"
 								role="listitem"
 							>
 								<Item item={ item } icon={ false } />
@@ -189,7 +186,7 @@ export default function SwitcherMarkup( { profile, items, small = false } ) {
 					</div>
 				</details>
 			) : (
-				<div className="cedar-switcher__list" role="list">
+				<div className="ako-switcher__list" role="list">
 					{ items
 						.filter(
 							( item ) =>
@@ -198,7 +195,7 @@ export default function SwitcherMarkup( { profile, items, small = false } ) {
 						.map( ( item ) => (
 							<div
 								key={ item.code }
-								className="cedar-switcher__entry"
+								className="ako-switcher__entry"
 								role="listitem"
 							>
 								<Item item={ item } icon={ icon } />

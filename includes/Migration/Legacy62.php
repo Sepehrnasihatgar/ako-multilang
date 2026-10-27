@@ -2,14 +2,14 @@
 /**
  * Moves data from the private Cedar 6.2 plugin to the v1 model.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Migration;
+namespace Ako\Multilang\Migration;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Registry;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Registry;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Legacy62 {
 
-	const STATUS_OPTION = 'cedar_ml_legacy62';
+	const STATUS_OPTION = 'ako_ml_legacy62';
 
 	/**
 	 * Safety cap per run so a request never times out.

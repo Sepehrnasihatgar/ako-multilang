@@ -20,15 +20,15 @@ export function ImportDialog( { sources, onClose } ) {
 		<Dialog
 			wide
 			icon="arrows-left-right"
-			title={ __( 'Import translations', 'cedar-multilang' ) }
+			title={ __( 'Import translations', 'ako-multilang' ) }
 			description={ __(
-				'Cedar reads the links straight from your database. The other plugin’s data isn’t changed.',
-				'cedar-multilang'
+				'Ako reads the links straight from your database. The other plugin’s data isn’t changed.',
+				'ako-multilang'
 			) }
 			busy={ busy }
 			onCancel={ onClose }
 		>
-			<div className="cedar-dialog__stack">
+			<div className="ako-dialog__stack">
 				{ sources.map( ( source ) => (
 					<ImportBanner
 						key={ source.key }
@@ -65,10 +65,7 @@ export function LinkPagesDialog( { defaultCode, notify, onClose, onLinked } ) {
 				setError(
 					errorMessage(
 						failure,
-						__(
-							'Suggestions couldn’t be loaded.',
-							'cedar-multilang'
-						)
+						__( 'Suggestions couldn’t be loaded.', 'ako-multilang' )
 					)
 				);
 			} );
@@ -97,7 +94,7 @@ export function LinkPagesDialog( { defaultCode, notify, onClose, onLinked } ) {
 								'%1$d pair connected. One couldn’t be: %2$s',
 								'%1$d pairs connected. One couldn’t be: %2$s',
 								result.linked,
-								'cedar-multilang'
+								'ako-multilang'
 							),
 							result.linked,
 							result.errors[ 0 ].message
@@ -108,7 +105,7 @@ export function LinkPagesDialog( { defaultCode, notify, onClose, onLinked } ) {
 								'%d pair connected.',
 								'%d pairs connected.',
 								result.linked,
-								'cedar-multilang'
+								'ako-multilang'
 							),
 							result.linked
 						),
@@ -120,7 +117,7 @@ export function LinkPagesDialog( { defaultCode, notify, onClose, onLinked } ) {
 				tone: 'error',
 				message: errorMessage(
 					failure,
-					__( 'The pairs couldn’t be connected.', 'cedar-multilang' )
+					__( 'The pairs couldn’t be connected.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -128,16 +125,16 @@ export function LinkPagesDialog( { defaultCode, notify, onClose, onLinked } ) {
 
 	let description = __(
 		'Pages that look like translations of each other, by slug and title. Check the ones to connect.',
-		'cedar-multilang'
+		'ako-multilang'
 	);
 	if ( null === pairs ) {
-		description = __( 'Looking for pages that match…', 'cedar-multilang' );
+		description = __( 'Looking for pages that match…', 'ako-multilang' );
 	} else if ( error ) {
 		description = error;
 	} else if ( ! pairs.length ) {
 		description = __(
 			'No pages look like translations of each other. Use “Add translation” on any row, or the language panel in the editor.',
-			'cedar-multilang'
+			'ako-multilang'
 		);
 	}
 
@@ -145,7 +142,7 @@ export function LinkPagesDialog( { defaultCode, notify, onClose, onLinked } ) {
 		<Dialog
 			wide={ !! ( pairs && pairs.length ) }
 			icon="link"
-			title={ __( 'Link pages', 'cedar-multilang' ) }
+			title={ __( 'Link pages', 'ako-multilang' ) }
 			description={ description }
 			busy={ busy }
 			onCancel={ onClose }
@@ -157,7 +154,7 @@ export function LinkPagesDialog( { defaultCode, notify, onClose, onLinked } ) {
 								'Connect %d pair',
 								'Connect %d pairs',
 								chosen.length,
-								'cedar-multilang'
+								'ako-multilang'
 							),
 							chosen.length
 						)

@@ -2,14 +2,14 @@
 /**
  * Which languages a switcher shows on the current page, and where each goes.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Switcher;
+namespace Ako\Multilang\Switcher;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Registry;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Registry;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -80,7 +80,7 @@ final class Items {
 		 * @param array $items   Items.
 		 * @param array $profile Switcher profile.
 		 */
-		return (array) apply_filters( 'cedar_ml_switcher_items', $items, $profile );
+		return (array) apply_filters( 'ako_ml_switcher_items', $items, $profile );
 	}
 
 	/**

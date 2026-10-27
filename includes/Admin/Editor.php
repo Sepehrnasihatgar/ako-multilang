@@ -1,14 +1,14 @@
 <?php
 /**
- * "Language · Cedar" in the block editor (sidebar panel) and the classic
+ * "Language · Ako" in the block editor (sidebar panel) and the classic
  * editor (metabox). Both render the same React panel.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Admin;
+namespace Ako\Multilang\Admin;
 
-use Cedar\Multilang\Content\Taxonomies;
+use Ako\Multilang\Content\Taxonomies;
 use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
@@ -18,8 +18,8 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Editor {
 
-	const BLOCK_HANDLE   = 'cedar-ml-editor';
-	const CLASSIC_HANDLE = 'cedar-ml-classic';
+	const BLOCK_HANDLE   = 'ako-ml-editor';
+	const CLASSIC_HANDLE = 'ako-ml-classic';
 
 	/**
 	 * Hooks into both editors.
@@ -31,7 +31,7 @@ final class Editor {
 	}
 
 	/**
-	 * Whether the current screen edits a post Cedar handles.
+	 * Whether the current screen edits a post Ako handles.
 	 *
 	 * @return bool
 	 */
@@ -62,8 +62,8 @@ final class Editor {
 			return;
 		}
 		add_meta_box(
-			'cedar-ml-language',
-			__( 'Language · Cedar', 'cedar-multilang' ),
+			'ako-ml-language',
+			__( 'Language · Ako', 'ako-multilang' ),
 			array( self::class, 'render_meta_box' ),
 			$post_type,
 			'side',
@@ -79,12 +79,12 @@ final class Editor {
 	 */
 	public static function render_meta_box( $post ) {
 		printf(
-			'<div id="cedar-ml-classic" data-post-id="%d"></div>',
+			'<div id="ako-ml-classic" data-post-id="%d"></div>',
 			(int) $post->ID
 		);
 		printf(
 			'<noscript><p>%s</p></noscript>',
-			esc_html__( 'Cedar Multilang needs JavaScript to show translations.', 'cedar-multilang' )
+			esc_html__( 'Ako Multilang needs JavaScript to show translations.', 'ako-multilang' )
 		);
 	}
 
@@ -112,7 +112,7 @@ final class Editor {
 	 * @param string $handle Script and style handle.
 	 */
 	private static function enqueue( $entry, $handle ) {
-		$asset_file = CEDAR_ML_PATH . 'build/' . $entry . '/index.asset.php';
+		$asset_file = AKO_ML_PATH . 'build/' . $entry . '/index.asset.php';
 		if ( ! is_readable( $asset_file ) ) {
 			return;
 		}
@@ -120,14 +120,14 @@ final class Editor {
 
 		wp_enqueue_script(
 			$handle,
-			CEDAR_ML_URL . 'build/' . $entry . '/index.js',
+			AKO_ML_URL . 'build/' . $entry . '/index.js',
 			$asset['dependencies'],
 			$asset['version'],
 			array( 'in_footer' => true )
 		);
-		wp_set_script_translations( $handle, 'cedar-multilang', CEDAR_ML_PATH . 'languages' );
+		wp_set_script_translations( $handle, 'ako-multilang', AKO_ML_PATH . 'languages' );
 
-		wp_enqueue_style( $handle, CEDAR_ML_URL . 'build/' . $entry . '/index.css', array(), $asset['version'] );
+		wp_enqueue_style( $handle, AKO_ML_URL . 'build/' . $entry . '/index.css', array(), $asset['version'] );
 		wp_style_add_data( $handle, 'rtl', 'replace' );
 	}
 }

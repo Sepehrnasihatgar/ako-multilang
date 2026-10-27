@@ -18,22 +18,22 @@ export function Row( { label, labelText, help, children } ) {
 	const id = useId();
 	const helpId = help ? `${ id }-help` : undefined;
 	return (
-		<div className="cedar-setting-row">
-			<span className="cedar-setting-row__copy">
+		<div className="ako-setting-row">
+			<span className="ako-setting-row__copy">
 				<label
-					className="cedar-setting-row__label"
+					className="ako-setting-row__label"
 					htmlFor={ id }
 					aria-label={ labelText }
 				>
 					{ label }
 				</label>
 				{ help && (
-					<span className="cedar-setting-row__help" id={ helpId }>
+					<span className="ako-setting-row__help" id={ helpId }>
 						{ help }
 					</span>
 				) }
 			</span>
-			<span className="cedar-setting-row__control">
+			<span className="ako-setting-row__control">
 				{ children( id, helpId ) }
 			</span>
 		</div>
@@ -61,11 +61,11 @@ export function ToggleRow( {
 } ) {
 	const id = useId();
 	return (
-		<div className="cedar-setting-row">
-			<span className="cedar-setting-row__copy">
-				<span className="cedar-setting-row__title">
+		<div className="ako-setting-row">
+			<span className="ako-setting-row__copy">
+				<span className="ako-setting-row__title">
 					<span
-						className="cedar-setting-row__label"
+						className="ako-setting-row__label"
 						id={ `${ id }-label` }
 					>
 						{ label }
@@ -74,7 +74,7 @@ export function ToggleRow( {
 				</span>
 				{ help && (
 					<span
-						className="cedar-setting-row__help"
+						className="ako-setting-row__help"
 						id={ `${ id }-help` }
 					>
 						{ help }

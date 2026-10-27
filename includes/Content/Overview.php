@@ -3,15 +3,15 @@
  * Data for the Translations screen: one row per source page, one column per
  * other language.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Content;
+namespace Ako\Multilang\Content;
 
-use Cedar\Multilang\Languages\Registry;
-use Cedar\Multilang\Rest\Rest;
-use Cedar\Multilang\Seo\Health;
-use Cedar\Multilang\Seo\Hreflang;
+use Ako\Multilang\Languages\Registry;
+use Ako\Multilang\Rest\Rest;
+use Ako\Multilang\Seo\Health;
+use Ako\Multilang\Seo\Hreflang;
 use WP_Post;
 use WP_Query;
 
@@ -370,7 +370,7 @@ final class Overview {
 
 		return array(
 			'id'       => (int) $post->ID,
-			'title'    => '' === $title ? __( '(no title)', 'cedar-multilang' ) : $title,
+			'title'    => '' === $title ? __( '(no title)', 'ako-multilang' ) : $title,
 			'path'     => self::path( $post ),
 			'status'   => $post->post_status,
 			'canEdit'  => current_user_can( 'edit_post', $post->ID ),
@@ -410,17 +410,17 @@ final class Overview {
 
 		if ( $diff < DAY_IN_SECONDS ) {
 			/* translators: %s: Human-readable time difference, e.g. "2 hours". */
-			return sprintf( __( '%s ago', 'cedar-multilang' ), human_time_diff( $then ) );
+			return sprintf( __( '%s ago', 'ako-multilang' ), human_time_diff( $then ) );
 		}
 		if ( $diff < 2 * DAY_IN_SECONDS ) {
-			return __( 'Yesterday', 'cedar-multilang' );
+			return __( 'Yesterday', 'ako-multilang' );
 		}
 		if ( $diff < WEEK_IN_SECONDS ) {
 			$days = (int) floor( $diff / DAY_IN_SECONDS );
 			/* translators: %d: Number of days. */
-			return sprintf( _n( '%d day ago', '%d days ago', $days, 'cedar-multilang' ), $days );
+			return sprintf( _n( '%d day ago', '%d days ago', $days, 'ako-multilang' ), $days );
 		}
-		return (string) wp_date( _x( 'M j', 'short date format', 'cedar-multilang' ), $then );
+		return (string) wp_date( _x( 'M j', 'short date format', 'ako-multilang' ), $then );
 	}
 
 	/**

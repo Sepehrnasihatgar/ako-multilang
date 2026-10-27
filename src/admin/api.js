@@ -1,11 +1,11 @@
 /**
- * REST client for cedar/v1. Authentication (cookie + nonce) is handled by
+ * REST client for ako/v1. Authentication (cookie + nonce) is handled by
  * `@wordpress/api-fetch`, which WordPress preconfigures in the admin.
  */
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 
-const BASE = '/cedar/v1';
+const BASE = '/ako/v1';
 
 export const getLinks = ( query ) =>
 	apiFetch( { path: addQueryArgs( `${ BASE }/links`, query ) } );

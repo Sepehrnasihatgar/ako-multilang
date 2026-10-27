@@ -29,12 +29,12 @@ export function sortCandidates( list ) {
  */
 export function candidateMeta( candidate ) {
 	if ( candidate.linked ) {
-		return __( 'Linked elsewhere', 'cedar-multilang' );
+		return __( 'Linked elsewhere', 'ako-multilang' );
 	}
 	if ( ! candidate.language ) {
-		return __( 'No language', 'cedar-multilang' );
+		return __( 'No language', 'ako-multilang' );
 	}
 	return 'publish' === candidate.status
-		? __( 'Published', 'cedar-multilang' )
-		: __( 'Draft', 'cedar-multilang' );
+		? __( 'Published', 'ako-multilang' )
+		: __( 'Draft', 'ako-multilang' );
 }

@@ -4,10 +4,10 @@
  *
  * Bundled on purpose: no request to api.wordpress.org is ever made.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Languages;
+namespace Ako\Multilang\Languages;
 
 defined( 'ABSPATH' ) || exit;
 

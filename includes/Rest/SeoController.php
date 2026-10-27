@@ -1,21 +1,21 @@
 <?php
 /**
- * REST: /cedar/v1/seo
+ * REST: /ako/v1/seo
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Rest;
+namespace Ako\Multilang\Rest;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Overview;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Catalog;
-use Cedar\Multilang\Languages\Registry;
-use Cedar\Multilang\Seo\Health;
-use Cedar\Multilang\Seo\Hreflang;
-use Cedar\Multilang\Seo\Integrations;
-use Cedar\Multilang\Settings;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Overview;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Catalog;
+use Ako\Multilang\Languages\Registry;
+use Ako\Multilang\Seo\Health;
+use Ako\Multilang\Seo\Hreflang;
+use Ako\Multilang\Seo\Integrations;
+use Ako\Multilang\Settings;
 use WP_Error;
 use WP_Query;
 use WP_REST_Request;
@@ -138,13 +138,13 @@ final class SeoController {
 	public static function update( WP_REST_Request $request ) {
 		$x_default = $request['x_default'];
 		if ( null !== $x_default && '' !== $x_default && ! Registry::exists( $x_default ) ) {
-			return new WP_Error( 'cedar_ml_unknown_language', __( 'That language isn’t set up yet.', 'cedar-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		if ( is_array( $request['hreflang'] ) ) {
 			foreach ( $request['hreflang'] as $code => $value ) {
 				if ( ! Registry::exists( $code ) ) {
-					return new WP_Error( 'cedar_ml_unknown_language', __( 'That language isn’t set up yet.', 'cedar-multilang' ), array( 'status' => 400 ) );
+					return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 400 ) );
 				}
 				$result = Registry::update( $code, array( 'hreflang' => (string) $value ) );
 				if ( is_wp_error( $result ) ) {
@@ -174,7 +174,7 @@ final class SeoController {
 	public static function preview( WP_REST_Request $request ) {
 		$post = get_post( (int) $request['post'] );
 		if ( ! $post || ! Taxonomies::supports( $post->post_type ) ) {
-			return new WP_Error( 'cedar_ml_invalid_post', __( 'That page doesn’t exist.', 'cedar-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ako_ml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 
 		$code     = Links::get_language( $post->ID );

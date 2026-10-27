@@ -11,10 +11,9 @@ import { Dialog } from '../../components/overlays';
 import { errorMessage, importBatch } from '../api';
 
 const REASONS = {
-	missing: () => __( 'Pages no longer exist', 'cedar-multilang' ),
-	conflict: () =>
-		__( 'Already linked differently in Cedar', 'cedar-multilang' ),
-	error: () => __( 'Couldn’t be saved', 'cedar-multilang' ),
+	missing: () => __( 'Pages no longer exist', 'ako-multilang' ),
+	conflict: () => __( 'Already linked differently in Ako', 'ako-multilang' ),
+	error: () => __( 'Couldn’t be saved', 'ako-multilang' ),
 };
 
 /**
@@ -68,8 +67,8 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 					sprintf(
 						/* translators: %s: Plugin name, e.g. "WPML". */
 						__(
-							'Cedar can’t read the %s translations.',
-							'cedar-multilang'
+							'Ako can’t read the %s translations.',
+							'ako-multilang'
 						),
 						source.name
 					)
@@ -92,41 +91,41 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 			? Math.round( ( 100 * progress.processed ) / progress.total )
 			: 0;
 		return (
-			<div className="cedar-import-progress">
-				<div className="cedar-import-progress__head">
+			<div className="ako-import-progress">
+				<div className="ako-import-progress__head">
 					<strong>
 						{ sprintf(
 							/* translators: %s: Plugin name, e.g. "WPML". */
-							__( 'Importing from %s…', 'cedar-multilang' ),
+							__( 'Importing from %s…', 'ako-multilang' ),
 							source.name
 						) }
 					</strong>
 					<span>
 						{ sprintf(
 							/* translators: 1: Groups done, 2: All groups. */
-							__( '%1$d of %2$d', 'cedar-multilang' ),
+							__( '%1$d of %2$d', 'ako-multilang' ),
 							progress.processed,
 							progress.total
 						) }
 					</span>
 				</div>
 				<div
-					className="cedar-progress"
+					className="ako-progress"
 					role="progressbar"
 					aria-valuemin={ 0 }
 					aria-valuemax={ 100 }
 					aria-valuenow={ percent }
-					aria-label={ __( 'Import progress', 'cedar-multilang' ) }
+					aria-label={ __( 'Import progress', 'ako-multilang' ) }
 				>
 					<span
-						className="cedar-progress__value"
+						className="ako-progress__value"
 						style={ { inlineSize: `${ percent }%` } }
 					/>
 				</div>
 				<p>
 					{ __(
 						'Reading translation groups. Keep this page open until it finishes.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				</p>
 			</div>
@@ -142,12 +141,12 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 				role="alert"
 				title={ sprintf(
 					/* translators: %s: Plugin name, e.g. "WPML". */
-					__( 'Couldn’t read %s data', 'cedar-multilang' ),
+					__( 'Couldn’t read %s data', 'ako-multilang' ),
 					source.name
 				) }
 				action={
 					<Button onClick={ () => run( done, result ) }>
-						{ __( 'Retry', 'cedar-multilang' ) }
+						{ __( 'Retry', 'ako-multilang' ) }
 					</Button>
 				}
 			>
@@ -159,13 +158,13 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 								'%d group was imported before it stopped. Retry to finish. Links you already have are kept.',
 								'%d groups were imported before it stopped. Retry to finish. Links you already have are kept.',
 								done,
-								'cedar-multilang'
+								'ako-multilang'
 							),
 							done
 						)
 					: __(
 							'Nothing was changed. Retry, or skip this and link pages later.',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 			</Callout>
 		);
@@ -178,7 +177,7 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 			result.skipped.every( ( group ) => 'missing' === group.reason );
 		let description = __(
 			'Every group was linked automatically.',
-			'cedar-multilang'
+			'ako-multilang'
 		);
 		if ( skipped && allMissing ) {
 			description = sprintf(
@@ -187,7 +186,7 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 					'%1$d linked automatically. %2$d points to pages that no longer exist. Review it before you continue.',
 					'%1$d linked automatically. %2$d point to pages that no longer exist. Review them before you continue.',
 					skipped,
-					'cedar-multilang'
+					'ako-multilang'
 				),
 				result.linked,
 				skipped
@@ -199,7 +198,7 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 					'%1$d linked automatically. %2$d couldn’t be linked. Review it before you continue.',
 					'%1$d linked automatically. %2$d couldn’t be linked. Review them before you continue.',
 					skipped,
-					'cedar-multilang'
+					'ako-multilang'
 				),
 				result.linked,
 				skipped
@@ -217,7 +216,7 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 							'%d group imported',
 							'%d groups imported',
 							progress.processed,
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						progress.processed
 					) }
@@ -226,7 +225,7 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 							<Button onClick={ () => setReviewing( true ) }>
 								{ sprintf(
 									/* translators: %d: Number of groups to review. */
-									__( 'Review %d', 'cedar-multilang' ),
+									__( 'Review %d', 'ako-multilang' ),
 									skipped
 								) }
 							</Button>
@@ -252,13 +251,13 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 				icon="arrows-left-right"
 				title={ sprintf(
 					/* translators: %s: Plugin name, e.g. "WPML". */
-					__( '%s data found', 'cedar-multilang' ),
+					__( '%s data found', 'ako-multilang' ),
 					source.name
 				) }
 			>
 				{ __(
-					'It has no translated pages or posts for the content types Cedar handles.',
-					'cedar-multilang'
+					'It has no translated pages or posts for the content types Ako handles.',
+					'ako-multilang'
 				) }
 			</Callout>
 		);
@@ -271,18 +270,18 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 				icon="circle-check"
 				title={ sprintf(
 					/* translators: %s: Plugin name, e.g. "WPML". */
-					__( '%s links imported', 'cedar-multilang' ),
+					__( '%s links imported', 'ako-multilang' ),
 					source.name
 				) }
 				action={
 					<Button onClick={ start }>
-						{ __( 'Import again', 'cedar-multilang' ) }
+						{ __( 'Import again', 'ako-multilang' ) }
 					</Button>
 				}
 			>
 				{ __(
 					'Run it again to pick up pages added since. Links you already have stay as they are.',
-					'cedar-multilang'
+					'ako-multilang'
 				) }
 			</Callout>
 		);
@@ -297,7 +296,7 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 					'Found %1$s data: %2$d translation group',
 					'Found %1$s data: %2$d translation groups',
 					source.groups,
-					'cedar-multilang'
+					'ako-multilang'
 				),
 				source.name,
 				source.groups
@@ -310,7 +309,7 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 							'Import %d group',
 							'Import %d groups',
 							source.groups,
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						source.groups
 					) }
@@ -321,7 +320,7 @@ export default function ImportBanner( { source, onImported, onBusy } ) {
 				/* translators: %s: Plugin name, e.g. "WPML". */
 				__(
 					'Import them now. %s isn’t changed, so you can switch back anytime.',
-					'cedar-multilang'
+					'ako-multilang'
 				),
 				source.name
 			) }
@@ -346,27 +345,27 @@ function ReviewDialog( { groups, onClose } ) {
 					'%d group wasn’t linked',
 					'%d groups weren’t linked',
 					groups.length,
-					'cedar-multilang'
+					'ako-multilang'
 				),
 				groups.length
 			) }
 			description={ __(
 				'Nothing was changed for these. If you still need them, link the pages from Translations or in the editor.',
-				'cedar-multilang'
+				'ako-multilang'
 			) }
 			onCancel={ onClose }
 		>
-			<ul className="cedar-review-list">
+			<ul className="ako-review-list">
 				{ groups.slice( 0, 50 ).map( ( group, index ) => (
 					<li key={ index }>
-						<span className="cedar-review-list__pages" dir="auto">
+						<span className="ako-review-list__pages" dir="auto">
 							{ group.pages.length
 								? group.pages
 										.map( ( page ) => page.title )
 										.join( ' · ' )
-								: __( '(no pages left)', 'cedar-multilang' ) }
+								: __( '(no pages left)', 'ako-multilang' ) }
 						</span>
-						<span className="cedar-review-list__reason">
+						<span className="ako-review-list__reason">
 							{ ( REASONS[ group.reason ] || REASONS.error )() }
 						</span>
 					</li>

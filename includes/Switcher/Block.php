@@ -2,10 +2,10 @@
 /**
  * The Language Switcher block (dynamic, rendered by the shared renderer).
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Switcher;
+namespace Ako\Multilang\Switcher;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Block {
 
-	const EDITOR_HANDLE = 'cedar-ml-switcher-block';
+	const EDITOR_HANDLE = 'ako-ml-switcher-block';
 
 	/**
 	 * Hooks block registration (after the switcher assets are registered).
@@ -34,7 +34,7 @@ final class Block {
 	 */
 	public static function allow_in_navigation( $args, $block_type ) {
 		if ( 'core/navigation' === $block_type && isset( $args['allowed_blocks'] ) && is_array( $args['allowed_blocks'] ) ) {
-			$args['allowed_blocks'][] = 'cedar-multilang/switcher';
+			$args['allowed_blocks'][] = 'ako-multilang/switcher';
 		}
 		return $args;
 	}
@@ -43,21 +43,21 @@ final class Block {
 	 * Registers the editor script handle and the block type.
 	 */
 	public static function register_block() {
-		$asset_file = CEDAR_ML_PATH . 'build/block/index.asset.php';
+		$asset_file = AKO_ML_PATH . 'build/block/index.asset.php';
 		if ( is_readable( $asset_file ) ) {
 			$asset = include $asset_file;
 			wp_register_script(
 				self::EDITOR_HANDLE,
-				CEDAR_ML_URL . 'build/block/index.js',
+				AKO_ML_URL . 'build/block/index.js',
 				$asset['dependencies'],
 				$asset['version'],
 				array( 'in_footer' => true )
 			);
-			wp_set_script_translations( self::EDITOR_HANDLE, 'cedar-multilang', CEDAR_ML_PATH . 'languages' );
+			wp_set_script_translations( self::EDITOR_HANDLE, 'ako-multilang', AKO_ML_PATH . 'languages' );
 		}
 
 		register_block_type(
-			CEDAR_ML_PATH . 'blocks/switcher',
+			AKO_ML_PATH . 'blocks/switcher',
 			array( 'render_callback' => array( self::class, 'render' ) )
 		);
 	}

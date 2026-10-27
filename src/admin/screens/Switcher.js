@@ -18,7 +18,7 @@ import SwitcherMarkup from '../../components/SwitcherMarkup';
 import { errorMessage, getLanguages } from '../api';
 import apiFetch from '@wordpress/api-fetch';
 
-const BASE = '/cedar/v1/switchers';
+const BASE = '/ako/v1/switchers';
 
 const EDITABLE = [
 	'style',
@@ -57,7 +57,7 @@ export default function Switcher( { config, notify } ) {
 						error,
 						__(
 							'Your switchers couldn’t be loaded.',
-							'cedar-multilang'
+							'ako-multilang'
 						)
 					)
 				)
@@ -118,7 +118,7 @@ export default function Switcher( { config, notify } ) {
 				tone: 'success',
 				message: sprintf(
 					/* translators: %s: Switcher name. */
-					__( '%s saved.', 'cedar-multilang' ),
+					__( '%s saved.', 'ako-multilang' ),
 					response.switcher.name
 				),
 			} );
@@ -127,7 +127,7 @@ export default function Switcher( { config, notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'Your changes couldn’t be saved.', 'cedar-multilang' )
+					__( 'Your changes couldn’t be saved.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -150,7 +150,7 @@ export default function Switcher( { config, notify } ) {
 				tone: 'success',
 				message: sprintf(
 					/* translators: %s: Switcher name. */
-					__( '%s created.', 'cedar-multilang' ),
+					__( '%s created.', 'ako-multilang' ),
 					response.switcher.name
 				),
 			} );
@@ -159,7 +159,7 @@ export default function Switcher( { config, notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'The switcher couldn’t be created.', 'cedar-multilang' )
+					__( 'The switcher couldn’t be created.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -180,7 +180,7 @@ export default function Switcher( { config, notify } ) {
 				tone: 'success',
 				message: sprintf(
 					/* translators: %s: Switcher name. */
-					__( '%s deleted.', 'cedar-multilang' ),
+					__( '%s deleted.', 'ako-multilang' ),
 					saved.name
 				),
 			} );
@@ -189,7 +189,7 @@ export default function Switcher( { config, notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'The switcher couldn’t be deleted.', 'cedar-multilang' )
+					__( 'The switcher couldn’t be deleted.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -201,20 +201,20 @@ export default function Switcher( { config, notify } ) {
 		return (
 			<>
 				<PageTitle
-					title={ __( 'Language switcher', 'cedar-multilang' ) }
+					title={ __( 'Language switcher', 'ako-multilang' ) }
 					description=""
 				/>
-				<div className="cedar-card">
+				<div className="ako-card">
 					<EmptyState
 						icon="alert"
 						title={ __(
 							'Couldn’t load switchers',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						description={ loadError }
 						actions={
 							<Button variant="primary" onClick={ load }>
-								{ __( 'Try again', 'cedar-multilang' ) }
+								{ __( 'Try again', 'ako-multilang' ) }
 							</Button>
 						}
 					/>
@@ -226,7 +226,7 @@ export default function Switcher( { config, notify } ) {
 	if ( ! draft ) {
 		return (
 			<PageTitle
-				title={ __( 'Language switcher', 'cedar-multilang' ) }
+				title={ __( 'Language switcher', 'ako-multilang' ) }
 				description=""
 			/>
 		);
@@ -235,32 +235,32 @@ export default function Switcher( { config, notify } ) {
 	return (
 		<>
 			<PageTitle
-				title={ __( 'Language switcher', 'cedar-multilang' ) }
+				title={ __( 'Language switcher', 'ako-multilang' ) }
 				description={ __(
 					'Design it once, place it anywhere. The preview updates as you go.',
-					'cedar-multilang'
+					'ako-multilang'
 				) }
 				actions={
 					<>
-						<span className="cedar-editing">
+						<span className="ako-editing">
 							<span
-								className="cedar-editing__label"
+								className="ako-editing__label"
 								aria-hidden="true"
 							>
-								{ __( 'Editing', 'cedar-multilang' ) }
+								{ __( 'Editing', 'ako-multilang' ) }
 							</span>
 							<Menu
 								align="end"
-								label={ __( 'Switchers', 'cedar-multilang' ) }
+								label={ __( 'Switchers', 'ako-multilang' ) }
 								renderTrigger={ ( props ) => (
 									<button
 										type="button"
-										className="cedar-input is-select is-trigger"
+										className="ako-input is-select is-trigger"
 										aria-label={ sprintf(
 											/* translators: %s: Switcher name. */
 											__(
 												'Editing: %s',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 											saved.name
 										) }
@@ -289,7 +289,7 @@ export default function Switcher( { config, notify } ) {
 														/* translators: %s: Switcher name. */
 														__(
 															'Delete “%s”…',
-															'cedar-multilang'
+															'ako-multilang'
 														),
 														saved.name
 													),
@@ -308,43 +308,37 @@ export default function Switcher( { config, notify } ) {
 							icon="plus"
 							onClick={ () => setDialog( { type: 'create' } ) }
 						>
-							{ __( 'New switcher', 'cedar-multilang' ) }
+							{ __( 'New switcher', 'ako-multilang' ) }
 						</Button>
 					</>
 				}
 			/>
 
-			<div className="cedar-designer">
-				<div className="cedar-designer__column">
+			<div className="ako-designer">
+				<div className="ako-designer__column">
 					<section
-						className="cedar-card"
-						aria-labelledby="cedar-style-title"
+						className="ako-card"
+						aria-labelledby="ako-style-title"
 					>
-						<h2
-							id="cedar-style-title"
-							className="cedar-card__title"
-						>
-							{ __( 'Style', 'cedar-multilang' ) }
+						<h2 id="ako-style-title" className="ako-card__title">
+							{ __( 'Style', 'ako-multilang' ) }
 						</h2>
 						<StyleTiles
 							value={ draft.style }
 							onChange={ ( style ) => set( 'style', style ) }
 							languages={ languages }
-							labelledBy="cedar-style-title"
+							labelledBy="ako-style-title"
 						/>
 					</section>
 
 					<section
-						className="cedar-card"
-						aria-labelledby="cedar-content-title"
+						className="ako-card"
+						aria-labelledby="ako-content-title"
 					>
-						<h2
-							id="cedar-content-title"
-							className="cedar-card__title"
-						>
-							{ __( 'Content', 'cedar-multilang' ) }
+						<h2 id="ako-content-title" className="ako-card__title">
+							{ __( 'Content', 'ako-multilang' ) }
 						</h2>
-						<SettingRow label={ __( 'Show', 'cedar-multilang' ) }>
+						<SettingRow label={ __( 'Show', 'ako-multilang' ) }>
 							{ ( id ) => (
 								<Select
 									id={ id }
@@ -357,21 +351,21 @@ export default function Switcher( { config, notify } ) {
 											value: 'code',
 											label: __(
 												'Code (EN · FA)',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 										{
 											value: 'native',
 											label: __(
 												'Native name',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 										{
 											value: 'both',
 											label: __(
 												'Name and code',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 									] }
@@ -379,7 +373,7 @@ export default function Switcher( { config, notify } ) {
 							) }
 						</SettingRow>
 						<SettingRow
-							label={ __( 'Globe icon', 'cedar-multilang' ) }
+							label={ __( 'Globe icon', 'ako-multilang' ) }
 							toggle
 						>
 							{ ( id, labelId ) => (
@@ -391,10 +385,7 @@ export default function Switcher( { config, notify } ) {
 							) }
 						</SettingRow>
 						<SettingRow
-							label={ __(
-								'On small screens',
-								'cedar-multilang'
-							) }
+							label={ __( 'On small screens', 'ako-multilang' ) }
 						>
 							{ ( id ) => (
 								<Select
@@ -408,21 +399,21 @@ export default function Switcher( { config, notify } ) {
 											value: 'same',
 											label: __(
 												'Same as desktop',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 										{
 											value: 'code',
 											label: __(
 												'Codes only',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 										{
 											value: 'icon',
 											label: __(
 												'Globe only',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 									] }
@@ -430,10 +421,10 @@ export default function Switcher( { config, notify } ) {
 							) }
 						</SettingRow>
 						<SettingRow
-							label={ __( 'No translation', 'cedar-multilang' ) }
+							label={ __( 'No translation', 'ako-multilang' ) }
 							help={ __(
 								'Where the link goes when a page isn’t translated.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 						>
 							{ ( id, labelId, helpId ) => (
@@ -449,21 +440,21 @@ export default function Switcher( { config, notify } ) {
 											value: 'home',
 											label: __(
 												'Language homepage',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 										{
 											value: 'hide',
 											label: __(
 												'Hide the language',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 										{
 											value: 'disabled',
 											label: __(
 												'Show it disabled',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 									] }
@@ -473,7 +464,7 @@ export default function Switcher( { config, notify } ) {
 					</section>
 				</div>
 
-				<div className="cedar-designer__column">
+				<div className="ako-designer__column">
 					<Preview
 						profile={ draft }
 						languages={ languages }
@@ -481,15 +472,13 @@ export default function Switcher( { config, notify } ) {
 					/>
 
 					<section
-						className="cedar-card"
-						aria-labelledby="cedar-look-title"
+						className="ako-card"
+						aria-labelledby="ako-look-title"
 					>
-						<h2 id="cedar-look-title" className="cedar-card__title">
-							{ __( 'Look', 'cedar-multilang' ) }
+						<h2 id="ako-look-title" className="ako-card__title">
+							{ __( 'Look', 'ako-multilang' ) }
 						</h2>
-						<SettingRow
-							label={ __( 'Styling', 'cedar-multilang' ) }
-						>
+						<SettingRow label={ __( 'Styling', 'ako-multilang' ) }>
 							{ ( id ) => (
 								<Select
 									id={ id }
@@ -499,17 +488,17 @@ export default function Switcher( { config, notify } ) {
 									}
 									options={ [
 										{
-											value: 'cedar',
+											value: 'ako',
 											label: __(
-												'Cedar style',
-												'cedar-multilang'
+												'Ako style',
+												'ako-multilang'
 											),
 										},
 										{
 											value: 'inherit',
 											label: __(
 												'Inherit from theme',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 										},
 									] }
@@ -517,10 +506,10 @@ export default function Switcher( { config, notify } ) {
 							) }
 						</SettingRow>
 						{ 'inherit' === draft.styling ? (
-							<p className="cedar-note is-info">
+							<p className="ako-note is-info">
 								{ __(
-									'Uses your theme’s font, colors, and spacing. Fine-tune it with --cedar-switcher-* in your CSS.',
-									'cedar-multilang'
+									'Uses your theme’s font, colors, and spacing. Fine-tune it with --ako-switcher-* in your CSS.',
+									'ako-multilang'
 								) }
 							</p>
 						) : (
@@ -528,7 +517,7 @@ export default function Switcher( { config, notify } ) {
 								<SettingRow
 									label={ __(
 										'Accent color',
-										'cedar-multilang'
+										'ako-multilang'
 									) }
 								>
 									{ ( id ) => (
@@ -542,7 +531,7 @@ export default function Switcher( { config, notify } ) {
 									) }
 								</SettingRow>
 								<SettingRow
-									label={ __( 'Shape', 'cedar-multilang' ) }
+									label={ __( 'Shape', 'ako-multilang' ) }
 								>
 									{ ( id ) => (
 										<Select
@@ -559,21 +548,21 @@ export default function Switcher( { config, notify } ) {
 													value: 'pill',
 													label: __(
 														'Pill',
-														'cedar-multilang'
+														'ako-multilang'
 													),
 												},
 												{
 													value: 'rounded',
 													label: __(
 														'Rounded',
-														'cedar-multilang'
+														'ako-multilang'
 													),
 												},
 												{
 													value: 'square',
 													label: __(
 														'Square',
-														'cedar-multilang'
+														'ako-multilang'
 													),
 												},
 											] }
@@ -584,7 +573,7 @@ export default function Switcher( { config, notify } ) {
 									<SettingRow
 										label={ __(
 											'Link look',
-											'cedar-multilang'
+											'ako-multilang'
 										) }
 									>
 										{ ( id ) => (
@@ -602,28 +591,28 @@ export default function Switcher( { config, notify } ) {
 														value: 'plain',
 														label: __(
 															'Plain',
-															'cedar-multilang'
+															'ako-multilang'
 														),
 													},
 													{
 														value: 'outline',
 														label: __(
 															'Outline',
-															'cedar-multilang'
+															'ako-multilang'
 														),
 													},
 													{
 														value: 'soft',
 														label: __(
 															'Soft',
-															'cedar-multilang'
+															'ako-multilang'
 														),
 													},
 													{
 														value: 'solid',
 														label: __(
 															'Solid',
-															'cedar-multilang'
+															'ako-multilang'
 														),
 													},
 												] }
@@ -660,14 +649,14 @@ export default function Switcher( { config, notify } ) {
 					icon="alert"
 					title={ sprintf(
 						/* translators: %s: Switcher name. */
-						__( 'Delete %s?', 'cedar-multilang' ),
+						__( 'Delete %s?', 'ako-multilang' ),
 						saved.name
 					) }
 					description={ __(
 						'Blocks, shortcodes, and menu items that use it will show your first switcher instead.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
-					confirmLabel={ __( 'Delete switcher', 'cedar-multilang' ) }
+					confirmLabel={ __( 'Delete switcher', 'ako-multilang' ) }
 					onConfirm={ remove }
 					onCancel={ () => setDialog( null ) }
 					busy={ saving }
@@ -677,19 +666,16 @@ export default function Switcher( { config, notify } ) {
 				<Dialog
 					tone="danger"
 					icon="alert"
-					title={ __(
-						'Discard unsaved changes?',
-						'cedar-multilang'
-					) }
+					title={ __( 'Discard unsaved changes?', 'ako-multilang' ) }
 					description={ sprintf(
 						/* translators: %s: Switcher name. */
 						__(
 							'Your changes to %s will be lost.',
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						saved.name
 					) }
-					confirmLabel={ __( 'Discard changes', 'cedar-multilang' ) }
+					confirmLabel={ __( 'Discard changes', 'ako-multilang' ) }
 					onConfirm={ () => {
 						setSelectedId( dialog.next.id );
 						setDraft( dialog.next );
@@ -716,15 +702,15 @@ function SettingRow( { label, help, toggle = false, children } ) {
 	const labelId = `${ id }-label`;
 	const helpId = help ? `${ id }-help` : undefined;
 	return (
-		<div className="cedar-setting-row">
-			<span className="cedar-setting-row__copy">
+		<div className="ako-setting-row">
+			<span className="ako-setting-row__copy">
 				{ toggle ? (
-					<span className="cedar-setting-row__label" id={ labelId }>
+					<span className="ako-setting-row__label" id={ labelId }>
 						{ label }
 					</span>
 				) : (
 					<label
-						className="cedar-setting-row__label"
+						className="ako-setting-row__label"
 						id={ labelId }
 						htmlFor={ id }
 					>
@@ -732,12 +718,12 @@ function SettingRow( { label, help, toggle = false, children } ) {
 					</label>
 				) }
 				{ help && (
-					<span className="cedar-setting-row__help" id={ helpId }>
+					<span className="ako-setting-row__help" id={ helpId }>
 						{ help }
 					</span>
 				) }
 			</span>
-			<span className="cedar-setting-row__control">
+			<span className="ako-setting-row__control">
 				{ children( id, labelId, helpId ) }
 			</span>
 		</div>
@@ -761,11 +747,11 @@ function Preview( { profile, languages, siteName } ) {
 
 	if ( languages.length < 2 ) {
 		return (
-			<section className="cedar-card">
-				<p className="cedar-note is-info">
+			<section className="ako-card">
+				<p className="ako-note is-info">
 					{ __(
 						'Add a second language to preview the switcher.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				</p>
 			</section>
@@ -780,57 +766,57 @@ function Preview( { profile, languages, siteName } ) {
 		value: language.code,
 		label: sprintf(
 			/* translators: %s: Language code, e.g. "EN". */
-			__( '%s page', 'cedar-multilang' ),
+			__( '%s page', 'ako-multilang' ),
 			language.code.toUpperCase()
 		),
 	} ) );
 
 	return (
 		<section
-			className="cedar-card cedar-preview-card"
-			aria-label={ __( 'Live preview', 'cedar-multilang' ) }
+			className="ako-card ako-preview-card"
+			aria-label={ __( 'Live preview', 'ako-multilang' ) }
 		>
-			<div className="cedar-preview-card__bar">
-				<span className="cedar-preview-card__live">
+			<div className="ako-preview-card__bar">
+				<span className="ako-preview-card__live">
 					<span
-						className="cedar-preview-card__dot"
+						className="ako-preview-card__dot"
 						aria-hidden="true"
 					/>
-					{ __( 'Live preview', 'cedar-multilang' ) }
+					{ __( 'Live preview', 'ako-multilang' ) }
 				</span>
-				<span className="cedar-preview-card__toggles">
+				<span className="ako-preview-card__toggles">
 					<Tabs
-						label={ __( 'Device', 'cedar-multilang' ) }
+						label={ __( 'Device', 'ako-multilang' ) }
 						value={ device }
 						onChange={ setDevice }
 						items={ [
 							{
 								value: 'desktop',
-								label: __( 'Desktop', 'cedar-multilang' ),
+								label: __( 'Desktop', 'ako-multilang' ),
 							},
 							{
 								value: 'mobile',
-								label: __( 'Mobile', 'cedar-multilang' ),
+								label: __( 'Mobile', 'ako-multilang' ),
 							},
 						] }
 					/>
 					<Tabs
-						label={ __( 'Color scheme', 'cedar-multilang' ) }
+						label={ __( 'Color scheme', 'ako-multilang' ) }
 						value={ scheme }
 						onChange={ setScheme }
 						items={ [
 							{
 								value: 'light',
-								label: __( 'Light', 'cedar-multilang' ),
+								label: __( 'Light', 'ako-multilang' ),
 							},
 							{
 								value: 'dark',
-								label: __( 'Dark', 'cedar-multilang' ),
+								label: __( 'Dark', 'ako-multilang' ),
 							},
 						] }
 					/>
 					<Tabs
-						label={ __( 'Page language', 'cedar-multilang' ) }
+						label={ __( 'Page language', 'ako-multilang' ) }
 						value={ current.code }
 						onChange={ setPage }
 						items={ pageOptions }
@@ -838,20 +824,20 @@ function Preview( { profile, languages, siteName } ) {
 				</span>
 			</div>
 			<div
-				className={ `cedar-preview is-${ device } is-${ scheme }` }
+				className={ `ako-preview is-${ device } is-${ scheme }` }
 				inert=""
 			>
 				<div
-					className="cedar-preview__site"
+					className="ako-preview__site"
 					dir={ current.dir }
 					lang={ current.hreflang }
 				>
-					<span className="cedar-preview__brand">{ siteName }</span>
-					<span className="cedar-preview__nav">
+					<span className="ako-preview__brand">{ siteName }</span>
+					<span className="ako-preview__nav">
 						{ 'desktop' === device && (
 							<>
-								<span className="cedar-preview__link" />
-								<span className="cedar-preview__link" />
+								<span className="ako-preview__link" />
+								<span className="ako-preview__link" />
 							</>
 						) }
 						{ 'floating' !== profile.style && (
@@ -864,10 +850,7 @@ function Preview( { profile, languages, siteName } ) {
 					</span>
 				</div>
 				{ 'floating' === profile.style && (
-					<div
-						className="cedar-preview__floating"
-						dir={ current.dir }
-					>
+					<div className="ako-preview__floating" dir={ current.dir }>
 						<SwitcherMarkup
 							profile={ profile }
 							items={ items }
@@ -895,14 +878,14 @@ function ColorInput( { id, value, onChange } ) {
 	const valid = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test( text );
 
 	return (
-		<span className={ `cedar-color ${ valid ? '' : 'is-invalid' }` }>
+		<span className={ `ako-color ${ valid ? '' : 'is-invalid' }` }>
 			<span
-				className="cedar-color__swatch"
+				className="ako-color__swatch"
 				style={ { background: valid ? text : 'transparent' } }
 			>
 				<input
 					type="color"
-					aria-label={ __( 'Pick a color', 'cedar-multilang' ) }
+					aria-label={ __( 'Pick a color', 'ako-multilang' ) }
 					value={ valid && 7 === text.length ? text : '#181815' }
 					onChange={ ( event ) => {
 						setText( event.target.value );
@@ -913,7 +896,7 @@ function ColorInput( { id, value, onChange } ) {
 			<input
 				id={ id }
 				type="text"
-				className="cedar-color__hex"
+				className="ako-color__hex"
 				value={ text }
 				maxLength={ 7 }
 				spellCheck={ false }
@@ -945,14 +928,14 @@ function EmbedCard( { profile, notify } ) {
 
 	if ( 'floating' === profile.style ) {
 		return (
-			<section className="cedar-card" aria-labelledby="cedar-embed-title">
-				<h2 id="cedar-embed-title" className="cedar-card__title">
-					{ __( 'Add it to your site', 'cedar-multilang' ) }
+			<section className="ako-card" aria-labelledby="ako-embed-title">
+				<h2 id="ako-embed-title" className="ako-card__title">
+					{ __( 'Add it to your site', 'ako-multilang' ) }
 				</h2>
-				<p className="cedar-card__text">
+				<p className="ako-card__text">
 					{ __(
 						'Floating switchers appear on every page automatically, in the bottom corner. Nothing to add.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				</p>
 			</section>
@@ -961,33 +944,33 @@ function EmbedCard( { profile, notify } ) {
 
 	const methods = {
 		block: {
-			label: __( 'Block', 'cedar-multilang' ),
+			label: __( 'Block', 'ako-multilang' ),
 			text: __(
 				'Add the “Language Switcher” block in the editor or Site Editor, then pick this design in its settings.',
-				'cedar-multilang'
+				'ako-multilang'
 			),
 			code: null,
 		},
 		menu: {
-			label: __( 'Menu item', 'cedar-multilang' ),
+			label: __( 'Menu item', 'ako-multilang' ),
 			text: __(
 				'In Appearance → Menus, add it from the “Language switcher” box. If you don’t see the box, turn it on in Screen Options. On block themes, add the “Language Switcher” block to your navigation in the Site Editor.',
-				'cedar-multilang'
+				'ako-multilang'
 			),
 			code: null,
 		},
 		shortcode: {
-			label: __( 'Shortcode', 'cedar-multilang' ),
+			label: __( 'Shortcode', 'ako-multilang' ),
 			text: __(
 				'Works in Elementor, widgets, and any text field.',
-				'cedar-multilang'
+				'ako-multilang'
 			),
-			code: `[cedar_switcher id="${ profile.id }"]`,
+			code: `[ako_switcher id="${ profile.id }"]`,
 		},
 		php: {
-			label: __( 'PHP', 'cedar-multilang' ),
-			text: __( 'For theme templates.', 'cedar-multilang' ),
-			code: `<?php cedar_ml_switcher( '${ profile.id }' ); ?>`,
+			label: __( 'PHP', 'ako-multilang' ),
+			text: __( 'For theme templates.', 'ako-multilang' ),
+			code: `<?php ako_ml_switcher( '${ profile.id }' ); ?>`,
 		},
 	};
 	const current = methods[ method ];
@@ -998,27 +981,27 @@ function EmbedCard( { profile, notify } ) {
 			setCopied( true );
 			notify( {
 				tone: 'success',
-				message: __( 'Copied to the clipboard.', 'cedar-multilang' ),
+				message: __( 'Copied to the clipboard.', 'ako-multilang' ),
 			} );
 		} catch {
 			notify( {
 				tone: 'error',
 				message: __(
 					'Couldn’t copy. Select the code and copy it instead.',
-					'cedar-multilang'
+					'ako-multilang'
 				),
 			} );
 		}
 	};
 
 	return (
-		<section className="cedar-card" aria-labelledby="cedar-embed-title">
-			<div className="cedar-card__head">
-				<h2 id="cedar-embed-title" className="cedar-card__title">
-					{ __( 'Add it to your site', 'cedar-multilang' ) }
+		<section className="ako-card" aria-labelledby="ako-embed-title">
+			<div className="ako-card__head">
+				<h2 id="ako-embed-title" className="ako-card__title">
+					{ __( 'Add it to your site', 'ako-multilang' ) }
 				</h2>
 				<Tabs
-					label={ __( 'Method', 'cedar-multilang' ) }
+					label={ __( 'Method', 'ako-multilang' ) }
 					value={ method }
 					onChange={ setMethod }
 					items={ Object.entries( methods ).map(
@@ -1029,9 +1012,9 @@ function EmbedCard( { profile, notify } ) {
 					) }
 				/>
 			</div>
-			<p className="cedar-card__text">{ current.text }</p>
+			<p className="ako-card__text">{ current.text }</p>
 			{ current.code && (
-				<div className="cedar-code">
+				<div className="ako-code">
 					<code dir="ltr">{ current.code }</code>
 					<Button
 						variant="ghost"
@@ -1040,8 +1023,8 @@ function EmbedCard( { profile, notify } ) {
 						onClick={ copy }
 					>
 						{ copied
-							? __( 'Copied', 'cedar-multilang' )
-							: __( 'Copy', 'cedar-multilang' ) }
+							? __( 'Copied', 'ako-multilang' )
+							: __( 'Copy', 'ako-multilang' ) }
 					</Button>
 				</div>
 			) }
@@ -1065,20 +1048,20 @@ function CreateDialog( { onCreate, onCancel, busy } ) {
 	return (
 		<Dialog
 			icon="plus"
-			title={ __( 'New switcher', 'cedar-multilang' ) }
+			title={ __( 'New switcher', 'ako-multilang' ) }
 			description={ __(
 				'Give it a name you’ll recognize, like “Footer switcher”.',
-				'cedar-multilang'
+				'ako-multilang'
 			) }
-			confirmLabel={ __( 'Create switcher', 'cedar-multilang' ) }
+			confirmLabel={ __( 'Create switcher', 'ako-multilang' ) }
 			onConfirm={ () => valid && onCreate( name.trim() ) }
 			onCancel={ onCancel }
 			busy={ busy }
 			initialFocus="input"
 		>
-			<div className="cedar-field">
-				<label className="cedar-field__label" htmlFor={ id }>
-					{ __( 'Name', 'cedar-multilang' ) }
+			<div className="ako-field">
+				<label className="ako-field__label" htmlFor={ id }>
+					{ __( 'Name', 'ako-multilang' ) }
 				</label>
 				<TextInput
 					id={ id }
