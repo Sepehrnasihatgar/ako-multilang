@@ -55,10 +55,19 @@ Done
 - Tested in Playground (real Polylang 3.9 + simulated WPML tables, Twenty Twenty-One): notices; every setup step (language search / no match, both import sources, WPML 2 linked + 1 skipped with review, Polylang 2 linked, re-import is safe, 5 suggested pairs incl. /fa/ folder pages connected, switcher added to the primary menu, summary 18 pages / 36 hreflang); default language locked once pages have languages; Settings save / export / import (bad file, unknown keys and unavailable content types rejected); About; front end after deactivating Polylang (RTL, hreflang, switcher in the menu).
 - RTL compatibility stylesheets (Elementor, Hello Elementor, Astra, GeneratePress, Kadence) move to M7: each needs testing in its theme. Until a stylesheet ships, its toggle isn't shown.
 
+## Milestone 7 — QA and release (done)
+
+- Plugin Check (all categories) on the release zip: 0 errors, 0 warnings. WPML table names use `%i`; IN lists are built inline.
+- Release zip now includes `blocks/` and `templates/` (the switcher block and template were missing).
+- RTL tested on Farsi pages in Astra, Kadence, Hello Elementor, Twenty Twenty-Five, GeneratePress and Elementor (heading, text, icon list, icon box). Only GeneratePress needed a fix: it keeps left/right physical, so `assets/rtl/generatepress.css` mirrors the header and sidebars (desktop and mobile checked). Toggle in Settings; loads only on RTL pages.
+- Accessibility: axe-core on all 7 admin screens, 0 violations. Secondary/tertiary text tokens moved to neutral 700/600 (Figma updated too) for 4.5:1; missing-cell label starts with its visible text; header no longer a nested banner.
+- Performance: +4 queries on linked pages, 0 on the home page; 2 KB CSS, JS only where a switcher needs it.
+- readme.txt for wordpress.org (Tested up to 7.1), banner, icon and five screenshots in `.wordpress-org/`.
+
 Next
-1. Milestone 7 — QA and release: RTL compatibility stylesheets (tested per theme), Plugin Check, accessibility pass, performance, readme, screenshots and wp.org assets.
+1. Before submitting: create the wp.org account's SVN assets from `.wordpress-org/`, run Plugin Check once more on the final zip, then submit at wordpress.org/plugins/developers/add/.
 2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.
-3. Later milestones add: Needs review tab + SEO health card (M5), Import / Link pages header buttons and first-run empty state (M6), Duplicate as draft (M3), Get Pro / Docs header links (when URLs exist).
+3. Header Get Pro / Docs links once those URLs exist.
 
 Run locally
 - `npm install && npm run build`

@@ -33,6 +33,7 @@ It's built for bilingual sites with a right-to-left language, like Farsi, Arabic
 = Right-to-left =
 
 * Each page loads in its own language, so `is_rtl()` is right and your theme's own `rtl.css` loads on right-to-left pages.
+* Tested with Astra, Kadence, Hello Elementor, Twenty Twenty-Five and Elementor. GeneratePress gets a small fix that mirrors its header and sidebar on right-to-left pages. You can turn it off in Settings.
 
 = Language switcher =
 
@@ -84,7 +85,7 @@ Your pages stay as they are. Cedar's settings and links stay too, unless you tur
 1. Translations: every page and its translations in one place.
 2. Setup: Cedar suggests pairs from your URLs and titles.
 3. Language switcher looks with a live preview.
-4. SEO health: missing translations and one-way links.
+4. SEO: the exact hreflang search engines see, plus health checks.
 5. Linking a translation from the editor.
 
 == Changelog ==
