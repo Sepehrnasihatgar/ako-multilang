@@ -401,66 +401,73 @@ export default function Settings( { notify } ) {
 				</div>
 
 				<div className="cedar-designer__column">
-					<section
-						className="cedar-card"
-						aria-labelledby="cedar-rtl-title"
-					>
-						<div className="cedar-card__head">
-							<h2
-								id="cedar-rtl-title"
-								className="cedar-card__title"
-							>
-								{ __( 'RTL compatibility', 'cedar-multilang' ) }
-							</h2>
-							<p className="cedar-card__text">
-								{ draft.modules.rtl
-									? __(
-											'Small fixes for builders and popular themes. Only the ones you use load.',
-											'cedar-multilang'
-										)
-									: __(
-											'Turn on RTL support to use these fixes.',
-											'cedar-multilang'
-										) }
-							</p>
-						</div>
-						{ data.integrations.map( ( integration ) => {
-							let badge = null;
-							if ( integration.detected ) {
-								badge = (
-									<Badge tone="linked">
-										{ 'theme' === integration.type
-											? __(
-													'Active theme',
-													'cedar-multilang'
-												)
-											: __(
-													'Detected',
-													'cedar-multilang'
-												) }
-									</Badge>
+					{ data.integrations.length > 0 && (
+						<section
+							className="cedar-card"
+							aria-labelledby="cedar-rtl-title"
+						>
+							<div className="cedar-card__head">
+								<h2
+									id="cedar-rtl-title"
+									className="cedar-card__title"
+								>
+									{ __(
+										'RTL compatibility',
+										'cedar-multilang'
+									) }
+								</h2>
+								<p className="cedar-card__text">
+									{ draft.modules.rtl
+										? __(
+												'Small fixes for builders and popular themes. Only the ones you use load.',
+												'cedar-multilang'
+											)
+										: __(
+												'Turn on RTL support to use these fixes.',
+												'cedar-multilang'
+											) }
+								</p>
+							</div>
+							{ data.integrations.map( ( integration ) => {
+								let badge = null;
+								if ( integration.detected ) {
+									badge = (
+										<Badge tone="linked">
+											{ 'theme' === integration.type
+												? __(
+														'Active theme',
+														'cedar-multilang'
+													)
+												: __(
+														'Detected',
+														'cedar-multilang'
+													) }
+										</Badge>
+									);
+								}
+								return (
+									<ToggleRow
+										key={ integration.key }
+										label={ integration.name }
+										badge={ badge }
+										disabled={ ! draft.modules.rtl }
+										checked={
+											!! draft.rtl_compat[
+												integration.key
+											]
+										}
+										onChange={ ( on ) =>
+											setIn(
+												'rtl_compat',
+												integration.key,
+												on
+											)
+										}
+									/>
 								);
-							}
-							return (
-								<ToggleRow
-									key={ integration.key }
-									label={ integration.name }
-									badge={ badge }
-									disabled={ ! draft.modules.rtl }
-									checked={
-										!! draft.rtl_compat[ integration.key ]
-									}
-									onChange={ ( on ) =>
-										setIn(
-											'rtl_compat',
-											integration.key,
-											on
-										)
-									}
-								/>
-							);
-						} ) }
-					</section>
+							} ) }
+						</section>
+					) }
 
 					<section
 						className="cedar-card"

@@ -89,6 +89,10 @@ final class Compat {
 	public static function status() {
 		$out = array();
 		foreach ( self::known() as $key => $integration ) {
+			// Only integrations whose fixes ship (and were tested) get a toggle.
+			if ( ! is_readable( CEDAR_ML_PATH . 'assets/rtl/' . $key . '.css' ) ) {
+				continue;
+			}
 			$out[] = array(
 				'key'      => $key,
 				'name'     => $integration['name'],

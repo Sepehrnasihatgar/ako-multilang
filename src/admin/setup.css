@@ -691,6 +691,7 @@
 	display: flex;
 	align-items: baseline;
 	gap: var(--cedar-admin-space-sm);
+	margin: 0;
 	font: var(--cedar-text-body-strong);
 }
 
@@ -739,6 +740,10 @@
 	gap: var(--cedar-admin-space-sm);
 	margin: 0;
 	font: var(--cedar-text-body-strong);
+}
+
+.cedar-status dd .cedar-icon {
+	flex: none;
 }
 
 .cedar-icon.is-warning {

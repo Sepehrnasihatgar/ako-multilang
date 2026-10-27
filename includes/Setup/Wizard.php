@@ -167,8 +167,16 @@ final class Wizard {
 		if ( 'floating' === $profile['style'] && 'floating' !== $placement ) {
 			$profile['style'] = 'dropdown';
 		}
+		// Match the look the setup tiles preview.
 		if ( 'segmented' === $profile['style'] ) {
 			$profile['show'] = 'code';
+			$profile['icon'] = false;
+		} elseif ( 'link' === $profile['style'] ) {
+			$profile['show'] = 'native';
+			$profile['icon'] = true;
+		} else {
+			$profile['show'] = 'code';
+			$profile['icon'] = true;
 		}
 
 		$saved = Profiles::save( $profile );

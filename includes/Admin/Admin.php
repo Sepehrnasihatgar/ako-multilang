@@ -229,8 +229,8 @@ final class Admin {
 		);
 		wp_style_add_data( self::SCRIPT, 'rtl', 'replace' );
 
-		// The designer previews the real front-end stylesheet.
-		if ( isset( self::$hooks['switcher'] ) && self::$hooks['switcher'] === $hook_suffix ) {
+		// The designer and setup preview the real front-end stylesheet.
+		if ( in_array( array_search( $hook_suffix, self::$hooks, true ), array( 'switcher', 'setup' ), true ) ) {
 			wp_enqueue_style( 'cedar-ml-switcher' );
 		}
 	}
