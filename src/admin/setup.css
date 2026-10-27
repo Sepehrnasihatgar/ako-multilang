@@ -154,6 +154,24 @@
 
 /* ---------- Step 1: languages ---------- */
 
+/* One-click languages found on the site (installed packs, pages). */
+.cedar-ml .cedar-setup-suggest {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--cedar-admin-space-xs);
+}
+
+.cedar-ml .cedar-setup-suggest__label {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-label);
+}
+
+.cedar-ml .cedar-setup-suggest__name {
+	margin-inline-start: var(--cedar-admin-space-2xs);
+	color: var(--cedar-admin-text-secondary);
+}
+
 .cedar-ml .cedar-setup-languages__list {
 	display: flex;
 	flex-direction: column;

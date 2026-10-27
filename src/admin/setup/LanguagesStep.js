@@ -11,11 +11,12 @@ import { errorMessage, saveSetupLanguages } from '../api';
 import { searchCatalog } from '../catalog';
 
 /**
- * Starting languages: the saved ones, or the site language as the default.
+ * Starting languages: the saved ones, or the site language as the default
+ * plus languages Cedar found in the site's pages (titles or a /fa/ folder).
  *
  * @param {Object} state   Setup state.
  * @param {Array}  catalog Catalog.
- * @return {Object} { defaultLocale, others }.
+ * @return {Object} { defaultLocale, others, found }.
  */
 function initial( state, catalog ) {
 	const saved = state.languages.languages;
@@ -24,10 +25,22 @@ function initial( state, catalog ) {
 		return {
 			defaultLocale: current.locale,
 			others: saved.filter( ( language ) => ! language.default ),
+			found: [],
 		};
 	}
 	const site = catalog.find( ( entry ) => entry.locale === state.siteLocale );
-	return { defaultLocale: site ? site.locale : 'en_US', others: [] };
+	const defaultLocale = site ? site.locale : 'en_US';
+	const found = ( state.suggested || [] )
+		.filter( ( suggestion ) => 'installed' !== suggestion.reason )
+		.map( ( suggestion ) =>
+			catalog.find( ( entry ) => entry.locale === suggestion.locale )
+		)
+		.filter( ( entry ) => entry && entry.locale !== defaultLocale );
+	return {
+		defaultLocale,
+		others: found,
+		found: found.map( ( e ) => e.locale ),
+	};
 }
 
 /**
@@ -88,6 +101,20 @@ export default function LanguagesStep( {
 	const open = '' !== text.trim();
 	const empty = 0 === others.length;
 	const showError = empty && touched;
+	const foundShown = others.filter( ( language ) =>
+		start.found.includes( language.locale )
+	);
+	const offers = ( state.suggested || [] )
+		.map( ( suggestion ) =>
+			catalog.find( ( entry ) => entry.locale === suggestion.locale )
+		)
+		.filter(
+			( entry ) =>
+				entry &&
+				entry.locale !== defaultLocale &&
+				! taken.has( entry.locale )
+		)
+		.slice( 0, 4 );
 
 	const add = ( entry ) => {
 		if ( taken.has( entry.locale ) ) {
@@ -413,18 +440,56 @@ export default function LanguagesStep( {
 						</div>
 					) }
 				</div>
+				{ offers.length > 0 && (
+					<div className="cedar-setup-suggest">
+						<span className="cedar-setup-suggest__label">
+							{ __( 'Suggested', 'cedar-multilang' ) }
+						</span>
+						{ offers.map( ( entry ) => (
+							<Button
+								key={ entry.locale }
+								size="small"
+								icon="plus"
+								onClick={ () => add( entry ) }
+							>
+								<span lang={ entry.hreflang } dir={ entry.dir }>
+									{ entry.native }
+								</span>
+								{ entry.name !== entry.native && (
+									<span className="cedar-setup-suggest__name">
+										{ entry.name }
+									</span>
+								) }
+							</Button>
+						) ) }
+					</div>
+				) }
 				<p className="cedar-field__help" id={ searchHelpId }>
 					{ showError && <Icon name="alert" size={ 14 } /> }
 					<span>
-						{ empty
-							? __(
-									'Add at least one more language to continue.',
+						{ empty &&
+							__(
+								'Add at least one more language to continue.',
+								'cedar-multilang'
+							) }
+						{ ! empty &&
+							foundShown.length > 0 &&
+							sprintf(
+								/* translators: %s: Language names, comma separated. */
+								__(
+									'Found in your pages: %s. Remove it if that’s not right.',
 									'cedar-multilang'
-								)
-							: __(
-									'Use ↑ and ↓ to pick a match, Enter to add it.',
-									'cedar-multilang'
-								) }
+								),
+								foundShown
+									.map( ( language ) => language.name )
+									.join( ', ' )
+							) }
+						{ ! empty &&
+							0 === foundShown.length &&
+							__(
+								'Use ↑ and ↓ to pick a match, Enter to add it.',
+								'cedar-multilang'
+							) }
 					</span>
 				</p>
 			</div>

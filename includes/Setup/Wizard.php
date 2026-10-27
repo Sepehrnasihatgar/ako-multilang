@@ -125,6 +125,149 @@ final class Wizard {
 	}
 
 	/**
+	 * Writing systems that point to one language, checked in order: the
+	 * first match wins. Letters only Urdu, Farsi or Arabic use come first;
+	 * other Arabic-script titles are settled in suggested_languages().
+	 */
+	const SCRIPTS = array(
+		'ur'     => '/[\x{0679}\x{0688}\x{0691}\x{06BA}\x{06BE}\x{06D2}]/u',
+		'fa_IR'  => '/[\x{067E}\x{0686}\x{0698}\x{06AF}\x{06A9}\x{06CC}]/u',
+		'ar'     => '/[\x{0629}\x{0643}\x{0649}\x{064A}]/u',
+		'arabic' => '/[\x{0600}-\x{06FF}]/u',
+		'he_IL'  => '/[\x{0590}-\x{05FF}]/u',
+		'el'     => '/[\x{0370}-\x{03FF}]/u',
+		'th'     => '/[\x{0E00}-\x{0E7F}]/u',
+		'hi_IN'  => '/[\x{0900}-\x{097F}]/u',
+		'ja'     => '/[\x{3040}-\x{30FF}]/u',
+		'ko_KR'  => '/[\x{AC00}-\x{D7AF}]/u',
+		'zh_CN'  => '/[\x{4E00}-\x{9FFF}]/u',
+	);
+
+	/**
+	 * Site locales written in Arabic script.
+	 */
+	const ARABIC_SCRIPT = array( 'ar', 'fa_IR', 'fa_AF', 'ur', 'ckb', 'ps', 'ug_CN', 'azb', 'skr', 'haz' );
+
+	/**
+	 * How many recent titles to read when looking for languages.
+	 */
+	const SCAN_LIMIT = 300;
+
+	/**
+	 * Languages the site seems to use besides its own, strongest first.
+	 *
+	 * - "content": titles written in another script (two or more pages).
+	 * - "folder": a top-level page named after a language with pages under it, like /fa/.
+	 * - "installed": a WordPress language pack installed on the site.
+	 *
+	 * Content and folder matches are likely enough to pre-select; installed
+	 * packs are only offered.
+	 *
+	 * @return array<int,array{locale:string,reason:string,count:int}>
+	 */
+	public static function suggested_languages() {
+		$site  = get_locale();
+		$found = array();
+		$add   = function ( $locale, $reason, $count ) use ( &$found, $site ) {
+			if ( $locale === $site || ! Catalog::get( $locale ) || isset( $found[ $locale ] ) ) {
+				return;
+			}
+			$found[ $locale ] = array(
+				'locale' => $locale,
+				'reason' => $reason,
+				'count'  => (int) $count,
+			);
+		};
+
+		$posts = get_posts(
+			array(
+				'post_type'              => Taxonomies::post_types(),
+				'post_status'            => array( 'publish', 'draft', 'future', 'private' ),
+				'numberposts'            => self::SCAN_LIMIT,
+				'orderby'                => 'ID',
+				'order'                  => 'DESC',
+				'no_found_rows'          => true,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
+			)
+		);
+
+		$counts = array();
+		foreach ( $posts as $post ) {
+			foreach ( self::SCRIPTS as $locale => $pattern ) {
+				if ( preg_match( $pattern, $post->post_title ) ) {
+					$counts[ $locale ] = isset( $counts[ $locale ] ) ? $counts[ $locale ] + 1 : 1;
+					break;
+				}
+			}
+		}
+		// Titles in Arabic script without a telling letter ("خانه") go with the
+		// Arabic-script language seen most; Farsi when none is clear.
+		if ( isset( $counts['arabic'] ) ) {
+			if ( ! in_array( $site, self::ARABIC_SCRIPT, true ) ) {
+				$ar               = isset( $counts['ar'] ) ? $counts['ar'] : 0;
+				$fa               = isset( $counts['fa_IR'] ) ? $counts['fa_IR'] : 0;
+				$ur               = isset( $counts['ur'] ) ? $counts['ur'] : 0;
+				$guess            = ( $ar > $fa && $ar >= $ur ) ? 'ar' : ( ( $ur > $fa ) ? 'ur' : 'fa_IR' );
+				$counts[ $guess ] = ( isset( $counts[ $guess ] ) ? $counts[ $guess ] : 0 ) + $counts['arabic'];
+			}
+			unset( $counts['arabic'] );
+		}
+		arsort( $counts );
+		foreach ( $counts as $locale => $count ) {
+			if ( $count > 1 ) {
+				$add( $locale, 'content', $count );
+			}
+		}
+
+		$parents = array();
+		foreach ( $posts as $post ) {
+			if ( 'page' === $post->post_type && $post->post_parent ) {
+				$parents[ $post->post_parent ] = isset( $parents[ $post->post_parent ] ) ? $parents[ $post->post_parent ] + 1 : 1;
+			}
+		}
+		foreach ( $parents as $parent_id => $children ) {
+			$parent = get_post( $parent_id );
+			if ( $parent && 0 === (int) $parent->post_parent && preg_match( '/^[a-z]{2,3}$/', $parent->post_name ) ) {
+				$locale = self::locale_for_code( $parent->post_name );
+				if ( $locale ) {
+					$add( $locale, 'folder', $children );
+				}
+			}
+		}
+
+		foreach ( get_available_languages() as $locale ) {
+			$add( $locale, 'installed', 0 );
+		}
+
+		return array_values( $found );
+	}
+
+	/**
+	 * The catalog locale for a short code: "de" → "de_DE", "fa" → "fa_IR".
+	 *
+	 * @param string $code Two- or three-letter code.
+	 * @return string Locale, or '' when the catalog has none.
+	 */
+	public static function locale_for_code( $code ) {
+		$code  = strtolower( (string) $code );
+		$match = '';
+		foreach ( array_keys( Catalog::LOCALES ) as $locale ) {
+			$parts = explode( '_', $locale );
+			if ( strtolower( $parts[0] ) !== $code ) {
+				continue;
+			}
+			if ( $locale === $code || $locale === $code . '_' . strtoupper( $code ) ) {
+				return $locale;
+			}
+			if ( '' === $match && 2 === count( $parts ) ) {
+				$match = $locale;
+			}
+		}
+		return $match;
+	}
+
+	/**
 	 * The classic menu the switcher can join, or null.
 	 *
 	 * @return array{location:string,name:string,menu:int,menuName:string}|null
