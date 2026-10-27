@@ -47,6 +47,30 @@
 		links[ index ].focus();
 	} );
 
+	// Near the edge of the screen (end of a menu), open the list toward the
+	// other side so it stays visible.
+	document.addEventListener(
+		'toggle',
+		function ( event ) {
+			var details = event.target;
+			var menu, rect;
+
+			if ( ! details.classList || ! details.classList.contains( 'cedar-switcher__details' ) || ! details.open ) {
+				return;
+			}
+			menu = details.querySelector( '.cedar-switcher__menu' );
+			if ( ! menu ) {
+				return;
+			}
+			menu.classList.remove( 'is-end' );
+			rect = menu.getBoundingClientRect();
+			if ( rect.right > document.documentElement.clientWidth || rect.left < 0 ) {
+				menu.classList.add( 'is-end' );
+			}
+		},
+		true
+	);
+
 	document.addEventListener( 'click', function ( event ) {
 		var open = document.querySelectorAll( '.cedar-switcher__details[open]' );
 		Array.prototype.forEach.call( open, function ( details ) {

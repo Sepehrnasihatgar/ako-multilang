@@ -64,6 +64,14 @@ Done
 - Performance: +4 queries on linked pages, 0 on the home page; 2 KB CSS, JS only where a switcher needs it.
 - readme.txt for wordpress.org (Tested up to 7.1), banner, icon and five screenshots in `.wordpress-org/`.
 
+## After M7 — fixes from a fresh-install test
+
+- Block themes (the default since WordPress 6.x): the switcher block can now go inside the Navigation block (core only accepts listed blocks), and setup's "Header menu" placement adds it to the header's navigation, creating the menu from WordPress's fallback when there isn't one yet. Header patterns are resolved first (Twenty Twenty-Five keeps its header in one).
+- A floating-style switcher placed in a menu, block or shortcode shows as a dropdown in place; the floating button stays the only floating one.
+- Dropdown opens toward the other side when it would run off the screen.
+- Setup detects the other languages: titles in another script (Farsi/Arabic/Urdu told apart by their letters), language folders like /de/, and installed language packs (offered, not pre-selected).
+- The block editor canvas is right-to-left for right-to-left languages and follows the language picked in the panel.
+
 Next
 1. Before submitting: create the wp.org account's SVN assets from `.wordpress-org/`, run Plugin Check once more on the final zip, then submit at wordpress.org/plugins/developers/add/.
 2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.

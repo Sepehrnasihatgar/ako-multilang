@@ -212,6 +212,7 @@ final class SetupController {
 			array(
 				'languages'     => LanguagesController::payload(),
 				'siteLocale'    => get_locale(),
+				'suggested'     => Wizard::suggested_languages(),
 				'defaultLocked' => Wizard::has_tagged_posts(),
 				'sources'       => Importer::summary(),
 				'menu'          => $menu ? array(

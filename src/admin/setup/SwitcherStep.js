@@ -83,7 +83,9 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 	const placements = [
 		{
 			value: 'menu',
-			label: __( 'Primary menu', 'cedar-multilang' ),
+			label: state.menu
+				? state.menu.name
+				: __( 'Primary menu', 'cedar-multilang' ),
 			help: menuHelp,
 			disabled: ! menuReady,
 			recommended: menuReady,

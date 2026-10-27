@@ -111,6 +111,12 @@ final class Renderer {
 		}
 		$profile = Profiles::with_overrides( $profile, $overrides );
 
+		// Floating is a placement: placed in a menu, block or shortcode it
+		// shows as a dropdown in place instead of a second floating button.
+		if ( 'floating' === $profile['style'] && 'footer' !== $context ) {
+			$profile['style'] = 'dropdown';
+		}
+
 		$items  = Items::for_request( $profile );
 		$others = array_filter(
 			$items,

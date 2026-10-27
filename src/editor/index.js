@@ -9,6 +9,8 @@ import { registerPlugin } from '@wordpress/plugins';
 import LanguagePanel from './LanguagePanel';
 import './editor.css';
 
+const DIRECTION_SOURCE = 'cedar-ml-direction';
+
 function CedarLanguagePanel() {
 	const { postId, isSaving, isAutosaving } = useSelect( ( select ) => {
 		const editor = select( 'core/editor' );
@@ -51,6 +53,28 @@ function CedarLanguagePanel() {
 		[ createSuccessNotice, createErrorNotice, createInfoNotice ]
 	);
 
+	// Write right-to-left languages right-to-left in the editor canvas.
+	const { updateEditorSettings } = useDispatch( 'core/editor' );
+	const getStyles = useSelect(
+		( select ) => () => select( 'core/editor' ).getEditorSettings().styles,
+		[]
+	);
+	const onDirection = useCallback(
+		( dir ) => {
+			const styles = ( getStyles() || [] ).filter(
+				( style ) => DIRECTION_SOURCE !== style.source
+			);
+			if ( 'rtl' === dir ) {
+				styles.push( {
+					css: '.editor-styles-wrapper { direction: rtl; }',
+					source: DIRECTION_SOURCE,
+				} );
+			}
+			updateEditorSettings( { styles } );
+		},
+		[ getStyles, updateEditorSettings ]
+	);
+
 	if ( ! postId ) {
 		return null;
 	}
@@ -65,6 +89,7 @@ function CedarLanguagePanel() {
 				postId={ postId }
 				reloadKey={ reloadKey }
 				notify={ notify }
+				onDirection={ onDirection }
 			/>
 		</PluginDocumentSettingPanel>
 	);
