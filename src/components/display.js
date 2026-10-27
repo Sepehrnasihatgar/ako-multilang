@@ -6,8 +6,12 @@ import { __, _n, sprintf } from '@wordpress/i18n';
 import Icon from './Icon';
 import { Button, LanguageTag } from './controls';
 
+const LOGO_DOTS =
+	'M3 14.064a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0ZM8.75 14.064a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0 -3.5 0ZM13 14.064a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0 -3.5 0ZM17.25 14.064a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0 -3.5 0ZM21.5 14.064a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0 -3.5 0ZM7 17.936a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0 -3.5 0ZM11.25 17.936a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0 -3.5 0ZM15.5 17.936a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0 -3.5 0ZM19.75 17.936a1.75 1.75 0 1 0 3.5 0a1.75 1.75 0 1 0 -3.5 0ZM24 17.936a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0Z';
+
 /**
- * The Ako mark on its tile.
+ * The Ako icon: two lines of dots on the brand tile (Figma: Logo / Icon).
+ * The top line reads left to right, the bottom line right to left.
  *
  * @param {Object} props
  * @param {number} [props.size]      Pixel size.
@@ -24,14 +28,7 @@ export function Logo( { size = 32, className = '' } ) {
 			focusable="false"
 		>
 			<rect width="32" height="32" rx="8" className="ako-logo__tile" />
-			<path
-				className="ako-logo__mark"
-				d="M16 5.5 10.5 12h3L9 17.5h3.5l-5 6h17l-5-6H23L18.5 12h3L16 5.5Z"
-			/>
-			<path
-				className="ako-logo__mark"
-				d="M15.55 23.5h.9c.44 0 .8.36.8.8v1.9c0 .44-.36.8-.8.8h-.9a.8.8 0 0 1-.8-.8v-1.9c0-.44.36-.8.8-.8Z"
-			/>
+			<path className="ako-logo__mark" d={ LOGO_DOTS } />
 		</svg>
 	);
 }

@@ -45,7 +45,7 @@ It's made for bilingual sites with a right-to-left language, like Farsi, Arabic,
 = Switching from another plugin =
 
 * Imports linked pages from WPML and Polylang. Ako only reads their data and never changes it, so you can switch back anytime.
-* Keeps your pairs and the `[lang_switch]` shortcode from Cedar Multilang 6.2, the private plugin Ako grew out of.
+* Keeps your page pairs and the `[lang_switch]` shortcode from version 6.2, the private plugin Ako grew out of.
 
 = Privacy =
 

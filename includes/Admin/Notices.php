@@ -123,7 +123,7 @@ final class Notices {
 		?>
 		<div class="notice ako-ml-notice ako-ml-notice--<?php echo esc_attr( 'success' === $variant ? 'success' : 'info' ); ?>">
 			<span class="ako-ml-notice__mark" aria-hidden="true">
-				<svg width="20" height="20" viewBox="0 0 32 32" focusable="false"><path fill="currentColor" d="M16 5.5 10.5 12h3L9 17.5h3.5l-5 6h17l-5-6H23L18.5 12h3L16 5.5Z"/><path fill="currentColor" d="M15.55 23.5h.9c.44 0 .8.36.8.8v1.9c0 .44-.36.8-.8.8h-.9a.8.8 0 0 1-.8-.8v-1.9c0-.44.36-.8.8-.8Z"/></svg>
+				<svg width="20" height="20" viewBox="0 0 32 32" focusable="false"><path fill="currentColor" d="M2 12.902a4 4 0 1 0 8 0a4 4 0 1 0 -8 0ZM11.2 12.902a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0 -5.6 0ZM18 12.902a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0 -5.6 0ZM8.4 19.098a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0 -5.6 0ZM15.2 19.098a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0 -5.6 0ZM22 19.098a4 4 0 1 0 8 0a4 4 0 1 0 -8 0Z"/></svg>
 			</span>
 			<div class="ako-ml-notice__copy">
 				<p class="ako-ml-notice__title"><?php echo esc_html( $title ); ?></p>
