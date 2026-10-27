@@ -44,8 +44,18 @@ Done
 - Translations: Needs review tab (rows show the real pages with a One-way badge), SEO health card, `#missing` / `#review` / `#drafts` deep links.
 - Tested with Yoast SEO 28.7 in Playground.
 
+## Milestone 6 — Setup, Settings, About, importers (in progress on `m6-wip`)
+
+- Setup wizard (hidden screen, reached from notices / plugin row): languages with catalog search (combobox), connect pages (WPML / Polylang import in batches + suggested pairs by language folder, suffix, slug and title), switcher look and placement (adds a menu item to the theme's primary menu, or the floating button), summary with next steps. Reaching the summary finishes setup.
+- Importers read WPML (`icl_translations`, `icl_languages`) and Polylang (`language`, `post_translations` terms) straight from the database — work while the other plugin is deactivated, never write to its data, skip groups whose pages are gone or already linked differently, and report why.
+- Settings: modules, content types, RTL compatibility toggles, delete-on-uninstall with export reminder, settings export/import (JSON; "delete on uninstall" is never imported; languages pages use are never removed).
+- About: version, update notice from WordPress's own cached update check, changelog, system status (PHP check read from WordPress's cache — Cedar makes no remote requests), copy system info, credits.
+- Notices: "Cedar is active — set it up" (Plugins), "Cedar is almost ready" (Dashboard), "Cedar 6.2 data was moved over"; manage_options only, dismissed per user with a nonce-checked link.
+- Translations: Import and Link pages header buttons, first-run card.
+- Tested so far (Playground, real Polylang 3.9 + simulated WPML tables): notices, setup step 1 (search, no match, add), step 2 (both sources detected, 5 suggested pairs incl. /fa/ folder pages, WPML import 2 linked + 1 skipped with review).
+
 Next
-1. Milestone 6 — Onboarding, Settings, About, importers (WPML / Polylang), admin notices.
+1. Finish M6 testing (Polylang import, steps 3–4, Settings, About, Translations dialogs), RTL compat stylesheets after testing each theme, visual QA, merge.
 2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.
 3. Later milestones add: Needs review tab + SEO health card (M5), Import / Link pages header buttons and first-run empty state (M6), Duplicate as draft (M3), Get Pro / Docs header links (when URLs exist).
 

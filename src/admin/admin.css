@@ -2,6 +2,7 @@
  * Cedar admin screens. Values come only from tokens.css (Figma variables).
  */
 @import "../components/components.css";
+@import "./setup.css";
 
 /* ---------- WordPress page integration (Cedar screens only) ---------- */
 

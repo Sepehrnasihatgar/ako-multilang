@@ -460,15 +460,13 @@ final class SettingsController {
 	}
 
 	/**
-	 * PHP row, using WordPress's own check of supported PHP versions.
+	 * PHP row, using the result of WordPress's own PHP check (the Dashboard
+	 * fetches and caches it; Cedar never makes the request itself).
 	 *
 	 * @return array
 	 */
 	private static function php_check() {
-		if ( ! function_exists( 'wp_check_php_version' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/misc.php';
-		}
-		$response = wp_check_php_version();
+		$response = get_site_transient( 'php_check_' . md5( PHP_VERSION ) );
 		$outdated = is_array( $response ) && ( empty( $response['is_secure'] ) || ! empty( $response['is_lower_than_future_minimum'] ) );
 		$version  = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;
 
