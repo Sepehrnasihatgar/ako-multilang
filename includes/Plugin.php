@@ -15,6 +15,7 @@ use Cedar\Multilang\Migration\Legacy62;
 use Cedar\Multilang\Rtl\Locale;
 use Cedar\Multilang\Rest\Rest;
 use Cedar\Multilang\Seo\Hreflang;
+use Cedar\Multilang\Seo\Integrations;
 use Cedar\Multilang\Switcher\Block;
 use Cedar\Multilang\Switcher\MenuItem;
 use Cedar\Multilang\Switcher\Renderer;
@@ -67,6 +68,7 @@ final class Plugin {
 
 		if ( ! empty( $settings['modules']['seo'] ) ) {
 			Hreflang::register();
+			Integrations::register();
 		}
 
 		if ( ! empty( $settings['modules']['switcher'] ) ) {

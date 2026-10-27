@@ -996,3 +996,288 @@ button.cedar-cell.is-missing[aria-expanded="true"] {
 		grid-template-columns: minmax(0, 1fr);
 	}
 }
+
+/* ---------- SEO ---------- */
+
+.cedar-cell__warn {
+	flex: none;
+	color: var(--cedar-admin-icon-warning);
+}
+
+.cedar-health-card {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-md);
+	padding: var(--cedar-admin-space-lg) var(--cedar-admin-space-xl);
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-bg-brand);
+	color: var(--cedar-admin-text-on-accent);
+}
+
+.cedar-health-card__top,
+.cedar-health-card__foot {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-sm);
+}
+
+.cedar-health-card__title {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-health-card__value {
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-health-card__foot {
+	font: var(--cedar-text-help);
+}
+
+.cedar-ml .cedar-health-card__foot a {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-2xs);
+	color: var(--cedar-admin-text-on-accent);
+	font: var(--cedar-text-label);
+	text-decoration: none;
+}
+
+.cedar-ml .cedar-health-card__foot a:hover {
+	text-decoration: underline;
+}
+
+.cedar-progress.is-on-brand {
+	background: color-mix(in srgb, var(--cedar-admin-text-on-accent) 20%, transparent);
+}
+
+.cedar-progress.is-on-brand .cedar-progress__value {
+	background: var(--cedar-admin-text-on-accent);
+}
+
+.cedar-setting-row__title {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+}
+
+.cedar-ml .cedar-card__text.is-small {
+	font: var(--cedar-text-help);
+}
+
+.cedar-ml .cedar-plugins {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cedar-plugins li {
+	display: grid;
+	grid-template-columns: 1fr 1fr auto;
+	align-items: center;
+	gap: var(--cedar-admin-space-md);
+	margin: 0;
+	padding-block: var(--cedar-admin-space-sm);
+	border-block-start: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+}
+
+.cedar-plugins__name {
+	color: var(--cedar-admin-text-secondary);
+}
+
+.cedar-plugins__status {
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-icon.is-success {
+	color: var(--cedar-admin-icon-success);
+}
+
+.cedar-icon.is-muted {
+	color: var(--cedar-admin-text-tertiary);
+}
+
+.cedar-callout {
+	display: flex;
+	align-items: flex-start;
+	gap: var(--cedar-admin-space-md);
+	padding: var(--cedar-admin-space-md);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-info);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-info-subtle);
+}
+
+.cedar-callout > span:last-child {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-3xs);
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-callout strong {
+	color: var(--cedar-admin-text-primary);
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-callout__tile {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	inline-size: 32px;
+	block-size: 32px;
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-surface);
+	color: var(--cedar-admin-icon-info);
+}
+
+/* What search engines see (Figma: Settings patterns / hreflang output) */
+
+.cedar-source {
+	overflow: hidden;
+	border-radius: var(--cedar-admin-radius-surface);
+	background: var(--cedar-admin-code-bg);
+	color: var(--cedar-admin-code-text);
+}
+
+.cedar-source__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-md);
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-lg);
+	border-block-end: var(--cedar-admin-border-width) solid var(--cedar-admin-code-border);
+}
+
+.cedar-source__title {
+	display: inline-flex;
+	align-items: baseline;
+	gap: var(--cedar-admin-space-sm);
+	color: var(--cedar-admin-code-text-strong);
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-source__path {
+	color: var(--cedar-admin-code-muted);
+	font: var(--cedar-text-code);
+}
+
+.cedar-source__picker {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-xs);
+	max-inline-size: 200px;
+	margin: 0;
+	padding: var(--cedar-admin-space-2xs) var(--cedar-admin-space-sm);
+	border: 0;
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-code-bg-subtle);
+	color: var(--cedar-admin-code-text-strong);
+	font: var(--cedar-text-label);
+	cursor: pointer;
+}
+
+.cedar-source__picker > span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cedar-ml .cedar-source__code {
+	margin: 0;
+	padding: var(--cedar-admin-space-lg);
+	overflow-x: auto;
+	color: var(--cedar-admin-code-text);
+	font: var(--cedar-text-code);
+	white-space: pre;
+}
+
+.cedar-source__code .is-attr {
+	color: var(--cedar-admin-code-attribute);
+}
+
+.cedar-source__code .is-value {
+	color: var(--cedar-admin-code-value);
+}
+
+.cedar-source__code .is-muted {
+	color: var(--cedar-admin-code-muted);
+}
+
+.cedar-ml .cedar-source__foot,
+.cedar-ml .cedar-source__empty {
+	display: flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-sm);
+	padding: var(--cedar-admin-space-md) var(--cedar-admin-space-lg);
+	background: var(--cedar-admin-code-bg-subtle);
+	color: var(--cedar-admin-code-text);
+	font: var(--cedar-text-help);
+}
+
+.cedar-source__foot .cedar-icon {
+	color: var(--cedar-admin-code-success);
+}
+
+/* Health check rows (Figma: Settings patterns / Health check row) */
+
+.cedar-ml .cedar-checks {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cedar-check {
+	display: flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-md);
+	margin: 0;
+	padding-block: var(--cedar-admin-space-md);
+	border-block-start: var(--cedar-admin-border-width) solid var(--cedar-admin-border-subtle);
+}
+
+.cedar-check__tile {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	inline-size: 28px;
+	block-size: 28px;
+	border-radius: var(--cedar-admin-radius-control);
+}
+
+.cedar-check__tile.is-warning {
+	background: var(--cedar-admin-bg-warning-subtle);
+	color: var(--cedar-admin-icon-warning);
+}
+
+.cedar-check__tile.is-info {
+	background: var(--cedar-admin-bg-info-subtle);
+	color: var(--cedar-admin-icon-info);
+}
+
+.cedar-check__tile.is-success {
+	background: var(--cedar-admin-bg-success-subtle);
+	color: var(--cedar-admin-icon-success);
+}
+
+.cedar-check__copy {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-3xs);
+	min-inline-size: 0;
+}
+
+.cedar-check__title {
+	font: var(--cedar-text-body-strong);
+}
+
+.cedar-check__description {
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}

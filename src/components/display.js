@@ -2,9 +2,9 @@
  * Display — Figma sections "Data display", "Feedback / Empty state" and
  * "Layout & brand / Cedar / Header".
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 import Icon from './Icon';
-import { LanguageTag } from './controls';
+import { Button, LanguageTag } from './controls';
 
 /**
  * Cedar / Header: logo, product name and version.
@@ -173,5 +173,77 @@ export function SkeletonRow( { columns } ) {
 			<span className="cedar-skeleton is-date" />
 			<span />
 		</div>
+	);
+}
+
+/**
+ * Save bar (Figma: Settings patterns / Save bar). Shown while there are
+ * unsaved changes.
+ *
+ * @param {Object}   props
+ * @param {boolean}  props.saving    Saving now.
+ * @param {Function} props.onSave    Save.
+ * @param {Function} props.onDiscard Discard.
+ */
+export function SaveBar( { saving, onSave, onDiscard } ) {
+	return (
+		<div
+			className="cedar-savebar"
+			role="region"
+			aria-label={ __( 'Unsaved changes', 'cedar-multilang' ) }
+		>
+			<Icon name="alert" />
+			<span className="cedar-savebar__message">
+				{ saving
+					? __( 'Saving…', 'cedar-multilang' )
+					: __( 'You have unsaved changes', 'cedar-multilang' ) }
+			</span>
+			<Button size="small" onClick={ onDiscard } disabled={ saving }>
+				{ __( 'Discard', 'cedar-multilang' ) }
+			</Button>
+			<Button
+				size="small"
+				onClick={ onSave }
+				disabled={ saving }
+				aria-busy={ saving || undefined }
+			>
+				{ __( 'Save changes', 'cedar-multilang' ) }
+			</Button>
+		</div>
+	);
+}
+
+/**
+ * "2 minutes ago" from a Unix timestamp.
+ *
+ * @param {number} timestamp Seconds since epoch.
+ * @return {string} Relative time.
+ */
+export function timeAgo( timestamp ) {
+	const seconds = Math.max( 0, Math.round( Date.now() / 1000 - timestamp ) );
+	if ( seconds < 60 ) {
+		return __( 'just now', 'cedar-multilang' );
+	}
+	const minutes = Math.round( seconds / 60 );
+	if ( minutes < 60 ) {
+		return sprintf(
+			/* translators: %d: Number of minutes. */
+			_n( '%d minute ago', '%d minutes ago', minutes, 'cedar-multilang' ),
+			minutes
+		);
+	}
+	const hours = Math.round( minutes / 60 );
+	if ( hours < 24 ) {
+		return sprintf(
+			/* translators: %d: Number of hours. */
+			_n( '%d hour ago', '%d hours ago', hours, 'cedar-multilang' ),
+			hours
+		);
+	}
+	const days = Math.round( hours / 24 );
+	return sprintf(
+		/* translators: %d: Number of days. */
+		_n( '%d day ago', '%d days ago', days, 'cedar-multilang' ),
+		days
 	);
 }

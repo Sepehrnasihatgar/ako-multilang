@@ -10,6 +10,7 @@ namespace Cedar\Multilang\Content;
 
 use Cedar\Multilang\Languages\Registry;
 use Cedar\Multilang\Rest\Rest;
+use Cedar\Multilang\Seo\Health;
 use Cedar\Multilang\Seo\Hreflang;
 use WP_Post;
 use WP_Query;
@@ -23,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Overview {
 
-	const FILTERS = array( 'all', 'missing', 'drafts' );
+	const FILTERS = array( 'all', 'missing', 'review', 'drafts' );
 
 	/**
 	 * IDs per query chunk, keeps IN() clauses small.
@@ -50,6 +51,7 @@ final class Overview {
 		$counts   = array(
 			'all'     => count( $source_ids ),
 			'missing' => 0,
+			'review'  => 0,
 			'drafts'  => 0,
 		);
 		$coverage = array_fill_keys( $targets, 0 );
@@ -61,6 +63,9 @@ final class Overview {
 			if ( $entry['draft'] ) {
 				++$counts['drafts'];
 			}
+			if ( $entry['review'] ) {
+				++$counts['review'];
+			}
 			foreach ( $entry['translations'] as $code => $unused ) {
 				++$coverage[ $code ];
 			}
@@ -70,9 +75,14 @@ final class Overview {
 		if ( '' !== $search ) {
 			$ids = array_values( array_intersect( $ids, self::search_ids( $post_type, $search ) ) );
 		}
-		if ( 'missing' === $filter || 'drafts' === $filter ) {
-			$key = 'missing' === $filter ? 'missing' : 'draft';
-			$ids = array_values(
+		if ( 'all' !== $filter ) {
+			$keys = array(
+				'missing' => 'missing',
+				'review'  => 'review',
+				'drafts'  => 'draft',
+			);
+			$key  = $keys[ $filter ];
+			$ids  = array_values(
 				array_filter(
 					$ids,
 					static function ( $id ) use ( $index, $key ) {
@@ -103,6 +113,7 @@ final class Overview {
 			'search'        => $search,
 			'post_type'     => $post_type,
 			'post_type_tag' => self::type_label( $post_type ),
+			'health'        => self::health_summary(),
 		);
 	}
 
@@ -178,7 +189,7 @@ final class Overview {
 	 *
 	 * @param int[]    $source_ids Source IDs.
 	 * @param string[] $targets    Non-default language codes.
-	 * @return array<int,array{translations:array<string,int>,missing:bool,draft:bool}>
+	 * @return array<int,array{translations:array<string,int>,missing:bool,draft:bool,review:bool}>
 	 */
 	private static function index( array $source_ids, array $targets ) {
 		$group_of = array();
@@ -200,6 +211,15 @@ final class Overview {
 		}
 
 		$members = Links::members_of_groups( array_values( $group_of ) );
+		$review  = array_flip( Health::review_group_ids() );
+
+		// Groups that need review show their real pages, so nobody adds a
+		// duplicate translation because the stored list is out of date.
+		foreach ( array_keys( $review ) as $group_id ) {
+			if ( isset( $members[ $group_id ] ) ) {
+				$members[ $group_id ] = Health::actual_members( $group_id );
+			}
+		}
 
 		// Every translation ID referenced by these groups.
 		$translation_ids = array();
@@ -224,6 +244,8 @@ final class Overview {
 			$translations = array();
 			$draft        = isset( $drafts[ $id ] );
 
+			$in_review = isset( $group_of[ $id ], $review[ $group_of[ $id ] ] );
+
 			if ( isset( $group_of[ $id ], $members[ $group_of[ $id ] ] ) ) {
 				foreach ( $targets as $code ) {
 					$member = isset( $members[ $group_of[ $id ] ][ $code ] ) ? $members[ $group_of[ $id ] ][ $code ] : 0;
@@ -238,6 +260,7 @@ final class Overview {
 				'translations' => $translations,
 				'missing'      => count( $translations ) < count( $targets ),
 				'draft'        => $draft,
+				'review'       => $in_review,
 			);
 		}
 
@@ -296,6 +319,7 @@ final class Overview {
 
 			$row                 = self::post_summary( $post );
 			$row['modified']     = self::relative_date( $post );
+			$row['review']       = $index[ $id ]['review'];
 			$row['translations'] = array();
 			foreach ( $index[ $id ]['translations'] as $code => $translation_id ) {
 				$translation = get_post( $translation_id );
@@ -397,6 +421,23 @@ final class Overview {
 			return sprintf( _n( '%d day ago', '%d days ago', $days, 'cedar-multilang' ), $days );
 		}
 		return (string) wp_date( _x( 'M j', 'short date format', 'cedar-multilang' ), $then );
+	}
+
+	/**
+	 * The SEO health card: score and one-way count from the last scan.
+	 *
+	 * @return array{score:int|null,oneWay:int,scannedAt:int}|null
+	 */
+	private static function health_summary() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return null;
+		}
+		$health = Health::latest();
+		return array(
+			'score'     => $health['score'],
+			'oneWay'    => (int) $health['oneWayAll'],
+			'scannedAt' => (int) $health['scannedAt'],
+		);
 	}
 
 	/**

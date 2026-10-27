@@ -7,11 +7,13 @@ import { Toast } from '../components/overlays';
 import Translations from './screens/Translations';
 import Languages from './screens/Languages';
 import Switcher from './screens/Switcher';
+import Seo from './screens/Seo';
 
 const SCREENS = {
 	translations: Translations,
 	languages: Languages,
 	switcher: Switcher,
+	seo: Seo,
 };
 
 export default function App( { config } ) {

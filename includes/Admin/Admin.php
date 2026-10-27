@@ -62,6 +62,15 @@ final class Admin {
 			),
 		);
 
+		$screens['seo'] = array(
+			'slug'  => self::SLUG . '-seo',
+			'title' => __( 'SEO', 'cedar-multilang' ),
+			'cap'   => 'manage_options',
+		);
+
+		if ( empty( Settings::get()['modules']['seo'] ) ) {
+			unset( $screens['seo'] );
+		}
 		if ( empty( Settings::get()['modules']['switcher'] ) ) {
 			unset( $screens['switcher'] );
 		}

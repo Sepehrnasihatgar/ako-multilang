@@ -55,10 +55,15 @@ function useDebounced( value, delay ) {
 }
 
 export default function Translations( { config, notify } ) {
-	const [ query, setQuery ] = useState( {
-		post_type: '',
-		filter: 'all',
-		page: 1,
+	const [ query, setQuery ] = useState( () => {
+		const hash = window.location.hash.replace( '#', '' );
+		return {
+			post_type: '',
+			filter: [ 'missing', 'review', 'drafts' ].includes( hash )
+				? hash
+				: 'all',
+			page: 1,
+		};
 	} );
 	const [ searchText, setSearchText ] = useState( '' );
 	const search = useDebounced( searchText.trim(), 300 );
@@ -447,6 +452,12 @@ export default function Translations( { config, notify } ) {
 							) }
 						/>
 					) ) }
+					{ data.health && (
+						<HealthCard
+							health={ data.health }
+							url={ config.urls.seo }
+						/>
+					) }
 				</section>
 			) }
 
@@ -536,6 +547,14 @@ export default function Translations( { config, notify } ) {
 									value: 'missing',
 									label: __( 'Missing', 'cedar-multilang' ),
 									count: data?.counts.missing,
+								},
+								{
+									value: 'review',
+									label: __(
+										'Needs review',
+										'cedar-multilang'
+									),
+									count: data?.counts.review,
 								},
 								{
 									value: 'drafts',
@@ -699,6 +718,13 @@ export default function Translations( { config, notify } ) {
 
 				{ data && data.total > 0 && (
 					<div className="cedar-table__footer">
+						<span>
+							{ 'review' === query.filter &&
+								__(
+									'One-way: a translation doesn’t link back. Fix both sides on the SEO screen.',
+									'cedar-multilang'
+								) }
+						</span>
 						<span>
 							{ sprintf(
 								/* translators: 1: First row number, 2: Last row number, 3: Total rows. */
@@ -1187,6 +1213,7 @@ function TranslationCell( {
 	}
 
 	const isDraft = DRAFT_STATUSES.includes( translation.status );
+	const isReview = !! row.review;
 	const title = translation.editUrl ? (
 		<a
 			href={ translation.editUrl }
@@ -1206,12 +1233,25 @@ function TranslationCell( {
 		<span
 			className={ `cedar-cell ${ isDraft ? 'is-draft' : 'is-linked' }` }
 		>
-			{ isDraft ? (
+			{ isReview && (
+				<Icon
+					name="alert"
+					className="cedar-cell__warn"
+					label={ __( 'Needs review', 'cedar-multilang' ) }
+				/>
+			) }
+			{ ! isReview && isDraft && (
 				<span className="cedar-cell__dot" aria-hidden="true" />
-			) : (
+			) }
+			{ ! isReview && ! isDraft && (
 				<Icon name="circle-check" className="cedar-cell__check" />
 			) }
 			{ title }
+			{ isReview && (
+				<span className="cedar-cell__badge">
+					{ __( 'One-way', 'cedar-multilang' ) }
+				</span>
+			) }
 			{ isDraft && (
 				<span className="cedar-cell__badge">
 					{ __( 'Draft', 'cedar-multilang' ) }
@@ -1396,6 +1436,79 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 						</li>
 					) ) }
 			</ul>
+		</div>
+	);
+}
+
+/**
+ * SEO health card (Figma: Data display / SEO health card).
+ *
+ * @param {Object} props
+ * @param {Object} props.health { score, oneWay }.
+ * @param {string} props.url    SEO screen URL.
+ */
+function HealthCard( { health, url } ) {
+	const hasScore = null !== health.score;
+	let caption = __(
+		'hreflang starts after the first link',
+		'cedar-multilang'
+	);
+	if ( hasScore ) {
+		caption = health.oneWay
+			? sprintf(
+					/* translators: %d: Number of one-way links. */
+					_n(
+						'%d one-way link',
+						'%d one-way links',
+						health.oneWay,
+						'cedar-multilang'
+					),
+					health.oneWay
+				)
+			: __( 'All links are reciprocal', 'cedar-multilang' );
+	}
+
+	return (
+		<div className="cedar-health-card">
+			<div className="cedar-health-card__top">
+				<span className="cedar-health-card__title">
+					<Icon name="circle-check" />
+					{ __( 'SEO health', 'cedar-multilang' ) }
+				</span>
+				<span className="cedar-health-card__value">
+					{ hasScore
+						? sprintf(
+								/* translators: %d: Percentage. */
+								__( '%d%%', 'cedar-multilang' ),
+								health.score
+							)
+						: '—' }
+				</span>
+			</div>
+			<div
+				className="cedar-progress is-on-brand"
+				role="progressbar"
+				aria-valuemin={ 0 }
+				aria-valuemax={ 100 }
+				aria-valuenow={ hasScore ? health.score : 0 }
+				aria-label={ __( 'SEO health', 'cedar-multilang' ) }
+			>
+				<span
+					className="cedar-progress__value"
+					style={ {
+						inlineSize: `${ hasScore ? health.score : 0 }%`,
+					} }
+				/>
+			</div>
+			<div className="cedar-health-card__foot">
+				<span>{ caption }</span>
+				{ url && (
+					<a href={ url }>
+						{ __( 'View SEO', 'cedar-multilang' ) }
+						<Icon name="external-link" size={ 12 } />
+					</a>
+				) }
+			</div>
 		</div>
 	);
 }

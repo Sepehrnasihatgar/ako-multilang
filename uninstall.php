@@ -33,7 +33,7 @@ foreach ( array( 'cedar_ml_language', 'cedar_ml_group' ) as $cedar_ml_taxonomy )
 	}
 }
 
-foreach ( array( 'cedar_ml_settings', 'cedar_ml_languages', 'cedar_ml_switchers', 'cedar_ml_db_version', 'cedar_ml_needs_setup', 'cedar_ml_legacy62' ) as $cedar_ml_option ) {
+foreach ( array( 'cedar_ml_settings', 'cedar_ml_languages', 'cedar_ml_switchers', 'cedar_ml_db_version', 'cedar_ml_needs_setup', 'cedar_ml_legacy62', 'cedar_ml_health' ) as $cedar_ml_option ) {
 	delete_option( $cedar_ml_option );
 }
 

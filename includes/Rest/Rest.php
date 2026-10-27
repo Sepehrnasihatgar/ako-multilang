@@ -43,6 +43,7 @@ final class Rest {
 		LanguagesController::register_routes();
 		LinksController::register_routes();
 		SwitchersController::register_routes();
+		SeoController::register_routes();
 	}
 
 	/**

@@ -100,7 +100,7 @@ No cookies, no redirects, no per-visitor output → full-page-cache safe.
 | `/switchers` | GET | `edit_posts` (the block lists them) |
 | `/switchers`, `/switchers/{id}` | POST, PUT, DELETE | `manage_options` |
 | `/settings` | GET, PUT | `manage_options` |
-| `/health` | GET; POST `/health/fix` | `manage_options` |
+| `/seo`, `/seo/preview`, `/seo/scan`, `/seo/fix` | GET, PUT; GET; POST; POST | `manage_options` |
 | `/import/{source}` | GET (preview), POST (run) | `manage_options` |
 
 Every route has a `permission_callback` (never `__return_true`), a JSON schema with `sanitize_callback` + `validate_callback`, enums for every choice, and integer bounds. Auth is cookie + `X-WP-Nonce` via `api-fetch`.

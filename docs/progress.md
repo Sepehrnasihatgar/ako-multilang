@@ -35,8 +35,17 @@ Done
 - Cedar → Switcher: style tiles (radio group, arrow keys), Content and Look settings, live preview (Desktop/Mobile, Light/Dark, EN/FA page with RTL) rendered with the real front-end CSS and markup (`SwitcherMarkup.js` mirrors `templates/switcher.php`), "Add it to your site" with Copy, save bar with Discard, create / delete switchers, unsaved-changes guard.
 - Tested in Playground: style change, accent color, RTL + dark preview, save → front end uses the new accent.
 
+## Milestone 5 — SEO & health (done)
+
+- Integrations: detects Yoast SEO, Rank Math, All in One SEO. Pages marked noindex or canonicalized elsewhere (Yoast, Rank Math) leave the hreflang cluster. og:locale printed only when no SEO plugin prints it; og:locale:alternate always. Yoast XML sitemap gets `xhtml:link` alternates (valid XML).
+- WordPress core sitemap can't carry hreflang (its renderer allows only loc/lastmod/changefreq/priority); without Yoast the toggle is disabled with an honest note — hreflang stays in each page's head.
+- Health checks (stored in `cedar_ml_health`): one-way groups (stored members ≠ real members) with one-click repair, missing translations per language (Duplicate for a single page, Review otherwise), pages left out of hreflang.
+- SEO screen: x-default, per-language hreflang, toggles, SEO plugins, "What search engines see" preview, health checks, save bar.
+- Translations: Needs review tab (rows show the real pages with a One-way badge), SEO health card, `#missing` / `#review` / `#drafts` deep links.
+- Tested with Yoast SEO 28.7 in Playground.
+
 Next
-1. Milestone 5 — SEO & health: SEO plugin integrations (Yoast, Rank Math, AIOSEO), sitemap, og:locale, health checks, Needs review tab, SEO health card, SEO screen.
+1. Milestone 6 — Onboarding, Settings, About, importers (WPML / Polylang), admin notices.
 2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.
 3. Later milestones add: Needs review tab + SEO health card (M5), Import / Link pages header buttons and first-run empty state (M6), Duplicate as draft (M3), Get Pro / Docs header links (when URLs exist).
 

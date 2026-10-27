@@ -18,7 +18,7 @@ import {
 	TextInput,
 	Toggle,
 } from '../../components/controls';
-import { EmptyState, PageTitle } from '../../components/display';
+import { EmptyState, PageTitle, SaveBar } from '../../components/display';
 import { Dialog, Menu } from '../../components/overlays';
 import SwitcherMarkup from '../../components/SwitcherMarkup';
 import { errorMessage, getLanguages } from '../api';
@@ -676,36 +676,11 @@ export default function Switcher( { config, notify } ) {
 			</div>
 
 			{ dirty && (
-				<div
-					className="cedar-savebar"
-					role="region"
-					aria-label={ __( 'Unsaved changes', 'cedar-multilang' ) }
-				>
-					<Icon name="alert" />
-					<span className="cedar-savebar__message">
-						{ saving
-							? __( 'Saving…', 'cedar-multilang' )
-							: __(
-									'You have unsaved changes',
-									'cedar-multilang'
-								) }
-					</span>
-					<Button
-						size="small"
-						onClick={ () => setDraft( saved ) }
-						disabled={ saving }
-					>
-						{ __( 'Discard', 'cedar-multilang' ) }
-					</Button>
-					<Button
-						size="small"
-						onClick={ save }
-						disabled={ saving }
-						aria-busy={ saving || undefined }
-					>
-						{ __( 'Save changes', 'cedar-multilang' ) }
-					</Button>
-				</div>
+				<SaveBar
+					saving={ saving }
+					onSave={ save }
+					onDiscard={ () => setDraft( saved ) }
+				/>
 			) }
 
 			{ dialog && 'create' === dialog.type && (
