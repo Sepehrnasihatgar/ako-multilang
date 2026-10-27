@@ -61,6 +61,8 @@
 	--cedar-neutral-300: #cececa;
 	--cedar-neutral-400: #a5a5a1;
 	--cedar-neutral-500: #73736f;
+	--cedar-neutral-600: #666662;
+	--cedar-neutral-700: #4f4f4b;
 	--cedar-neutral-800: #2c2c28;
 	--cedar-neutral-900: #181815;
 	--cedar-neutral-950: #0d0d0c;
@@ -119,8 +121,8 @@
 	--cedar-admin-bg-brand-subtle: var(--cedar-cedar-100);
 	--cedar-admin-bg-overlay: var(--cedar-neutral-950);
 	--cedar-admin-text-primary: var(--cedar-neutral-900);
-	--cedar-admin-text-secondary: var(--cedar-neutral-500);
-	--cedar-admin-text-tertiary: var(--cedar-neutral-400);
+	--cedar-admin-text-secondary: var(--cedar-neutral-700);
+	--cedar-admin-text-tertiary: var(--cedar-neutral-600);
 	--cedar-admin-text-on-accent: var(--cedar-neutral-0);
 	--cedar-admin-text-accent: var(--cedar-cedar-700);
 	--cedar-admin-text-brand: var(--cedar-cedar-700);

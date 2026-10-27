@@ -44,7 +44,7 @@ export function Logo( { size = 32, className = '' } ) {
  */
 export function Header( { version } ) {
 	return (
-		<header className="cedar-header">
+		<div className="cedar-header">
 			<div className="cedar-header__brand">
 				<Logo className="cedar-header__logo" />
 				<span className="cedar-header__name">
@@ -60,7 +60,7 @@ export function Header( { version } ) {
 					</span>
 				</span>
 			</div>
-		</header>
+		</div>
 	);
 }
 

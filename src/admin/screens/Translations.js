@@ -1277,9 +1277,9 @@ function TranslationCell( {
 						type="button"
 						className="cedar-cell is-missing"
 						aria-label={ sprintf(
-							/* translators: 1: Language name, 2: Page title. */
+							/* translators: 1: Language name, 2: Page title. Starts with the visible "Add translation" label. */
 							__(
-								'Add %1$s translation of “%2$s”',
+								'Add translation: %1$s, for “%2$s”',
 								'cedar-multilang'
 							),
 							language.name,
