@@ -8,12 +8,18 @@ import Translations from './screens/Translations';
 import Languages from './screens/Languages';
 import Switcher from './screens/Switcher';
 import Seo from './screens/Seo';
+import Settings from './screens/Settings';
+import About from './screens/About';
+import Setup from './screens/Setup';
 
 const SCREENS = {
 	translations: Translations,
 	languages: Languages,
 	switcher: Switcher,
 	seo: Seo,
+	settings: Settings,
+	about: About,
+	setup: Setup,
 };
 
 export default function App( { config } ) {
@@ -23,7 +29,9 @@ export default function App( { config } ) {
 
 	return (
 		<>
-			<Header version={ config.version || '' } />
+			{ 'setup' !== config.screen && (
+				<Header version={ config.version || '' } />
+			) }
 			<div className="cedar-body">
 				<Screen config={ config } notify={ setToast } />
 			</div>

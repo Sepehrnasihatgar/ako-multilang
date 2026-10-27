@@ -291,12 +291,14 @@ export function Menu( {
  * @param {string}   props.icon           Icon name.
  * @param {string}   props.title          Title.
  * @param {string}   props.description    Description.
- * @param {string}   props.confirmLabel   Confirm button label.
- * @param {Function} props.onConfirm      Confirm handler.
+ * @param {string}   [props.confirmLabel] Confirm button label.
+ * @param {Function} [props.onConfirm]    Confirm handler (none: close only).
  * @param {Function} props.onCancel       Cancel handler.
  * @param {boolean}  [props.busy]         Disable actions while working.
  * @param {Object}   [props.children]     Extra content, e.g. a field.
  * @param {string}   [props.initialFocus] Selector to focus first.
+ * @param {string}   [props.cancelLabel]  Cancel label ("Close" without a confirm).
+ * @param {boolean}  [props.wide]         Wider panel for lists.
  */
 export function Dialog( {
 	tone = 'default',
@@ -309,6 +311,8 @@ export function Dialog( {
 	busy = false,
 	children,
 	initialFocus,
+	cancelLabel,
+	wide = false,
 } ) {
 	const titleId = useId();
 	const descId = useId();
@@ -338,7 +342,7 @@ export function Dialog( {
 			return;
 		}
 		const focusable = panelRef.current.querySelectorAll(
-			'button:not([disabled]), input:not([disabled])'
+			'a[href], button:not([disabled]), input:not([disabled])'
 		);
 		const first = focusable[ 0 ];
 		const last = focusable[ focusable.length - 1 ];
@@ -356,7 +360,7 @@ export function Dialog( {
 		<div className="cedar-dialog-backdrop">
 			<div
 				ref={ panelRef }
-				className={ `cedar-dialog is-${ tone }` }
+				className={ `cedar-dialog is-${ tone } ${ wide ? 'is-wide' : '' }` }
 				role={ 'danger' === tone ? 'alertdialog' : 'dialog' }
 				aria-modal="true"
 				aria-labelledby={ titleId }
@@ -384,16 +388,21 @@ export function Dialog( {
 						onClick={ onCancel }
 						disabled={ busy }
 					>
-						{ __( 'Cancel', 'cedar-multilang' ) }
+						{ cancelLabel ||
+							( onConfirm
+								? __( 'Cancel', 'cedar-multilang' )
+								: __( 'Close', 'cedar-multilang' ) ) }
 					</Button>
-					<Button
-						variant={ 'danger' === tone ? 'danger' : 'primary' }
-						onClick={ onConfirm }
-						disabled={ busy }
-						aria-busy={ busy || undefined }
-					>
-						{ confirmLabel }
-					</Button>
+					{ onConfirm && (
+						<Button
+							variant={ 'danger' === tone ? 'danger' : 'primary' }
+							onClick={ onConfirm }
+							disabled={ busy }
+							aria-busy={ busy || undefined }
+						>
+							{ confirmLabel }
+						</Button>
+					) }
 				</div>
 			</div>
 		</div>

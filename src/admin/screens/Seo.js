@@ -2,24 +2,20 @@
  * SEO screen (Figma: Admin screens / Configure / SEO — *).
  */
 import apiFetch from '@wordpress/api-fetch';
-import { useCallback, useEffect, useId, useState } from '@wordpress/element';
+import { useCallback, useEffect, useState } from '@wordpress/element';
 import { __, _n, sprintf } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import Icon from '../../components/Icon';
+import { Badge, Button, LanguageTag, Select } from '../../components/controls';
 import {
-	Badge,
-	Button,
-	LanguageTag,
-	Select,
-	Toggle,
-} from '../../components/controls';
-import {
+	Callout,
 	EmptyState,
 	PageTitle,
 	SaveBar,
 	timeAgo,
 } from '../../components/display';
 import { Menu } from '../../components/overlays';
+import { Row, ToggleRow } from '../../components/rows';
 import { duplicatePost, errorMessage } from '../api';
 
 const BASE = '/cedar/v1/seo';
@@ -446,28 +442,18 @@ export default function Seo( { config, notify } ) {
 							) ) }
 						</ul>
 						{ ! activePlugin && (
-							<div className="cedar-callout">
-								<span
-									className="cedar-callout__tile"
-									aria-hidden="true"
-								>
-									<Icon name="arrows-left-right" />
-								</span>
-								<span>
-									<strong>
-										{ __(
-											'No SEO plugin? No problem.',
-											'cedar-multilang'
-										) }
-									</strong>
-									<span>
-										{ __(
-											'Cedar prints hreflang, og:locale and the right lang and dir on every linked page.',
-											'cedar-multilang'
-										) }
-									</span>
-								</span>
-							</div>
+							<Callout
+								icon="arrows-left-right"
+								title={ __(
+									'No SEO plugin? No problem.',
+									'cedar-multilang'
+								) }
+							>
+								{ __(
+									'Cedar prints hreflang, og:locale and the right lang and dir on every linked page.',
+									'cedar-multilang'
+								) }
+							</Callout>
 						) }
 					</section>
 				</div>
@@ -524,93 +510,6 @@ export default function Seo( { config, notify } ) {
 				/>
 			) }
 		</>
-	);
-}
-
-/**
- * Setting row with a select (label on the start side).
- *
- * @param {Object}   props
- * @param {*}        props.label       Visible label (string or element).
- * @param {string}   [props.labelText] Accessible label when `label` is an element.
- * @param {string}   [props.help]      Help text.
- * @param {Function} props.children    ( id, helpId ) => control.
- */
-function Row( { label, labelText, help, children } ) {
-	const id = useId();
-	const helpId = help ? `${ id }-help` : undefined;
-	return (
-		<div className="cedar-setting-row">
-			<span className="cedar-setting-row__copy">
-				<label
-					className="cedar-setting-row__label"
-					htmlFor={ id }
-					aria-label={ labelText }
-				>
-					{ label }
-				</label>
-				{ help && (
-					<span className="cedar-setting-row__help" id={ helpId }>
-						{ help }
-					</span>
-				) }
-			</span>
-			<span className="cedar-setting-row__control">
-				{ children( id, helpId ) }
-			</span>
-		</div>
-	);
-}
-
-/**
- * Setting row with a switch.
- *
- * @param {Object}   props
- * @param {string}   props.label      Label.
- * @param {*}        [props.badge]    Badge after the label.
- * @param {string}   [props.help]     Help text.
- * @param {boolean}  props.checked    On.
- * @param {boolean}  [props.disabled] Disabled.
- * @param {Function} props.onChange   Change handler.
- */
-function ToggleRow( {
-	label,
-	badge,
-	help,
-	checked,
-	disabled = false,
-	onChange,
-} ) {
-	const id = useId();
-	return (
-		<div className="cedar-setting-row">
-			<span className="cedar-setting-row__copy">
-				<span className="cedar-setting-row__title">
-					<span
-						className="cedar-setting-row__label"
-						id={ `${ id }-label` }
-					>
-						{ label }
-					</span>
-					{ badge }
-				</span>
-				{ help && (
-					<span
-						className="cedar-setting-row__help"
-						id={ `${ id }-help` }
-					>
-						{ help }
-					</span>
-				) }
-			</span>
-			<Toggle
-				checked={ checked }
-				disabled={ disabled }
-				onChange={ onChange }
-				labelId={ `${ id }-label` }
-				describedBy={ help ? `${ id }-help` : undefined }
-			/>
-		</div>
 	);
 }
 

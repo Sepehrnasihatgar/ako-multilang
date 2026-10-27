@@ -29,10 +29,12 @@ import {
 	duplicatePost,
 	errorMessage,
 	getCandidates,
+	getImportSources,
 	getLinks,
 	linkPost,
 	unlinkPost,
 } from '../api';
+import { ImportDialog, LinkPagesDialog } from '../setup/Dialogs';
 import { candidateMeta, sortCandidates } from '../candidates';
 
 const PER_PAGE = 20;
@@ -75,6 +77,17 @@ export default function Translations( { config, notify } ) {
 	const [ linking, setLinking ] = useState( null );
 	const [ busy, setBusy ] = useState( false );
 	const [ duplicating, setDuplicating ] = useState( () => new Set() );
+	const [ sources, setSources ] = useState( [] );
+	const [ dialog, setDialog ] = useState( null );
+
+	// Import sources (WPML / Polylang data) are only offered to site owners.
+	useEffect( () => {
+		if ( config.canManage ) {
+			getImportSources()
+				.then( setSources )
+				.catch( () => {} );
+		}
+	}, [ config.canManage ] );
 
 	const reload = useCallback( () => setReloadKey( ( key ) => key + 1 ), [] );
 
@@ -402,6 +415,15 @@ export default function Translations( { config, notify } ) {
 			on ? new Set( rows.map( ( row ) => row.id ) ) : new Set()
 		);
 
+	const canLink = config.canManage && !! data && targets.length > 0;
+	const canImport = sources.length > 0;
+	const firstRun =
+		!! data &&
+		targets.length > 0 &&
+		'all' === query.filter &&
+		! search &&
+		targets.every( ( language ) => ! data.coverage[ language.code ] );
+
 	const columns = `var(--cedar-checkbox-size) minmax(200px, 384fr) repeat(${ Math.max(
 		targets.length,
 		1
@@ -415,7 +437,90 @@ export default function Translations( { config, notify } ) {
 					'Every page, in every language.',
 					'cedar-multilang'
 				) }
+				actions={
+					canLink && (
+						<>
+							{ canImport && (
+								<Button
+									icon="arrows-left-right"
+									onClick={ () => setDialog( 'import' ) }
+								>
+									{ __( 'Import', 'cedar-multilang' ) }
+								</Button>
+							) }
+							<Button
+								variant="primary"
+								icon="link"
+								onClick={ () => setDialog( 'link' ) }
+							>
+								{ __( 'Link pages', 'cedar-multilang' ) }
+							</Button>
+						</>
+					)
+				}
 			/>
+
+			{ firstRun && (
+				<div className="cedar-card cedar-first-run">
+					<EmptyState
+						icon="link"
+						title={ __(
+							'No pages are linked yet',
+							'cedar-multilang'
+						) }
+						description={ __(
+							'Link a page to its translation and Cedar writes hreflang, sets lang/dir and shows the switcher — automatically.',
+							'cedar-multilang'
+						) }
+						actions={
+							canLink && (
+								<>
+									{ canImport && (
+										<Button
+											variant="ghost"
+											onClick={ () =>
+												setDialog( 'import' )
+											}
+										>
+											{ __(
+												'Import from WPML or Polylang',
+												'cedar-multilang'
+											) }
+										</Button>
+									) }
+									<Button
+										variant="primary"
+										onClick={ () => setDialog( 'link' ) }
+									>
+										{ __( 'Link pages', 'cedar-multilang' ) }
+									</Button>
+								</>
+							)
+						}
+					/>
+				</div>
+			) }
+
+			{ 'import' === dialog && (
+				<ImportDialog
+					sources={ sources }
+					onClose={ () => {
+						setDialog( null );
+						reload();
+					} }
+				/>
+			) }
+			{ 'link' === dialog && (
+				<LinkPagesDialog
+					defaultCode={ data.default }
+					notify={ notify }
+					onClose={ () => setDialog( null ) }
+					onLinked={ () => {
+						setDialog( null );
+						reload();
+					} }
+				/>
+			) }
 
 			{ data && source && targets.length > 0 && (
 				<section

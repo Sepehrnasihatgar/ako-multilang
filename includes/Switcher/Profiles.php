@@ -221,6 +221,27 @@ final class Profiles {
 	}
 
 	/**
+	 * Replaces every profile (settings import). Invalid entries are skipped;
+	 * nothing changes if none is valid.
+	 *
+	 * @param array $raw_profiles Raw profiles.
+	 * @return int Number of profiles saved.
+	 */
+	public static function replace_all( array $raw_profiles ) {
+		$profiles = array();
+		foreach ( array_slice( $raw_profiles, 0, self::MAX ) as $raw ) {
+			$clean = is_array( $raw ) ? self::sanitize( $raw ) : null;
+			if ( is_array( $clean ) ) {
+				$profiles[ $clean['id'] ] = $clean;
+			}
+		}
+		if ( $profiles ) {
+			self::write( $profiles );
+		}
+		return count( $profiles );
+	}
+
+	/**
 	 * A free ID based on a name ("Footer switcher" → "footer-switcher-2").
 	 *
 	 * @param string $name Name.

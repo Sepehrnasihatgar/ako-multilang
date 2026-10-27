@@ -7,6 +7,36 @@ import Icon from './Icon';
 import { Button, LanguageTag } from './controls';
 
 /**
+ * The Cedar mark on its tile.
+ *
+ * @param {Object} props
+ * @param {number} [props.size]      Pixel size.
+ * @param {string} [props.className] Class.
+ */
+export function Logo( { size = 32, className = '' } ) {
+	return (
+		<svg
+			className={ className }
+			width={ size }
+			height={ size }
+			viewBox="0 0 32 32"
+			aria-hidden="true"
+			focusable="false"
+		>
+			<rect width="32" height="32" rx="8" className="cedar-logo__tile" />
+			<path
+				className="cedar-logo__mark"
+				d="M16 5.5 10.5 12h3L9 17.5h3.5l-5 6h17l-5-6H23L18.5 12h3L16 5.5Z"
+			/>
+			<path
+				className="cedar-logo__mark"
+				d="M15.55 23.5h.9c.44 0 .8.36.8.8v1.9c0 .44-.36.8-.8.8h-.9a.8.8 0 0 1-.8-.8v-1.9c0-.44.36-.8.8-.8Z"
+			/>
+		</svg>
+	);
+}
+
+/**
  * Cedar / Header: logo, product name and version.
  *
  * @param {Object} props
@@ -16,29 +46,7 @@ export function Header( { version } ) {
 	return (
 		<header className="cedar-header">
 			<div className="cedar-header__brand">
-				<svg
-					className="cedar-header__logo"
-					width="32"
-					height="32"
-					viewBox="0 0 32 32"
-					aria-hidden="true"
-					focusable="false"
-				>
-					<rect
-						width="32"
-						height="32"
-						rx="8"
-						className="cedar-logo__tile"
-					/>
-					<path
-						className="cedar-logo__mark"
-						d="M16 5.5 10.5 12h3L9 17.5h3.5l-5 6h17l-5-6H23L18.5 12h3L16 5.5Z"
-					/>
-					<path
-						className="cedar-logo__mark"
-						d="M15.55 23.5h.9c.44 0 .8.36.8.8v1.9c0 .44-.36.8-.8.8h-.9a.8.8 0 0 1-.8-.8v-1.9c0-.44.36-.8.8-.8Z"
-					/>
-				</svg>
+				<Logo className="cedar-header__logo" />
 				<span className="cedar-header__name">
 					<span className="cedar-header__product">
 						{ __( 'Cedar', 'cedar-multilang' ) }
@@ -53,6 +61,41 @@ export function Header( { version } ) {
 				</span>
 			</div>
 		</header>
+	);
+}
+
+/**
+ * Callout (Figma: Feedback / Callout). Tone=Info|Success|Warning|Danger|Neutral.
+ *
+ * @param {Object} props
+ * @param {string} [props.tone]     Tone.
+ * @param {string} props.icon       Icon name.
+ * @param {*}      props.title      Title.
+ * @param {*}      [props.children] Description.
+ * @param {*}      [props.action]   Button on the end side.
+ * @param {string} [props.role]     ARIA role (e.g. "alert" for failures).
+ */
+export function Callout( {
+	tone = 'info',
+	icon,
+	title,
+	children,
+	action,
+	role,
+} ) {
+	return (
+		<div className={ `cedar-callout is-${ tone }` } role={ role }>
+			<span className="cedar-callout__tile" aria-hidden="true">
+				<Icon name={ icon } />
+			</span>
+			<span className="cedar-callout__copy">
+				<strong>{ title }</strong>
+				{ children && <span>{ children }</span> }
+			</span>
+			{ action && (
+				<span className="cedar-callout__action">{ action }</span>
+			) }
+		</div>
 	);
 }
 

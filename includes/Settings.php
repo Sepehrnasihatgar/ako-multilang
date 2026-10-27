@@ -123,8 +123,12 @@ final class Settings {
 
 		if ( isset( $raw['rtl_compat'] ) && is_array( $raw['rtl_compat'] ) ) {
 			$out['rtl_compat'] = array();
+			$known             = Rtl\Compat::known();
 			foreach ( $raw['rtl_compat'] as $key => $enabled ) {
-				$out['rtl_compat'][ sanitize_key( $key ) ] = (bool) $enabled;
+				$key = sanitize_key( $key );
+				if ( isset( $known[ $key ] ) ) {
+					$out['rtl_compat'][ $key ] = (bool) $enabled;
+				}
 			}
 		}
 

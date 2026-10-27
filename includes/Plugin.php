@@ -9,13 +9,16 @@ namespace Cedar\Multilang;
 
 use Cedar\Multilang\Admin\Admin;
 use Cedar\Multilang\Admin\Editor;
+use Cedar\Multilang\Admin\Notices;
 use Cedar\Multilang\Content\Links;
 use Cedar\Multilang\Content\Taxonomies;
 use Cedar\Multilang\Migration\Legacy62;
+use Cedar\Multilang\Rtl\Compat;
 use Cedar\Multilang\Rtl\Locale;
 use Cedar\Multilang\Rest\Rest;
 use Cedar\Multilang\Seo\Hreflang;
 use Cedar\Multilang\Seo\Integrations;
+use Cedar\Multilang\Setup\Wizard;
 use Cedar\Multilang\Switcher\Block;
 use Cedar\Multilang\Switcher\MenuItem;
 use Cedar\Multilang\Switcher\Renderer;
@@ -64,6 +67,7 @@ final class Plugin {
 
 		if ( ! empty( $settings['modules']['rtl'] ) ) {
 			Locale::register();
+			Compat::register();
 		}
 
 		if ( ! empty( $settings['modules']['seo'] ) ) {
@@ -84,6 +88,7 @@ final class Plugin {
 		if ( is_admin() ) {
 			Admin::register();
 			Editor::register();
+			Notices::register();
 		}
 
 		/**
@@ -103,7 +108,7 @@ final class Plugin {
 
 		if ( false === get_option( self::DB_VERSION_OPTION, false ) ) {
 			add_option( self::DB_VERSION_OPTION, self::DB_VERSION, '', false );
-			add_option( 'cedar_ml_needs_setup', 1, '', false );
+			add_option( Wizard::NEEDS_SETUP_OPTION, 1, '', false );
 		}
 	}
 

@@ -1110,10 +1110,32 @@ button.cedar-cell.is-missing[aria-expanded="true"] {
 	background: var(--cedar-admin-bg-info-subtle);
 }
 
-.cedar-callout > span:last-child {
+.cedar-callout.is-success {
+	border-color: var(--cedar-admin-border-success);
+	background: var(--cedar-admin-bg-success-subtle);
+}
+
+.cedar-callout.is-warning {
+	border-color: var(--cedar-admin-border-warning);
+	background: var(--cedar-admin-bg-warning-subtle);
+}
+
+.cedar-callout.is-danger {
+	border-color: var(--cedar-admin-border-danger);
+	background: var(--cedar-admin-bg-danger-subtle);
+}
+
+.cedar-callout.is-neutral {
+	border-color: transparent;
+	background: var(--cedar-admin-bg-subtle);
+}
+
+.cedar-callout__copy {
 	display: flex;
+	flex: 1;
 	flex-direction: column;
 	gap: var(--cedar-admin-space-3xs);
+	min-inline-size: 0;
 	color: var(--cedar-admin-text-secondary);
 	font: var(--cedar-text-help);
 }
@@ -1121,6 +1143,11 @@ button.cedar-cell.is-missing[aria-expanded="true"] {
 .cedar-callout strong {
 	color: var(--cedar-admin-text-primary);
 	font: var(--cedar-text-body-strong);
+}
+
+.cedar-callout__action {
+	flex: none;
+	align-self: center;
 }
 
 .cedar-callout__tile {
@@ -1133,6 +1160,18 @@ button.cedar-cell.is-missing[aria-expanded="true"] {
 	border-radius: var(--cedar-admin-radius-control);
 	background: var(--cedar-admin-bg-surface);
 	color: var(--cedar-admin-icon-info);
+}
+
+.cedar-callout.is-success .cedar-callout__tile {
+	color: var(--cedar-admin-icon-success);
+}
+
+.cedar-callout.is-warning .cedar-callout__tile {
+	color: var(--cedar-admin-icon-warning);
+}
+
+.cedar-callout.is-danger .cedar-callout__tile {
+	color: var(--cedar-admin-icon-danger);
 }
 
 /* What search engines see (Figma: Settings patterns / hreflang output) */
