@@ -42,7 +42,12 @@ final class Wizard {
 	/**
 	 * Menu location names Cedar prefers, in order.
 	 */
-	const PREFERRED_LOCATIONS = array( 'primary', 'main', 'menu-1', 'header', 'primary-menu', 'main-menu', 'top' );
+	const PREFERRED_LOCATIONS = array( 'primary', 'main', 'menu-1', 'menu_1', 'main_menu', 'header', 'primary-menu', 'main-menu', 'header-menu' );
+
+	/**
+	 * Words in a location's slug or name that mean it isn't the main menu.
+	 */
+	const SECONDARY_LOCATION = '/footer|mobile|social|top[ _-]?bar|topbar|secondary|legal|utility|off[ _-]?canvas|sidebar/i';
 
 	/**
 	 * Whether setup hasn't been finished.
@@ -284,8 +289,19 @@ final class Wizard {
 			return null;
 		}
 
-		$order = array_unique( array_merge( array_intersect( self::PREFERRED_LOCATIONS, array_keys( $registered ) ), array_keys( $registered ) ) );
+		// Known main-menu slugs first, then other locations, then footer,
+		// mobile, social and top-bar menus last.
+		$order     = array_unique( array_merge( array_intersect( self::PREFERRED_LOCATIONS, array_keys( $registered ) ), array_keys( $registered ) ) );
+		$main      = array();
+		$secondary = array();
 		foreach ( $order as $location ) {
+			if ( preg_match( self::SECONDARY_LOCATION, $location . ' ' . $registered[ $location ] ) ) {
+				$secondary[] = $location;
+			} else {
+				$main[] = $location;
+			}
+		}
+		foreach ( array_merge( $main, $secondary ) as $location ) {
 			if ( empty( $assigned[ $location ] ) ) {
 				continue;
 			}

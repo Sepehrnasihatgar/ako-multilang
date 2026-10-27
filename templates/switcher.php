@@ -88,22 +88,22 @@ foreach ( $cedar_ml_items as $cedar_ml_candidate ) {
 		<summary class="cedar-switcher__toggle">
 			<?php echo $cedar_ml_label( $cedar_ml_current, $cedar_ml_profile['icon'] ) . $cedar_ml_chevron; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?>
 		</summary>
-		<ul class="cedar-switcher__menu">
+		<div class="cedar-switcher__menu" role="list">
 			<?php foreach ( $cedar_ml_items as $cedar_ml_entry ) : ?>
-				<li><?php echo $cedar_ml_item( $cedar_ml_entry, false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></li>
+				<div class="cedar-switcher__entry" role="listitem"><?php echo $cedar_ml_item( $cedar_ml_entry, false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></div>
 			<?php endforeach; ?>
-		</ul>
+		</div>
 	</details>
 <?php else : ?>
-	<ul class="cedar-switcher__list">
+	<div class="cedar-switcher__list" role="list">
 		<?php foreach ( $cedar_ml_items as $cedar_ml_entry ) : ?>
 			<?php
 			if ( 'link' === $cedar_ml_profile['style'] && $cedar_ml_entry['current'] ) {
 				continue;
 			}
 			?>
-			<li><?php echo $cedar_ml_item( $cedar_ml_entry, $cedar_ml_profile['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></li>
+			<div class="cedar-switcher__entry" role="listitem"><?php echo $cedar_ml_item( $cedar_ml_entry, $cedar_ml_profile['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></div>
 		<?php endforeach; ?>
-	</ul>
+	</div>
 <?php endif; ?>
 </nav>

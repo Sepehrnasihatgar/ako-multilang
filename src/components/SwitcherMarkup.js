@@ -176,27 +176,35 @@ export default function SwitcherMarkup( { profile, items, small = false } ) {
 						<Label item={ current } icon={ icon } />
 						<Chevron />
 					</summary>
-					<ul className="cedar-switcher__menu">
+					<div className="cedar-switcher__menu" role="list">
 						{ items.map( ( item ) => (
-							<li key={ item.code }>
+							<div
+								key={ item.code }
+								className="cedar-switcher__entry"
+								role="listitem"
+							>
 								<Item item={ item } icon={ false } />
-							</li>
+							</div>
 						) ) }
-					</ul>
+					</div>
 				</details>
 			) : (
-				<ul className="cedar-switcher__list">
+				<div className="cedar-switcher__list" role="list">
 					{ items
 						.filter(
 							( item ) =>
 								! ( 'link' === profile.style && item.current )
 						)
 						.map( ( item ) => (
-							<li key={ item.code }>
+							<div
+								key={ item.code }
+								className="cedar-switcher__entry"
+								role="listitem"
+							>
 								<Item item={ item } icon={ icon } />
-							</li>
+							</div>
 						) ) }
-				</ul>
+				</div>
 			) }
 		</nav>
 	);

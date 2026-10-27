@@ -72,6 +72,15 @@ Done
 - Setup detects the other languages: titles in another script (Farsi/Arabic/Urdu told apart by their letters), language folders like /de/, and installed language packs (offered, not pre-selected).
 - The block editor canvas is right-to-left for right-to-left languages and follows the language picked in the panel.
 
+## Theme compatibility pass
+
+Automated run (Playwright + Playground, logged-out visitor, 1280px and 390px, English and Farsi page) on Astra, Hello Elementor (with Elementor), GeneratePress, Kadence, OceanWP, Neve, Blocksy, Twenty Twenty-Five, Twenty Twenty-Four and Twenty Twenty-One, for the Dropdown, Segmented and Link looks: setup finds the main menu and adds the switcher, it shows in the header (or the opened mobile menu), the dropdown opens on screen, the Farsi link leads to the Farsi page, the Farsi page is RTL, no horizontal scroll. 120 checks, all pass.
+
+Fixed along the way:
+- Themes hide `li ul` as sub-menus (Hello, Elementor menus) or move them off-screen (GeneratePress), which hid the switcher inside menus. The switcher no longer uses ul/li (div with role="list"/"listitem").
+- A layout layer with real specificity (display, gap, padding, box-sizing) so theme resets (`summary { display: list-item }`, `.menu a { display: block }`, `.dropdown-menu * { padding: 0 }`, `#mobile-dropdown ul li a`) can't break it; colors and borders stay overridable.
+- Setup prefers main-menu locations and skips footer, mobile, social and top-bar menus (OceanWP picked Top Bar, Blocksy picked Footer).
+
 Next
 1. Before submitting: create the wp.org account's SVN assets from `.wordpress-org/`, run Plugin Check once more on the final zip, then submit at wordpress.org/plugins/developers/add/.
 2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.
