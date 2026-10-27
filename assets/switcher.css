@@ -227,6 +227,11 @@
 	box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 12px 24px -4px rgb(0 0 0 / 12%);
 }
 
+:where(.cedar-switcher) :where(.cedar-switcher__menu.is-end) {
+	inset-inline-start: auto;
+	inset-inline-end: 0;
+}
+
 :where(.cedar-switcher) :where(.cedar-switcher__menu .cedar-switcher__item) {
 	justify-content: space-between;
 	inline-size: 100%;

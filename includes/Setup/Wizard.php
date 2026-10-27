@@ -268,11 +268,16 @@ final class Wizard {
 	}
 
 	/**
-	 * The classic menu the switcher can join, or null.
+	 * The menu the switcher can join, or null: a classic menu location, or
+	 * the header's Navigation block on block themes.
 	 *
-	 * @return array{location:string,name:string,menu:int,menuName:string}|null
+	 * @return array{type:string,location:string,name:string,menu:int,menuName:string}|null
 	 */
 	public static function menu_location() {
+		if ( wp_is_block_theme() ) {
+			return self::block_navigation();
+		}
+
 		$registered = get_registered_nav_menus();
 		$assigned   = get_nav_menu_locations();
 		if ( ! $registered || ! $assigned ) {
@@ -287,6 +292,7 @@ final class Wizard {
 			$menu = wp_get_nav_menu_object( (int) $assigned[ $location ] );
 			if ( $menu ) {
 				return array(
+					'type'     => 'classic',
 					'location' => (string) $location,
 					'name'     => (string) $registered[ $location ],
 					'menu'     => (int) $menu->term_id,
@@ -295,6 +301,127 @@ final class Wizard {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * The header's Navigation block on a block theme. `menu` is the
+	 * wp_navigation post it shows, or 0 when it shows WordPress's fallback
+	 * (a menu is then created when the switcher is added).
+	 *
+	 * @return array{type:string,location:string,name:string,menu:int,menuName:string}|null
+	 */
+	private static function block_navigation() {
+		$part = get_block_template( get_stylesheet() . '//header', 'wp_template_part' );
+		if ( ! $part || ! is_string( $part->content ) ) {
+			return null;
+		}
+		// Themes often keep the header in a pattern (Twenty Twenty-Five does).
+		$blocks     = resolve_pattern_blocks( parse_blocks( $part->content ) );
+		$navigation = self::find_block( $blocks, 'core/navigation' );
+		if ( ! $navigation ) {
+			return null;
+		}
+
+		$menu = 0;
+		if ( ! empty( $navigation['attrs']['ref'] ) ) {
+			$menu = (int) $navigation['attrs']['ref'];
+		} else {
+			// Without a ref, the block shows the most recent published menu.
+			$latest = get_posts(
+				array(
+					'post_type'   => 'wp_navigation',
+					'post_status' => 'publish',
+					'numberposts' => 1,
+					'orderby'     => 'date',
+					'order'       => 'DESC',
+					'fields'      => 'ids',
+				)
+			);
+			$menu   = $latest ? (int) $latest[0] : 0;
+		}
+		$post = $menu ? get_post( $menu ) : null;
+		if ( $menu && ( ! $post || 'wp_navigation' !== $post->post_type ) ) {
+			return null;
+		}
+
+		return array(
+			'type'     => 'block',
+			'location' => 'header',
+			'name'     => __( 'Header menu', 'cedar-multilang' ),
+			'menu'     => $menu,
+			'menuName' => $post ? (string) $post->post_title : __( 'Header', 'cedar-multilang' ),
+		);
+	}
+
+	/**
+	 * First block of a type in a parsed tree.
+	 *
+	 * @param array  $blocks Parsed blocks.
+	 * @param string $name   Block name.
+	 * @return array|null
+	 */
+	private static function find_block( array $blocks, $name ) {
+		foreach ( $blocks as $block ) {
+			if ( isset( $block['blockName'] ) && $name === $block['blockName'] ) {
+				return $block;
+			}
+			if ( ! empty( $block['innerBlocks'] ) ) {
+				$found = self::find_block( $block['innerBlocks'], $name );
+				if ( $found ) {
+					return $found;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Adds the switcher block to the end of a block theme's header menu.
+	 *
+	 * @param array  $location From block_navigation().
+	 * @param string $id       Switcher ID.
+	 * @return true|WP_Error
+	 */
+	private static function add_to_block_navigation( array $location, $id ) {
+		$menu = (int) $location['menu'];
+		if ( ! $menu ) {
+			// Turn WordPress's fallback (the page list) into a saved menu first.
+			if ( ! class_exists( 'WP_Navigation_Fallback' ) ) {
+				return new WP_Error( 'cedar_ml_no_menu', __( 'Your theme has no menu to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
+			}
+			$fallback = \WP_Navigation_Fallback::get_fallback();
+			if ( ! $fallback instanceof \WP_Post ) {
+				return new WP_Error( 'cedar_ml_no_menu', __( 'Your theme has no menu to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
+			}
+			$menu = (int) $fallback->ID;
+		}
+
+		if ( ! current_user_can( 'edit_post', $menu ) ) {
+			return new WP_Error( 'cedar_ml_menu_forbidden', __( 'You can’t edit menus on this site. Pick another placement.', 'cedar-multilang' ), array( 'status' => 403 ) );
+		}
+
+		$post = get_post( $menu );
+		if ( false !== strpos( (string) $post->post_content, '<!-- wp:cedar-multilang/switcher' ) ) {
+			return true;
+		}
+
+		$block  = serialize_block(
+			array(
+				'blockName'    => 'cedar-multilang/switcher',
+				'attrs'        => array( 'switcher' => sanitize_key( $id ) ),
+				'innerBlocks'  => array(),
+				'innerHTML'    => '',
+				'innerContent' => array(),
+			)
+		);
+		$result = wp_update_post(
+			array(
+				'ID'           => $menu,
+				'post_content' => rtrim( (string) $post->post_content ) . "\n\n" . $block,
+			),
+			true
+		);
+		return is_wp_error( $result ) ? $result : true;
 	}
 
 	/**
@@ -340,6 +467,17 @@ final class Wizard {
 		$location = self::menu_location();
 		if ( ! $location ) {
 			return new WP_Error( 'cedar_ml_no_menu', __( 'Your theme has no menu to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
+		}
+
+		if ( 'block' === $location['type'] ) {
+			$added = self::add_to_block_navigation( $location, $saved['id'] );
+			if ( is_wp_error( $added ) ) {
+				return $added;
+			}
+			return array(
+				'placed' => true,
+				'id'     => $saved['id'],
+			);
 		}
 
 		$url = '#cedar-switcher-' . $saved['id'];
@@ -422,9 +560,19 @@ final class Wizard {
 	 */
 	private static function placed_switchers() {
 		$count = 0;
+		foreach ( get_posts(
+			array(
+				'post_type'   => 'wp_navigation',
+				'post_status' => 'publish',
+				'numberposts' => 50,
+				's'           => 'wp:cedar-multilang/switcher',
+			)
+		) as $navigation ) {
+			$count += substr_count( (string) $navigation->post_content, '<!-- wp:cedar-multilang/switcher' );
+		}
 		foreach ( Profiles::all() as $profile ) {
 			if ( 'floating' === $profile['style'] ) {
-				$count = 1;
+				++$count;
 				break;
 			}
 		}

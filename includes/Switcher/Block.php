@@ -21,6 +21,22 @@ final class Block {
 	 */
 	public static function register() {
 		add_action( 'init', array( self::class, 'register_block' ), 20 );
+		add_filter( 'register_block_type_args', array( self::class, 'allow_in_navigation' ), 10, 2 );
+	}
+
+	/**
+	 * Lets the switcher go inside the Navigation block, where block themes
+	 * keep their menus. Navigation only accepts the blocks it lists.
+	 *
+	 * @param array  $args       Block type arguments.
+	 * @param string $block_type Block name.
+	 * @return array
+	 */
+	public static function allow_in_navigation( $args, $block_type ) {
+		if ( 'core/navigation' === $block_type && isset( $args['allowed_blocks'] ) && is_array( $args['allowed_blocks'] ) ) {
+			$args['allowed_blocks'][] = 'cedar-multilang/switcher';
+		}
+		return $args;
 	}
 
 	/**

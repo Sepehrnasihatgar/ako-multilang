@@ -56,11 +56,17 @@ function StatusBadge( { status } ) {
 
 /**
  * @param {Object}   props
- * @param {number}   props.postId    Post being edited.
- * @param {number}   props.reloadKey Changes when the post was saved.
- * @param {Function} props.notify    ( { tone, message, action } ) => void.
+ * @param {number}   props.postId      Post being edited.
+ * @param {number}   props.reloadKey   Changes when the post was saved.
+ * @param {Function} props.notify      ( { tone, message, action } ) => void.
+ * @param {Function} props.onDirection Called with "ltr" or "rtl" for the page language (block editor only).
  */
-export default function LanguagePanel( { postId, reloadKey, notify } ) {
+export default function LanguagePanel( {
+	postId,
+	reloadKey,
+	notify,
+	onDirection,
+} ) {
 	const [ detail, setDetail ] = useState( null );
 	const [ loadError, setLoadError ] = useState( null );
 	const [ working, setWorking ] = useState( null );
@@ -85,6 +91,18 @@ export default function LanguagePanel( { postId, reloadKey, notify } ) {
 	}, [ postId ] );
 
 	useEffect( load, [ load, reloadKey ] );
+
+	// Tell the editor which way this page's language is written.
+	const pageCode = detail ? detail.language || detail.default : '';
+	const pageLanguage = detail
+		? detail.languages.find( ( entry ) => entry.code === pageCode )
+		: null;
+	const dir = pageLanguage ? pageLanguage.dir : '';
+	useEffect( () => {
+		if ( onDirection && dir ) {
+			onDirection( dir );
+		}
+	}, [ onDirection, dir ] );
 
 	if ( loadError ) {
 		return (
