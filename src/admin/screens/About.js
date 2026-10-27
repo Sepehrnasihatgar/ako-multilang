@@ -16,7 +16,7 @@ const REVIEWS_URL =
 const CHANGELOG = [
 	{
 		version: '1.0.0',
-		date: '2026-10-01',
+		date: '2026-10-27',
 		changes: () => [
 			__( 'Any number of languages, every post type', 'ako-multilang' ),
 			__(
@@ -33,7 +33,7 @@ const CHANGELOG = [
 	},
 	{
 		version: '6.2',
-		date: '2025-07-01',
+		date: '2026-07-21',
 		changes: () => [
 			__(
 				'Private release for one Persian/English site. Data migrates automatically.',
