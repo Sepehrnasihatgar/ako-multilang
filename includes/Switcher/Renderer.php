@@ -202,7 +202,7 @@ final class Renderer {
 				'aria-label'    => true,
 				'data-switcher' => true,
 			),
-			'div'     => $common,
+			'div'     => $common + array( 'role' => true ),
 			'ul'      => $common + array( 'role' => true ),
 			'li'      => $common,
 			'a'       => $common + array(

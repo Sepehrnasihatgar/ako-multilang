@@ -53,7 +53,7 @@
 	--cedar-switcher-menu-radius: 0;
 }
 
-:where(.cedar-switcher) :where(ul) {
+:where(.cedar-switcher) :where(.cedar-switcher__list, .cedar-switcher__menu) {
 	display: flex;
 	gap: var(--cedar-switcher-item-gap);
 	margin: 0;
@@ -61,7 +61,7 @@
 	list-style: none;
 }
 
-:where(.cedar-switcher) :where(li) {
+:where(.cedar-switcher) :where(.cedar-switcher__entry) {
 	margin: 0;
 	padding: 0;
 }
@@ -303,3 +303,84 @@
  *   --cedar-switcher-focus-ring: #91ceab;
  * }
  */
+
+/*
+ * Layout layer. Theme resets and menu styles (`summary { display: list-item }`,
+ * `.menu a { display: block }`, `.dropdown-menu * { padding: 0 }`, rules
+ * that hide nested menus) would otherwise break the switcher's structure.
+ * These rules carry real specificity but only set layout; colors, borders
+ * and radii above stay easy to override. `display` is !important because
+ * some mobile menus style links by ID (`#mobile-dropdown ul li a`).
+ */
+.cedar-switcher,
+.cedar-switcher *,
+.cedar-switcher *::before,
+.cedar-switcher *::after {
+	box-sizing: border-box;
+}
+
+.cedar-switcher .cedar-switcher__list {
+	display: flex !important;
+	gap: var(--cedar-switcher-item-gap);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	visibility: visible;
+	opacity: 1;
+}
+
+.cedar-switcher.cedar-switcher--segmented .cedar-switcher__list {
+	padding: var(--cedar-switcher-container-padding);
+}
+
+.cedar-switcher .cedar-switcher__details[open] > .cedar-switcher__menu {
+	display: flex !important;
+	flex-direction: column;
+	gap: var(--cedar-switcher-item-gap);
+	margin: 0;
+	padding: var(--cedar-switcher-container-padding);
+	list-style: none;
+	visibility: visible;
+	opacity: 1;
+	transform: none;
+	pointer-events: auto;
+}
+
+.cedar-switcher .cedar-switcher__entry {
+	margin: 0;
+	padding: 0;
+}
+
+/* Three classes, so theme menu link rules (two classes) don't win. */
+.cedar-switcher .cedar-switcher__list .cedar-switcher__item,
+.cedar-switcher .cedar-switcher__menu .cedar-switcher__item,
+.cedar-switcher .cedar-switcher__details .cedar-switcher__toggle {
+	display: inline-flex !important;
+	align-items: center;
+	gap: var(--cedar-switcher-gap);
+	margin: 0;
+	padding: var(--cedar-switcher-padding-y) var(--cedar-switcher-padding-x);
+	white-space: nowrap;
+}
+
+.cedar-switcher.cedar-switcher--segmented .cedar-switcher__list .cedar-switcher__item {
+	padding-block: 4px;
+}
+
+.cedar-switcher .cedar-switcher__menu .cedar-switcher__item {
+	display: flex !important;
+	justify-content: space-between;
+	inline-size: 100%;
+}
+
+/* Cedar style keeps its own type size inside theme menus. */
+.cedar-switcher:not(.cedar-switcher--inherit) .cedar-switcher__item,
+.cedar-switcher:not(.cedar-switcher--inherit) .cedar-switcher__toggle {
+	font: inherit;
+	line-height: 20px;
+}
+
+.cedar-switcher .cedar-switcher__icon {
+	flex: none;
+	margin: 0;
+}
