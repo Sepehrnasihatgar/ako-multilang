@@ -26,12 +26,14 @@ import {
 } from '../../components/display';
 import { Menu, usePopoverStyle } from '../../components/overlays';
 import {
+	duplicatePost,
 	errorMessage,
 	getCandidates,
 	getLinks,
 	linkPost,
 	unlinkPost,
 } from '../api';
+import { candidateMeta, sortCandidates } from '../candidates';
 
 const PER_PAGE = 20;
 const DRAFT_STATUSES = [ 'draft', 'pending', 'future' ];
@@ -67,6 +69,7 @@ export default function Translations( { config, notify } ) {
 	const [ selected, setSelected ] = useState( () => new Set() );
 	const [ linking, setLinking ] = useState( null );
 	const [ busy, setBusy ] = useState( false );
+	const [ duplicating, setDuplicating ] = useState( () => new Set() );
 
 	const reload = useCallback( () => setReloadKey( ( key ) => key + 1 ), [] );
 
@@ -248,6 +251,81 @@ export default function Translations( { config, notify } ) {
 		);
 	};
 
+	/**
+	 * Creates linked drafts for [ row, code ] pairs, one request at a time.
+	 *
+	 * @param {Array} pairs [ [ row, code ] ].
+	 */
+	const duplicatePairs = async ( pairs ) => {
+		const keys = pairs.map( ( [ row, code ] ) => `${ row.id }:${ code }` );
+		setBusy( true );
+		setDuplicating( new Set( keys ) );
+		let created = 0;
+		let lastError = null;
+		let lastDraft = null;
+		for ( const [ row, code ] of pairs ) {
+			try {
+				const response = await duplicatePost( row.id, code );
+				lastDraft = response.created;
+				created++;
+			} catch ( error ) {
+				lastError = errorMessage(
+					error,
+					__( 'A draft couldn’t be created.', 'cedar-multilang' )
+				);
+			}
+		}
+		setDuplicating( new Set() );
+		setBusy( false );
+		setSelected( new Set() );
+		if ( lastError && ! created ) {
+			notify( { tone: 'error', message: lastError } );
+		} else if ( lastError ) {
+			notify( {
+				tone: 'error',
+				message: sprintf(
+					/* translators: 1: Drafts created, 2: Drafts requested. */
+					__(
+						'Created %1$d of %2$d drafts. Try the rest again.',
+						'cedar-multilang'
+					),
+					created,
+					pairs.length
+				),
+			} );
+		} else {
+			notify( {
+				tone: 'success',
+				message: sprintf(
+					/* translators: %d: Number of drafts. */
+					_n(
+						'Created %d draft.',
+						'Created %d drafts.',
+						created,
+						'cedar-multilang'
+					),
+					created
+				),
+				action:
+					1 === created && lastDraft && lastDraft.editUrl
+						? {
+								label: __( 'Edit draft', 'cedar-multilang' ),
+								url: lastDraft.editUrl,
+							}
+						: null,
+			} );
+		}
+		reload();
+	};
+
+	const missingInSelection = rows
+		.filter( ( row ) => selected.has( row.id ) && row.canEdit )
+		.flatMap( ( row ) =>
+			targets
+				.filter( ( language ) => ! row.translations[ language.code ] )
+				.map( ( language ) => [ row, language.code ] )
+		);
+
 	const unlinkSelected = () => {
 		const chosen = rows.filter(
 			( row ) =>
@@ -399,8 +477,33 @@ export default function Translations( { config, notify } ) {
 								),
 								selected.size
 							) }
+							{ missingInSelection.length > 0 &&
+								' · ' +
+									sprintf(
+										/* translators: %d: Number of missing translations. */
+										_n(
+											'%d missing translation',
+											'%d missing translations',
+											missingInSelection.length,
+											'cedar-multilang'
+										),
+										missingInSelection.length
+									) }
 						</span>
 						<span className="cedar-bulkbar__spacer" />
+						<Button
+							size="small"
+							icon="file-plus"
+							onClick={ () =>
+								duplicatePairs( missingInSelection )
+							}
+							disabled={ busy || ! missingInSelection.length }
+						>
+							{ __(
+								'Duplicate missing as drafts',
+								'cedar-multilang'
+							) }
+						</Button>
 						<Button
 							size="small"
 							icon="close"
@@ -582,6 +685,11 @@ export default function Translations( { config, notify } ) {
 							onLinked={ onLinked }
 							onUnlinkRow={ unlinkRow }
 							onUnlinkTranslation={ unlinkTranslation }
+							duplicating={ duplicating }
+							onDuplicate={ ( row, code ) =>
+								duplicatePairs( [ [ row, code ] ] )
+							}
+							busy={ busy }
 							onClearSearch={ () => setSearchText( '' ) }
 							onRetry={ reload }
 							notify={ notify }
@@ -797,6 +905,9 @@ function Rows( props ) {
  * @param {Function} props.onUnlinkTranslation
  * @param {Function} props.notify
  * @param {Object}   props.data
+ * @param {Object}   props.duplicating
+ * @param {Function} props.onDuplicate
+ * @param {boolean}  props.busy
  */
 function Row( {
 	row,
@@ -810,6 +921,9 @@ function Row( {
 	onUnlinkTranslation,
 	notify,
 	data,
+	duplicating,
+	onDuplicate,
+	busy,
 } ) {
 	const isSelected = selected.has( row.id );
 	const linkedCodes = Object.keys( row.translations );
@@ -892,6 +1006,11 @@ function Row( {
 						onLinked={ ( candidate ) =>
 							onLinked( row, language.code, candidate )
 						}
+						isDuplicating={ duplicating.has(
+							`${ row.id }:${ language.code }`
+						) }
+						onDuplicate={ () => onDuplicate( row, language.code ) }
+						busy={ busy }
 						notify={ notify }
 					/>
 				</span>
@@ -963,6 +1082,9 @@ function Row( {
  * @param {Function} props.onCancelLinking
  * @param {Function} props.onLinked
  * @param {Function} props.notify
+ * @param {boolean}  props.isDuplicating
+ * @param {Function} props.onDuplicate
+ * @param {boolean}  props.busy
  */
 function TranslationCell( {
 	row,
@@ -974,7 +1096,19 @@ function TranslationCell( {
 	onCancelLinking,
 	onLinked,
 	notify,
+	isDuplicating,
+	onDuplicate,
+	busy,
 } ) {
+	if ( isDuplicating ) {
+		return (
+			<span className="cedar-cell is-working" aria-live="polite">
+				<span className="cedar-cell__dot" aria-hidden="true" />
+				{ __( 'Duplicating…', 'cedar-multilang' ) }
+			</span>
+		);
+	}
+
 	if ( isLinking ) {
 		return (
 			<LinkSearch
@@ -1027,6 +1161,17 @@ function TranslationCell( {
 				) }
 				items={ [
 					{
+						id: 'duplicate',
+						icon: 'file-plus',
+						label: __( 'Duplicate as draft', 'cedar-multilang' ),
+						description: __(
+							'Copies content, images, SEO fields and builder layout.',
+							'cedar-multilang'
+						),
+						disabled: busy,
+						onSelect: onDuplicate,
+					},
+					{
 						id: 'link',
 						icon: 'link',
 						label: __( 'Link an existing page', 'cedar-multilang' ),
@@ -1077,23 +1222,6 @@ function TranslationCell( {
 }
 
 /**
- * Best matches first: pages already in the language and free to link, then
- * pages without a language, then pages linked elsewhere (linking moves them).
- *
- * @param {Array} list Candidates from the API (newest first).
- * @return {Array} Sorted candidates.
- */
-function sortCandidates( list ) {
-	const rank = ( candidate ) => {
-		if ( ! candidate.language ) {
-			return 1;
-		}
-		return candidate.linked ? 2 : 0;
-	};
-	return [ ...list ].sort( ( a, b ) => rank( a ) - rank( b ) );
-}
-
-/**
  * Inline combobox to pick an existing page as the translation.
  *
  * @param {Object}   props
@@ -1130,8 +1258,16 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 		} )
 			.then( ( list ) => {
 				if ( ! ignore ) {
-					setResults( sortCandidates( list ) );
-					setActive( 0 );
+					const sorted = sortCandidates( list );
+					setResults( sorted );
+					setActive(
+						Math.max(
+							0,
+							sorted.findIndex(
+								( candidate ) => ! candidate.linked
+							)
+						)
+					);
 				}
 			} )
 			.catch( () => ! ignore && setResults( [] ) );
@@ -1154,7 +1290,7 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 	}, [ onCancel ] );
 
 	const choose = async ( candidate ) => {
-		if ( ! candidate || saving ) {
+		if ( ! candidate || candidate.linked || saving ) {
 			return;
 		}
 		setSaving( true );
@@ -1245,7 +1381,8 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 							id={ optionId( index ) }
 							role="option"
 							aria-selected={ index === active }
-							className={ `cedar-menu__item ${ index === active ? 'is-active' : '' }` }
+							aria-disabled={ candidate.linked || undefined }
+							className={ `cedar-menu__item ${ index === active ? 'is-active' : '' } ${ candidate.linked ? 'is-disabled' : '' }` }
 							onMouseEnter={ () => setActive( index ) }
 							onMouseDown={ ( event ) => event.preventDefault() }
 							onClick={ () => choose( candidate ) }
@@ -1254,10 +1391,7 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 								{ candidate.title }
 							</span>
 							<span className="cedar-menu__meta">
-								{ candidate.language
-									? candidate.linked &&
-										__( 'Linked', 'cedar-multilang' )
-									: __( 'No language', 'cedar-multilang' ) }
+								{ candidateMeta( candidate ) }
 							</span>
 						</li>
 					) ) }

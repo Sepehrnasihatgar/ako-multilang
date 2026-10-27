@@ -1,0 +1,73 @@
+/**
+ * Block editor: "Language · Cedar" panel in the document sidebar.
+ */
+import { useDispatch, useSelect } from '@wordpress/data';
+import { PluginDocumentSettingPanel } from '@wordpress/editor';
+import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
+import { registerPlugin } from '@wordpress/plugins';
+import LanguagePanel from './LanguagePanel';
+import './editor.css';
+
+function CedarLanguagePanel() {
+	const { postId, isSaving, isAutosaving } = useSelect( ( select ) => {
+		const editor = select( 'core/editor' );
+		return {
+			postId: editor.getCurrentPostId(),
+			isSaving: editor.isSavingPost(),
+			isAutosaving: editor.isAutosavingPost(),
+		};
+	}, [] );
+	const { createSuccessNotice, createErrorNotice, createInfoNotice } =
+		useDispatch( 'core/notices' );
+
+	// Refresh after each manual save: status and hreflang may have changed.
+	const [ reloadKey, setReloadKey ] = useState( 0 );
+	const wasSaving = useRef( false );
+	useEffect( () => {
+		if ( wasSaving.current && ! isSaving && ! isAutosaving ) {
+			setReloadKey( ( key ) => key + 1 );
+		}
+		wasSaving.current = isSaving && ! isAutosaving;
+	}, [ isSaving, isAutosaving ] );
+
+	const notify = useCallback(
+		( { tone, message, action } ) => {
+			const create =
+				{ success: createSuccessNotice, error: createErrorNotice }[
+					tone
+				] || createInfoNotice;
+			const actions = [];
+			if ( action && action.url ) {
+				actions.push( { label: action.label, url: action.url } );
+			} else if ( action ) {
+				actions.push( {
+					label: action.label,
+					onClick: action.onClick,
+				} );
+			}
+			create( message, { type: 'snackbar', actions } );
+		},
+		[ createSuccessNotice, createErrorNotice, createInfoNotice ]
+	);
+
+	if ( ! postId ) {
+		return null;
+	}
+
+	return (
+		<PluginDocumentSettingPanel
+			name="cedar-ml-language"
+			title={ __( 'Language · Cedar', 'cedar-multilang' ) }
+			className="cedar-ml-document-panel"
+		>
+			<LanguagePanel
+				postId={ postId }
+				reloadKey={ reloadKey }
+				notify={ notify }
+			/>
+		</PluginDocumentSettingPanel>
+	);
+}
+
+registerPlugin( 'cedar-ml-language', { render: CedarLanguagePanel } );

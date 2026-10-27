@@ -7,6 +7,7 @@
 
 namespace Cedar\Multilang\Rest;
 
+use Cedar\Multilang\Content\Duplicate;
 use Cedar\Multilang\Content\Links;
 use Cedar\Multilang\Content\Overview;
 use Cedar\Multilang\Content\Taxonomies;
@@ -101,8 +102,47 @@ final class LinksController {
 
 		register_rest_route(
 			Rest::NAMESPACE,
+			'/links/(?P<id>\d+)/language',
+			array(
+				'methods'             => WP_REST_Server::EDITABLE,
+				'callback'            => array( self::class, 'set_language' ),
+				'permission_callback' => array( self::class, 'can_edit' ),
+				'args'                => array(
+					'language' => array(
+						'type'              => 'string',
+						'required'          => true,
+						'validate_callback' => array( self::class, 'validate_language_or_empty' ),
+					),
+				),
+			)
+		);
+
+		register_rest_route(
+			Rest::NAMESPACE,
+			'/links/(?P<id>\d+)/duplicate',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( self::class, 'duplicate' ),
+				'permission_callback' => array( self::class, 'can_duplicate' ),
+				'args'                => array(
+					'language' => array(
+						'type'              => 'string',
+						'required'          => true,
+						'validate_callback' => array( self::class, 'validate_language' ),
+					),
+				),
+			)
+		);
+
+		register_rest_route(
+			Rest::NAMESPACE,
 			'/links/(?P<id>\d+)',
 			array(
+				array(
+					'methods'             => WP_REST_Server::READABLE,
+					'callback'            => array( self::class, 'show' ),
+					'permission_callback' => array( self::class, 'can_edit' ),
+				),
 				array(
 					'methods'             => WP_REST_Server::EDITABLE,
 					'callback'            => array( self::class, 'link' ),
@@ -175,6 +215,41 @@ final class LinksController {
 			return true;
 		}
 		return new WP_Error( 'rest_invalid_param', __( 'That language isn’t set up yet.', 'cedar-multilang' ), array( 'status' => 400 ) );
+	}
+
+	/**
+	 * Accepts a registered language code, or '' to clear the language.
+	 *
+	 * @param mixed $value Value.
+	 * @return true|WP_Error
+	 */
+	public static function validate_language_or_empty( $value ) {
+		return '' === $value ? true : self::validate_language( $value );
+	}
+
+	/**
+	 * Reading or changing one post requires editing it.
+	 *
+	 * @param WP_REST_Request $request Request.
+	 * @return bool
+	 */
+	public static function can_edit( WP_REST_Request $request ) {
+		return current_user_can( 'edit_post', (int) $request['id'] );
+	}
+
+	/**
+	 * Duplicating requires editing the source and creating posts of its type.
+	 *
+	 * @param WP_REST_Request $request Request.
+	 * @return bool
+	 */
+	public static function can_duplicate( WP_REST_Request $request ) {
+		$post = get_post( (int) $request['id'] );
+		if ( ! $post || ! current_user_can( 'edit_post', $post->ID ) ) {
+			return false;
+		}
+		$object = get_post_type_object( $post->post_type );
+		return $object && current_user_can( $object->cap->create_posts );
 	}
 
 	/**
@@ -308,6 +383,58 @@ final class LinksController {
 		}
 
 		return rest_ensure_response( array( 'translations' => Links::get_translations( $source_id ) ) );
+	}
+
+	/**
+	 * GET /links/{id} — language, translations and hreflang of one post.
+	 *
+	 * @param WP_REST_Request $request Request.
+	 * @return \WP_REST_Response|WP_Error
+	 */
+	public static function show( WP_REST_Request $request ) {
+		$post = get_post( (int) $request['id'] );
+		if ( ! $post || ! Taxonomies::supports( $post->post_type ) ) {
+			return new WP_Error( 'cedar_ml_unsupported_type', __( 'Cedar isn’t enabled for this content type.', 'cedar-multilang' ), array( 'status' => 404 ) );
+		}
+		return rest_ensure_response( Overview::detail( $post ) );
+	}
+
+	/**
+	 * PUT /links/{id}/language — sets (or clears, with '') a post's language.
+	 *
+	 * @param WP_REST_Request $request Request.
+	 * @return \WP_REST_Response|WP_Error
+	 */
+	public static function set_language( WP_REST_Request $request ) {
+		$id     = (int) $request['id'];
+		$result = Links::set_language( $id, (string) $request['language'] );
+		if ( is_wp_error( $result ) ) {
+			return Rest::with_status( $result, 400 );
+		}
+		return rest_ensure_response( Overview::detail( get_post( $id ) ) );
+	}
+
+	/**
+	 * POST /links/{id}/duplicate — creates a linked draft copy in `language`.
+	 *
+	 * @param WP_REST_Request $request Request.
+	 * @return \WP_REST_Response|WP_Error
+	 */
+	public static function duplicate( WP_REST_Request $request ) {
+		$id     = (int) $request['id'];
+		$new_id = Duplicate::create( $id, (string) $request['language'] );
+		if ( is_wp_error( $new_id ) ) {
+			return Rest::with_status( $new_id, 400 );
+		}
+
+		$response = rest_ensure_response(
+			array(
+				'created' => Overview::post_summary( get_post( $new_id ) ),
+				'detail'  => Overview::detail( get_post( $id ) ),
+			)
+		);
+		$response->set_status( 201 );
+		return $response;
 	}
 
 	/**

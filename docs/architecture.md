@@ -93,7 +93,9 @@ No cookies, no redirects, no per-visitor output → full-page-cache safe.
 | `/languages` | GET, POST, PUT, DELETE | `manage_options` |
 | `/links` | GET (paginated, filters) | `edit_posts` + per-row `edit_post` filtering |
 | `/links/{post_id}` | GET, PUT (link), DELETE (unlink) | `edit_post` on **every** post touched |
-| `/duplicate` | POST | `edit_post` source + `publish_posts`/`edit_posts` for the post type |
+| `/links/{post_id}/language` | PUT | `edit_post` |
+| `/links/{post_id}/duplicate` | POST | `edit_post` source + `create_posts` for the post type |
+| `/links/candidates` | GET | `edit_posts` for the post type; only editable posts listed |
 | `/suggestions` | GET | `manage_options` |
 | `/switchers` | GET, POST, PUT, DELETE | `manage_options` |
 | `/settings` | GET, PUT | `manage_options` |

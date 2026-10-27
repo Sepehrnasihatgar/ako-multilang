@@ -4,7 +4,7 @@
 import domReady from '@wordpress/dom-ready';
 import { createRoot } from '@wordpress/element';
 import App from './App';
-import './style.css';
+import './admin.css';
 
 domReady( () => {
 	const root = document.getElementById( 'cedar-ml-root' );

@@ -1,0 +1,174 @@
+/**
+ * "Language · Cedar" panel (block editor sidebar and classic metabox).
+ */
+@import "../components/components.css";
+
+.cedar-lp {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-md);
+}
+
+.cedar-lp__head {
+	display: flex;
+	justify-content: space-between;
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-label);
+}
+
+.cedar-lp__head > span:last-child {
+	color: var(--cedar-admin-text-tertiary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-ml .cedar-lp__note {
+	display: flex;
+	gap: var(--cedar-admin-space-sm);
+	margin: 0;
+	padding: var(--cedar-admin-space-md);
+	border-radius: var(--cedar-admin-radius-control);
+	font: var(--cedar-text-help);
+}
+
+.cedar-lp__note .cedar-icon {
+	flex: none;
+	margin-block-start: var(--cedar-admin-space-3xs);
+}
+
+.cedar-lp__note.is-info {
+	background: var(--cedar-admin-bg-info-subtle);
+	color: var(--cedar-admin-text-info);
+}
+
+.cedar-lp__note.is-error {
+	background: var(--cedar-admin-bg-danger-subtle);
+	color: var(--cedar-admin-text-danger);
+}
+
+.cedar-lp-card {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-sm);
+	padding: var(--cedar-admin-space-md);
+	border: var(--cedar-admin-border-width) solid var(--cedar-admin-border-default);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-surface);
+}
+
+.cedar-lp-card.is-dashed {
+	border-style: dashed;
+}
+
+.cedar-lp-card__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cedar-admin-space-sm);
+}
+
+.cedar-ml .cedar-lp-card__title {
+	margin: 0;
+	overflow: hidden;
+	font: var(--cedar-text-body-strong);
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cedar-ml .cedar-lp-card__note {
+	margin: 0;
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-lp-card__actions {
+	display: flex;
+	gap: var(--cedar-admin-space-2xs);
+}
+
+.cedar-lp-card > .cedar-button {
+	inline-size: 100%;
+}
+
+.cedar-ml .cedar-lp-results {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-3xs);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cedar-lp-results .cedar-menu__item {
+	padding: var(--cedar-admin-space-xs) var(--cedar-admin-space-sm);
+}
+
+.cedar-lp-results__empty {
+	padding: var(--cedar-admin-space-xs) var(--cedar-admin-space-sm);
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-help);
+}
+
+.cedar-lp .cedar-link {
+	align-self: flex-start;
+}
+
+.cedar-lp-hreflang {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cedar-admin-space-2xs);
+	padding: var(--cedar-admin-space-md);
+	border-radius: var(--cedar-admin-radius-control);
+	background: var(--cedar-admin-bg-subtle);
+}
+
+.cedar-ml .cedar-lp-hreflang__title {
+	display: flex;
+	align-items: center;
+	gap: var(--cedar-admin-space-xs);
+	margin: 0;
+	font: var(--cedar-text-label);
+}
+
+.cedar-lp-hreflang__title .cedar-icon {
+	color: var(--cedar-admin-icon-success);
+}
+
+.cedar-ml .cedar-lp-hreflang code {
+	padding: 0;
+	background: none;
+	color: var(--cedar-admin-text-secondary);
+	font: var(--cedar-text-code);
+}
+
+/* Indeterminate progress while a draft is created. */
+.cedar-progress.is-indeterminate .cedar-progress__value {
+	inline-size: 40%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+
+	.cedar-progress.is-indeterminate .cedar-progress__value {
+		animation: cedar-indeterminate 1.2s ease-in-out infinite;
+	}
+}
+
+@keyframes cedar-indeterminate {
+
+	from {
+		transform: translateX(-100%);
+	}
+
+	to {
+		transform: translateX(250%);
+	}
+}
+
+/* Classic metabox: tokens exist only inside .cedar-ml, so the panel owns its padding. */
+#cedar-ml-language .inside {
+	margin: 0;
+	padding: 0;
+}
+
+#cedar-ml-classic .cedar-lp {
+	padding: var(--cedar-admin-space-md);
+}

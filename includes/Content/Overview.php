@@ -10,6 +10,7 @@ namespace Cedar\Multilang\Content;
 
 use Cedar\Multilang\Languages\Registry;
 use Cedar\Multilang\Rest\Rest;
+use Cedar\Multilang\Seo\Hreflang;
 use WP_Post;
 use WP_Query;
 
@@ -308,6 +309,33 @@ final class Overview {
 	}
 
 	/**
+	 * Everything the editor panel needs about one post.
+	 *
+	 * @param WP_Post $post Post.
+	 * @return array
+	 */
+	public static function detail( WP_Post $post ) {
+		$translations = array();
+		foreach ( Links::get_translations( $post->ID ) as $code => $member_id ) {
+			$member = get_post( $member_id );
+			if ( $member && $member->ID !== $post->ID ) {
+				$translations[ $code ] = self::post_summary( $member );
+			}
+		}
+
+		return array(
+			'id'           => (int) $post->ID,
+			'postType'     => $post->post_type,
+			'status'       => $post->post_status,
+			'language'     => Links::get_language( $post->ID ),
+			'default'      => Registry::default_code(),
+			'languages'    => self::languages(),
+			'translations' => $translations,
+			'hreflang'     => array_keys( Hreflang::cluster( $post->ID ) ),
+		);
+	}
+
+	/**
 	 * The fields the admin app needs about one post.
 	 *
 	 * @param WP_Post $post Post.
@@ -376,7 +404,7 @@ final class Overview {
 	 *
 	 * @return array<int,array{code:string,name:string,native:string,dir:string}>
 	 */
-	private static function languages() {
+	public static function languages() {
 		$out = array();
 		foreach ( Registry::all() as $language ) {
 			$out[] = array(

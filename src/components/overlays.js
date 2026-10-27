@@ -430,7 +430,17 @@ export function Toast( { toast, onDismiss } ) {
 					<span className="cedar-toast__message">
 						{ toast.message }
 					</span>
-					{ toast.action && (
+					{ toast.action && toast.action.url && (
+						<a
+							className="cedar-toast__action"
+							href={ toast.action.url }
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							{ toast.action.label }
+						</a>
+					) }
+					{ toast.action && ! toast.action.url && (
 						<button
 							type="button"
 							className="cedar-toast__action"

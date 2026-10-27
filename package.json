@@ -8,8 +8,8 @@
 		"node": ">=20"
 	},
 	"scripts": {
-		"build": "wp-scripts build src/admin/index.js --output-path=build/admin",
-		"start": "wp-scripts start src/admin/index.js --output-path=build/admin",
+		"build": "wp-scripts build admin/index=./src/admin/index.js editor/index=./src/editor/index.js classic/index=./src/classic/index.js --output-path=build",
+		"start": "wp-scripts start admin/index=./src/admin/index.js editor/index=./src/editor/index.js classic/index=./src/classic/index.js --output-path=build",
 		"lint:js": "wp-scripts lint-js src",
 		"lint:css": "wp-scripts lint-style \"src/**/*.css\"",
 		"plugin-zip": "wp-scripts plugin-zip",
@@ -27,9 +27,12 @@
 	],
 	"devDependencies": {
 		"@wordpress/api-fetch": "8.0.0",
+		"@wordpress/data": "11.0.0",
 		"@wordpress/dom-ready": "5.0.0",
+		"@wordpress/editor": "16.0.0",
 		"@wordpress/element": "10.0.0",
 		"@wordpress/i18n": "7.0.0",
+		"@wordpress/plugins": "8.0.0",
 		"@wordpress/scripts": "37.0.0",
 		"@wordpress/url": "5.0.0"
 	}

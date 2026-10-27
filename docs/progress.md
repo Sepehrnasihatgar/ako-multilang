@@ -14,8 +14,15 @@ Done
 
 - Visual QA in Playground at 1440×1024 against Figma: Translations (all, add-translation menu, link existing page, bulk bar, undo) and Languages (edit, invalid hreflang, remove dialog, add from catalog, keyboard reorder). Fixed: RTL title alignment, card grid, draft dates, slug trailing slash, popovers clipped by the table (now fixed-position), candidate ordering, catalog ranking, help-text color.
 
+## Milestone 3 — Editor (done)
+
+- "Language · Cedar" panel: block editor (`PluginDocumentSettingPanel`) and classic metabox render the same React component. States from Figma: default, duplicating, all linked, no language, linking.
+- Duplicate as draft (`Content/Duplicate.php`): validates first, then copies content, excerpt, meta (SEO fields, Elementor data, featured image; skips edit locks and caches), terms and translated parent; links the draft; removes the copy if linking fails. Verified byte-identical content/meta with backslashes and arrays.
+- Translations table: "Duplicate as draft" in the add-translation menu, bulk "Duplicate missing as drafts".
+- Link pickers: pages linked elsewhere are shown but can't be picked (no silent group changes).
+
 Next
-1. Milestone 3 — Editor: block-editor panel + classic metabox (same component), Duplicate as draft.
+1. Milestone 4 — Switcher: renderer, template, CSS, block, shortcode (+ legacy `[lang_switch]`), menu item, profiles, designer screen.
 2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.
 3. Later milestones add: Needs review tab + SEO health card (M5), Import / Link pages header buttons and first-run empty state (M6), Duplicate as draft (M3), Get Pro / Docs header links (when URLs exist).
 

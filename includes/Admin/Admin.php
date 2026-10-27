@@ -163,7 +163,7 @@ final class Admin {
 
 		wp_enqueue_style(
 			self::SCRIPT,
-			CEDAR_ML_URL . 'build/admin/style-index.css',
+			CEDAR_ML_URL . 'build/admin/index.css',
 			array(),
 			$asset['version']
 		);

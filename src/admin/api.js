@@ -26,6 +26,23 @@ export const unlinkPost = ( id, scope = 'post' ) =>
 		method: 'DELETE',
 	} );
 
+export const getDetail = ( id ) =>
+	apiFetch( { path: `${ BASE }/links/${ id }` } );
+
+export const setPostLanguage = ( id, language ) =>
+	apiFetch( {
+		path: `${ BASE }/links/${ id }/language`,
+		method: 'PUT',
+		data: { language },
+	} );
+
+export const duplicatePost = ( id, language ) =>
+	apiFetch( {
+		path: `${ BASE }/links/${ id }/duplicate`,
+		method: 'POST',
+		data: { language },
+	} );
+
 export const getLanguages = () => apiFetch( { path: `${ BASE }/languages` } );
 
 export const getCatalog = () =>

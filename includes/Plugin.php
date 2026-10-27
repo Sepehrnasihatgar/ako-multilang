@@ -8,6 +8,7 @@
 namespace Cedar\Multilang;
 
 use Cedar\Multilang\Admin\Admin;
+use Cedar\Multilang\Admin\Editor;
 use Cedar\Multilang\Content\Links;
 use Cedar\Multilang\Content\Taxonomies;
 use Cedar\Multilang\Migration\Legacy62;
@@ -69,6 +70,7 @@ final class Plugin {
 
 		if ( is_admin() ) {
 			Admin::register();
+			Editor::register();
 		}
 
 		/**
