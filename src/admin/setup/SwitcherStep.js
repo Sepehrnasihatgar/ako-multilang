@@ -58,7 +58,7 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'The switcher couldn’t be added.', 'cedar-multilang' )
+					__( 'The switcher couldn’t be added.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -66,18 +66,15 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 
 	let menuHelp = __(
 		'Detected in your theme. The switcher becomes the last menu item.',
-		'cedar-multilang'
+		'ako-multilang'
 	);
 	if ( ! state.menu ) {
 		menuHelp = __(
 			'We couldn’t find a menu in your theme. Use the floating button or add the block.',
-			'cedar-multilang'
+			'ako-multilang'
 		);
 	} else if ( ! state.canEditMenus ) {
-		menuHelp = __(
-			'You can’t edit menus on this site.',
-			'cedar-multilang'
-		);
+		menuHelp = __( 'You can’t edit menus on this site.', 'ako-multilang' );
 	}
 
 	const placements = [
@@ -85,47 +82,47 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 			value: 'menu',
 			label: state.menu
 				? state.menu.name
-				: __( 'Primary menu', 'cedar-multilang' ),
+				: __( 'Primary menu', 'ako-multilang' ),
 			help: menuHelp,
 			disabled: ! menuReady,
 			recommended: menuReady,
 		},
 		{
 			value: 'floating',
-			label: __( 'Floating button', 'cedar-multilang' ),
+			label: __( 'Floating button', 'ako-multilang' ),
 			help: __(
 				'Sits in the bottom corner of every page. No theme changes.',
-				'cedar-multilang'
+				'ako-multilang'
 			),
 			recommended: ! menuReady,
 		},
 		{
 			value: 'manual',
-			label: __( 'I’ll place it myself', 'cedar-multilang' ),
+			label: __( 'I’ll place it myself', 'ako-multilang' ),
 			help: __(
 				'Use the block, the shortcode, or the PHP tag.',
-				'cedar-multilang'
+				'ako-multilang'
 			),
 		},
 	];
 
 	return (
 		<>
-			<div className="cedar-setup__intro">
+			<div className="ako-setup__intro">
 				<h1 tabIndex={ -1 }>
-					{ __( 'Add a language switcher', 'cedar-multilang' ) }
+					{ __( 'Add a language switcher', 'ako-multilang' ) }
 				</h1>
 				<p>
 					{ __(
 						'Choose a look and where it goes. You can fine-tune colors, labels, and placement later in Switcher.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				</p>
 			</div>
 
-			<div className="cedar-field">
-				<span className="cedar-field__label" id={ lookId }>
-					{ __( 'Look', 'cedar-multilang' ) }
+			<div className="ako-field">
+				<span className="ako-field__label" id={ lookId }>
+					{ __( 'Look', 'ako-multilang' ) }
 				</span>
 				<StyleTiles
 					value={ look }
@@ -136,21 +133,21 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 				/>
 			</div>
 
-			<fieldset className="cedar-field cedar-placements">
-				<legend className="cedar-field__label">
-					{ __( 'Where should it go?', 'cedar-multilang' ) }
+			<fieldset className="ako-field ako-placements">
+				<legend className="ako-field__label">
+					{ __( 'Where should it go?', 'ako-multilang' ) }
 				</legend>
 				{ placements.map( ( option ) => (
 					<div
 						key={ option.value }
-						className={ `cedar-placement ${
+						className={ `ako-placement ${
 							placement === option.value ? 'is-selected' : ''
 						} ${ option.disabled ? 'is-disabled' : '' }` }
 					>
 						<input
 							id={ `${ lookId }-${ option.value }` }
 							type="radio"
-							name="cedar-placement"
+							name="ako-placement"
 							value={ option.value }
 							checked={ placement === option.value }
 							disabled={ option.disabled }
@@ -159,18 +156,18 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 						/>
 						<label
 							htmlFor={ `${ lookId }-${ option.value }` }
-							className="cedar-placement__title"
+							className="ako-placement__title"
 						>
 							{ option.label }
 							{ option.recommended && (
-								<span className="cedar-placement__tag">
-									{ __( 'Recommended', 'cedar-multilang' ) }
+								<span className="ako-placement__tag">
+									{ __( 'Recommended', 'ako-multilang' ) }
 								</span>
 							) }
 						</label>
 						<span
 							id={ `${ lookId }-${ option.value }-help` }
-							className="cedar-placement__help"
+							className="ako-placement__help"
 						>
 							{ option.help }
 						</span>
@@ -178,17 +175,17 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 				) ) }
 			</fieldset>
 
-			<div className="cedar-setup__footer">
+			<div className="ako-setup__footer">
 				<Button variant="ghost" onClick={ onBack } disabled={ saving }>
-					{ __( 'Back', 'cedar-multilang' ) }
+					{ __( 'Back', 'ako-multilang' ) }
 				</Button>
-				<span className="cedar-setup__footer-end">
+				<span className="ako-setup__footer-end">
 					<Button
 						variant="ghost"
 						onClick={ onNext }
 						disabled={ saving }
 					>
-						{ __( 'Skip', 'cedar-multilang' ) }
+						{ __( 'Skip', 'ako-multilang' ) }
 					</Button>
 					<Button
 						variant="primary"
@@ -196,7 +193,7 @@ export default function SwitcherStep( { state, notify, onBack, onNext } ) {
 						disabled={ saving }
 						aria-busy={ saving || undefined }
 					>
-						{ __( 'Add switcher', 'cedar-multilang' ) }
+						{ __( 'Add switcher', 'ako-multilang' ) }
 					</Button>
 				</span>
 			</div>

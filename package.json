@@ -1,5 +1,5 @@
 {
-	"name": "cedar-multilang",
+	"name": "ako-multilang",
 	"version": "1.0.0",
 	"private": true,
 	"description": "Link your pages across languages with hreflang, right-to-left support, and a language switcher. Your URLs stay the same.",
@@ -13,7 +13,7 @@
 		"lint:js": "wp-scripts lint-js src",
 		"lint:css": "wp-scripts lint-style \"src/**/*.css\"",
 		"plugin-zip": "wp-scripts plugin-zip",
-		"playground": "npx @wp-playground/cli@latest server --mount=.:/wordpress/wp-content/plugins/cedar-multilang --login"
+		"playground": "npx @wp-playground/cli@latest server --mount=.:/wordpress/wp-content/plugins/ako-multilang --login"
 	},
 	"files": [
 		"assets",
@@ -22,7 +22,7 @@
 		"includes",
 		"src",
 		"templates",
-		"cedar-multilang.php",
+		"ako-multilang.php",
 		"uninstall.php",
 		"readme.txt"
 	],

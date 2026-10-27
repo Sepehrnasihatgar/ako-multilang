@@ -18,7 +18,7 @@ import { Menu } from '../../components/overlays';
 import { Row, ToggleRow } from '../../components/rows';
 import { duplicatePost, errorMessage } from '../api';
 
-const BASE = '/cedar/v1/seo';
+const BASE = '/ako/v1/seo';
 
 /**
  * Readable URL for the preview: site origin shortened to "…", path decoded
@@ -80,7 +80,7 @@ export default function Seo( { config, notify } ) {
 						error,
 						__(
 							'SEO settings couldn’t be loaded.',
-							'cedar-multilang'
+							'ako-multilang'
 						)
 					)
 				)
@@ -93,20 +93,20 @@ export default function Seo( { config, notify } ) {
 		return (
 			<>
 				<PageTitle
-					title={ __( 'SEO', 'cedar-multilang' ) }
+					title={ __( 'SEO', 'ako-multilang' ) }
 					description=""
 				/>
-				<div className="cedar-card">
+				<div className="ako-card">
 					<EmptyState
 						icon="alert"
 						title={ __(
 							'Couldn’t load SEO settings',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						description={ loadError }
 						actions={
 							<Button variant="primary" onClick={ load }>
-								{ __( 'Try again', 'cedar-multilang' ) }
+								{ __( 'Try again', 'ako-multilang' ) }
 							</Button>
 						}
 					/>
@@ -117,10 +117,7 @@ export default function Seo( { config, notify } ) {
 
 	if ( ! data ) {
 		return (
-			<PageTitle
-				title={ __( 'SEO', 'cedar-multilang' ) }
-				description=""
-			/>
+			<PageTitle title={ __( 'SEO', 'ako-multilang' ) } description="" />
 		);
 	}
 
@@ -145,14 +142,14 @@ export default function Seo( { config, notify } ) {
 			);
 			notify( {
 				tone: 'success',
-				message: __( 'SEO settings saved.', 'cedar-multilang' ),
+				message: __( 'SEO settings saved.', 'ako-multilang' ),
 			} );
 		} catch ( error ) {
 			notify( {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'Your changes couldn’t be saved.', 'cedar-multilang' )
+					__( 'Your changes couldn’t be saved.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -172,7 +169,7 @@ export default function Seo( { config, notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'Something went wrong. Try again.', 'cedar-multilang' )
+					__( 'Something went wrong. Try again.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -195,7 +192,7 @@ export default function Seo( { config, notify } ) {
 						'%d one-way link fixed.',
 						'%d one-way links fixed.',
 						response.fixed,
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					response.fixed
 				)
@@ -205,7 +202,7 @@ export default function Seo( { config, notify } ) {
 		run(
 			'scan',
 			() => apiFetch( { path: `${ BASE }/scan`, method: 'POST' } ),
-			() => __( 'Scan complete.', 'cedar-multilang' )
+			() => __( 'Scan complete.', 'ako-multilang' )
 		);
 
 	const duplicateExample = ( page, code ) =>
@@ -218,7 +215,7 @@ export default function Seo( { config, notify } ) {
 			() =>
 				sprintf(
 					/* translators: %s: Page title. */
-					__( 'Draft created for “%s”.', 'cedar-multilang' ),
+					__( 'Draft created for “%s”.', 'ako-multilang' ),
 					page.title
 				)
 		);
@@ -234,30 +231,27 @@ export default function Seo( { config, notify } ) {
 	return (
 		<>
 			<PageTitle
-				title={ __( 'SEO', 'cedar-multilang' ) }
+				title={ __( 'SEO', 'ako-multilang' ) }
 				description={ __(
-					'Cedar adds hreflang, lang, and dir for you. Here’s exactly what search engines see.',
-					'cedar-multilang'
+					'Ako adds hreflang, lang, and dir for you. Here’s exactly what search engines see.',
+					'ako-multilang'
 				) }
 			/>
 
-			<div className="cedar-designer is-seo">
-				<div className="cedar-designer__column">
+			<div className="ako-designer is-seo">
+				<div className="ako-designer__column">
 					<section
-						className="cedar-card"
-						aria-labelledby="cedar-hreflang-title"
+						className="ako-card"
+						aria-labelledby="ako-hreflang-title"
 					>
-						<h2
-							id="cedar-hreflang-title"
-							className="cedar-card__title"
-						>
+						<h2 id="ako-hreflang-title" className="ako-card__title">
 							hreflang
 						</h2>
 						<Row
-							label={ __( 'x-default', 'cedar-multilang' ) }
+							label={ __( 'x-default', 'ako-multilang' ) }
 							help={ __(
 								'Where visitors land when no language matches.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 						>
 							{ ( id, helpId ) => (
@@ -276,13 +270,13 @@ export default function Seo( { config, notify } ) {
 														/* translators: %s: Language name. */
 														__(
 															'%s (default)',
-															'cedar-multilang'
+															'ako-multilang'
 														),
 														defaultLanguage.name
 													)
 												: __(
 														'Default language',
-														'cedar-multilang'
+														'ako-multilang'
 													),
 										},
 										...data.languages
@@ -309,7 +303,7 @@ export default function Seo( { config, notify } ) {
 								}
 								labelText={ sprintf(
 									/* translators: %s: Language name. */
-									__( 'hreflang for %s', 'cedar-multilang' ),
+									__( 'hreflang for %s', 'ako-multilang' ),
 									language.name
 								) }
 							>
@@ -339,7 +333,7 @@ export default function Seo( { config, notify } ) {
 						<ToggleRow
 							label={ __(
 								'Add hreflang to the XML sitemap',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 							badge={
 								'yoast' === data.sitemap ? (
@@ -350,8 +344,8 @@ export default function Seo( { config, notify } ) {
 								'yoast' === data.sitemap
 									? null
 									: __(
-											'Your sitemap can’t list hreflang without Yoast SEO. Cedar keeps it in each page’s <head>, which Google reads the same way.',
-											'cedar-multilang'
+											'Your sitemap can’t list hreflang without Yoast SEO. Ako keeps it in each page’s <head>, which Google reads the same way.',
+											'ako-multilang'
 										)
 							}
 							checked={
@@ -363,7 +357,7 @@ export default function Seo( { config, notify } ) {
 						<ToggleRow
 							label={ __(
 								'Social locale tags (og:locale)',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 							checked={ draft.og_locale }
 							onChange={ ( on ) => set( 'og_locale', on ) }
@@ -371,11 +365,11 @@ export default function Seo( { config, notify } ) {
 						<ToggleRow
 							label={ __(
 								'Skip noindex and draft pages',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 							help={ __(
 								'Pages your SEO plugin marks noindex or canonicalizes elsewhere stay out of hreflang.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 							checked={ draft.skip_noindex }
 							onChange={ ( on ) => set( 'skip_noindex', on ) }
@@ -383,42 +377,42 @@ export default function Seo( { config, notify } ) {
 					</section>
 
 					<section
-						className="cedar-card"
-						aria-labelledby="cedar-plugins-title"
+						className="ako-card"
+						aria-labelledby="ako-plugins-title"
 					>
 						<div>
 							<h2
-								id="cedar-plugins-title"
-								className="cedar-card__title"
+								id="ako-plugins-title"
+								className="ako-card__title"
 							>
-								{ __( 'SEO plugins', 'cedar-multilang' ) }
+								{ __( 'SEO plugins', 'ako-multilang' ) }
 							</h2>
-							<p className="cedar-card__text">
+							<p className="ako-card__text">
 								{ __(
-									'Cedar works alongside them without adding duplicate tags.',
-									'cedar-multilang'
+									'Ako works alongside them without adding duplicate tags.',
+									'ako-multilang'
 								) }
 							</p>
 						</div>
-						<ul className="cedar-plugins">
+						<ul className="ako-plugins">
 							{ data.plugins.map( ( plugin ) => (
 								<li key={ plugin.key }>
-									<span className="cedar-plugins__name">
+									<span className="ako-plugins__name">
 										{ plugin.name }
 									</span>
-									<span className="cedar-plugins__status">
+									<span className="ako-plugins__status">
 										{ plugin.active
 											? sprintf(
 													/* translators: %s: Plugin version. */
 													__(
 														'Connected · %s',
-														'cedar-multilang'
+														'ako-multilang'
 													),
 													plugin.version
 												)
 											: __(
 													'Not installed',
-													'cedar-multilang'
+													'ako-multilang'
 												) }
 									</span>
 									{ plugin.active ? (
@@ -428,7 +422,7 @@ export default function Seo( { config, notify } ) {
 											className="is-success"
 											label={ __(
 												'Connected',
-												'cedar-multilang'
+												'ako-multilang'
 											) }
 										/>
 									) : (
@@ -446,37 +440,37 @@ export default function Seo( { config, notify } ) {
 								icon="arrows-left-right"
 								title={ __(
 									'No SEO plugin? No problem.',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 							>
 								{ __(
-									'Cedar adds hreflang, og:locale, and the right lang and dir to every linked page.',
-									'cedar-multilang'
+									'Ako adds hreflang, og:locale, and the right lang and dir to every linked page.',
+									'ako-multilang'
 								) }
 							</Callout>
 						) }
 					</section>
 				</div>
 
-				<div className="cedar-designer__column">
+				<div className="ako-designer__column">
 					<SourcePreview pages={ data.pages } />
 
 					<section
-						className="cedar-card"
-						aria-labelledby="cedar-health-title"
+						className="ako-card"
+						aria-labelledby="ako-health-title"
 					>
-						<div className="cedar-card__head">
+						<div className="ako-card__head">
 							<div>
 								<h2
-									id="cedar-health-title"
-									className="cedar-card__title"
+									id="ako-health-title"
+									className="ako-card__title"
 								>
-									{ __( 'Health checks', 'cedar-multilang' ) }
+									{ __( 'Health checks', 'ako-multilang' ) }
 								</h2>
-								<p className="cedar-card__text is-small">
+								<p className="ako-card__text is-small">
 									{ sprintf(
 										/* translators: %s: Relative time, e.g. "2 minutes ago". */
-										__( 'Last scan %s', 'cedar-multilang' ),
+										__( 'Last scan %s', 'ako-multilang' ),
 										timeAgo( data.health.scannedAt )
 									) }
 								</p>
@@ -487,7 +481,7 @@ export default function Seo( { config, notify } ) {
 								onClick={ rescan }
 								disabled={ !! working }
 							>
-								{ __( 'Scan again', 'cedar-multilang' ) }
+								{ __( 'Scan again', 'ako-multilang' ) }
 							</Button>
 						</div>
 						<HealthChecks
@@ -542,16 +536,16 @@ function SourcePreview( { pages } ) {
 
 	if ( ! pages.length ) {
 		return (
-			<section className="cedar-source">
-				<div className="cedar-source__head">
-					<span className="cedar-source__title">
-						{ __( 'What search engines see', 'cedar-multilang' ) }
+			<section className="ako-source">
+				<div className="ako-source__head">
+					<span className="ako-source__title">
+						{ __( 'What search engines see', 'ako-multilang' ) }
 					</span>
 				</div>
-				<p className="cedar-source__empty">
+				<p className="ako-source__empty">
 					{ __(
 						'Link a published page to its translation to see its hreflang here.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				</p>
 			</section>
@@ -568,25 +562,25 @@ function SourcePreview( { pages } ) {
 
 	return (
 		<section
-			className="cedar-source"
-			aria-label={ __( 'What search engines see', 'cedar-multilang' ) }
+			className="ako-source"
+			aria-label={ __( 'What search engines see', 'ako-multilang' ) }
 		>
-			<div className="cedar-source__head">
-				<span className="cedar-source__title">
-					{ __( 'What search engines see', 'cedar-multilang' ) }
+			<div className="ako-source__head">
+				<span className="ako-source__title">
+					{ __( 'What search engines see', 'ako-multilang' ) }
 					{ preview && (
-						<span className="cedar-source__path" dir="ltr">
+						<span className="ako-source__path" dir="ltr">
 							{ displayPath( preview.path ) }
 						</span>
 					) }
 				</span>
 				<Menu
 					align="end"
-					label={ __( 'Page', 'cedar-multilang' ) }
+					label={ __( 'Page', 'ako-multilang' ) }
 					renderTrigger={ ( props ) => (
 						<button
 							type="button"
-							className="cedar-source__picker"
+							className="ako-source__picker"
 							{ ...props }
 						>
 							<span dir="auto">{ page ? page.title : '' }</span>
@@ -601,7 +595,7 @@ function SourcePreview( { pages } ) {
 					} ) ) }
 				/>
 			</div>
-			<pre className="cedar-source__code" dir="ltr">
+			<pre className="ako-source__code" dir="ltr">
 				{ preview && (
 					<>
 						&lt;html { attr( 'lang', preview.lang ) }{ ' ' }
@@ -620,11 +614,11 @@ function SourcePreview( { pages } ) {
 								{ preview.indexable
 									? __(
 											'<!-- No hreflang yet: link a published translation. -->',
-											'cedar-multilang'
+											'ako-multilang'
 										)
 									: __(
 											'<!-- No hreflang: this page is noindex or canonicalized elsewhere. -->',
-											'cedar-multilang'
+											'ako-multilang'
 										) }
 								{ '\n' }
 							</span>
@@ -647,7 +641,7 @@ function SourcePreview( { pages } ) {
 				) }
 			</pre>
 			{ preview && links.length > 0 && (
-				<p className="cedar-source__foot">
+				<p className="ako-source__foot">
 					<Icon name="circle-check" size={ 14 } />
 					{ sprintf(
 						/* translators: %d: Number of pages in the group. */
@@ -656,7 +650,7 @@ function SourcePreview( { pages } ) {
 							'Reciprocal on all %d pages · self-referencing · canonical untouched',
 							links.length -
 								( preview.links[ 'x-default' ] ? 1 : 0 ),
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						links.length - ( preview.links[ 'x-default' ] ? 1 : 0 )
 					) }
@@ -703,7 +697,7 @@ function HealthChecks( {
 						'%d one-way link',
 						'%d one-way links',
 						health.oneWayAll,
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					health.oneWayAll
 				) }
@@ -711,7 +705,7 @@ function HealthChecks( {
 					/* translators: %s: Page titles. */
 					__(
 						'%s don’t all point back to each other. Fixing rebuilds the links from your pages.',
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					names
 				) }
@@ -722,7 +716,7 @@ function HealthChecks( {
 						disabled={ !! working }
 						aria-busy={ 'fix' === working || undefined }
 					>
-						{ __( 'Fix both', 'cedar-multilang' ) }
+						{ __( 'Fix both', 'ako-multilang' ) }
 					</Button>
 				}
 			/>
@@ -746,7 +740,7 @@ function HealthChecks( {
 						'%1$d page without a %2$s version',
 						'%1$d pages without a %2$s version',
 						entry.count,
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					entry.count,
 					language.name
@@ -757,13 +751,13 @@ function HealthChecks( {
 								/* translators: %s: Page title. */
 								__(
 									'Visitors to “%s” get the language homepage instead.',
-									'cedar-multilang'
+									'ako-multilang'
 								),
 								example.title
 							)
 						: __(
 								'Visitors get the language homepage instead.',
-								'cedar-multilang'
+								'ako-multilang'
 							)
 				}
 				action={
@@ -773,14 +767,14 @@ function HealthChecks( {
 							onClick={ () => onDuplicate( example, entry.code ) }
 							disabled={ !! working }
 						>
-							{ __( 'Duplicate', 'cedar-multilang' ) }
+							{ __( 'Duplicate', 'ako-multilang' ) }
 						</Button>
 					) : (
 						<Button
 							size="small"
 							href={ `${ translationsUrl }#missing` }
 						>
-							{ __( 'Review', 'cedar-multilang' ) }
+							{ __( 'Review', 'ako-multilang' ) }
 						</Button>
 					)
 				}
@@ -800,13 +794,13 @@ function HealthChecks( {
 						'%d page left out of hreflang',
 						'%d pages left out of hreflang',
 						health.excluded.count,
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					health.excluded.count
 				) }
 				description={ __(
 					'They’re set to noindex, or their canonical points to another page. That’s fine if you meant it.',
-					'cedar-multilang'
+					'ako-multilang'
 				) }
 			/>
 		);
@@ -818,14 +812,14 @@ function HealthChecks( {
 				key="ok"
 				tone="success"
 				icon="circle-check"
-				title={ __( 'Everything checks out', 'cedar-multilang' ) }
+				title={ __( 'Everything checks out', 'ako-multilang' ) }
 				description={ sprintf(
 					/* translators: %d: Number of linked pages. */
 					_n(
 						'%d linked page. All hreflang links are reciprocal.',
 						'%d linked pages. All hreflang links are reciprocal.',
 						health.linked,
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					health.linked
 				) }
@@ -837,17 +831,14 @@ function HealthChecks( {
 				key="reciprocal"
 				tone="success"
 				icon="circle-check"
-				title={ __(
-					'hreflang links are reciprocal',
-					'cedar-multilang'
-				) }
+				title={ __( 'hreflang links are reciprocal', 'ako-multilang' ) }
 				description={ sprintf(
 					/* translators: %d: Number of linked pages. */
 					_n(
 						'%d linked page passes.',
 						'All %d linked pages pass.',
 						health.linked,
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					health.linked
 				) }
@@ -855,7 +846,7 @@ function HealthChecks( {
 		);
 	}
 
-	return <ul className="cedar-checks">{ rows }</ul>;
+	return <ul className="ako-checks">{ rows }</ul>;
 }
 
 /**
@@ -870,16 +861,16 @@ function HealthChecks( {
  */
 function CheckRow( { tone, icon, title, description, action } ) {
 	return (
-		<li className="cedar-check">
+		<li className="ako-check">
 			<span
-				className={ `cedar-check__tile is-${ tone }` }
+				className={ `ako-check__tile is-${ tone }` }
 				aria-hidden="true"
 			>
 				<Icon name={ icon } />
 			</span>
-			<span className="cedar-check__copy">
-				<span className="cedar-check__title">{ title }</span>
-				<span className="cedar-check__description" dir="auto">
+			<span className="ako-check__copy">
+				<span className="ako-check__title">{ title }</span>
+				<span className="ako-check__description" dir="auto">
 					{ description }
 				</span>
 			</span>

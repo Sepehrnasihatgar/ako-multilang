@@ -1,5 +1,5 @@
 /**
- * Cedar switcher: keyboard support for the Dropdown and Floating styles.
+ * Ako switcher: keyboard support for the Dropdown and Floating styles.
  *
  * They work without JavaScript (<details>/<summary>); this adds Escape to
  * close, arrow keys to move between languages and click-outside to close.
@@ -9,12 +9,12 @@
 
 	function menuLinks( details ) {
 		return Array.prototype.slice.call(
-			details.querySelectorAll( '.cedar-switcher__menu a' )
+			details.querySelectorAll( '.ako-switcher__menu a' )
 		);
 	}
 
 	document.addEventListener( 'keydown', function ( event ) {
-		var details = event.target.closest && event.target.closest( '.cedar-switcher__details' );
+		var details = event.target.closest && event.target.closest( '.ako-switcher__details' );
 		var links, index;
 
 		if ( ! details ) {
@@ -55,10 +55,10 @@
 			var details = event.target;
 			var menu, rect;
 
-			if ( ! details.classList || ! details.classList.contains( 'cedar-switcher__details' ) || ! details.open ) {
+			if ( ! details.classList || ! details.classList.contains( 'ako-switcher__details' ) || ! details.open ) {
 				return;
 			}
-			menu = details.querySelector( '.cedar-switcher__menu' );
+			menu = details.querySelector( '.ako-switcher__menu' );
 			if ( ! menu ) {
 				return;
 			}
@@ -72,7 +72,7 @@
 	);
 
 	document.addEventListener( 'click', function ( event ) {
-		var open = document.querySelectorAll( '.cedar-switcher__details[open]' );
+		var open = document.querySelectorAll( '.ako-switcher__details[open]' );
 		Array.prototype.forEach.call( open, function ( details ) {
 			if ( ! details.contains( event.target ) ) {
 				details.open = false;

@@ -2,20 +2,20 @@
 /**
  * Working next to SEO plugins: noindex, canonicals, og:locale and sitemaps.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Seo;
+namespace Ako\Multilang\Seo;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Registry;
-use Cedar\Multilang\Settings;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Registry;
+use Ako\Multilang\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Detects Yoast SEO, Rank Math and All in One SEO and adapts Cedar's output:
+ * Detects Yoast SEO, Rank Math and All in One SEO and adapts Ako's output:
  * pages they mark noindex (or canonicalize elsewhere) leave the hreflang
  * cluster, og:locale is only printed when no SEO plugin prints it, and Yoast's
  * XML sitemap gets hreflang alternates.
@@ -29,7 +29,7 @@ final class Integrations {
 		$settings = Settings::get();
 
 		if ( ! empty( $settings['skip_noindex'] ) ) {
-			add_filter( 'cedar_ml_is_indexable', array( self::class, 'respect_seo_plugins' ), 10, 2 );
+			add_filter( 'ako_ml_is_indexable', array( self::class, 'respect_seo_plugins' ), 10, 2 );
 		}
 		if ( ! empty( $settings['og_locale'] ) ) {
 			add_action( 'wp_head', array( self::class, 'print_og_locale' ), 2 );
@@ -225,7 +225,7 @@ final class Integrations {
 	 */
 	public static function yoast_entry( $url, $type, $item ) {
 		if ( 'post' === $type && $item instanceof \WP_Post && Taxonomies::supports( $item->post_type ) && is_array( $url ) ) {
-			$url['cedar_ml_hreflang'] = Hreflang::cluster( $item->ID );
+			$url['ako_ml_hreflang'] = Hreflang::cluster( $item->ID );
 		}
 		return $url;
 	}
@@ -238,11 +238,11 @@ final class Integrations {
 	 * @return string
 	 */
 	public static function yoast_url( $output, $url ) {
-		if ( empty( $url['cedar_ml_hreflang'] ) || ! is_array( $url['cedar_ml_hreflang'] ) ) {
+		if ( empty( $url['ako_ml_hreflang'] ) || ! is_array( $url['ako_ml_hreflang'] ) ) {
 			return $output;
 		}
 		$links = '';
-		foreach ( $url['cedar_ml_hreflang'] as $hreflang => $href ) {
+		foreach ( $url['ako_ml_hreflang'] as $hreflang => $href ) {
 			$links .= sprintf(
 				"\t\t<xhtml:link rel=\"alternate\" hreflang=\"%1\$s\" href=\"%2\$s\" />\n",
 				esc_attr( $hreflang ),

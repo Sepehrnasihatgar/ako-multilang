@@ -1,7 +1,7 @@
 /**
  * Setup (Figma: Admin screens / Onboarding — 1 · Languages, 2 · Connect
  * pages, 3 · Switcher, 4 · Done). Each step saves through the same REST
- * routes as the rest of Cedar; nothing changes on the site before a step's
+ * routes as the rest of Ako; nothing changes on the site before a step's
  * main button is pressed.
  */
 import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
@@ -16,10 +16,10 @@ import SwitcherStep from '../setup/SwitcherStep';
 import DoneStep from '../setup/DoneStep';
 
 const STEPS = [
-	() => __( 'Languages', 'cedar-multilang' ),
-	() => __( 'Connect pages', 'cedar-multilang' ),
-	() => __( 'Switcher', 'cedar-multilang' ),
-	() => __( 'Done', 'cedar-multilang' ),
+	() => __( 'Languages', 'ako-multilang' ),
+	() => __( 'Connect pages', 'ako-multilang' ),
+	() => __( 'Switcher', 'ako-multilang' ),
+	() => __( 'Done', 'ako-multilang' ),
 ];
 
 /**
@@ -30,7 +30,7 @@ const STEPS = [
  */
 function Stepper( { current } ) {
 	return (
-		<ol className="cedar-stepper">
+		<ol className="ako-stepper">
 			{ STEPS.map( ( label, index ) => {
 				let state = 'upcoming';
 				if ( index < current || 3 === current ) {
@@ -41,13 +41,13 @@ function Stepper( { current } ) {
 				return (
 					<li
 						key={ index }
-						className={ `cedar-stepper__step is-${ state }` }
+						className={ `ako-stepper__step is-${ state }` }
 						aria-current={
 							'current' === state ? 'step' : undefined
 						}
 					>
 						<span
-							className="cedar-stepper__marker"
+							className="ako-stepper__marker"
 							aria-hidden="true"
 						>
 							{ 'done' === state ? (
@@ -56,11 +56,11 @@ function Stepper( { current } ) {
 								index + 1
 							) }
 						</span>
-						<span className="cedar-stepper__label">
+						<span className="ako-stepper__label">
 							{ label() }
 							{ 'done' === state && (
 								<span className="screen-reader-text">
-									{ __( '(done)', 'cedar-multilang' ) }
+									{ __( '(done)', 'ako-multilang' ) }
 								</span>
 							) }
 						</span>
@@ -89,7 +89,7 @@ export default function Setup( { config, notify } ) {
 				setLoadError(
 					errorMessage(
 						error,
-						__( 'Setup couldn’t be loaded.', 'cedar-multilang' )
+						__( 'Setup couldn’t be loaded.', 'ako-multilang' )
 					)
 				)
 			);
@@ -115,19 +115,19 @@ export default function Setup( { config, notify } ) {
 		content = (
 			<EmptyState
 				icon="alert"
-				title={ __( 'Couldn’t load setup', 'cedar-multilang' ) }
+				title={ __( 'Couldn’t load setup', 'ako-multilang' ) }
 				description={ loadError }
 				actions={
 					<Button variant="primary" onClick={ load }>
-						{ __( 'Try again', 'cedar-multilang' ) }
+						{ __( 'Try again', 'ako-multilang' ) }
 					</Button>
 				}
 			/>
 		);
 	} else if ( ! state ) {
 		content = (
-			<p className="cedar-setup__loading" role="status">
-				{ __( 'Loading…', 'cedar-multilang' ) }
+			<p className="ako-setup__loading" role="status">
+				{ __( 'Loading…', 'ako-multilang' ) }
 			</p>
 		);
 	} else if ( 0 === step ) {
@@ -166,25 +166,22 @@ export default function Setup( { config, notify } ) {
 	}
 
 	return (
-		<div className="cedar-setup">
-			<div className="cedar-setup__brand">
-				<Logo size={ 32 } className="cedar-setup__logo" />
-				<span>{ __( 'Set up Cedar', 'cedar-multilang' ) }</span>
+		<div className="ako-setup">
+			<div className="ako-setup__brand">
+				<Logo size={ 32 } className="ako-setup__logo" />
+				<span>{ __( 'Set up Ako', 'ako-multilang' ) }</span>
 			</div>
 			<nav
 				aria-label={ sprintf(
 					/* translators: 1: Current step number, 2: Number of steps. */
-					__(
-						'Setup progress, step %1$d of %2$d',
-						'cedar-multilang'
-					),
+					__( 'Setup progress, step %1$d of %2$d', 'ako-multilang' ),
 					step + 1,
 					STEPS.length
 				) }
 			>
 				<Stepper current={ step } />
 			</nav>
-			<div className="cedar-setup__card" ref={ cardRef }>
+			<div className="ako-setup__card" ref={ cardRef }>
 				{ content }
 			</div>
 		</div>

@@ -184,7 +184,7 @@ export function Menu( {
 	};
 
 	return (
-		<div className="cedar-menu-wrap" ref={ wrapRef }>
+		<div className="ako-menu-wrap" ref={ wrapRef }>
 			{ renderTrigger( {
 				ref: triggerRef,
 				'aria-haspopup': 'menu',
@@ -202,7 +202,7 @@ export function Menu( {
 					tabIndex={ -1 }
 					style={ menuStyle }
 					aria-label={ label }
-					className={ `cedar-menu is-${ variant } is-align-${ align }` }
+					className={ `ako-menu is-${ variant } is-align-${ align }` }
 					onKeyDown={ onMenuKeyDown }
 				>
 					{ items.map( ( item, index ) => (
@@ -223,7 +223,7 @@ export function Menu( {
 							}
 							aria-disabled={ item.disabled || undefined }
 							tabIndex={ index === active ? 0 : -1 }
-							className={ `cedar-menu__item ${ item.checked ? 'is-selected' : '' } ${
+							className={ `ako-menu__item ${ item.checked ? 'is-selected' : '' } ${
 								item.disabled ? 'is-disabled' : ''
 							}` }
 							onClick={ () => choose( item ) }
@@ -241,16 +241,16 @@ export function Menu( {
 							{ 'rich' === variant ? (
 								<>
 									<span
-										className="cedar-menu__tile"
+										className="ako-menu__tile"
 										aria-hidden="true"
 									>
 										<Icon name={ item.icon } />
 									</span>
-									<span className="cedar-menu__copy">
-										<span className="cedar-menu__label">
+									<span className="ako-menu__copy">
+										<span className="ako-menu__label">
 											{ item.label }
 										</span>
-										<span className="cedar-menu__description">
+										<span className="ako-menu__description">
 											{ item.description }
 										</span>
 									</span>
@@ -259,13 +259,13 @@ export function Menu( {
 								<>
 									{ item.icon && <Icon name={ item.icon } /> }
 									<span
-										className="cedar-menu__label"
+										className="ako-menu__label"
 										dir="auto"
 									>
 										{ item.label }
 									</span>
 									{ item.meta && (
-										<span className="cedar-menu__meta">
+										<span className="ako-menu__meta">
 											{ item.meta }
 										</span>
 									) }
@@ -357,31 +357,31 @@ export function Dialog( {
 	};
 
 	return (
-		<div className="cedar-dialog-backdrop">
+		<div className="ako-dialog-backdrop">
 			<div
 				ref={ panelRef }
-				className={ `cedar-dialog is-${ tone } ${ wide ? 'is-wide' : '' }` }
+				className={ `ako-dialog is-${ tone } ${ wide ? 'is-wide' : '' }` }
 				role={ 'danger' === tone ? 'alertdialog' : 'dialog' }
 				aria-modal="true"
 				aria-labelledby={ titleId }
 				aria-describedby={ descId }
 				onKeyDown={ onKeyDown }
 			>
-				<div className="cedar-dialog__head">
-					<span className="cedar-dialog__tile" aria-hidden="true">
+				<div className="ako-dialog__head">
+					<span className="ako-dialog__tile" aria-hidden="true">
 						<Icon name={ icon } size={ 18 } />
 					</span>
-					<div className="cedar-dialog__copy">
-						<h2 id={ titleId } className="cedar-dialog__title">
+					<div className="ako-dialog__copy">
+						<h2 id={ titleId } className="ako-dialog__title">
 							{ title }
 						</h2>
-						<p id={ descId } className="cedar-dialog__description">
+						<p id={ descId } className="ako-dialog__description">
 							{ description }
 						</p>
 					</div>
 				</div>
 				{ children }
-				<div className="cedar-dialog__actions">
+				<div className="ako-dialog__actions">
 					<Button
 						ref={ cancelRef }
 						variant="ghost"
@@ -390,8 +390,8 @@ export function Dialog( {
 					>
 						{ cancelLabel ||
 							( onConfirm
-								? __( 'Cancel', 'cedar-multilang' )
-								: __( 'Close', 'cedar-multilang' ) ) }
+								? __( 'Cancel', 'ako-multilang' )
+								: __( 'Close', 'ako-multilang' ) ) }
 					</Button>
 					{ onConfirm && (
 						<Button
@@ -435,21 +435,21 @@ export function Toast( { toast, onDismiss } ) {
 
 	return (
 		<div
-			className="cedar-toast-region"
+			className="ako-toast-region"
 			role={ toast && 'error' === toast.tone ? 'alert' : 'status' }
 			aria-live={
 				toast && 'error' === toast.tone ? 'assertive' : 'polite'
 			}
 		>
 			{ toast && (
-				<div className={ `cedar-toast is-${ toast.tone }` }>
+				<div className={ `ako-toast is-${ toast.tone }` }>
 					<Icon name={ icons[ toast.tone ] } />
-					<span className="cedar-toast__message">
+					<span className="ako-toast__message">
 						{ toast.message }
 					</span>
 					{ toast.action && toast.action.url && (
 						<a
-							className="cedar-toast__action"
+							className="ako-toast__action"
 							href={ toast.action.url }
 							target="_blank"
 							rel="noopener noreferrer"
@@ -460,7 +460,7 @@ export function Toast( { toast, onDismiss } ) {
 					{ toast.action && ! toast.action.url && (
 						<button
 							type="button"
-							className="cedar-toast__action"
+							className="ako-toast__action"
 							onClick={ () => {
 								onDismiss();
 								toast.action.onClick();
@@ -471,9 +471,9 @@ export function Toast( { toast, onDismiss } ) {
 					) }
 					<button
 						type="button"
-						className="cedar-toast__close"
+						className="ako-toast__close"
 						onClick={ onDismiss }
-						aria-label={ __( 'Dismiss', 'cedar-multilang' ) }
+						aria-label={ __( 'Dismiss', 'ako-multilang' ) }
 					>
 						<Icon name="close" size={ 14 } />
 					</button>

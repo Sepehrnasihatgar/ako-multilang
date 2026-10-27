@@ -15,7 +15,7 @@ function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
 
 	useEffect( () => {
-		apiFetch( { path: '/cedar/v1/switchers' } )
+		apiFetch( { path: '/ako/v1/switchers' } )
 			.then( ( response ) => setSwitchers( response.switchers ) )
 			.catch( () => setSwitchers( [] ) );
 	}, [] );
@@ -23,23 +23,20 @@ function Edit( { attributes, setAttributes } ) {
 	return (
 		<div { ...blockProps }>
 			<InspectorControls>
-				<PanelBody title={ __( 'Switcher', 'cedar-multilang' ) }>
+				<PanelBody title={ __( 'Switcher', 'ako-multilang' ) }>
 					<SelectControl
 						__next40pxDefaultSize
 						__nextHasNoMarginBottom
-						label={ __( 'Design', 'cedar-multilang' ) }
+						label={ __( 'Design', 'ako-multilang' ) }
 						help={ __(
-							'Edit designs in Cedar → Switcher.',
-							'cedar-multilang'
+							'Edit designs in Ako → Switcher.',
+							'ako-multilang'
 						) }
 						value={ attributes.switcher }
 						options={ [
 							{
 								value: '',
-								label: __(
-									'First switcher',
-									'cedar-multilang'
-								),
+								label: __( 'First switcher', 'ako-multilang' ),
 							},
 							...switchers.map( ( switcher ) => ( {
 								value: switcher.id,
@@ -53,13 +50,13 @@ function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 			<ServerSideRender
-				block="cedar-multilang/switcher"
+				block="ako-multilang/switcher"
 				attributes={ attributes }
 				EmptyResponsePlaceholder={ () => (
 					<p>
 						{ __(
-							'Add a second language in Cedar → Languages to show the switcher.',
-							'cedar-multilang'
+							'Add a second language in Ako → Languages to show the switcher.',
+							'ako-multilang'
 						) }
 					</p>
 				) }
@@ -68,7 +65,7 @@ function Edit( { attributes, setAttributes } ) {
 	);
 }
 
-registerBlockType( 'cedar-multilang/switcher', {
+registerBlockType( 'ako-multilang/switcher', {
 	edit: Edit,
 	save: () => null,
 } );

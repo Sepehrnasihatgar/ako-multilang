@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="Cedar Multilang">
-	<description>WordPress Coding Standards for Cedar Multilang.</description>
+<ruleset name="Ako Multilang">
+	<description>WordPress Coding Standards for Ako Multilang.</description>
 
 	<file>.</file>
 	<exclude-pattern>/build/*</exclude-pattern>
@@ -22,7 +22,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="cedar-multilang"/>
+				<element value="ako-multilang"/>
 			</property>
 		</properties>
 	</rule>
@@ -30,9 +30,9 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="cedar_ml"/>
-				<element value="Cedar\Multilang"/>
-				<element value="CEDAR_ML"/>
+				<element value="ako_ml"/>
+				<element value="Ako\Multilang"/>
+				<element value="AKO_ML"/>
 			</property>
 		</properties>
 	</rule>

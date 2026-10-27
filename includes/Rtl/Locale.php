@@ -2,12 +2,12 @@
 /**
  * Switches the WordPress locale to the language of the page being viewed.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Rtl;
+namespace Ako\Multilang\Rtl;
 
-use Cedar\Multilang\Seo\Hreflang;
+use Ako\Multilang\Seo\Hreflang;
 
 defined( 'ABSPATH' ) || exit;
 

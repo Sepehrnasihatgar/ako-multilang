@@ -2,23 +2,23 @@
 /**
  * Imports translation links from WPML or Polylang, in batches.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Import;
+namespace Ako\Multilang\Import;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Catalog;
-use Cedar\Multilang\Languages\Registry;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Catalog;
+use Ako\Multilang\Languages\Registry;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Adds the other plugin's languages to Cedar (matched by locale), then links
- * each group. Never moves a page that is already linked elsewhere in Cedar,
- * never changes a language Cedar already knows, never touches the other
+ * Adds the other plugin's languages to Ako (matched by locale), then links
+ * each group. Never moves a page that is already linked elsewhere in Ako,
+ * never changes a language Ako already knows, never touches the other
  * plugin's data. Safe to run again: existing links are kept.
  */
 final class Importer {
@@ -26,7 +26,7 @@ final class Importer {
 	/**
 	 * Option with the last import per source (not autoloaded).
 	 */
-	const STATUS_OPTION = 'cedar_ml_imports';
+	const STATUS_OPTION = 'ako_ml_imports';
 
 	/**
 	 * Largest batch per request.
@@ -80,17 +80,17 @@ final class Importer {
 	}
 
 	/**
-	 * Adds the source's languages to Cedar where missing.
+	 * Adds the source's languages to Ako where missing.
 	 *
 	 * @param Source $source Source.
-	 * @return array<string,string> Their code => Cedar code.
+	 * @return array<string,string> Their code => Ako code.
 	 */
 	public static function map_languages( Source $source ) {
 		$map         = array();
 		$theirs      = $source->languages();
 		$their_first = $source->default_language();
 
-		// Their default first, so it becomes Cedar's default on an empty site.
+		// Their default first, so it becomes Ako's default on an empty site.
 		usort(
 			$theirs,
 			function ( $a, $b ) use ( $their_first ) {
@@ -111,7 +111,7 @@ final class Importer {
 	}
 
 	/**
-	 * Cedar code for a source language (same locale, else same code), or ''.
+	 * Ako code for a source language (same locale, else same code), or ''.
 	 *
 	 * @param array{code:string,locale:string} $language Source language.
 	 * @return string
@@ -126,10 +126,10 @@ final class Importer {
 	}
 
 	/**
-	 * Adds a source language to Cedar.
+	 * Adds a source language to Ako.
 	 *
 	 * @param array{code:string,locale:string} $language Source language.
-	 * @return string Cedar code, or '' if it can't be added.
+	 * @return string Ako code, or '' if it can't be added.
 	 */
 	private static function add_language( array $language ) {
 		$known = Catalog::get( $language['locale'] );
@@ -164,7 +164,7 @@ final class Importer {
 		$total      = $source->count_groups( $post_types );
 		$map        = self::map_languages( $source );
 		if ( ! $map ) {
-			return new WP_Error( 'cedar_ml_import_languages', __( 'Cedar couldn’t read the languages from this plugin. Nothing was changed.', 'cedar-multilang' ), array( 'status' => 500 ) );
+			return new WP_Error( 'ako_ml_import_languages', __( 'Ako couldn’t read the languages from this plugin. Nothing was changed.', 'ako-multilang' ), array( 'status' => 500 ) );
 		}
 
 		$limit   = max( 1, min( self::MAX_BATCH, absint( $limit ) ) );
@@ -208,7 +208,7 @@ final class Importer {
 	 * Links one group.
 	 *
 	 * @param array<string,int>    $group Their code => post ID.
-	 * @param array<string,string> $map   Their code => Cedar code.
+	 * @param array<string,string> $map   Their code => Ako code.
 	 * @return true|array{reason:string,pages:array} True, or why it was skipped.
 	 */
 	private static function import_group( array $group, array $map ) {
@@ -244,7 +244,7 @@ final class Importer {
 			);
 		}
 
-		// A page already linked to a different group in Cedar stays where it is.
+		// A page already linked to a different group in Ako stays where it is.
 		$groups = array_unique( array_filter( array_map( array( Links::class, 'get_group_id' ), $members ) ) );
 		if ( count( $groups ) > 1 ) {
 			return array(

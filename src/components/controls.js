@@ -9,7 +9,7 @@ import Icon from './Icon';
  * Button. Variant=Primary|Secondary|Ghost|Danger, Size=Medium|Small.
  * Renders an <a> when `href` is given.
  */
-export const Button = forwardRef( function CedarButton(
+export const Button = forwardRef( function AkoButton(
 	{
 		variant = 'secondary',
 		size = 'medium',
@@ -22,7 +22,7 @@ export const Button = forwardRef( function CedarButton(
 	},
 	ref
 ) {
-	const classes = `cedar-button is-${ variant } is-${ size } ${
+	const classes = `ako-button is-${ variant } is-${ size } ${
 		icon && ! children ? 'is-icon-only' : ''
 	} ${ className }`;
 	const content = (
@@ -31,7 +31,7 @@ export const Button = forwardRef( function CedarButton(
 				<Icon name={ icon } size={ size === 'small' ? 14 : 16 } />
 			) }
 			{ children && (
-				<span className="cedar-button__label">{ children }</span>
+				<span className="ako-button__label">{ children }</span>
 			) }
 		</>
 	);
@@ -60,8 +60,8 @@ export const Button = forwardRef( function CedarButton(
  */
 export function Badge( { tone = 'draft', dot = false, children } ) {
 	return (
-		<span className={ `cedar-badge is-${ tone }` }>
-			{ dot && <span className="cedar-badge__dot" aria-hidden="true" /> }
+		<span className={ `ako-badge is-${ tone }` }>
+			{ dot && <span className="ako-badge__dot" aria-hidden="true" /> }
 			{ children }
 		</span>
 	);
@@ -79,15 +79,15 @@ export function Badge( { tone = 'draft', dot = false, children } ) {
  */
 export function LanguageTag( { code, name, size = 'small', children } ) {
 	return (
-		<span className={ `cedar-language-tag is-${ size }` }>
+		<span className={ `ako-language-tag is-${ size }` }>
 			<span
-				className="cedar-language-tag__code"
+				className="ako-language-tag__code"
 				aria-hidden={ name ? true : undefined }
 			>
 				{ code.toUpperCase() }
 			</span>
 			{ name && (
-				<span className="cedar-language-tag__name" dir="auto">
+				<span className="ako-language-tag__name" dir="auto">
 					{ name }
 				</span>
 			) }
@@ -108,18 +108,18 @@ export function LanguageTag( { code, name, size = 'small', children } ) {
  */
 export function Tabs( { label, items, value, onChange } ) {
 	return (
-		<div className="cedar-tabs" role="group" aria-label={ label }>
+		<div className="ako-tabs" role="group" aria-label={ label }>
 			{ items.map( ( item ) => (
 				<button
 					key={ item.value }
 					type="button"
-					className={ `cedar-tab ${ item.value === value ? 'is-active' : '' }` }
+					className={ `ako-tab ${ item.value === value ? 'is-active' : '' }` }
 					aria-pressed={ item.value === value }
 					onClick={ () => onChange( item.value ) }
 				>
 					<span>{ item.label }</span>
 					{ typeof item.count === 'number' && (
-						<span className="cedar-tab__count">{ item.count }</span>
+						<span className="ako-tab__count">{ item.count }</span>
 					) }
 				</button>
 			) ) }
@@ -130,13 +130,13 @@ export function Tabs( { label, items, value, onChange } ) {
 /**
  * Text input. Type=Text|Search; State=Default|Focus|Error|Disabled via props.
  */
-export const TextInput = forwardRef( function CedarTextInput(
+export const TextInput = forwardRef( function AkoTextInput(
 	{ search = false, invalid = false, className = '', ...rest },
 	ref
 ) {
 	return (
 		<span
-			className={ `cedar-input ${ search ? 'is-search' : '' } ${
+			className={ `ako-input ${ search ? 'is-search' : '' } ${
 				invalid ? 'is-invalid' : ''
 			} ${ rest.disabled ? 'is-disabled' : '' } ${ className }` }
 		>
@@ -161,7 +161,7 @@ export const TextInput = forwardRef( function CedarTextInput(
 export function Select( { options, invalid = false, ...rest } ) {
 	return (
 		<span
-			className={ `cedar-input is-select ${ invalid ? 'is-invalid' : '' }` }
+			className={ `ako-input is-select ${ invalid ? 'is-invalid' : '' }` }
 		>
 			<select aria-invalid={ invalid || undefined } { ...rest }>
 				{ options.map( ( option ) => (
@@ -190,8 +190,8 @@ export function Field( { label, help, error, children } ) {
 	const message = error || help;
 
 	return (
-		<div className={ `cedar-field ${ error ? 'is-error' : '' }` }>
-			<label className="cedar-field__label" htmlFor={ id }>
+		<div className={ `ako-field ${ error ? 'is-error' : '' }` }>
+			<label className="ako-field__label" htmlFor={ id }>
 				{ label }
 			</label>
 			{ children( {
@@ -200,7 +200,7 @@ export function Field( { label, help, error, children } ) {
 				invalid: !! error,
 			} ) }
 			{ message && (
-				<p className="cedar-field__help" id={ helpId }>
+				<p className="ako-field__help" id={ helpId }>
 					{ error && <Icon name="alert" size={ 14 } /> }
 					<span>{ message }</span>
 				</p>
@@ -234,7 +234,7 @@ export function Checkbox( {
 	}, [ indeterminate ] );
 
 	return (
-		<span className="cedar-checkbox">
+		<span className="ako-checkbox">
 			<input
 				ref={ ref }
 				type="checkbox"
@@ -243,7 +243,7 @@ export function Checkbox( {
 				onChange={ ( event ) => onChange( event.target.checked ) }
 				{ ...rest }
 			/>
-			<span className="cedar-checkbox__box" aria-hidden="true">
+			<span className="ako-checkbox__box" aria-hidden="true">
 				<Icon name={ indeterminate ? 'minus' : 'check' } size={ 12 } />
 			</span>
 		</span>
@@ -271,14 +271,14 @@ export function Toggle( {
 		<button
 			type="button"
 			role="switch"
-			className="cedar-toggle"
+			className="ako-toggle"
 			aria-checked={ checked }
 			aria-labelledby={ labelId }
 			aria-describedby={ describedBy }
 			disabled={ disabled }
 			onClick={ () => onChange( ! checked ) }
 		>
-			<span className="cedar-toggle__knob" aria-hidden="true" />
+			<span className="ako-toggle__knob" aria-hidden="true" />
 		</button>
 	);
 }

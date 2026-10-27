@@ -1,5 +1,5 @@
 /**
- * Block editor: "Language · Cedar" panel in the document sidebar.
+ * Block editor: "Language · Ako" panel in the document sidebar.
  */
 import { useDispatch, useSelect } from '@wordpress/data';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
@@ -9,9 +9,9 @@ import { registerPlugin } from '@wordpress/plugins';
 import LanguagePanel from './LanguagePanel';
 import './editor.css';
 
-const DIRECTION_SOURCE = 'cedar-ml-direction';
+const DIRECTION_SOURCE = 'ako-ml-direction';
 
-function CedarLanguagePanel() {
+function AkoLanguagePanel() {
 	const { postId, isSaving, isAutosaving } = useSelect( ( select ) => {
 		const editor = select( 'core/editor' );
 		return {
@@ -81,9 +81,9 @@ function CedarLanguagePanel() {
 
 	return (
 		<PluginDocumentSettingPanel
-			name="cedar-ml-language"
-			title={ __( 'Language · Cedar', 'cedar-multilang' ) }
-			className="cedar-ml-document-panel"
+			name="ako-ml-language"
+			title={ __( 'Language · Ako', 'ako-multilang' ) }
+			className="ako-ml-document-panel"
 		>
 			<LanguagePanel
 				postId={ postId }
@@ -95,4 +95,4 @@ function CedarLanguagePanel() {
 	);
 }
 
-registerPlugin( 'cedar-ml-language', { render: CedarLanguagePanel } );
+registerPlugin( 'ako-ml-language', { render: AkoLanguagePanel } );

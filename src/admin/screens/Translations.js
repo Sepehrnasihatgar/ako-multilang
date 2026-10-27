@@ -114,7 +114,7 @@ export default function Translations( { config, notify } ) {
 							error,
 							__(
 								'The list couldn’t be loaded.',
-								'cedar-multilang'
+								'ako-multilang'
 							)
 						)
 					);
@@ -177,14 +177,11 @@ export default function Translations( { config, notify } ) {
 				tone: 'success',
 				message,
 				action: {
-					label: __( 'Undo', 'cedar-multilang' ),
+					label: __( 'Undo', 'ako-multilang' ),
 					onClick: async () => {
 						notify( {
 							tone: 'info',
-							message: __(
-								'Restoring links…',
-								'cedar-multilang'
-							),
+							message: __( 'Restoring links…', 'ako-multilang' ),
 						} );
 						try {
 							for ( const job of jobs ) {
@@ -200,7 +197,7 @@ export default function Translations( { config, notify } ) {
 								tone: 'success',
 								message: __(
 									'Links restored.',
-									'cedar-multilang'
+									'ako-multilang'
 								),
 							} );
 						} catch ( error ) {
@@ -210,7 +207,7 @@ export default function Translations( { config, notify } ) {
 									error,
 									__(
 										'The links couldn’t be restored.',
-										'cedar-multilang'
+										'ako-multilang'
 									)
 								),
 							} );
@@ -224,7 +221,7 @@ export default function Translations( { config, notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'Unlinking failed.', 'cedar-multilang' )
+					__( 'Unlinking failed.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -245,7 +242,7 @@ export default function Translations( { config, notify } ) {
 			[ { id: row.id, scope: 'group', restore: restoreAll( row ) } ],
 			sprintf(
 				/* translators: %s: Page title. */
-				__( 'Unlinked the translations of “%s”.', 'cedar-multilang' ),
+				__( 'Unlinked the translations of “%s”.', 'ako-multilang' ),
 				row.title
 			)
 		);
@@ -262,7 +259,7 @@ export default function Translations( { config, notify } ) {
 			],
 			sprintf(
 				/* translators: 1: Translation title, 2: Page title. */
-				__( 'Unlinked “%1$s” from “%2$s”.', 'cedar-multilang' ),
+				__( 'Unlinked “%1$s” from “%2$s”.', 'ako-multilang' ),
 				translation.title,
 				row.title
 			)
@@ -289,7 +286,7 @@ export default function Translations( { config, notify } ) {
 			} catch ( error ) {
 				lastError = errorMessage(
 					error,
-					__( 'A draft couldn’t be created.', 'cedar-multilang' )
+					__( 'A draft couldn’t be created.', 'ako-multilang' )
 				);
 			}
 		}
@@ -305,7 +302,7 @@ export default function Translations( { config, notify } ) {
 					/* translators: 1: Drafts created, 2: Drafts requested. */
 					__(
 						'Created %1$d of %2$d drafts. Try the rest again.',
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					created,
 					pairs.length
@@ -320,14 +317,14 @@ export default function Translations( { config, notify } ) {
 						'Created %d draft.',
 						'Created %d drafts.',
 						created,
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					created
 				),
 				action:
 					1 === created && lastDraft && lastDraft.editUrl
 						? {
-								label: __( 'Edit draft', 'cedar-multilang' ),
+								label: __( 'Edit draft', 'ako-multilang' ),
 								url: lastDraft.editUrl,
 							}
 						: null,
@@ -354,7 +351,7 @@ export default function Translations( { config, notify } ) {
 				tone: 'info',
 				message: __(
 					'The selected pages have no translations to unlink.',
-					'cedar-multilang'
+					'ako-multilang'
 				),
 			} );
 			return;
@@ -371,7 +368,7 @@ export default function Translations( { config, notify } ) {
 					'Unlinked %d page.',
 					'Unlinked %d pages.',
 					chosen.length,
-					'cedar-multilang'
+					'ako-multilang'
 				),
 				chosen.length
 			)
@@ -386,7 +383,7 @@ export default function Translations( { config, notify } ) {
 				/* translators: 1: Page title, 2: Language name, 3: Page title. */
 				__(
 					'Linked “%1$s” as the %2$s version of “%3$s”.',
-					'cedar-multilang'
+					'ako-multilang'
 				),
 				candidate.title,
 				byCode[ code ].name,
@@ -424,7 +421,7 @@ export default function Translations( { config, notify } ) {
 		! search &&
 		targets.every( ( language ) => ! data.coverage[ language.code ] );
 
-	const columns = `var(--cedar-checkbox-size) minmax(200px, 384fr) repeat(${ Math.max(
+	const columns = `var(--ako-checkbox-size) minmax(200px, 384fr) repeat(${ Math.max(
 		targets.length,
 		1
 	) }, minmax(200px, 260fr)) 96px 60px`;
@@ -432,10 +429,10 @@ export default function Translations( { config, notify } ) {
 	return (
 		<>
 			<PageTitle
-				title={ __( 'Translations', 'cedar-multilang' ) }
+				title={ __( 'Translations', 'ako-multilang' ) }
 				description={ __(
 					'Every page, in every language.',
-					'cedar-multilang'
+					'ako-multilang'
 				) }
 				actions={
 					canLink && (
@@ -445,7 +442,7 @@ export default function Translations( { config, notify } ) {
 									icon="arrows-left-right"
 									onClick={ () => setDialog( 'import' ) }
 								>
-									{ __( 'Import', 'cedar-multilang' ) }
+									{ __( 'Import', 'ako-multilang' ) }
 								</Button>
 							) }
 							<Button
@@ -453,7 +450,7 @@ export default function Translations( { config, notify } ) {
 								icon="link"
 								onClick={ () => setDialog( 'link' ) }
 							>
-								{ __( 'Link pages', 'cedar-multilang' ) }
+								{ __( 'Link pages', 'ako-multilang' ) }
 							</Button>
 						</>
 					)
@@ -461,16 +458,16 @@ export default function Translations( { config, notify } ) {
 			/>
 
 			{ firstRun && (
-				<div className="cedar-card cedar-first-run">
+				<div className="ako-card ako-first-run">
 					<EmptyState
 						icon="link"
 						title={ __(
 							'No pages are linked yet',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						description={ __(
-							'Link a page to its translation, and Cedar adds hreflang, sets lang and dir, and shows the switcher for you.',
-							'cedar-multilang'
+							'Link a page to its translation, and Ako adds hreflang, sets lang and dir, and shows the switcher for you.',
+							'ako-multilang'
 						) }
 						actions={
 							canLink && (
@@ -484,7 +481,7 @@ export default function Translations( { config, notify } ) {
 										>
 											{ __(
 												'Import from WPML or Polylang',
-												'cedar-multilang'
+												'ako-multilang'
 											) }
 										</Button>
 									) }
@@ -492,10 +489,7 @@ export default function Translations( { config, notify } ) {
 										variant="primary"
 										onClick={ () => setDialog( 'link' ) }
 									>
-										{ __(
-											'Link pages',
-											'cedar-multilang'
-										) }
+										{ __( 'Link pages', 'ako-multilang' ) }
 									</Button>
 								</>
 							)
@@ -527,8 +521,8 @@ export default function Translations( { config, notify } ) {
 
 			{ data && source && targets.length > 0 && (
 				<section
-					className="cedar-overview"
-					aria-label={ __( 'Coverage', 'cedar-multilang' ) }
+					className="ako-overview"
+					aria-label={ __( 'Coverage', 'ako-multilang' ) }
 				>
 					<CoverageCard
 						source
@@ -541,7 +535,7 @@ export default function Translations( { config, notify } ) {
 								'%d page',
 								'%d pages',
 								data.source_total,
-								'cedar-multilang'
+								'ako-multilang'
 							),
 							data.source_total
 						) }
@@ -554,7 +548,7 @@ export default function Translations( { config, notify } ) {
 							total={ data.source_total }
 							caption={ sprintf(
 								/* translators: 1: Linked pages, 2: All pages. */
-								__( '%1$d of %2$d linked', 'cedar-multilang' ),
+								__( '%1$d of %2$d linked', 'ako-multilang' ),
 								data.coverage[ language.code ] || 0,
 								data.source_total
 							) }
@@ -570,29 +564,26 @@ export default function Translations( { config, notify } ) {
 			) }
 
 			<section
-				className="cedar-table"
-				aria-label={ __( 'Translations', 'cedar-multilang' ) }
-				style={ { '--cedar-table-columns': columns } }
+				className="ako-table"
+				aria-label={ __( 'Translations', 'ako-multilang' ) }
+				style={ { '--ako-table-columns': columns } }
 			>
 				{ selected.size > 0 ? (
-					<div className="cedar-bulkbar">
+					<div className="ako-bulkbar">
 						<Checkbox
 							checked={ allOnPage }
 							indeterminate={ ! allOnPage }
-							label={ __( 'Clear selection', 'cedar-multilang' ) }
+							label={ __( 'Clear selection', 'ako-multilang' ) }
 							onChange={ () => setSelected( new Set() ) }
 						/>
-						<span
-							className="cedar-bulkbar__count"
-							aria-live="polite"
-						>
+						<span className="ako-bulkbar__count" aria-live="polite">
 							{ sprintf(
 								/* translators: %d: Number of selected pages. */
 								_n(
 									'%d selected',
 									'%d selected',
 									selected.size,
-									'cedar-multilang'
+									'ako-multilang'
 								),
 								selected.size
 							) }
@@ -604,12 +595,12 @@ export default function Translations( { config, notify } ) {
 											'%d missing translation',
 											'%d missing translations',
 											missingInSelection.length,
-											'cedar-multilang'
+											'ako-multilang'
 										),
 										missingInSelection.length
 									) }
 						</span>
-						<span className="cedar-bulkbar__spacer" />
+						<span className="ako-bulkbar__spacer" />
 						<Button
 							size="small"
 							icon="file-plus"
@@ -620,7 +611,7 @@ export default function Translations( { config, notify } ) {
 						>
 							{ __(
 								'Duplicate missing as drafts',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 						</Button>
 						<Button
@@ -629,59 +620,59 @@ export default function Translations( { config, notify } ) {
 							onClick={ unlinkSelected }
 							disabled={ busy }
 						>
-							{ __( 'Unlink', 'cedar-multilang' ) }
+							{ __( 'Unlink', 'ako-multilang' ) }
 						</Button>
 						<button
 							type="button"
-							className="cedar-bulkbar__clear"
+							className="ako-bulkbar__clear"
 							onClick={ () => setSelected( new Set() ) }
 						>
-							{ __( 'Clear', 'cedar-multilang' ) }
+							{ __( 'Clear', 'ako-multilang' ) }
 						</button>
 					</div>
 				) : (
-					<div className="cedar-toolbar">
+					<div className="ako-toolbar">
 						<Tabs
-							label={ __( 'Filter', 'cedar-multilang' ) }
+							label={ __( 'Filter', 'ako-multilang' ) }
 							value={ query.filter }
 							onChange={ setFilter }
 							items={ [
 								{
 									value: 'all',
-									label: __( 'All', 'cedar-multilang' ),
+									label: __( 'All', 'ako-multilang' ),
 									count: data?.counts.all,
 								},
 								{
 									value: 'missing',
-									label: __( 'Missing', 'cedar-multilang' ),
+									label: __( 'Missing', 'ako-multilang' ),
 									count: data?.counts.missing,
 								},
 								{
 									value: 'review',
 									label: __(
 										'Needs review',
-										'cedar-multilang'
+										'ako-multilang'
 									),
 									count: data?.counts.review,
 								},
 								{
 									value: 'drafts',
-									label: __( 'Drafts', 'cedar-multilang' ),
+									label: __( 'Drafts', 'ako-multilang' ),
 									count: data?.counts.drafts,
 								},
 							] }
 						/>
-						<div className="cedar-toolbar__end">
+						<div className="ako-toolbar__end">
 							{ data && (
 								<Menu
 									label={ __(
 										'Content type',
-										'cedar-multilang'
+										'ako-multilang'
 									) }
 									renderTrigger={ ( props ) => (
 										<button
 											type="button"
-											className="cedar-input is-select is-trigger"
+											className="ako-input is-select is-trigger"
 											{ ...props }
 										>
 											<span>
@@ -690,7 +681,7 @@ export default function Translations( { config, notify } ) {
 															/* translators: 1: Content type, e.g. "Pages". 2: Count. */
 															__(
 																'%1$s · %2$d',
-																'cedar-multilang'
+																'ako-multilang'
 															),
 															currentType.label,
 															currentType.count
@@ -707,7 +698,7 @@ export default function Translations( { config, notify } ) {
 											? String( type.count )
 											: __(
 													'Off. Turn it on in Settings.',
-													'cedar-multilang'
+													'ako-multilang'
 												),
 										checked: type.name === data.post_type,
 										disabled: ! type.enabled,
@@ -717,63 +708,60 @@ export default function Translations( { config, notify } ) {
 							) }
 							<TextInput
 								search
-								className="cedar-toolbar__search"
+								className="ako-toolbar__search"
 								value={ searchText }
 								onChange={ ( event ) =>
 									setSearchText( event.target.value )
 								}
 								placeholder={ __(
 									'Search titles or slugs…',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 								aria-label={ __(
 									'Search titles or slugs',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 							/>
 						</div>
 					</div>
 				) }
 
-				<div className="cedar-table__scroll">
+				<div className="ako-table__scroll">
 					<div
-						className="cedar-grid"
+						className="ako-grid"
 						role="table"
 						aria-label={ __(
 							'Pages and their translations',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						aria-busy={ loading }
 						aria-rowcount={ data ? data.total + 1 : -1 }
 					>
-						<div className="cedar-row is-header" role="row">
+						<div className="ako-row is-header" role="row">
 							<span role="columnheader">
 								<Checkbox
 									checked={ allOnPage }
 									indeterminate={ someOnPage && ! allOnPage }
 									label={ __(
 										'Select all on this page',
-										'cedar-multilang'
+										'ako-multilang'
 									) }
 									onChange={ toggleAll }
 									disabled={ ! rows.length }
 								/>
 							</span>
-							<span
-								role="columnheader"
-								className="cedar-overline"
-							>
+							<span role="columnheader" className="ako-overline">
 								{ source
 									? sprintf(
 											/* translators: 1: Content type, e.g. "Page". 2: Language name. */
 											__(
 												'%1$s · %2$s (source)',
-												'cedar-multilang'
+												'ako-multilang'
 											),
 											data.post_type_tag,
 											source.name
 										)
-									: __( 'Page', 'cedar-multilang' ) }
+									: __( 'Page', 'ako-multilang' ) }
 							</span>
 							{ targets.map( ( language ) => (
 								<span role="columnheader" key={ language.code }>
@@ -783,15 +771,12 @@ export default function Translations( { config, notify } ) {
 									/>
 								</span>
 							) ) }
-							<span
-								role="columnheader"
-								className="cedar-overline"
-							>
-								{ __( 'Updated', 'cedar-multilang' ) }
+							<span role="columnheader" className="ako-overline">
+								{ __( 'Updated', 'ako-multilang' ) }
 							</span>
 							<span role="columnheader">
 								<span className="screen-reader-text">
-									{ __( 'Actions', 'cedar-multilang' ) }
+									{ __( 'Actions', 'ako-multilang' ) }
 								</span>
 							</span>
 						</div>
@@ -825,12 +810,12 @@ export default function Translations( { config, notify } ) {
 				</div>
 
 				{ data && data.total > 0 && (
-					<div className="cedar-table__footer">
+					<div className="ako-table__footer">
 						<span>
 							{ 'review' === query.filter &&
 								__(
 									'One-way: a translation doesn’t link back. Fix both sides on the SEO screen.',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 						</span>
 						<span>
@@ -838,20 +823,20 @@ export default function Translations( { config, notify } ) {
 								/* translators: 1: First row number, 2: Last row number, 3: Total rows. */
 								__(
 									'Showing %1$d to %2$d of %3$d',
-									'cedar-multilang'
+									'ako-multilang'
 								),
 								( data.page - 1 ) * PER_PAGE + 1,
 								( data.page - 1 ) * PER_PAGE + rows.length,
 								data.total
 							) }
 						</span>
-						<span className="cedar-table__pager">
+						<span className="ako-table__pager">
 							<Button
 								size="small"
 								onClick={ () => setPage( data.page - 1 ) }
 								disabled={ data.page <= 1 || loading }
 							>
-								{ __( 'Previous', 'cedar-multilang' ) }
+								{ __( 'Previous', 'ako-multilang' ) }
 							</Button>
 							<Button
 								size="small"
@@ -860,7 +845,7 @@ export default function Translations( { config, notify } ) {
 									data.page >= data.total_pages || loading
 								}
 							>
-								{ __( 'Next', 'cedar-multilang' ) }
+								{ __( 'Next', 'ako-multilang' ) }
 							</Button>
 						</span>
 					</div>
@@ -893,11 +878,11 @@ function Rows( props ) {
 		empty = (
 			<EmptyState
 				icon="alert"
-				title={ __( 'Couldn’t load translations', 'cedar-multilang' ) }
+				title={ __( 'Couldn’t load translations', 'ako-multilang' ) }
 				description={ loadError }
 				actions={
 					<Button variant="primary" onClick={ props.onRetry }>
-						{ __( 'Try again', 'cedar-multilang' ) }
+						{ __( 'Try again', 'ako-multilang' ) }
 					</Button>
 				}
 			/>
@@ -906,16 +891,16 @@ function Rows( props ) {
 		empty = (
 			<EmptyState
 				icon="plus"
-				title={ __( 'Add a second language', 'cedar-multilang' ) }
+				title={ __( 'Add a second language', 'ako-multilang' ) }
 				description={
 					config.canManage
 						? __(
 								'Translations show up here once your site has at least two languages.',
-								'cedar-multilang'
+								'ako-multilang'
 							)
 						: __(
 								'Translations show up here once a site administrator adds a second language.',
-								'cedar-multilang'
+								'ako-multilang'
 							)
 				}
 				actions={
@@ -926,7 +911,7 @@ function Rows( props ) {
 							icon="plus"
 							href={ config.urls.languages }
 						>
-							{ __( 'Add language', 'cedar-multilang' ) }
+							{ __( 'Add language', 'ako-multilang' ) }
 						</Button>
 					)
 				}
@@ -938,19 +923,19 @@ function Rows( props ) {
 			if ( 'page' === data.post_type ) {
 				title = sprintf(
 					/* translators: %s: Search text. */
-					__( 'No pages match “%s”', 'cedar-multilang' ),
+					__( 'No pages match “%s”', 'ako-multilang' ),
 					search
 				);
 			} else if ( 'post' === data.post_type ) {
 				title = sprintf(
 					/* translators: %s: Search text. */
-					__( 'No posts match “%s”', 'cedar-multilang' ),
+					__( 'No posts match “%s”', 'ako-multilang' ),
 					search
 				);
 			} else {
 				title = sprintf(
 					/* translators: %s: Search text. */
-					__( 'Nothing matches “%s”', 'cedar-multilang' ),
+					__( 'Nothing matches “%s”', 'ako-multilang' ),
 					search
 				);
 			}
@@ -960,14 +945,14 @@ function Rows( props ) {
 					title={ title }
 					description={ __(
 						'Check the spelling, or search in another content type.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 					actions={
 						<Button
 							variant="primary"
 							onClick={ props.onClearSearch }
 						>
-							{ __( 'Clear search', 'cedar-multilang' ) }
+							{ __( 'Clear search', 'ako-multilang' ) }
 						</Button>
 					}
 				/>
@@ -976,10 +961,10 @@ function Rows( props ) {
 			empty = (
 				<EmptyState
 					icon="circle-check"
-					title={ __( 'Nothing is missing', 'cedar-multilang' ) }
+					title={ __( 'Nothing is missing', 'ako-multilang' ) }
 					description={ __(
 						'Every page here has a translation in every language.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				/>
 			);
@@ -987,10 +972,10 @@ function Rows( props ) {
 			empty = (
 				<EmptyState
 					icon="circle-check"
-					title={ __( 'No drafts', 'cedar-multilang' ) }
+					title={ __( 'No drafts', 'ako-multilang' ) }
 					description={ __(
 						'Every page and translation here is published.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				/>
 			);
@@ -998,13 +983,10 @@ function Rows( props ) {
 			empty = (
 				<EmptyState
 					icon="file-plus"
-					title={ __(
-						'Nothing to translate yet',
-						'cedar-multilang'
-					) }
+					title={ __( 'Nothing to translate yet', 'ako-multilang' ) }
 					description={ __(
 						'Content you write in your default language shows up here, ready to link.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				/>
 			);
@@ -1013,7 +995,7 @@ function Rows( props ) {
 
 	if ( empty ) {
 		return (
-			<div role="row" className="cedar-row is-empty">
+			<div role="row" className="ako-row is-empty">
 				<div role="cell">{ empty }</div>
 			</div>
 		);
@@ -1066,7 +1048,7 @@ function Row( {
 	if ( row.editUrl ) {
 		moreItems.push( {
 			id: 'edit',
-			label: __( 'Edit page', 'cedar-multilang' ),
+			label: __( 'Edit page', 'ako-multilang' ),
 			onSelect: () => window.location.assign( row.editUrl ),
 		} );
 	}
@@ -1077,7 +1059,7 @@ function Row( {
 				id: `unlink-${ language.code }`,
 				label: sprintf(
 					/* translators: %s: Language name in that language, e.g. "فارسی". */
-					__( 'Unlink %s', 'cedar-multilang' ),
+					__( 'Unlink %s', 'ako-multilang' ),
 					language.native
 				),
 				onSelect: () => onUnlinkTranslation( row, language.code ),
@@ -1087,7 +1069,7 @@ function Row( {
 	if ( linkedCodes.length > 1 ) {
 		moreItems.push( {
 			id: 'unlink-all',
-			label: __( 'Unlink all translations', 'cedar-multilang' ),
+			label: __( 'Unlink all translations', 'ako-multilang' ),
 			onSelect: () => onUnlinkRow( row ),
 		} );
 	}
@@ -1095,29 +1077,29 @@ function Row( {
 	return (
 		<div
 			role="row"
-			className={ `cedar-row ${ isSelected ? 'is-selected' : '' }` }
+			className={ `ako-row ${ isSelected ? 'is-selected' : '' }` }
 		>
 			<span role="cell">
 				<Checkbox
 					checked={ isSelected }
 					label={ sprintf(
 						/* translators: %s: Page title. */
-						__( 'Select “%s”', 'cedar-multilang' ),
+						__( 'Select “%s”', 'ako-multilang' ),
 						row.title
 					) }
 					onChange={ ( on ) => toggleRow( row.id, on ) }
 				/>
 			</span>
-			<span role="cell" className="cedar-row__page">
-				<span className="cedar-row__title">
+			<span role="cell" className="ako-row__page">
+				<span className="ako-row__title">
 					<span dir="auto">{ row.title }</span>
 					{ DRAFT_STATUSES.includes( row.status ) && (
 						<Badge tone="draft">
-							{ __( 'Draft', 'cedar-multilang' ) }
+							{ __( 'Draft', 'ako-multilang' ) }
 						</Badge>
 					) }
 				</span>
-				<span className="cedar-row__slug" dir="ltr">
+				<span className="ako-row__slug" dir="ltr">
 					{ row.path }
 				</span>
 			</span>
@@ -1149,10 +1131,10 @@ function Row( {
 					/>
 				</span>
 			) ) }
-			<span role="cell" className="cedar-row__date">
+			<span role="cell" className="ako-row__date">
 				{ row.modified }
 			</span>
-			<span role="cell" className="cedar-row__actions">
+			<span role="cell" className="ako-row__actions">
 				{ row.viewUrl && (
 					<Button
 						variant="ghost"
@@ -1165,7 +1147,7 @@ function Row( {
 							/* translators: %s: Page title. */
 							__(
 								'View “%s” (opens in a new tab)',
-								'cedar-multilang'
+								'ako-multilang'
 							),
 							row.title
 						) }
@@ -1176,7 +1158,7 @@ function Row( {
 						align="end"
 						label={ sprintf(
 							/* translators: %s: Page title. */
-							__( 'Actions for “%s”', 'cedar-multilang' ),
+							__( 'Actions for “%s”', 'ako-multilang' ),
 							row.title
 						) }
 						renderTrigger={ ( props ) => (
@@ -1188,7 +1170,7 @@ function Row( {
 									/* translators: %s: Page title. */
 									__(
 										'More actions for “%s”',
-										'cedar-multilang'
+										'ako-multilang'
 									),
 									row.title
 								) }
@@ -1236,9 +1218,9 @@ function TranslationCell( {
 } ) {
 	if ( isDuplicating ) {
 		return (
-			<span className="cedar-cell is-working" aria-live="polite">
-				<span className="cedar-cell__dot" aria-hidden="true" />
-				{ __( 'Duplicating…', 'cedar-multilang' ) }
+			<span className="ako-cell is-working" aria-live="polite">
+				<span className="ako-cell__dot" aria-hidden="true" />
+				{ __( 'Duplicating…', 'ako-multilang' ) }
 			</span>
 		);
 	}
@@ -1259,8 +1241,8 @@ function TranslationCell( {
 	if ( ! translation ) {
 		if ( ! row.canEdit ) {
 			return (
-				<span className="cedar-cell is-empty">
-					{ __( 'Not translated', 'cedar-multilang' ) }
+				<span className="ako-cell is-empty">
+					{ __( 'Not translated', 'ako-multilang' ) }
 				</span>
 			);
 		}
@@ -1269,18 +1251,18 @@ function TranslationCell( {
 				variant="rich"
 				label={ sprintf(
 					/* translators: %s: Language name. */
-					__( 'Add a %s translation', 'cedar-multilang' ),
+					__( 'Add a %s translation', 'ako-multilang' ),
 					language.name
 				) }
 				renderTrigger={ ( props ) => (
 					<button
 						type="button"
-						className="cedar-cell is-missing"
+						className="ako-cell is-missing"
 						aria-label={ sprintf(
 							/* translators: 1: Language name, 2: Page title. Starts with the visible "Add translation" label. */
 							__(
 								'Add translation: %1$s, for “%2$s”',
-								'cedar-multilang'
+								'ako-multilang'
 							),
 							language.name,
 							row.title
@@ -1289,7 +1271,7 @@ function TranslationCell( {
 					>
 						<Icon name="plus" size={ 14 } />
 						<span>
-							{ __( 'Add translation', 'cedar-multilang' ) }
+							{ __( 'Add translation', 'ako-multilang' ) }
 						</span>
 					</button>
 				) }
@@ -1297,10 +1279,10 @@ function TranslationCell( {
 					{
 						id: 'duplicate',
 						icon: 'file-plus',
-						label: __( 'Duplicate as draft', 'cedar-multilang' ),
+						label: __( 'Duplicate as draft', 'ako-multilang' ),
 						description: __(
 							'Copies the content, images, SEO fields, and builder layout.',
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						disabled: busy,
 						onSelect: onDuplicate,
@@ -1308,10 +1290,10 @@ function TranslationCell( {
 					{
 						id: 'link',
 						icon: 'link',
-						label: __( 'Link an existing page', 'cedar-multilang' ),
+						label: __( 'Link an existing page', 'ako-multilang' ),
 						description: __(
 							'Search pages in this language and connect one.',
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						onSelect: onStartLinking,
 					},
@@ -1327,42 +1309,40 @@ function TranslationCell( {
 			href={ translation.editUrl }
 			dir="auto"
 			lang={ language.code }
-			className="cedar-cell__title"
+			className="ako-cell__title"
 		>
 			{ translation.title }
 		</a>
 	) : (
-		<span dir="auto" lang={ language.code } className="cedar-cell__title">
+		<span dir="auto" lang={ language.code } className="ako-cell__title">
 			{ translation.title }
 		</span>
 	);
 
 	return (
-		<span
-			className={ `cedar-cell ${ isDraft ? 'is-draft' : 'is-linked' }` }
-		>
+		<span className={ `ako-cell ${ isDraft ? 'is-draft' : 'is-linked' }` }>
 			{ isReview && (
 				<Icon
 					name="alert"
-					className="cedar-cell__warn"
-					label={ __( 'Needs review', 'cedar-multilang' ) }
+					className="ako-cell__warn"
+					label={ __( 'Needs review', 'ako-multilang' ) }
 				/>
 			) }
 			{ ! isReview && isDraft && (
-				<span className="cedar-cell__dot" aria-hidden="true" />
+				<span className="ako-cell__dot" aria-hidden="true" />
 			) }
 			{ ! isReview && ! isDraft && (
-				<Icon name="circle-check" className="cedar-cell__check" />
+				<Icon name="circle-check" className="ako-cell__check" />
 			) }
 			{ title }
 			{ isReview && (
-				<span className="cedar-cell__badge">
-					{ __( 'One-way', 'cedar-multilang' ) }
+				<span className="ako-cell__badge">
+					{ __( 'One-way', 'ako-multilang' ) }
 				</span>
 			) }
 			{ isDraft && (
-				<span className="cedar-cell__badge">
-					{ __( 'Draft', 'cedar-multilang' ) }
+				<span className="ako-cell__badge">
+					{ __( 'Draft', 'ako-multilang' ) }
 				</span>
 			) }
 		</span>
@@ -1451,7 +1431,7 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'Those pages couldn’t be linked.', 'cedar-multilang' )
+					__( 'Those pages couldn’t be linked.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -1477,7 +1457,7 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 	const optionId = ( index ) => `${ listId }-${ index }`;
 
 	return (
-		<div className="cedar-link-search" ref={ wrapRef }>
+		<div className="ako-link-search" ref={ wrapRef }>
 			<TextInput
 				search
 				ref={ inputRef }
@@ -1494,12 +1474,12 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 				aria-busy={ saving || undefined }
 				placeholder={ sprintf(
 					/* translators: %s: Language name in that language. */
-					__( 'Search %s pages…', 'cedar-multilang' ),
+					__( 'Search %s pages…', 'ako-multilang' ),
 					language.native
 				) }
 				aria-label={ sprintf(
 					/* translators: %s: Language name. */
-					__( 'Search %s pages to link', 'cedar-multilang' ),
+					__( 'Search %s pages to link', 'ako-multilang' ),
 					language.name
 				) }
 			/>
@@ -1507,16 +1487,16 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 				ref={ listRef }
 				style={ listStyle }
 				hidden={ ! results }
-				className="cedar-menu is-list cedar-link-search__list"
+				className="ako-menu is-list ako-link-search__list"
 				id={ listId }
 				role="listbox"
-				aria-label={ __( 'Pages', 'cedar-multilang' ) }
+				aria-label={ __( 'Pages', 'ako-multilang' ) }
 			>
 				{ results && ! results.length && (
-					<li className="cedar-menu__empty" role="presentation">
+					<li className="ako-menu__empty" role="presentation">
 						{ __(
 							'No pages found. Pages already in another language aren’t listed.',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 					</li>
 				) }
@@ -1530,15 +1510,15 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 							role="option"
 							aria-selected={ index === active }
 							aria-disabled={ candidate.linked || undefined }
-							className={ `cedar-menu__item ${ index === active ? 'is-active' : '' } ${ candidate.linked ? 'is-disabled' : '' }` }
+							className={ `ako-menu__item ${ index === active ? 'is-active' : '' } ${ candidate.linked ? 'is-disabled' : '' }` }
 							onMouseEnter={ () => setActive( index ) }
 							onMouseDown={ ( event ) => event.preventDefault() }
 							onClick={ () => choose( candidate ) }
 						>
-							<span className="cedar-menu__label" dir="auto">
+							<span className="ako-menu__label" dir="auto">
 								{ candidate.title }
 							</span>
-							<span className="cedar-menu__meta">
+							<span className="ako-menu__meta">
 								{ candidateMeta( candidate ) }
 							</span>
 						</li>
@@ -1557,10 +1537,7 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
  */
 function HealthCard( { health, url } ) {
 	const hasScore = null !== health.score;
-	let caption = __(
-		'hreflang starts after the first link',
-		'cedar-multilang'
-	);
+	let caption = __( 'hreflang starts after the first link', 'ako-multilang' );
 	if ( hasScore ) {
 		caption = health.oneWay
 			? sprintf(
@@ -1569,50 +1546,50 @@ function HealthCard( { health, url } ) {
 						'%d one-way link',
 						'%d one-way links',
 						health.oneWay,
-						'cedar-multilang'
+						'ako-multilang'
 					),
 					health.oneWay
 				)
-			: __( 'All links are reciprocal', 'cedar-multilang' );
+			: __( 'All links are reciprocal', 'ako-multilang' );
 	}
 
 	return (
-		<div className="cedar-health-card">
-			<div className="cedar-health-card__top">
-				<span className="cedar-health-card__title">
+		<div className="ako-health-card">
+			<div className="ako-health-card__top">
+				<span className="ako-health-card__title">
 					<Icon name="circle-check" />
-					{ __( 'SEO health', 'cedar-multilang' ) }
+					{ __( 'SEO health', 'ako-multilang' ) }
 				</span>
-				<span className="cedar-health-card__value">
+				<span className="ako-health-card__value">
 					{ hasScore
 						? sprintf(
 								/* translators: %d: Percentage. */
-								__( '%d%%', 'cedar-multilang' ),
+								__( '%d%%', 'ako-multilang' ),
 								health.score
 							)
-						: __( 'None yet', 'cedar-multilang' ) }
+						: __( 'None yet', 'ako-multilang' ) }
 				</span>
 			</div>
 			<div
-				className="cedar-progress is-on-brand"
+				className="ako-progress is-on-brand"
 				role="progressbar"
 				aria-valuemin={ 0 }
 				aria-valuemax={ 100 }
 				aria-valuenow={ hasScore ? health.score : 0 }
-				aria-label={ __( 'SEO health', 'cedar-multilang' ) }
+				aria-label={ __( 'SEO health', 'ako-multilang' ) }
 			>
 				<span
-					className="cedar-progress__value"
+					className="ako-progress__value"
 					style={ {
 						inlineSize: `${ hasScore ? health.score : 0 }%`,
 					} }
 				/>
 			</div>
-			<div className="cedar-health-card__foot">
+			<div className="ako-health-card__foot">
 				<span>{ caption }</span>
 				{ url && (
 					<a href={ url }>
-						{ __( 'View SEO', 'cedar-multilang' ) }
+						{ __( 'View SEO', 'ako-multilang' ) }
 						<Icon name="external-link" size={ 12 } />
 					</a>
 				) }

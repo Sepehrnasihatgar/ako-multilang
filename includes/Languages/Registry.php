@@ -2,17 +2,17 @@
 /**
  * The site's languages.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Languages;
+namespace Ako\Multilang\Languages;
 
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Stores languages in the option `cedar_ml_languages`.
+ * Stores languages in the option `ako_ml_languages`.
  *
  * Shape: `array( 'default' => 'en', 'languages' => array( array( 'code' => 'en',
  * 'locale' => 'en_US', 'hreflang' => 'en-US', 'name' => 'English',
@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Registry {
 
-	const OPTION = 'cedar_ml_languages';
+	const OPTION = 'ako_ml_languages';
 
 	/**
 	 * Language codes: 2–3 lowercase letters, optional "-" + 2–4 alphanumerics (e.g. "pt-br").
@@ -127,17 +127,17 @@ final class Registry {
 	public static function sanitize_language( array $raw ) {
 		$code = isset( $raw['code'] ) ? strtolower( sanitize_text_field( (string) $raw['code'] ) ) : '';
 		if ( ! preg_match( self::CODE_PATTERN, $code ) ) {
-			return new WP_Error( 'cedar_ml_invalid_code', __( 'Use a language code like “ar” or “pt-br”.', 'cedar-multilang' ) );
+			return new WP_Error( 'ako_ml_invalid_code', __( 'Use a language code like “ar” or “pt-br”.', 'ako-multilang' ) );
 		}
 
 		$locale = isset( $raw['locale'] ) ? sanitize_text_field( (string) $raw['locale'] ) : '';
 		if ( ! preg_match( self::LOCALE_PATTERN, $locale ) ) {
-			return new WP_Error( 'cedar_ml_invalid_locale', __( 'Use a WordPress locale like “ar” or “fa_IR”.', 'cedar-multilang' ) );
+			return new WP_Error( 'ako_ml_invalid_locale', __( 'Use a WordPress locale like “ar” or “fa_IR”.', 'ako-multilang' ) );
 		}
 
 		$hreflang = isset( $raw['hreflang'] ) && '' !== $raw['hreflang'] ? sanitize_text_field( (string) $raw['hreflang'] ) : $code;
 		if ( ! preg_match( self::HREFLANG_PATTERN, $hreflang ) ) {
-			return new WP_Error( 'cedar_ml_invalid_hreflang', __( 'Use a code like “ar” or “ar-SA”.', 'cedar-multilang' ) );
+			return new WP_Error( 'ako_ml_invalid_hreflang', __( 'Use a code like “ar” or “ar-SA”.', 'ako-multilang' ) );
 		}
 
 		$name   = isset( $raw['name'] ) ? sanitize_text_field( (string) $raw['name'] ) : '';
@@ -171,19 +171,19 @@ final class Registry {
 	public static function save( array $languages, $default_code ) {
 		$clean = array();
 		foreach ( $languages as $raw ) {
-			$language = is_array( $raw ) ? self::sanitize_language( $raw ) : new WP_Error( 'cedar_ml_invalid_language', __( 'Invalid language.', 'cedar-multilang' ) );
+			$language = is_array( $raw ) ? self::sanitize_language( $raw ) : new WP_Error( 'ako_ml_invalid_language', __( 'Invalid language.', 'ako-multilang' ) );
 			if ( is_wp_error( $language ) ) {
 				return $language;
 			}
 			if ( isset( $clean[ $language['code'] ] ) ) {
-				return new WP_Error( 'cedar_ml_duplicate_language', __( 'Each language can only be added once.', 'cedar-multilang' ) );
+				return new WP_Error( 'ako_ml_duplicate_language', __( 'Each language can only be added once.', 'ako-multilang' ) );
 			}
 			$clean[ $language['code'] ] = $language;
 		}
 
 		$default_code = sanitize_key( (string) $default_code );
 		if ( $clean && ! isset( $clean[ $default_code ] ) ) {
-			return new WP_Error( 'cedar_ml_invalid_default', __( 'The default language must be one of your languages.', 'cedar-multilang' ) );
+			return new WP_Error( 'ako_ml_invalid_default', __( 'The default language must be one of your languages.', 'ako-multilang' ) );
 		}
 
 		update_option(
@@ -202,7 +202,7 @@ final class Registry {
 		 * @param array  $languages Sanitized languages keyed by code.
 		 * @param string $default_code Default language code.
 		 */
-		do_action( 'cedar_ml_languages_saved', $clean, $default_code );
+		do_action( 'ako_ml_languages_saved', $clean, $default_code );
 
 		return true;
 	}
@@ -235,7 +235,7 @@ final class Registry {
 		$code      = sanitize_key( (string) $code );
 		$languages = self::all();
 		if ( ! isset( $languages[ $code ] ) ) {
-			return new WP_Error( 'cedar_ml_unknown_language', __( 'That language isn’t set up yet.', 'cedar-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 
 		$languages[ $code ] = array_merge( $languages[ $code ], $raw, array( 'code' => $code ) );
@@ -253,10 +253,10 @@ final class Registry {
 		$code      = sanitize_key( (string) $code );
 		$languages = self::all();
 		if ( ! isset( $languages[ $code ] ) ) {
-			return new WP_Error( 'cedar_ml_unknown_language', __( 'That language isn’t set up yet.', 'cedar-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 		if ( self::default_code() === $code ) {
-			return new WP_Error( 'cedar_ml_remove_default', __( 'The default language can’t be removed.', 'cedar-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ako_ml_remove_default', __( 'The default language can’t be removed.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		unset( $languages[ $code ] );
@@ -278,7 +278,7 @@ final class Registry {
 		sort( $sorted_new );
 		sort( $sorted_old );
 		if ( $sorted_new !== $sorted_old ) {
-			return new WP_Error( 'cedar_ml_invalid_order', __( 'The order must list every language once.', 'cedar-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ako_ml_invalid_order', __( 'The order must list every language once.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		$ordered = array();

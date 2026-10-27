@@ -2,29 +2,29 @@
 /**
  * Saved switcher designs ("Header switcher", "Footer switcher", …).
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Switcher;
+namespace Ako\Multilang\Switcher;
 
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Stores profiles in the option `cedar_ml_switchers` as
+ * Stores profiles in the option `ako_ml_switchers` as
  * `array( 'profiles' => array( id => profile ) )`. Every value is
  * allow-listed; unknown keys are dropped.
  */
 final class Profiles {
 
-	const OPTION = 'cedar_ml_switchers';
+	const OPTION = 'ako_ml_switchers';
 
 	const STYLES     = array( 'link', 'inline', 'segmented', 'dropdown', 'floating' );
 	const SHOW       = array( 'code', 'native', 'both' );
 	const MOBILE     = array( 'same', 'code', 'icon' );
 	const MISSING    = array( 'home', 'hide', 'disabled' );
-	const STYLING    = array( 'cedar', 'inherit' );
+	const STYLING    = array( 'ako', 'inherit' );
 	const SHAPES     = array( 'pill', 'rounded', 'square' );
 	const LINK_LOOKS = array( 'plain', 'outline', 'soft', 'solid' );
 
@@ -48,13 +48,13 @@ final class Profiles {
 	public static function defaults() {
 		return array(
 			'id'       => 'header',
-			'name'     => __( 'Header switcher', 'cedar-multilang' ),
+			'name'     => __( 'Header switcher', 'ako-multilang' ),
 			'style'    => 'dropdown',
 			'show'     => 'code',
 			'icon'     => true,
 			'mobile'   => 'same',
 			'missing'  => 'home',
-			'styling'  => 'cedar',
+			'styling'  => 'ako',
 			'accent'   => '',
 			'shape'    => 'pill',
 			'linkLook' => 'outline',
@@ -145,7 +145,7 @@ final class Profiles {
 
 		$id = isset( $raw['id'] ) ? sanitize_key( (string) $raw['id'] ) : '';
 		if ( '' === $id || strlen( $id ) > 40 ) {
-			return new WP_Error( 'cedar_ml_invalid_switcher', __( 'Use a short ID with letters, numbers, and hyphens.', 'cedar-multilang' ) );
+			return new WP_Error( 'ako_ml_invalid_switcher', __( 'Use a short ID with letters, numbers, and hyphens.', 'ako-multilang' ) );
 		}
 		$clean['id'] = $id;
 
@@ -195,7 +195,7 @@ final class Profiles {
 
 		$profiles = self::stored();
 		if ( ! isset( $profiles[ $profile['id'] ] ) && count( $profiles ) >= self::MAX ) {
-			return new WP_Error( 'cedar_ml_too_many_switchers', __( 'You’ve reached the maximum number of switchers.', 'cedar-multilang' ) );
+			return new WP_Error( 'ako_ml_too_many_switchers', __( 'You’ve reached the maximum number of switchers.', 'ako-multilang' ) );
 		}
 
 		$profiles[ $profile['id'] ] = $profile;
@@ -213,7 +213,7 @@ final class Profiles {
 		$id       = sanitize_key( (string) $id );
 		$profiles = self::stored();
 		if ( ! isset( $profiles[ $id ] ) ) {
-			return new WP_Error( 'cedar_ml_unknown_switcher', __( 'That switcher doesn’t exist.', 'cedar-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ako_ml_unknown_switcher', __( 'That switcher doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 		unset( $profiles[ $id ] );
 		self::write( $profiles );

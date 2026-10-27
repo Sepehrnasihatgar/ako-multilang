@@ -1,21 +1,21 @@
 <?php
 /**
- * REST: /cedar/v1/settings and /cedar/v1/system
+ * REST: /ako/v1/settings and /ako/v1/system
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Rest;
+namespace Ako\Multilang\Rest;
 
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Import\Importer;
-use Cedar\Multilang\Languages\Registry;
-use Cedar\Multilang\Rtl\Compat;
-use Cedar\Multilang\Seo\Health;
-use Cedar\Multilang\Seo\Integrations;
-use Cedar\Multilang\Settings;
-use Cedar\Multilang\Setup\Wizard;
-use Cedar\Multilang\Switcher\Profiles;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Import\Importer;
+use Ako\Multilang\Languages\Registry;
+use Ako\Multilang\Rtl\Compat;
+use Ako\Multilang\Seo\Health;
+use Ako\Multilang\Seo\Integrations;
+use Ako\Multilang\Settings;
+use Ako\Multilang\Setup\Wizard;
+use Ako\Multilang\Switcher\Profiles;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -157,7 +157,7 @@ final class SettingsController {
 			$allowed = wp_list_pluck( self::post_types(), 'slug' );
 			foreach ( $request['post_types'] as $post_type ) {
 				if ( ! in_array( $post_type, $allowed, true ) ) {
-					return new WP_Error( 'cedar_ml_invalid_post_type', __( 'That content type isn’t available.', 'cedar-multilang' ), array( 'status' => 400 ) );
+					return new WP_Error( 'ako_ml_invalid_post_type', __( 'That content type isn’t available.', 'ako-multilang' ), array( 'status' => 400 ) );
 				}
 			}
 			$settings['post_types'] = $request['post_types'];
@@ -233,9 +233,9 @@ final class SettingsController {
 	public static function export() {
 		return rest_ensure_response(
 			array(
-				'plugin'    => 'cedar-multilang',
+				'plugin'    => 'ako-multilang',
 				'format'    => self::EXPORT_FORMAT,
-				'version'   => CEDAR_ML_VERSION,
+				'version'   => AKO_ML_VERSION,
 				'exported'  => gmdate( 'c' ),
 				'settings'  => Settings::get(),
 				'languages' => array(
@@ -257,8 +257,8 @@ final class SettingsController {
 	 */
 	public static function import( WP_REST_Request $request ) {
 		$data = (array) $request['data'];
-		if ( ! isset( $data['plugin'], $data['format'] ) || 'cedar-multilang' !== $data['plugin'] || self::EXPORT_FORMAT !== (int) $data['format'] ) {
-			return new WP_Error( 'cedar_ml_invalid_import', __( 'This isn’t a Cedar settings file.', 'cedar-multilang' ), array( 'status' => 400 ) );
+		if ( ! isset( $data['plugin'], $data['format'] ) || 'ako-multilang' !== $data['plugin'] || self::EXPORT_FORMAT !== (int) $data['format'] ) {
+			return new WP_Error( 'ako_ml_invalid_import', __( 'This isn’t a Ako settings file.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		if ( isset( $data['languages']['languages'] ) && is_array( $data['languages']['languages'] ) ) {
@@ -299,7 +299,7 @@ final class SettingsController {
 			}
 		}
 		if ( ! $list ) {
-			return new WP_Error( 'cedar_ml_invalid_import', __( 'The file has no valid languages.', 'cedar-multilang' ) );
+			return new WP_Error( 'ako_ml_invalid_import', __( 'The file has no valid languages.', 'ako-multilang' ) );
 		}
 
 		$tagged = Wizard::has_tagged_posts();
@@ -337,7 +337,7 @@ final class SettingsController {
 	public static function system() {
 		return rest_ensure_response(
 			array(
-				'version' => CEDAR_ML_VERSION,
+				'version' => AKO_ML_VERSION,
 				'update'  => self::update_status(),
 				'checks'  => self::checks(),
 			)
@@ -350,13 +350,13 @@ final class SettingsController {
 	 * @return array{version:string,notice:string,url:string}|null
 	 */
 	private static function update_status() {
-		$file    = plugin_basename( CEDAR_ML_FILE );
+		$file    = plugin_basename( AKO_ML_FILE );
 		$updates = get_site_transient( 'update_plugins' );
 		if ( ! is_object( $updates ) || empty( $updates->response[ $file ] ) ) {
 			return null;
 		}
 		$update = $updates->response[ $file ];
-		if ( empty( $update->new_version ) || version_compare( $update->new_version, CEDAR_ML_VERSION, '<=' ) ) {
+		if ( empty( $update->new_version ) || version_compare( $update->new_version, AKO_ML_VERSION, '<=' ) ) {
 			return null;
 		}
 
@@ -378,14 +378,14 @@ final class SettingsController {
 		$checks = array(
 			array(
 				'key'    => 'wordpress',
-				'label'  => __( 'WordPress', 'cedar-multilang' ),
+				'label'  => __( 'WordPress', 'ako-multilang' ),
 				'value'  => (string) get_bloginfo( 'version' ),
 				'status' => 'ok',
 			),
 			self::php_check(),
 			array(
 				'key'    => 'theme',
-				'label'  => __( 'Theme', 'cedar-multilang' ),
+				'label'  => __( 'Theme', 'ako-multilang' ),
 				'value'  => (string) wp_get_theme()->get( 'Name' ),
 				'status' => 'ok',
 			),
@@ -394,14 +394,14 @@ final class SettingsController {
 		$checks[] = defined( 'ELEMENTOR_VERSION' )
 			? array(
 				'key'    => 'builder',
-				'label'  => __( 'Page builder', 'cedar-multilang' ),
+				'label'  => __( 'Page builder', 'ako-multilang' ),
 				'value'  => 'Elementor ' . self::short_version( ELEMENTOR_VERSION ),
 				'status' => 'ok',
 			)
 			: array(
 				'key'    => 'builder',
-				'label'  => __( 'Page builder', 'cedar-multilang' ),
-				'value'  => __( 'Block editor', 'cedar-multilang' ),
+				'label'  => __( 'Page builder', 'ako-multilang' ),
+				'value'  => __( 'Block editor', 'ako-multilang' ),
 				'status' => 'ok',
 			);
 
@@ -414,17 +414,17 @@ final class SettingsController {
 		}
 		$checks[] = array(
 			'key'    => 'seo',
-			'label'  => __( 'SEO plugin', 'cedar-multilang' ),
-			'value'  => $seo ? $seo['name'] . ' ' . self::short_version( $seo['version'] ) : __( 'None. Cedar adds hreflang itself.', 'cedar-multilang' ),
+			'label'  => __( 'SEO plugin', 'ako-multilang' ),
+			'value'  => $seo ? $seo['name'] . ' ' . self::short_version( $seo['version'] ) : __( 'None. Ako adds hreflang itself.', 'ako-multilang' ),
 			'status' => 'ok',
 		);
 
 		$cache    = self::cache_plugin();
 		$checks[] = array(
 			'key'    => 'cache',
-			'label'  => __( 'Cache', 'cedar-multilang' ),
+			'label'  => __( 'Cache', 'ako-multilang' ),
 			/* translators: %s: Cache plugin name. */
-			'value'  => $cache ? sprintf( __( '%s · cache-safe', 'cedar-multilang' ), $cache ) : __( 'No page cache', 'cedar-multilang' ),
+			'value'  => $cache ? sprintf( __( '%s · cache-safe', 'ako-multilang' ), $cache ) : __( 'No page cache', 'ako-multilang' ),
 			'status' => $cache ? 'ok' : 'none',
 		);
 
@@ -438,19 +438,19 @@ final class SettingsController {
 				? array(
 					'key'    => $key,
 					'label'  => $source->name(),
-					'value'  => __( 'Still active. You can deactivate it.', 'cedar-multilang' ),
+					'value'  => __( 'Still active. You can deactivate it.', 'ako-multilang' ),
 					'status' => 'none',
 				)
 				: array(
 					'key'     => $key,
 					'label'   => $source->name(),
-					'value'   => __( 'Active. Import its links first.', 'cedar-multilang' ),
+					'value'   => __( 'Active. Import its links first.', 'ako-multilang' ),
 					'status'  => 'warning',
 					/* translators: %s: Plugin name, e.g. "WPML". */
-					'title'   => sprintf( __( '%s is still active', 'cedar-multilang' ), $source->name() ),
+					'title'   => sprintf( __( '%s is still active', 'ako-multilang' ), $source->name() ),
 					'message' => sprintf(
 						/* translators: %s: Plugin name, e.g. "WPML". */
-						__( 'Both plugins add language tags while %s is active. Import its links from Translations, then deactivate it.', 'cedar-multilang' ),
+						__( 'Both plugins add language tags while %s is active. Import its links from Translations, then deactivate it.', 'ako-multilang' ),
 						$source->name()
 					),
 				);
@@ -461,7 +461,7 @@ final class SettingsController {
 
 	/**
 	 * PHP row, using the result of WordPress's own PHP check (the Dashboard
-	 * fetches and caches it; Cedar never makes the request itself).
+	 * fetches and caches it; Ako never makes the request itself).
 	 *
 	 * @return array
 	 */
@@ -472,7 +472,7 @@ final class SettingsController {
 
 		$check = array(
 			'key'    => 'php',
-			'label'  => __( 'PHP', 'cedar-multilang' ),
+			'label'  => __( 'PHP', 'ako-multilang' ),
 			'value'  => (string) PHP_VERSION,
 			'status' => $outdated ? 'warning' : 'ok',
 		);
@@ -480,13 +480,13 @@ final class SettingsController {
 			$recommended = ! empty( $response['recommended_version'] ) ? (string) $response['recommended_version'] : '';
 
 			/* translators: %s: PHP version, e.g. "7.4". */
-			$check['value'] = sprintf( __( '%s (update recommended)', 'cedar-multilang' ), $version );
+			$check['value'] = sprintf( __( '%s (update recommended)', 'ako-multilang' ), $version );
 			/* translators: %s: PHP version, e.g. "7.4". */
-			$check['title']   = sprintf( __( 'PHP %s no longer gets security updates', 'cedar-multilang' ), $version );
+			$check['title']   = sprintf( __( 'PHP %s no longer gets security updates', 'ako-multilang' ), $version );
 			$check['message'] = '' === $recommended
-				? __( 'Cedar keeps working, but your site is safer on a newer PHP version. Ask your host. It’s usually one click.', 'cedar-multilang' )
+				? __( 'Ako keeps working, but your site is safer on a newer PHP version. Ask your host. It’s usually one click.', 'ako-multilang' )
 				/* translators: %s: Recommended PHP version, e.g. "8.3". */
-				: sprintf( __( 'Cedar keeps working, but your site is safer on PHP %s or newer. Ask your host. It’s usually one click.', 'cedar-multilang' ), $recommended );
+				: sprintf( __( 'Ako keeps working, but your site is safer on PHP %s or newer. Ask your host. It’s usually one click.', 'ako-multilang' ), $recommended );
 		}
 		return $check;
 	}

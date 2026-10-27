@@ -1,5 +1,5 @@
 /**
- * Classic editor: the same panel inside the "Language · Cedar" metabox.
+ * Classic editor: the same panel inside the "Language · Ako" metabox.
  */
 import domReady from '@wordpress/dom-ready';
 import { createRoot, useCallback, useState } from '@wordpress/element';
@@ -21,7 +21,7 @@ function ClassicPanel( { postId } ) {
 				reloadKey={ 0 }
 				notify={ notify }
 			/>
-			<div className="cedar-ml">
+			<div className="ako-ml">
 				<Toast toast={ toast } onDismiss={ dismiss } />
 			</div>
 		</>
@@ -29,7 +29,7 @@ function ClassicPanel( { postId } ) {
 }
 
 domReady( () => {
-	const root = document.getElementById( 'cedar-ml-classic' );
+	const root = document.getElementById( 'ako-ml-classic' );
 	const postId = root ? parseInt( root.dataset.postId, 10 ) : 0;
 	if ( postId > 0 ) {
 		createRoot( root ).render( <ClassicPanel postId={ postId } /> );

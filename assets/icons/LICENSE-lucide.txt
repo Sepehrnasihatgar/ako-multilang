@@ -1,4 +1,4 @@
-Lucide icons (https://lucide.dev), used in the Cedar Multilang admin.
+Lucide icons (https://lucide.dev), used in the Ako Multilang admin.
 
 ISC License
 

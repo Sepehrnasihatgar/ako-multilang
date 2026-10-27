@@ -2,10 +2,10 @@
 /**
  * Reads WPML's translation groups.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Import;
+namespace Ako\Multilang\Import;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -126,7 +126,7 @@ final class Wpml extends Source {
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- WPML's table; values go through prepare().
 		return (int) $wpdb->get_var(
 			$wpdb->prepare(
-				'SELECT COUNT(*) FROM ( SELECT trid FROM %i WHERE element_type IN ( ' . implode( ', ', array_fill( 0, count( $types ), '%s' ) ) . ' ) AND element_id IS NOT NULL GROUP BY trid HAVING COUNT(*) > 1 ) AS cedar_groups',
+				'SELECT COUNT(*) FROM ( SELECT trid FROM %i WHERE element_type IN ( ' . implode( ', ', array_fill( 0, count( $types ), '%s' ) ) . ' ) AND element_id IS NOT NULL GROUP BY trid HAVING COUNT(*) > 1 ) AS ako_groups',
 				array_merge( array( self::table() ), $types )
 			)
 		);

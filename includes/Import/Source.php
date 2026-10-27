@@ -2,10 +2,10 @@
 /**
  * Base class for reading another multilingual plugin's links.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Import;
+namespace Ako\Multilang\Import;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -60,7 +60,7 @@ abstract class Source {
 	/**
 	 * Number of translation groups with at least two posts of the given types.
 	 *
-	 * @param string[] $post_types Post types Cedar handles.
+	 * @param string[] $post_types Post types Ako handles.
 	 * @return int
 	 */
 	abstract public function count_groups( array $post_types );
@@ -68,7 +68,7 @@ abstract class Source {
 	/**
 	 * One page of groups: each is [ its language code => post ID ].
 	 *
-	 * @param string[] $post_types Post types Cedar handles.
+	 * @param string[] $post_types Post types Ako handles.
 	 * @param int      $offset     Groups to skip.
 	 * @param int      $limit      Groups to return.
 	 * @return array<int,array<string,int>>

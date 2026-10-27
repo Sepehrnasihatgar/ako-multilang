@@ -8,11 +8,11 @@ import Icon from './Icon';
 import SwitcherMarkup from './SwitcherMarkup';
 
 export const STYLES = [
-	{ value: 'link', label: () => __( 'Link', 'cedar-multilang' ) },
-	{ value: 'inline', label: () => __( 'Inline', 'cedar-multilang' ) },
-	{ value: 'segmented', label: () => __( 'Segmented', 'cedar-multilang' ) },
-	{ value: 'dropdown', label: () => __( 'Dropdown', 'cedar-multilang' ) },
-	{ value: 'floating', label: () => __( 'Floating', 'cedar-multilang' ) },
+	{ value: 'link', label: () => __( 'Link', 'ako-multilang' ) },
+	{ value: 'inline', label: () => __( 'Inline', 'ako-multilang' ) },
+	{ value: 'segmented', label: () => __( 'Segmented', 'ako-multilang' ) },
+	{ value: 'dropdown', label: () => __( 'Dropdown', 'ako-multilang' ) },
+	{ value: 'floating', label: () => __( 'Floating', 'ako-multilang' ) },
 ];
 
 /**
@@ -93,7 +93,7 @@ export default function StyleTiles( {
 
 	return (
 		<div
-			className="cedar-tiles"
+			className="ako-tiles"
 			role="radiogroup"
 			aria-labelledby={ labelledBy }
 		>
@@ -109,11 +109,11 @@ export default function StyleTiles( {
 						role="radio"
 						aria-checked={ selected }
 						tabIndex={ selected ? 0 : -1 }
-						className={ `cedar-tile ${ selected ? 'is-selected' : '' }` }
+						className={ `ako-tile ${ selected ? 'is-selected' : '' }` }
 						onClick={ () => onChange( style.value ) }
 						onKeyDown={ ( event ) => onKeyDown( event, index ) }
 					>
-						<span className="cedar-tile__thumb" inert="">
+						<span className="ako-tile__thumb" inert="">
 							{ items.length > 1 && (
 								<SwitcherMarkup
 									profile={ {
@@ -130,7 +130,7 @@ export default function StyleTiles( {
 											'floating',
 										].includes( style.value ),
 										mobile: 'same',
-										styling: 'cedar',
+										styling: 'ako',
 										accent: '',
 										linkLook: 'outline',
 									} }
@@ -138,7 +138,7 @@ export default function StyleTiles( {
 								/>
 							) }
 						</span>
-						<span className="cedar-tile__label">
+						<span className="ako-tile__label">
 							<span>{ style.label() }</span>
 							{ selected && (
 								<Icon name="circle-check" size={ 14 } />

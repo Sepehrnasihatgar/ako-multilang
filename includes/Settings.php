@@ -2,19 +2,19 @@
 /**
  * Typed access to the plugin settings option.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang;
+namespace Ako\Multilang;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Reads, sanitizes and saves `cedar_ml_settings`.
+ * Reads, sanitizes and saves `ako_ml_settings`.
  */
 final class Settings {
 
-	const OPTION = 'cedar_ml_settings';
+	const OPTION = 'ako_ml_settings';
 
 	/**
 	 * Allowed values for the "no translation" behavior.

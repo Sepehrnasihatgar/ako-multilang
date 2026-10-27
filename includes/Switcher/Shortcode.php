@@ -1,11 +1,11 @@
 <?php
 /**
- * [cedar_switcher] and the legacy [lang_switch] shortcode from Cedar 6.2.
+ * [ako_switcher] and the legacy [lang_switch] shortcode from Cedar 6.2.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Switcher;
+namespace Ako\Multilang\Switcher;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ final class Shortcode {
 	 * Registers the shortcodes.
 	 */
 	public static function register() {
-		add_shortcode( 'cedar_switcher', array( self::class, 'render' ) );
+		add_shortcode( 'ako_switcher', array( self::class, 'render' ) );
 
 		// Sites upgrading from 6.2 keep working; another plugin's [lang_switch] wins.
 		if ( ! shortcode_exists( 'lang_switch' ) ) {
@@ -27,7 +27,7 @@ final class Shortcode {
 	}
 
 	/**
-	 * [cedar_switcher id="header" type="segmented" show="code"]
+	 * [ako_switcher id="header" type="segmented" show="code"]
 	 *
 	 * `type` (alias `style`) and `show` override the saved switcher; every
 	 * value is validated against the same allow-lists as the settings screen.
@@ -44,7 +44,7 @@ final class Shortcode {
 				'show'  => '',
 			),
 			is_array( $atts ) ? $atts : array(),
-			'cedar_switcher'
+			'ako_switcher'
 		);
 
 		$overrides = array();

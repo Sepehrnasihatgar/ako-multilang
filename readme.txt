@@ -1,4 +1,4 @@
-=== Cedar Multilang ===
+=== Ako Multilang ===
 Contributors: sepehrnasihatgar
 Tags: multilingual, hreflang, rtl, language switcher, bilingual
 Requires at least: 6.6
@@ -12,7 +12,7 @@ Link your pages across languages with hreflang, right-to-left support, and a lan
 
 == Description ==
 
-Cedar Multilang connects pages you already have in different languages. It doesn't translate anything, and it never changes your URLs, so it fits right into a site you've already built.
+Ako Multilang connects pages you already have in different languages. It doesn't translate anything, and it never changes your URLs, so it fits right into a site you've already built.
 
 It's made for bilingual sites with a right-to-left language, like Farsi, Arabic, or Hebrew next to English. It works just as well for any other pair of languages.
 
@@ -20,7 +20,7 @@ It's made for bilingual sites with a right-to-left language, like Farsi, Arabic,
 
 * Link any post, page, or custom post type to its translations. Do it from the editor, the Translations screen, or the setup.
 * Setup finds the languages your site already uses and suggests page pairs from your URLs and titles, like `/about` and `/fa/about`. You check every pair before anything is saved.
-* Start a translation with one click: Cedar copies a page into a draft in the other language.
+* Start a translation with one click: Ako copies a page into a draft in the other language.
 * Works with pages you built in Elementor or the block editor.
 
 = SEO =
@@ -38,26 +38,26 @@ It's made for bilingual sites with a right-to-left language, like Farsi, Arabic,
 
 = Language switcher =
 
-* Add it as a block, a menu item, the `[cedar_switcher]` shortcode, or a floating button. Setup can add it to your header menu for you, on classic and block themes.
+* Add it as a block, a menu item, the `[ako_switcher]` shortcode, or a floating button. Setup can add it to your header menu for you, on classic and block themes.
 * Five looks: link, inline, segmented, dropdown, and floating, with a live preview in the admin.
 * Works with a keyboard and screen readers. When a page has no translation, it links to that language's homepage.
 
 = Switching from another plugin =
 
-* Imports linked pages from WPML and Polylang. Cedar only reads their data and never changes it, so you can switch back anytime.
-* Keeps your pairs and the `[lang_switch]` shortcode from Cedar Multilang 6.2.
+* Imports linked pages from WPML and Polylang. Ako only reads their data and never changes it, so you can switch back anytime.
+* Keeps your pairs and the `[lang_switch]` shortcode from Cedar Multilang 6.2, the private plugin Ako grew out of.
 
 = Privacy =
 
-Cedar Multilang makes no external requests, adds no tracking, and collects no data. Its admin fonts and icons ship with the plugin.
+Ako Multilang makes no external requests, adds no tracking, and collects no data. Its admin fonts and icons ship with the plugin.
 
 == Installation ==
 
-1. Install Cedar Multilang from the Plugins screen, or upload the plugin folder to `/wp-content/plugins/`.
+1. Install Ako Multilang from the Plugins screen, or upload the plugin folder to `/wp-content/plugins/`.
 2. Activate it.
 3. Follow the setup: pick your languages, connect your pages, and add the switcher.
 
-You can change all of it later under Cedar in the admin menu.
+You can change all of it later under Ako in the admin menu.
 
 == Frequently Asked Questions ==
 
@@ -67,7 +67,7 @@ No. It links pages you've already written in each language. To start a translati
 
 = Does it change my URLs? =
 
-No. Every page keeps its address. Cedar only adds the links between them.
+No. Every page keeps its address. Ako only adds the links between them.
 
 = I use WPML or Polylang. Can I switch? =
 
@@ -75,7 +75,7 @@ Yes. Setup finds their data and imports your linked pages. Their own data isn't 
 
 = Does it work with Elementor? =
 
-Yes. Elementor pages link like any other page, and right-to-left pages load Elementor's right-to-left styles. To show the switcher in an Elementor layout, put the `[cedar_switcher]` shortcode in a Shortcode widget.
+Yes. Elementor pages link like any other page, and right-to-left pages load Elementor's right-to-left styles. To show the switcher in an Elementor layout, put the `[ako_switcher]` shortcode in a Shortcode widget.
 
 = The switcher doesn't show in my menu. What should I check? =
 
@@ -83,7 +83,7 @@ Make sure you added it to the menu your header actually uses. On classic themes,
 
 = What happens when I uninstall it? =
 
-Your pages stay exactly as they are. Cedar's settings and links stay too, unless you turn on "Delete Cedar data on uninstall" in Settings first.
+Your pages stay exactly as they are. Ako's settings and links stay too, unless you turn on "Delete Ako data on uninstall" in Settings first.
 
 == Screenshots ==
 

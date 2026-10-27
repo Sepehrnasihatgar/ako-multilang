@@ -2,20 +2,20 @@
 /**
  * The switcher as a menu item (Appearance → Menus and the Navigation block).
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Switcher;
+namespace Ako\Multilang\Switcher;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * A switcher is stored as a custom link whose URL is `#cedar-switcher-{id}`;
+ * A switcher is stored as a custom link whose URL is `#ako-switcher-{id}`;
  * on output that link is replaced with the rendered switcher.
  */
 final class MenuItem {
 
-	const URL_PATTERN = '/^#cedar-switcher-([a-z0-9_-]{1,40})$/';
+	const URL_PATTERN = '/^#ako-switcher-([a-z0-9_-]{1,40})$/';
 
 	/**
 	 * Hooks into menus.
@@ -31,8 +31,8 @@ final class MenuItem {
 	 */
 	public static function add_meta_box() {
 		add_meta_box(
-			'cedar-ml-menu-switcher',
-			__( 'Language switcher', 'cedar-multilang' ),
+			'ako-ml-menu-switcher',
+			__( 'Language switcher', 'ako-multilang' ),
 			array( self::class, 'render_meta_box' ),
 			'nav-menus',
 			'side',
@@ -47,7 +47,7 @@ final class MenuItem {
 	public static function render_meta_box() {
 		$index = -1;
 		?>
-		<div id="cedar-ml-switcher-items" class="posttypediv">
+		<div id="ako-ml-switcher-items" class="posttypediv">
 			<div class="tabs-panel tabs-panel-active">
 				<ul class="categorychecklist form-no-clear">
 					<?php foreach ( Profiles::all() as $profile ) : ?>
@@ -57,8 +57,8 @@ final class MenuItem {
 								<?php echo esc_html( $profile['name'] ); ?>
 							</label>
 							<input type="hidden" class="menu-item-type" name="menu-item[<?php echo (int) $index; ?>][menu-item-type]" value="custom" />
-							<input type="hidden" class="menu-item-title" name="menu-item[<?php echo (int) $index; ?>][menu-item-title]" value="<?php esc_attr_e( 'Language switcher', 'cedar-multilang' ); ?>" />
-							<input type="hidden" class="menu-item-url" name="menu-item[<?php echo (int) $index; ?>][menu-item-url]" value="<?php echo esc_attr( '#cedar-switcher-' . $profile['id'] ); ?>" />
+							<input type="hidden" class="menu-item-title" name="menu-item[<?php echo (int) $index; ?>][menu-item-title]" value="<?php esc_attr_e( 'Language switcher', 'ako-multilang' ); ?>" />
+							<input type="hidden" class="menu-item-url" name="menu-item[<?php echo (int) $index; ?>][menu-item-url]" value="<?php echo esc_attr( '#ako-switcher-' . $profile['id'] ); ?>" />
 						</li>
 						<?php --$index; ?>
 					<?php endforeach; ?>
@@ -66,7 +66,7 @@ final class MenuItem {
 			</div>
 			<p class="button-controls wp-clearfix">
 				<span class="add-to-menu">
-					<input type="submit" class="button submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'cedar-multilang' ); ?>" name="add-cedar-ml-switcher-menu-item" id="submit-cedar-ml-switcher-items" />
+					<input type="submit" class="button submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'ako-multilang' ); ?>" name="add-ako-ml-switcher-menu-item" id="submit-ako-ml-switcher-items" />
 					<span class="spinner"></span>
 				</span>
 			</p>

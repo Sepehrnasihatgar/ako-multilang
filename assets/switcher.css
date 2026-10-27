@@ -1,125 +1,125 @@
 /**
- * Cedar language switcher.
+ * Ako language switcher.
  *
  * Values come from the Figma "Switcher" variable collection (Light mode).
  * Everything sits inside :where() so any theme rule wins without !important.
- * Override the --cedar-switcher-* properties to restyle; the Dark values are
+ * Override the --ako-switcher-* properties to restyle; the Dark values are
  * listed at the end as a ready-made example.
  */
 
-:where(.cedar-switcher) {
-	--cedar-switcher-bg: #fff;
-	--cedar-switcher-bg-hover: #f0f0ec;
-	--cedar-switcher-surface: #fff;
-	--cedar-switcher-accent: #181815;
-	--cedar-switcher-on-accent: #fff;
-	--cedar-switcher-fg: #2c2c28;
-	--cedar-switcher-fg-muted: #73736f;
-	--cedar-switcher-fg-disabled: #cececa;
-	--cedar-switcher-border: #e3e3df;
-	--cedar-switcher-focus-ring: #3d8c64;
-	--cedar-switcher-radius: 999px;
-	--cedar-switcher-menu-radius: 12px;
-	--cedar-switcher-padding-x: 12px;
-	--cedar-switcher-padding-y: 6px;
-	--cedar-switcher-gap: 6px;
-	--cedar-switcher-font-size: 14px;
-	--cedar-switcher-icon-size: 16px;
-	--cedar-switcher-border-width: 1px;
-	--cedar-switcher-focus-width: 2px;
-	--cedar-switcher-container-padding: 4px;
-	--cedar-switcher-item-gap: 2px;
-	--cedar-switcher-menu-offset: 6px;
+:where(.ako-switcher) {
+	--ako-switcher-bg: #fff;
+	--ako-switcher-bg-hover: #f0f0ec;
+	--ako-switcher-surface: #fff;
+	--ako-switcher-accent: #181815;
+	--ako-switcher-on-accent: #fff;
+	--ako-switcher-fg: #2c2c28;
+	--ako-switcher-fg-muted: #73736f;
+	--ako-switcher-fg-disabled: #cececa;
+	--ako-switcher-border: #e3e3df;
+	--ako-switcher-focus-ring: #3d8c64;
+	--ako-switcher-radius: 999px;
+	--ako-switcher-menu-radius: 12px;
+	--ako-switcher-padding-x: 12px;
+	--ako-switcher-padding-y: 6px;
+	--ako-switcher-gap: 6px;
+	--ako-switcher-font-size: 14px;
+	--ako-switcher-icon-size: 16px;
+	--ako-switcher-border-width: 1px;
+	--ako-switcher-focus-width: 2px;
+	--ako-switcher-container-padding: 4px;
+	--ako-switcher-item-gap: 2px;
+	--ako-switcher-menu-offset: 6px;
 
 	position: relative;
 	display: inline-block;
-	color: var(--cedar-switcher-fg);
+	color: var(--ako-switcher-fg);
 	font-family: inherit;
-	font-size: var(--cedar-switcher-font-size);
+	font-size: var(--ako-switcher-font-size);
 	font-weight: 500;
 	line-height: 20px;
 }
 
-:where(.cedar-switcher) :where(*, *::before, *::after) {
+:where(.ako-switcher) :where(*, *::before, *::after) {
 	box-sizing: border-box;
 }
 
-:where(.cedar-switcher--rounded) {
-	--cedar-switcher-radius: 8px;
+:where(.ako-switcher--rounded) {
+	--ako-switcher-radius: 8px;
 }
 
-:where(.cedar-switcher--square) {
-	--cedar-switcher-radius: 0;
-	--cedar-switcher-menu-radius: 0;
+:where(.ako-switcher--square) {
+	--ako-switcher-radius: 0;
+	--ako-switcher-menu-radius: 0;
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__list, .cedar-switcher__menu) {
+:where(.ako-switcher) :where(.ako-switcher__list, .ako-switcher__menu) {
 	display: flex;
-	gap: var(--cedar-switcher-item-gap);
+	gap: var(--ako-switcher-item-gap);
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__entry) {
+:where(.ako-switcher) :where(.ako-switcher__entry) {
 	margin: 0;
 	padding: 0;
 }
 
 /* Item (Figma: .Building blocks/Switcher item) */
 
-:where(.cedar-switcher) :where(.cedar-switcher__item, .cedar-switcher__toggle) {
+:where(.ako-switcher) :where(.ako-switcher__item, .ako-switcher__toggle) {
 	display: inline-flex;
 	align-items: center;
-	gap: var(--cedar-switcher-gap);
-	padding: var(--cedar-switcher-padding-y) var(--cedar-switcher-padding-x);
-	border-radius: var(--cedar-switcher-radius);
+	gap: var(--ako-switcher-gap);
+	padding: var(--ako-switcher-padding-y) var(--ako-switcher-padding-x);
+	border-radius: var(--ako-switcher-radius);
 	color: inherit;
 	text-decoration: none;
 	white-space: nowrap;
 }
 
-:where(.cedar-switcher) :where(a.cedar-switcher__item:hover, .cedar-switcher__toggle:hover) {
-	background: var(--cedar-switcher-bg-hover);
+:where(.ako-switcher) :where(a.ako-switcher__item:hover, .ako-switcher__toggle:hover) {
+	background: var(--ako-switcher-bg-hover);
 }
 
-:where(.cedar-switcher) :where(a, summary):focus-visible {
-	outline: var(--cedar-switcher-focus-width) solid var(--cedar-switcher-focus-ring);
+:where(.ako-switcher) :where(a, summary):focus-visible {
+	outline: var(--ako-switcher-focus-width) solid var(--ako-switcher-focus-ring);
 	outline-offset: 1px;
 }
 
-:where(.cedar-switcher) :where(.is-current) {
-	background: var(--cedar-switcher-accent);
-	color: var(--cedar-switcher-on-accent);
+:where(.ako-switcher) :where(.is-current) {
+	background: var(--ako-switcher-accent);
+	color: var(--ako-switcher-on-accent);
 }
 
-:where(.cedar-switcher) :where(.is-disabled) {
+:where(.ako-switcher) :where(.is-disabled) {
 	position: relative;
-	color: var(--cedar-switcher-fg-disabled);
+	color: var(--ako-switcher-fg-disabled);
 	cursor: default;
 }
 
-:where(.cedar-switcher) :where(.is-disabled[data-tooltip]:hover)::after {
+:where(.ako-switcher) :where(.is-disabled[data-tooltip]:hover)::after {
 	content: attr(data-tooltip);
 	position: absolute;
 	z-index: 10;
-	inset-block-end: calc(100% + var(--cedar-switcher-menu-offset));
+	inset-block-end: calc(100% + var(--ako-switcher-menu-offset));
 	inset-inline-start: 0;
-	padding: var(--cedar-switcher-padding-y) var(--cedar-switcher-padding-x);
-	border-radius: var(--cedar-switcher-menu-radius);
-	background: var(--cedar-switcher-accent);
-	color: var(--cedar-switcher-on-accent);
+	padding: var(--ako-switcher-padding-y) var(--ako-switcher-padding-x);
+	border-radius: var(--ako-switcher-menu-radius);
+	background: var(--ako-switcher-accent);
+	color: var(--ako-switcher-on-accent);
 	font-size: 12px;
 	white-space: nowrap;
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__icon) {
+:where(.ako-switcher) :where(.ako-switcher__icon) {
 	flex: none;
-	inline-size: var(--cedar-switcher-icon-size);
-	block-size: var(--cedar-switcher-icon-size);
+	inline-size: var(--ako-switcher-icon-size);
+	block-size: var(--ako-switcher-icon-size);
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__code) {
+:where(.ako-switcher) :where(.ako-switcher__code) {
 	font-size: 12px;
 	font-weight: 600;
 	letter-spacing: 0.6px;
@@ -127,8 +127,8 @@
 
 /* What each label shows. The native name stays readable by screen readers. */
 
-:where(.cedar-switcher--show-code) :where(.cedar-switcher__toggle, .cedar-switcher__list) :where(.cedar-switcher__name),
-:where(.cedar-switcher__sr) {
+:where(.ako-switcher--show-code) :where(.ako-switcher__toggle, .ako-switcher__list) :where(.ako-switcher__name),
+:where(.ako-switcher__sr) {
 	position: absolute;
 	inline-size: 1px;
 	block-size: 1px;
@@ -137,13 +137,13 @@
 	white-space: nowrap;
 }
 
-:where(.cedar-switcher--show-native) :where(.cedar-switcher__code) {
+:where(.ako-switcher--show-native) :where(.ako-switcher__code) {
 	display: none;
 }
 
 @media (max-width: 600px) {
 
-	:where(.cedar-switcher--sm-code, .cedar-switcher--sm-icon) :where(.cedar-switcher__name) {
+	:where(.ako-switcher--sm-code, .ako-switcher--sm-icon) :where(.ako-switcher__name) {
 		position: absolute;
 		inline-size: 1px;
 		block-size: 1px;
@@ -151,156 +151,156 @@
 		clip-path: inset(50%);
 	}
 
-	:where(.cedar-switcher--sm-code) :where(.cedar-switcher__code) {
+	:where(.ako-switcher--sm-code) :where(.ako-switcher__code) {
 		display: inline;
 	}
 
-	:where(.cedar-switcher--sm-icon) :where(.cedar-switcher__code) {
+	:where(.ako-switcher--sm-icon) :where(.ako-switcher__code) {
 		display: none;
 	}
 }
 
 /* Link (Figma: Switcher/Link — Plain, Outline, Soft, Solid) */
 
-:where(.cedar-switcher--look-outline) :where(.cedar-switcher__item) {
-	box-shadow: inset 0 0 0 var(--cedar-switcher-border-width) var(--cedar-switcher-border);
+:where(.ako-switcher--look-outline) :where(.ako-switcher__item) {
+	box-shadow: inset 0 0 0 var(--ako-switcher-border-width) var(--ako-switcher-border);
 }
 
-:where(.cedar-switcher--look-soft) :where(.cedar-switcher__item) {
-	background: var(--cedar-switcher-bg-hover);
+:where(.ako-switcher--look-soft) :where(.ako-switcher__item) {
+	background: var(--ako-switcher-bg-hover);
 }
 
-:where(.cedar-switcher--look-solid) :where(.cedar-switcher__item) {
-	background: var(--cedar-switcher-accent);
-	color: var(--cedar-switcher-on-accent);
+:where(.ako-switcher--look-solid) :where(.ako-switcher__item) {
+	background: var(--ako-switcher-accent);
+	color: var(--ako-switcher-on-accent);
 }
 
 /* Segmented (Figma: Switcher/Segmented) */
 
-:where(.cedar-switcher--segmented) :where(.cedar-switcher__list) {
-	padding: var(--cedar-switcher-container-padding);
-	border: var(--cedar-switcher-border-width) solid var(--cedar-switcher-border);
-	border-radius: var(--cedar-switcher-radius);
-	background: var(--cedar-switcher-bg);
+:where(.ako-switcher--segmented) :where(.ako-switcher__list) {
+	padding: var(--ako-switcher-container-padding);
+	border: var(--ako-switcher-border-width) solid var(--ako-switcher-border);
+	border-radius: var(--ako-switcher-radius);
+	background: var(--ako-switcher-bg);
 }
 
-:where(.cedar-switcher--segmented) :where(.cedar-switcher__item) {
+:where(.ako-switcher--segmented) :where(.ako-switcher__item) {
 	padding-block: 4px;
 }
 
 /* Dropdown & Floating (Figma: Switcher/Dropdown, Switcher/Floating) */
 
-:where(.cedar-switcher) :where(.cedar-switcher__details) {
+:where(.ako-switcher) :where(.ako-switcher__details) {
 	position: relative;
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__toggle) {
-	border: var(--cedar-switcher-border-width) solid var(--cedar-switcher-border);
-	background: var(--cedar-switcher-bg);
+:where(.ako-switcher) :where(.ako-switcher__toggle) {
+	border: var(--ako-switcher-border-width) solid var(--ako-switcher-border);
+	background: var(--ako-switcher-bg);
 	cursor: pointer;
 	list-style: none;
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__toggle)::-webkit-details-marker {
+:where(.ako-switcher) :where(.ako-switcher__toggle)::-webkit-details-marker {
 	display: none;
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__chevron) {
+:where(.ako-switcher) :where(.ako-switcher__chevron) {
 	transition: transform 120ms ease;
 }
 
-:where(.cedar-switcher) :where(details[open] .cedar-switcher__chevron) {
+:where(.ako-switcher) :where(details[open] .ako-switcher__chevron) {
 	transform: rotate(180deg);
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__menu) {
+:where(.ako-switcher) :where(.ako-switcher__menu) {
 	position: absolute;
 	z-index: 1000;
-	inset-block-start: calc(100% + var(--cedar-switcher-menu-offset));
+	inset-block-start: calc(100% + var(--ako-switcher-menu-offset));
 	inset-inline-start: 0;
 	flex-direction: column;
 	min-inline-size: 200px;
-	padding: var(--cedar-switcher-container-padding);
-	border: var(--cedar-switcher-border-width) solid var(--cedar-switcher-border);
-	border-radius: var(--cedar-switcher-menu-radius);
-	background: var(--cedar-switcher-surface);
+	padding: var(--ako-switcher-container-padding);
+	border: var(--ako-switcher-border-width) solid var(--ako-switcher-border);
+	border-radius: var(--ako-switcher-menu-radius);
+	background: var(--ako-switcher-surface);
 	box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 12px 24px -4px rgb(0 0 0 / 12%);
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__menu.is-end) {
+:where(.ako-switcher) :where(.ako-switcher__menu.is-end) {
 	inset-inline-start: auto;
 	inset-inline-end: 0;
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__menu .cedar-switcher__item) {
+:where(.ako-switcher) :where(.ako-switcher__menu .ako-switcher__item) {
 	justify-content: space-between;
 	inline-size: 100%;
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__menu .is-current) {
-	background: var(--cedar-switcher-bg-hover);
-	color: var(--cedar-switcher-fg);
+:where(.ako-switcher) :where(.ako-switcher__menu .is-current) {
+	background: var(--ako-switcher-bg-hover);
+	color: var(--ako-switcher-fg);
 }
 
-:where(.cedar-switcher) :where(.cedar-switcher__menu .cedar-switcher__code) {
-	color: var(--cedar-switcher-fg-muted);
+:where(.ako-switcher) :where(.ako-switcher__menu .ako-switcher__code) {
+	color: var(--ako-switcher-fg-muted);
 }
 
-:where(.cedar-switcher--floating) {
+:where(.ako-switcher--floating) {
 	position: fixed;
 	z-index: 9999;
 	inset-block-end: 24px;
 	inset-inline-end: 24px;
 }
 
-:where(.cedar-switcher--floating) :where(.cedar-switcher__toggle) {
+:where(.ako-switcher--floating) :where(.ako-switcher__toggle) {
 	border-color: transparent;
-	background: var(--cedar-switcher-accent);
-	color: var(--cedar-switcher-on-accent);
+	background: var(--ako-switcher-accent);
+	color: var(--ako-switcher-on-accent);
 	box-shadow: 0 4px 8px rgb(0 0 0 / 10%), 0 16px 32px -8px rgb(0 0 0 / 16%);
 }
 
-:where(.cedar-switcher--floating) :where(.cedar-switcher__menu) {
+:where(.ako-switcher--floating) :where(.ako-switcher__menu) {
 	inset-block: auto calc(100% + 8px);
 	inset-inline: auto 0;
 }
 
 /* Inherit from theme: structure only; theme colors and fonts show. */
 
-:where(.cedar-switcher--inherit) {
+:where(.ako-switcher--inherit) {
 	color: inherit;
 	font: inherit;
 }
 
-:where(.cedar-switcher--inherit) :where(.cedar-switcher__item, .cedar-switcher__toggle, .is-current, .cedar-switcher__menu) {
+:where(.ako-switcher--inherit) :where(.ako-switcher__item, .ako-switcher__toggle, .is-current, .ako-switcher__menu) {
 	border: 0;
 	background: none;
 	box-shadow: none;
 	color: inherit;
 }
 
-:where(.cedar-switcher--inherit) :where(.is-current) {
+:where(.ako-switcher--inherit) :where(.is-current) {
 	font-weight: 700;
 }
 
-:where(.cedar-switcher--inherit) :where(.cedar-switcher__menu) {
-	background: var(--cedar-switcher-surface);
+:where(.ako-switcher--inherit) :where(.ako-switcher__menu) {
+	background: var(--ako-switcher-surface);
 }
 
 /*
  * Dark mode values (Figma: Switcher / Dark). Example for a theme:
  *
- * .dark .cedar-switcher {
- *   --cedar-switcher-bg: #181815;
- *   --cedar-switcher-bg-hover: #2c2c28;
- *   --cedar-switcher-surface: #2c2c28;
- *   --cedar-switcher-accent: #fff;
- *   --cedar-switcher-on-accent: #181815;
- *   --cedar-switcher-fg: #f0f0ec;
- *   --cedar-switcher-fg-muted: #a5a5a1;
- *   --cedar-switcher-fg-disabled: #585854;
- *   --cedar-switcher-border: #41413e;
- *   --cedar-switcher-focus-ring: #91ceab;
+ * .dark .ako-switcher {
+ *   --ako-switcher-bg: #181815;
+ *   --ako-switcher-bg-hover: #2c2c28;
+ *   --ako-switcher-surface: #2c2c28;
+ *   --ako-switcher-accent: #fff;
+ *   --ako-switcher-on-accent: #181815;
+ *   --ako-switcher-fg: #f0f0ec;
+ *   --ako-switcher-fg-muted: #a5a5a1;
+ *   --ako-switcher-fg-disabled: #585854;
+ *   --ako-switcher-border: #41413e;
+ *   --ako-switcher-focus-ring: #91ceab;
  * }
  */
 
@@ -312,16 +312,16 @@
  * and radii above stay easy to override. `display` is !important because
  * some mobile menus style links by ID (`#mobile-dropdown ul li a`).
  */
-.cedar-switcher,
-.cedar-switcher *,
-.cedar-switcher *::before,
-.cedar-switcher *::after {
+.ako-switcher,
+.ako-switcher *,
+.ako-switcher *::before,
+.ako-switcher *::after {
 	box-sizing: border-box;
 }
 
-.cedar-switcher .cedar-switcher__list {
+.ako-switcher .ako-switcher__list {
 	display: flex !important;
-	gap: var(--cedar-switcher-item-gap);
+	gap: var(--ako-switcher-item-gap);
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -329,16 +329,16 @@
 	opacity: 1;
 }
 
-.cedar-switcher.cedar-switcher--segmented .cedar-switcher__list {
-	padding: var(--cedar-switcher-container-padding);
+.ako-switcher.ako-switcher--segmented .ako-switcher__list {
+	padding: var(--ako-switcher-container-padding);
 }
 
-.cedar-switcher .cedar-switcher__details[open] > .cedar-switcher__menu {
+.ako-switcher .ako-switcher__details[open] > .ako-switcher__menu {
 	display: flex !important;
 	flex-direction: column;
-	gap: var(--cedar-switcher-item-gap);
+	gap: var(--ako-switcher-item-gap);
 	margin: 0;
-	padding: var(--cedar-switcher-container-padding);
+	padding: var(--ako-switcher-container-padding);
 	list-style: none;
 	visibility: visible;
 	opacity: 1;
@@ -346,41 +346,41 @@
 	pointer-events: auto;
 }
 
-.cedar-switcher .cedar-switcher__entry {
+.ako-switcher .ako-switcher__entry {
 	margin: 0;
 	padding: 0;
 }
 
 /* Three classes, so theme menu link rules (two classes) don't win. */
-.cedar-switcher .cedar-switcher__list .cedar-switcher__item,
-.cedar-switcher .cedar-switcher__menu .cedar-switcher__item,
-.cedar-switcher .cedar-switcher__details .cedar-switcher__toggle {
+.ako-switcher .ako-switcher__list .ako-switcher__item,
+.ako-switcher .ako-switcher__menu .ako-switcher__item,
+.ako-switcher .ako-switcher__details .ako-switcher__toggle {
 	display: inline-flex !important;
 	align-items: center;
-	gap: var(--cedar-switcher-gap);
+	gap: var(--ako-switcher-gap);
 	margin: 0;
-	padding: var(--cedar-switcher-padding-y) var(--cedar-switcher-padding-x);
+	padding: var(--ako-switcher-padding-y) var(--ako-switcher-padding-x);
 	white-space: nowrap;
 }
 
-.cedar-switcher.cedar-switcher--segmented .cedar-switcher__list .cedar-switcher__item {
+.ako-switcher.ako-switcher--segmented .ako-switcher__list .ako-switcher__item {
 	padding-block: 4px;
 }
 
-.cedar-switcher .cedar-switcher__menu .cedar-switcher__item {
+.ako-switcher .ako-switcher__menu .ako-switcher__item {
 	display: flex !important;
 	justify-content: space-between;
 	inline-size: 100%;
 }
 
-/* Cedar style keeps its own type size inside theme menus. */
-.cedar-switcher:not(.cedar-switcher--inherit) .cedar-switcher__item,
-.cedar-switcher:not(.cedar-switcher--inherit) .cedar-switcher__toggle {
+/* Ako style keeps its own type size inside theme menus. */
+.ako-switcher:not(.ako-switcher--inherit) .ako-switcher__item,
+.ako-switcher:not(.ako-switcher--inherit) .ako-switcher__toggle {
 	font: inherit;
 	line-height: 20px;
 }
 
-.cedar-switcher .cedar-switcher__icon {
+.ako-switcher .ako-switcher__icon {
 	flex: none;
 	margin: 0;
 }

@@ -2,16 +2,16 @@
 /**
  * Suggests page pairs that look like translations of each other.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Setup;
+namespace Ako\Multilang\Setup;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Overview;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Registry;
-use Cedar\Multilang\Rest\Rest;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Overview;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Registry;
+use Ako\Multilang\Rest\Rest;
 use WP_Query;
 
 defined( 'ABSPATH' ) || exit;

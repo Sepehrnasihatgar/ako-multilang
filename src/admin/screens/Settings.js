@@ -16,7 +16,7 @@ import { Dialog } from '../../components/overlays';
 import { ToggleRow } from '../../components/rows';
 import { errorMessage } from '../api';
 
-const BASE = '/cedar/v1/settings';
+const BASE = '/ako/v1/settings';
 
 /**
  * Largest settings file accepted (they're a few KB).
@@ -26,38 +26,35 @@ const MAX_FILE_BYTES = 1024 * 1024;
 const MODULES = [
 	{
 		key: 'seo',
-		label: () => __( 'SEO', 'cedar-multilang' ),
+		label: () => __( 'SEO', 'ako-multilang' ),
 		help: () =>
 			__(
 				'hreflang, lang and dir, og:locale, and sitemap entries.',
-				'cedar-multilang'
+				'ako-multilang'
 			),
 	},
 	{
 		key: 'rtl',
-		label: () => __( 'RTL support', 'cedar-multilang' ),
+		label: () => __( 'RTL support', 'ako-multilang' ),
 		help: () =>
 			__(
 				'Switches the locale per page so your theme’s RTL styles load.',
-				'cedar-multilang'
+				'ako-multilang'
 			),
 	},
 	{
 		key: 'switcher',
-		label: () => __( 'Language switcher', 'cedar-multilang' ),
+		label: () => __( 'Language switcher', 'ako-multilang' ),
 		help: () =>
-			__(
-				'Block, menu item, shortcode, and PHP tag.',
-				'cedar-multilang'
-			),
+			__( 'Block, menu item, shortcode, and PHP tag.', 'ako-multilang' ),
 	},
 	{
 		key: 'import',
-		label: () => __( 'Import tools', 'cedar-multilang' ),
+		label: () => __( 'Import tools', 'ako-multilang' ),
 		help: () =>
 			__(
 				'Import links from WPML and Polylang on the Translations screen.',
-				'cedar-multilang'
+				'ako-multilang'
 			),
 	},
 ];
@@ -104,7 +101,7 @@ export default function Settings( { notify } ) {
 				setLoadError(
 					errorMessage(
 						error,
-						__( 'Settings couldn’t be loaded.', 'cedar-multilang' )
+						__( 'Settings couldn’t be loaded.', 'ako-multilang' )
 					)
 				)
 			);
@@ -114,10 +111,10 @@ export default function Settings( { notify } ) {
 
 	const title = (
 		<PageTitle
-			title={ __( 'Settings', 'cedar-multilang' ) }
+			title={ __( 'Settings', 'ako-multilang' ) }
 			description={ __(
 				'Turn off anything you don’t need. Parts you turn off load no code on your site.',
-				'cedar-multilang'
+				'ako-multilang'
 			) }
 		/>
 	);
@@ -126,17 +123,17 @@ export default function Settings( { notify } ) {
 		return (
 			<>
 				{ title }
-				<div className="cedar-card">
+				<div className="ako-card">
 					<EmptyState
 						icon="alert"
 						title={ __(
 							'Couldn’t load settings',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						description={ loadError }
 						actions={
 							<Button variant="primary" onClick={ load }>
-								{ __( 'Try again', 'cedar-multilang' ) }
+								{ __( 'Try again', 'ako-multilang' ) }
 							</Button>
 						}
 					/>
@@ -169,7 +166,7 @@ export default function Settings( { notify } ) {
 			);
 			notify( {
 				tone: 'success',
-				message: __( 'Settings saved.', 'cedar-multilang' ),
+				message: __( 'Settings saved.', 'ako-multilang' ),
 			} );
 			// Screens come and go with their modules: refresh the menu.
 			if ( modulesChanged ) {
@@ -180,7 +177,7 @@ export default function Settings( { notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'Your changes couldn’t be saved.', 'cedar-multilang' )
+					__( 'Your changes couldn’t be saved.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -192,17 +189,14 @@ export default function Settings( { notify } ) {
 			const file = await apiFetch( { path: `${ BASE }/export` } );
 			download(
 				file,
-				`cedar-settings-${ new Date().toISOString().slice( 0, 10 ) }.json`
+				`ako-settings-${ new Date().toISOString().slice( 0, 10 ) }.json`
 			);
 		} catch ( error ) {
 			notify( {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__(
-						'Your settings couldn’t be exported.',
-						'cedar-multilang'
-					)
+					__( 'Your settings couldn’t be exported.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -211,10 +205,7 @@ export default function Settings( { notify } ) {
 	const invalidFile = () =>
 		notify( {
 			tone: 'error',
-			message: __(
-				'This isn’t a Cedar settings file.',
-				'cedar-multilang'
-			),
+			message: __( 'This isn’t a Ako settings file.', 'ako-multilang' ),
 		} );
 
 	const readFile = ( event ) => {
@@ -232,7 +223,7 @@ export default function Settings( { notify } ) {
 				const parsed = JSON.parse( text );
 				if (
 					! parsed ||
-					'cedar-multilang' !== parsed.plugin ||
+					'ako-multilang' !== parsed.plugin ||
 					! parsed.languages ||
 					! Array.isArray( parsed.languages.languages )
 				) {
@@ -256,7 +247,7 @@ export default function Settings( { notify } ) {
 			setPending( null );
 			notify( {
 				tone: 'success',
-				message: __( 'Settings imported.', 'cedar-multilang' ),
+				message: __( 'Settings imported.', 'ako-multilang' ),
 			} );
 			window.location.reload();
 		} catch ( error ) {
@@ -264,10 +255,7 @@ export default function Settings( { notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__(
-						'Your settings couldn’t be imported.',
-						'cedar-multilang'
-					)
+					__( 'Your settings couldn’t be imported.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -287,23 +275,23 @@ export default function Settings( { notify } ) {
 		<>
 			{ title }
 
-			<div className="cedar-designer is-settings">
-				<div className="cedar-designer__column">
+			<div className="ako-designer is-settings">
+				<div className="ako-designer__column">
 					<section
-						className="cedar-card"
-						aria-labelledby="cedar-modules-title"
+						className="ako-card"
+						aria-labelledby="ako-modules-title"
 					>
-						<div className="cedar-card__head">
+						<div className="ako-card__head">
 							<h2
-								id="cedar-modules-title"
-								className="cedar-card__title"
+								id="ako-modules-title"
+								className="ako-card__title"
 							>
-								{ __( 'Modules', 'cedar-multilang' ) }
+								{ __( 'Modules', 'ako-multilang' ) }
 							</h2>
-							<p className="cedar-card__text">
+							<p className="ako-card__text">
 								{ __(
-									'Each part of Cedar works on its own.',
-									'cedar-multilang'
+									'Each part of Ako works on its own.',
+									'ako-multilang'
 								) }
 							</p>
 						</div>
@@ -321,24 +309,24 @@ export default function Settings( { notify } ) {
 					</section>
 
 					<section
-						className="cedar-card"
-						aria-labelledby="cedar-types-title"
+						className="ako-card"
+						aria-labelledby="ako-types-title"
 					>
-						<div className="cedar-card__head">
+						<div className="ako-card__head">
 							<h2
-								id="cedar-types-title"
-								className="cedar-card__title"
+								id="ako-types-title"
+								className="ako-card__title"
 							>
-								{ __( 'Content types', 'cedar-multilang' ) }
+								{ __( 'Content types', 'ako-multilang' ) }
 							</h2>
-							<p className="cedar-card__text">
+							<p className="ako-card__text">
 								{ __(
 									'Where the language panel and Translations screen appear.',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 							</p>
 						</div>
-						<ul className="cedar-type-list">
+						<ul className="ako-type-list">
 							{ data.postTypes.map( ( type ) => {
 								const checked = checkedTypes.includes(
 									type.slug
@@ -346,26 +334,23 @@ export default function Settings( { notify } ) {
 								const last =
 									checked && 1 === checkedTypes.length;
 								return (
-									<li
-										key={ type.slug }
-										className="cedar-type"
-									>
+									<li key={ type.slug } className="ako-type">
 										<Checkbox
 											checked={ checked }
 											disabled={ last }
 											label={ type.label }
 											aria-describedby={
 												last
-													? 'cedar-types-last'
+													? 'ako-types-last'
 													: undefined
 											}
 											onChange={ ( on ) =>
 												toggleType( type.slug, on )
 											}
 										/>
-										<span className="cedar-type__copy">
+										<span className="ako-type__copy">
 											<span
-												className="cedar-type__label"
+												className="ako-type__label"
 												aria-hidden="true"
 											>
 												{ type.label }
@@ -377,10 +362,10 @@ export default function Settings( { notify } ) {
 											</span>
 											{ ! type.builtin &&
 												! type.plugin && (
-													<span className="cedar-type__help">
+													<span className="ako-type__help">
 														{ __(
 															'Custom content type.',
-															'cedar-multilang'
+															'ako-multilang'
 														) }
 													</span>
 												) }
@@ -390,44 +375,41 @@ export default function Settings( { notify } ) {
 							} ) }
 						</ul>
 						{ 1 === checkedTypes.length && (
-							<p
-								id="cedar-types-last"
-								className="cedar-card__text"
-							>
+							<p id="ako-types-last" className="ako-card__text">
 								{ __(
 									'Keep at least one content type.',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 							</p>
 						) }
 					</section>
 				</div>
 
-				<div className="cedar-designer__column">
+				<div className="ako-designer__column">
 					{ data.integrations.length > 0 && (
 						<section
-							className="cedar-card"
-							aria-labelledby="cedar-rtl-title"
+							className="ako-card"
+							aria-labelledby="ako-rtl-title"
 						>
-							<div className="cedar-card__head">
+							<div className="ako-card__head">
 								<h2
-									id="cedar-rtl-title"
-									className="cedar-card__title"
+									id="ako-rtl-title"
+									className="ako-card__title"
 								>
 									{ __(
 										'RTL compatibility',
-										'cedar-multilang'
+										'ako-multilang'
 									) }
 								</h2>
-								<p className="cedar-card__text">
+								<p className="ako-card__text">
 									{ draft.modules.rtl
 										? __(
 												'Small fixes for popular themes. Only the fix for your theme loads.',
-												'cedar-multilang'
+												'ako-multilang'
 											)
 										: __(
 												'Turn on RTL support to use these fixes.',
-												'cedar-multilang'
+												'ako-multilang'
 											) }
 								</p>
 							</div>
@@ -439,11 +421,11 @@ export default function Settings( { notify } ) {
 											{ 'theme' === integration.type
 												? __(
 														'Active theme',
-														'cedar-multilang'
+														'ako-multilang'
 													)
 												: __(
 														'Detected',
-														'cedar-multilang'
+														'ako-multilang'
 													) }
 										</Badge>
 									);
@@ -473,20 +455,20 @@ export default function Settings( { notify } ) {
 					) }
 
 					<section
-						className="cedar-card"
-						aria-labelledby="cedar-data-title"
+						className="ako-card"
+						aria-labelledby="ako-data-title"
 					>
-						<h2 id="cedar-data-title" className="cedar-card__title">
-							{ __( 'Data', 'cedar-multilang' ) }
+						<h2 id="ako-data-title" className="ako-card__title">
+							{ __( 'Data', 'ako-multilang' ) }
 						</h2>
 						<ToggleRow
 							label={ __(
-								'Delete Cedar data on uninstall',
-								'cedar-multilang'
+								'Delete Ako data on uninstall',
+								'ako-multilang'
 							) }
 							help={ __(
 								'Links, languages, and switcher styles. Your pages are never touched.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 							checked={ draft.delete_on_uninstall }
 							onChange={ ( on ) =>
@@ -499,14 +481,11 @@ export default function Settings( { notify } ) {
 								icon="alert"
 								title={ __(
 									'This can’t be undone',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 								action={
 									<Button onClick={ exportSettings }>
-										{ __(
-											'Export now',
-											'cedar-multilang'
-										) }
+										{ __( 'Export now', 'ako-multilang' ) }
 									</Button>
 								}
 							>
@@ -516,25 +495,25 @@ export default function Settings( { notify } ) {
 										'Uninstalling removes the links on %1$d page and your %2$d languages. Export first if you might come back.',
 										'Uninstalling removes the links on %1$d pages and your %2$d languages. Export first if you might come back.',
 										data.counts.linked,
-										'cedar-multilang'
+										'ako-multilang'
 									),
 									data.counts.linked,
 									data.counts.languages
 								) }
 							</Callout>
 						) }
-						<div className="cedar-data-actions">
+						<div className="ako-data-actions">
 							<Button
 								icon="external-link"
 								onClick={ exportSettings }
 							>
-								{ __( 'Export settings', 'cedar-multilang' ) }
+								{ __( 'Export settings', 'ako-multilang' ) }
 							</Button>
 							<Button
 								variant="ghost"
 								onClick={ () => fileRef.current.click() }
 							>
-								{ __( 'Import settings', 'cedar-multilang' ) }
+								{ __( 'Import settings', 'ako-multilang' ) }
 							</Button>
 							<input
 								ref={ fileRef }
@@ -553,12 +532,12 @@ export default function Settings( { notify } ) {
 			{ pending && (
 				<Dialog
 					icon="arrows-left-right"
-					title={ __( 'Replace your settings?', 'cedar-multilang' ) }
+					title={ __( 'Replace your settings?', 'ako-multilang' ) }
 					description={ sprintf(
 						/* translators: 1: File name, 2: Number of languages, 3: Number of switchers. */
 						__(
 							'%1$s has %2$d languages and %3$d switcher styles. Your current settings will be replaced. Links between pages stay.',
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						pending.name,
 						pending.data.languages.languages.length,
@@ -566,7 +545,7 @@ export default function Settings( { notify } ) {
 							? pending.data.switchers.length
 							: 0
 					) }
-					confirmLabel={ __( 'Replace settings', 'cedar-multilang' ) }
+					confirmLabel={ __( 'Replace settings', 'ako-multilang' ) }
 					onConfirm={ importSettings }
 					onCancel={ () => setPending( null ) }
 					busy={ importing }

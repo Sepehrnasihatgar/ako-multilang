@@ -1,5 +1,5 @@
 /**
- * App shell: Cedar header + the current screen. (#wpbody already has role="main".)
+ * App shell: Ako header + the current screen. (#wpbody already has role="main".)
  */
 import { useCallback, useState } from '@wordpress/element';
 import { Header } from '../components/display';
@@ -32,7 +32,7 @@ export default function App( { config } ) {
 			{ 'setup' !== config.screen && (
 				<Header version={ config.version || '' } />
 			) }
-			<div className="cedar-body">
+			<div className="ako-body">
 				<Screen config={ config } notify={ setToast } />
 			</div>
 			<Toast toast={ toast } onDismiss={ dismiss } />

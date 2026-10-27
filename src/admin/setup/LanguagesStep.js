@@ -12,7 +12,7 @@ import { searchCatalog } from '../catalog';
 
 /**
  * Starting languages: the saved ones, or the site language as the default
- * plus languages Cedar found in the site's pages (titles or a /fa/ folder).
+ * plus languages Ako found in the site's pages (titles or a /fa/ folder).
  *
  * @param {Object} state   Setup state.
  * @param {Array}  catalog Catalog.
@@ -179,7 +179,7 @@ export default function LanguagesStep( {
 			setError(
 				errorMessage(
 					failure,
-					__( 'Your languages couldn’t be saved.', 'cedar-multilang' )
+					__( 'Your languages couldn’t be saved.', 'ako-multilang' )
 				)
 			);
 			setSaving( false );
@@ -209,24 +209,24 @@ export default function LanguagesStep( {
 
 	return (
 		<>
-			<div className="cedar-setup__intro">
+			<div className="ako-setup__intro">
 				<h1 tabIndex={ -1 }>
 					{ __(
 						'Which languages does your site speak?',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				</h1>
 				<p>
 					{ __(
 						'Pick your main language, then add the others. Text direction is automatic, so Farsi and Arabic pages switch to right-to-left.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				</p>
 			</div>
 
-			<div className="cedar-field">
-				<label className="cedar-field__label" htmlFor={ defaultId }>
-					{ __( 'Default language', 'cedar-multilang' ) }
+			<div className="ako-field">
+				<label className="ako-field__label" htmlFor={ defaultId }>
+					{ __( 'Default language', 'ako-multilang' ) }
 				</label>
 				<Select
 					id={ defaultId }
@@ -238,56 +238,56 @@ export default function LanguagesStep( {
 					}
 					options={ defaultOptions }
 				/>
-				<p className="cedar-field__help" id={ defaultHelpId }>
+				<p className="ako-field__help" id={ defaultHelpId }>
 					<span>
 						{ locked
 							? __(
 									'Your pages already have languages, so the default stays as it is.',
-									'cedar-multilang'
+									'ako-multilang'
 								)
 							: __(
 									'From Settings → General. Pages without a language count as this one.',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 					</span>
 				</p>
 			</div>
 
 			<div
-				className={ `cedar-field cedar-setup-languages ${
+				className={ `ako-field ako-setup-languages ${
 					showError ? 'is-error' : ''
 				}` }
 			>
-				<span className="cedar-field__label" id={ `${ listId }-label` }>
-					{ __( 'Other languages', 'cedar-multilang' ) }
+				<span className="ako-field__label" id={ `${ listId }-label` }>
+					{ __( 'Other languages', 'ako-multilang' ) }
 				</span>
 				{ others.length > 0 && (
 					<ul
-						className="cedar-setup-languages__list"
+						className="ako-setup-languages__list"
 						aria-labelledby={ `${ listId }-label` }
 					>
 						{ others.map( ( language ) => (
 							<li
 								key={ language.locale }
-								className="cedar-setup-language"
+								className="ako-setup-language"
 							>
 								<LanguageTag
 									code={ language.code }
 									size="large"
 								/>
 								<span
-									className="cedar-setup-language__native"
+									className="ako-setup-language__native"
 									lang={ language.hreflang }
 									dir={ language.dir }
 								>
 									{ language.native }
 								</span>
-								<span className="cedar-setup-language__meta">
+								<span className="ako-setup-language__meta">
 									{ `${ language.name } · ${ language.locale }` }
 								</span>
 								{ 'rtl' === language.dir && (
 									<Badge tone="info">
-										{ __( 'RTL', 'cedar-multilang' ) }
+										{ __( 'RTL', 'ako-multilang' ) }
 									</Badge>
 								) }
 								<Button
@@ -296,7 +296,7 @@ export default function LanguagesStep( {
 									icon="close"
 									aria-label={ sprintf(
 										/* translators: %s: Language name. */
-										__( 'Remove %s', 'cedar-multilang' ),
+										__( 'Remove %s', 'ako-multilang' ),
 										language.name
 									) }
 									onClick={ () => remove( language.locale ) }
@@ -306,9 +306,9 @@ export default function LanguagesStep( {
 					</ul>
 				) }
 
-				<div className="cedar-combobox">
+				<div className="ako-combobox">
 					<span
-						className={ `cedar-input cedar-combobox__field ${
+						className={ `ako-input ako-combobox__field ${
 							showError ? 'is-invalid' : ''
 						}` }
 					>
@@ -330,7 +330,7 @@ export default function LanguagesStep( {
 							aria-invalid={ showError || undefined }
 							placeholder={ __(
 								'Add a language, like “German” or “Deutsch”',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 							value={ text }
 							onChange={ ( event ) => {
@@ -345,7 +345,7 @@ export default function LanguagesStep( {
 						<ul
 							id={ listId }
 							role="listbox"
-							className="cedar-combobox__list"
+							className="ako-combobox__list"
 							aria-labelledby={ `${ listId }-label` }
 						>
 							{ matches.map( ( entry, index ) => {
@@ -359,7 +359,7 @@ export default function LanguagesStep( {
 										role="option"
 										aria-selected={ index === active }
 										aria-disabled={ added || undefined }
-										className={ `cedar-combobox__option ${
+										className={ `ako-combobox__option ${
 											index === active ? 'is-active' : ''
 										}` }
 										onMouseDown={ ( event ) =>
@@ -369,16 +369,16 @@ export default function LanguagesStep( {
 									>
 										<LanguageTag code={ entry.code } />
 										<span
-											className="cedar-combobox__native"
+											className="ako-combobox__native"
 											lang={ entry.hreflang }
 											dir={ entry.dir }
 										>
 											{ entry.native }
 										</span>
-										<span className="cedar-combobox__meta">
+										<span className="ako-combobox__meta">
 											{ `${ entry.name } · ${ entry.locale }` }
 										</span>
-										<span className="cedar-combobox__end">
+										<span className="ako-combobox__end">
 											{ added && (
 												<>
 													<Icon
@@ -387,7 +387,7 @@ export default function LanguagesStep( {
 													/>
 													{ __(
 														'Added',
-														'cedar-multilang'
+														'ako-multilang'
 													) }
 												</>
 											) }
@@ -395,7 +395,7 @@ export default function LanguagesStep( {
 												<>
 													{ __(
 														'Enter',
-														'cedar-multilang'
+														'ako-multilang'
 													) }
 													<Icon
 														name="corner-down-left"
@@ -410,13 +410,13 @@ export default function LanguagesStep( {
 						</ul>
 					) }
 					{ open && 0 === matches.length && (
-						<div className="cedar-combobox__empty" role="status">
+						<div className="ako-combobox__empty" role="status">
 							<strong>
 								{ sprintf(
 									/* translators: %s: Search text. */
 									__(
 										'No language matches “%s”',
-										'cedar-multilang'
+										'ako-multilang'
 									),
 									text.trim()
 								) }
@@ -424,7 +424,7 @@ export default function LanguagesStep( {
 							<span>
 								{ __(
 									'Add it as a custom language with its own locale and hreflang code.',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 							</span>
 							<Button
@@ -432,18 +432,15 @@ export default function LanguagesStep( {
 								onClick={ addCustom }
 								disabled={ saving }
 							>
-								{ __(
-									'Add custom language',
-									'cedar-multilang'
-								) }
+								{ __( 'Add custom language', 'ako-multilang' ) }
 							</Button>
 						</div>
 					) }
 				</div>
 				{ offers.length > 0 && (
-					<div className="cedar-setup-suggest">
-						<span className="cedar-setup-suggest__label">
-							{ __( 'Suggested', 'cedar-multilang' ) }
+					<div className="ako-setup-suggest">
+						<span className="ako-setup-suggest__label">
+							{ __( 'Suggested', 'ako-multilang' ) }
 						</span>
 						{ offers.map( ( entry ) => (
 							<Button
@@ -456,7 +453,7 @@ export default function LanguagesStep( {
 									{ entry.native }
 								</span>
 								{ entry.name !== entry.native && (
-									<span className="cedar-setup-suggest__name">
+									<span className="ako-setup-suggest__name">
 										{ entry.name }
 									</span>
 								) }
@@ -464,13 +461,13 @@ export default function LanguagesStep( {
 						) ) }
 					</div>
 				) }
-				<p className="cedar-field__help" id={ searchHelpId }>
+				<p className="ako-field__help" id={ searchHelpId }>
 					{ showError && <Icon name="alert" size={ 14 } /> }
 					<span>
 						{ empty &&
 							__(
 								'Add at least one more language to continue.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 						{ ! empty &&
 							foundShown.length > 0 &&
@@ -478,7 +475,7 @@ export default function LanguagesStep( {
 								/* translators: %s: Language names, comma separated. */
 								__(
 									'Found in your pages: %s. Remove it if that’s not right.',
-									'cedar-multilang'
+									'ako-multilang'
 								),
 								foundShown
 									.map( ( language ) => language.name )
@@ -488,7 +485,7 @@ export default function LanguagesStep( {
 							0 === foundShown.length &&
 							__(
 								'Use ↑ and ↓ to pick a match, Enter to add it.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 					</span>
 				</p>
@@ -501,14 +498,14 @@ export default function LanguagesStep( {
 					role="alert"
 					title={ __(
 						'Your languages couldn’t be saved',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				>
 					{ error }
 				</Callout>
 			) }
 
-			<div className="cedar-setup__footer">
+			<div className="ako-setup__footer">
 				<span />
 				<Button
 					variant="primary"
@@ -516,7 +513,7 @@ export default function LanguagesStep( {
 					disabled={ empty || saving }
 					aria-busy={ saving || undefined }
 				>
-					{ __( 'Next: Connect pages', 'cedar-multilang' ) }
+					{ __( 'Next: Connect pages', 'ako-multilang' ) }
 				</Button>
 			</div>
 		</>

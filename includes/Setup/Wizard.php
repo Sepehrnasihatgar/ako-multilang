@@ -2,32 +2,32 @@
 /**
  * Setup steps: languages, switcher placement and the final summary.
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Setup;
+namespace Ako\Multilang\Setup;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Catalog;
-use Cedar\Multilang\Languages\Registry;
-use Cedar\Multilang\Seo\Health;
-use Cedar\Multilang\Seo\Hreflang;
-use Cedar\Multilang\Switcher\Profiles;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Catalog;
+use Ako\Multilang\Languages\Registry;
+use Ako\Multilang\Seo\Health;
+use Ako\Multilang\Seo\Hreflang;
+use Ako\Multilang\Switcher\Profiles;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Everything the setup screen changes goes through the same APIs as the
- * rest of Cedar; the wizard only adds a guided order.
+ * rest of Ako; the wizard only adds a guided order.
  */
 final class Wizard {
 
 	/**
 	 * Option set on first activation, removed when setup is finished.
 	 */
-	const NEEDS_SETUP_OPTION = 'cedar_ml_needs_setup';
+	const NEEDS_SETUP_OPTION = 'ako_ml_needs_setup';
 
 	/**
 	 * Placements offered in setup.
@@ -40,7 +40,7 @@ final class Wizard {
 	const LOOKS = array( 'link', 'segmented', 'dropdown', 'floating' );
 
 	/**
-	 * Menu location names Cedar prefers, in order.
+	 * Menu location names Ako prefers, in order.
 	 */
 	const PREFERRED_LOCATIONS = array( 'primary', 'main', 'menu-1', 'menu_1', 'main_menu', 'header', 'primary-menu', 'main-menu', 'header-menu' );
 
@@ -103,11 +103,11 @@ final class Wizard {
 			} else {
 				$known = Catalog::get( $locale );
 				if ( ! $known ) {
-					return new WP_Error( 'cedar_ml_unknown_locale', __( 'Pick languages from the list.', 'cedar-multilang' ), array( 'status' => 400 ) );
+					return new WP_Error( 'ako_ml_unknown_locale', __( 'Pick languages from the list.', 'ako-multilang' ), array( 'status' => 400 ) );
 				}
 				$code = Catalog::code_for( $locale, array_merge( $taken, array_keys( $current ) ) );
 				if ( isset( $current[ $code ] ) ) {
-					return new WP_Error( 'cedar_ml_duplicate_language', __( 'Each language can only be added once.', 'cedar-multilang' ), array( 'status' => 400 ) );
+					return new WP_Error( 'ako_ml_duplicate_language', __( 'Each language can only be added once.', 'ako-multilang' ), array( 'status' => 400 ) );
 				}
 				$language = array_merge( $known, array( 'code' => $code ) );
 			}
@@ -117,7 +117,7 @@ final class Wizard {
 
 		$default_code = $list[0]['code'];
 		if ( '' !== Registry::default_code() && Registry::default_code() !== $default_code && self::has_tagged_posts() ) {
-			return new WP_Error( 'cedar_ml_default_locked', __( 'Your pages already have languages, so you can’t change the default here. Pages without a language would move to the new default.', 'cedar-multilang' ), array( 'status' => 409 ) );
+			return new WP_Error( 'ako_ml_default_locked', __( 'Your pages already have languages, so you can’t change the default here. Pages without a language would move to the new default.', 'ako-multilang' ), array( 'status' => 409 ) );
 		}
 
 		foreach ( array_keys( $current ) as $code ) {
@@ -363,9 +363,9 @@ final class Wizard {
 		return array(
 			'type'     => 'block',
 			'location' => 'header',
-			'name'     => __( 'Header menu', 'cedar-multilang' ),
+			'name'     => __( 'Header menu', 'ako-multilang' ),
 			'menu'     => $menu,
-			'menuName' => $post ? (string) $post->post_title : __( 'Header', 'cedar-multilang' ),
+			'menuName' => $post ? (string) $post->post_title : __( 'Header', 'ako-multilang' ),
 		);
 	}
 
@@ -403,27 +403,27 @@ final class Wizard {
 		if ( ! $menu ) {
 			// Turn WordPress's fallback (the page list) into a saved menu first.
 			if ( ! class_exists( 'WP_Navigation_Fallback' ) ) {
-				return new WP_Error( 'cedar_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
+				return new WP_Error( 'ako_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'ako-multilang' ), array( 'status' => 400 ) );
 			}
 			$fallback = \WP_Navigation_Fallback::get_fallback();
 			if ( ! $fallback instanceof \WP_Post ) {
-				return new WP_Error( 'cedar_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
+				return new WP_Error( 'ako_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'ako-multilang' ), array( 'status' => 400 ) );
 			}
 			$menu = (int) $fallback->ID;
 		}
 
 		if ( ! current_user_can( 'edit_post', $menu ) ) {
-			return new WP_Error( 'cedar_ml_menu_forbidden', __( 'You can’t edit menus on this site. Pick another placement.', 'cedar-multilang' ), array( 'status' => 403 ) );
+			return new WP_Error( 'ako_ml_menu_forbidden', __( 'You can’t edit menus on this site. Pick another placement.', 'ako-multilang' ), array( 'status' => 403 ) );
 		}
 
 		$post = get_post( $menu );
-		if ( false !== strpos( (string) $post->post_content, '<!-- wp:cedar-multilang/switcher' ) ) {
+		if ( false !== strpos( (string) $post->post_content, '<!-- wp:ako-multilang/switcher' ) ) {
 			return true;
 		}
 
 		$block  = serialize_block(
 			array(
-				'blockName'    => 'cedar-multilang/switcher',
+				'blockName'    => 'ako-multilang/switcher',
 				'attrs'        => array( 'switcher' => sanitize_key( $id ) ),
 				'innerBlocks'  => array(),
 				'innerHTML'    => '',
@@ -478,11 +478,11 @@ final class Wizard {
 		}
 
 		if ( ! current_user_can( 'edit_theme_options' ) ) {
-			return new WP_Error( 'cedar_ml_menu_forbidden', __( 'You can’t edit menus on this site. Pick another placement.', 'cedar-multilang' ), array( 'status' => 403 ) );
+			return new WP_Error( 'ako_ml_menu_forbidden', __( 'You can’t edit menus on this site. Pick another placement.', 'ako-multilang' ), array( 'status' => 403 ) );
 		}
 		$location = self::menu_location();
 		if ( ! $location ) {
-			return new WP_Error( 'cedar_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'cedar-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ako_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		if ( 'block' === $location['type'] ) {
@@ -496,7 +496,7 @@ final class Wizard {
 			);
 		}
 
-		$url = '#cedar-switcher-' . $saved['id'];
+		$url = '#ako-switcher-' . $saved['id'];
 		foreach ( (array) wp_get_nav_menu_items( $location['menu'] ) as $item ) {
 			if ( isset( $item->url ) && $url === $item->url ) {
 				return array(
@@ -510,7 +510,7 @@ final class Wizard {
 			$location['menu'],
 			0,
 			array(
-				'menu-item-title'  => __( 'Language switcher', 'cedar-multilang' ),
+				'menu-item-title'  => __( 'Language switcher', 'ako-multilang' ),
 				'menu-item-url'    => $url,
 				'menu-item-type'   => 'custom',
 				'menu-item-status' => 'publish',
@@ -570,7 +570,7 @@ final class Wizard {
 	}
 
 	/**
-	 * Switchers Cedar can see on the site: menu items plus a floating button.
+	 * Switchers Ako can see on the site: menu items plus a floating button.
 	 *
 	 * @return int
 	 */
@@ -581,10 +581,10 @@ final class Wizard {
 				'post_type'   => 'wp_navigation',
 				'post_status' => 'publish',
 				'numberposts' => 50,
-				's'           => 'wp:cedar-multilang/switcher',
+				's'           => 'wp:ako-multilang/switcher',
 			)
 		) as $navigation ) {
-			$count += substr_count( (string) $navigation->post_content, '<!-- wp:cedar-multilang/switcher' );
+			$count += substr_count( (string) $navigation->post_content, '<!-- wp:ako-multilang/switcher' );
 		}
 		foreach ( Profiles::all() as $profile ) {
 			if ( 'floating' === $profile['style'] ) {
@@ -595,7 +595,7 @@ final class Wizard {
 
 		foreach ( wp_get_nav_menus() as $menu ) {
 			foreach ( (array) wp_get_nav_menu_items( $menu->term_id ) as $item ) {
-				if ( isset( $item->url ) && 0 === strpos( (string) $item->url, '#cedar-switcher-' ) ) {
+				if ( isset( $item->url ) && 0 === strpos( (string) $item->url, '#ako-switcher-' ) ) {
 					++$count;
 				}
 			}

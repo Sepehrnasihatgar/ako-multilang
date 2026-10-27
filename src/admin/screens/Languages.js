@@ -62,7 +62,7 @@ export default function Languages( { notify } ) {
 						error,
 						__(
 							'Your languages couldn’t be loaded.',
-							'cedar-multilang'
+							'ako-multilang'
 						)
 					)
 				)
@@ -92,7 +92,7 @@ export default function Languages( { notify } ) {
 		setAnnouncement(
 			sprintf(
 				/* translators: 1: Language name, 2: New position, 3: Number of languages. */
-				__( '%1$s moved to position %2$d of %3$d.', 'cedar-multilang' ),
+				__( '%1$s moved to position %2$d of %3$d.', 'ako-multilang' ),
 				item.name,
 				to + 1,
 				next.length
@@ -110,7 +110,7 @@ export default function Languages( { notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'The new order couldn’t be saved.', 'cedar-multilang' )
+					__( 'The new order couldn’t be saved.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -124,7 +124,7 @@ export default function Languages( { notify } ) {
 				tone: 'success',
 				message: sprintf(
 					/* translators: %s: Language name. */
-					__( '%s removed.', 'cedar-multilang' ),
+					__( '%s removed.', 'ako-multilang' ),
 					removing.name
 				),
 			} );
@@ -135,7 +135,7 @@ export default function Languages( { notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'The language couldn’t be removed.', 'cedar-multilang' )
+					__( 'The language couldn’t be removed.', 'ako-multilang' )
 				),
 			} );
 			setRemoving( null );
@@ -147,20 +147,20 @@ export default function Languages( { notify } ) {
 		return (
 			<>
 				<PageTitle
-					title={ __( 'Languages', 'cedar-multilang' ) }
+					title={ __( 'Languages', 'ako-multilang' ) }
 					description=""
 				/>
-				<div className="cedar-card">
+				<div className="ako-card">
 					<EmptyState
 						icon="alert"
 						title={ __(
 							'Couldn’t load languages',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 						description={ loadError }
 						actions={
 							<Button variant="primary" onClick={ load }>
-								{ __( 'Try again', 'cedar-multilang' ) }
+								{ __( 'Try again', 'ako-multilang' ) }
 							</Button>
 						}
 					/>
@@ -177,10 +177,10 @@ export default function Languages( { notify } ) {
 	return (
 		<>
 			<PageTitle
-				title={ __( 'Languages', 'cedar-multilang' ) }
+				title={ __( 'Languages', 'ako-multilang' ) }
 				description={ __(
 					'Drag to reorder. The switcher shows languages in this order.',
-					'cedar-multilang'
+					'ako-multilang'
 				) }
 				actions={
 					<Button
@@ -190,31 +190,28 @@ export default function Languages( { notify } ) {
 						onClick={ () => setPanel( { mode: 'add' } ) }
 						aria-expanded={ !! panel && 'edit' !== panel.mode }
 					>
-						{ __( 'Add language', 'cedar-multilang' ) }
+						{ __( 'Add language', 'ako-multilang' ) }
 					</Button>
 				}
 			/>
 
-			<div className={ `cedar-columns ${ panel ? 'has-panel' : '' }` }>
-				<div className="cedar-language-list">
+			<div className={ `ako-columns ${ panel ? 'has-panel' : '' }` }>
+				<div className="ako-language-list">
 					{ ! data && (
 						<div
-							className="cedar-language-row is-skeleton"
+							className="ako-language-row is-skeleton"
 							aria-hidden="true"
 						>
-							<span className="cedar-skeleton is-title" />
+							<span className="ako-skeleton is-title" />
 						</div>
 					) }
 					{ data && ! languages.length && (
 						<EmptyState
 							icon="plus"
-							title={ __(
-								'No languages yet',
-								'cedar-multilang'
-							) }
+							title={ __( 'No languages yet', 'ako-multilang' ) }
 							description={ __(
 								'Add the language your site is written in first, then the languages you translate into.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 						/>
 					) }
@@ -228,10 +225,10 @@ export default function Languages( { notify } ) {
 							}
 						/>
 					) }
-					<p className="cedar-language-list__note">
+					<p className="ako-language-list__note">
 						{ __(
 							'Removing a language never deletes pages. It only unlinks them.',
-							'cedar-multilang'
+							'ako-multilang'
 						) }
 					</p>
 				</div>
@@ -248,7 +245,7 @@ export default function Languages( { notify } ) {
 								tone: 'success',
 								message: sprintf(
 									/* translators: %s: Language name. */
-									__( '%s added.', 'cedar-multilang' ),
+									__( '%s added.', 'ako-multilang' ),
 									added
 								),
 							} );
@@ -268,7 +265,7 @@ export default function Languages( { notify } ) {
 								tone: 'success',
 								message: sprintf(
 									/* translators: %s: Language name. */
-									__( '%s added.', 'cedar-multilang' ),
+									__( '%s added.', 'ako-multilang' ),
 									added
 								),
 							} );
@@ -288,7 +285,7 @@ export default function Languages( { notify } ) {
 								tone: 'success',
 								message: sprintf(
 									/* translators: %s: Language name. */
-									__( '%s saved.', 'cedar-multilang' ),
+									__( '%s saved.', 'ako-multilang' ),
 									editing.name
 								),
 							} );
@@ -309,7 +306,7 @@ export default function Languages( { notify } ) {
 					icon="alert"
 					title={ sprintf(
 						/* translators: %s: Language name. */
-						__( 'Remove %s?', 'cedar-multilang' ),
+						__( 'Remove %s?', 'ako-multilang' ),
 						removing.name
 					) }
 					description={ sprintf(
@@ -318,14 +315,14 @@ export default function Languages( { notify } ) {
 							'%1$d %2$s page stays published but loses its links, hreflang and switcher entry. You can add %2$s back anytime.',
 							'%1$d %2$s pages stay published but lose their links, hreflang and switcher entry. You can add %2$s back anytime.',
 							removing.count,
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						removing.count,
 						removing.name
 					) }
 					confirmLabel={ sprintf(
 						/* translators: %s: Language name. */
-						__( 'Remove %s', 'cedar-multilang' ),
+						__( 'Remove %s', 'ako-multilang' ),
 						removing.name
 					) }
 					onConfirm={ confirmRemove }
@@ -362,11 +359,11 @@ function LanguageList( { languages, selected, onMove, onEdit } ) {
 	} );
 
 	return (
-		<ol className="cedar-language-list__rows">
+		<ol className="ako-language-list__rows">
 			{ languages.map( ( language, index ) => (
 				<li
 					key={ language.code }
-					className={ `cedar-language-row ${ selected === language.code ? 'is-selected' : '' } ${
+					className={ `ako-language-row ${ selected === language.code ? 'is-selected' : '' } ${
 						dragging === index ? 'is-dragging' : ''
 					}` }
 					draggable
@@ -390,7 +387,7 @@ function LanguageList( { languages, selected, onMove, onEdit } ) {
 				>
 					<button
 						type="button"
-						className="cedar-language-row__handle"
+						className="ako-language-row__handle"
 						ref={ ( node ) =>
 							( handleRefs.current[ language.code ] = node )
 						}
@@ -398,7 +395,7 @@ function LanguageList( { languages, selected, onMove, onEdit } ) {
 							/* translators: 1: Language name, 2: Position, 3: Number of languages. */
 							__(
 								'Reorder %1$s, position %2$d of %3$d. Use the up and down arrow keys.',
-								'cedar-multilang'
+								'ako-multilang'
 							),
 							language.name,
 							index + 1,
@@ -422,7 +419,7 @@ function LanguageList( { languages, selected, onMove, onEdit } ) {
 					>
 						<Icon name="arrows-left-right" size={ 14 } />
 					</button>
-					<span className="cedar-language-row__lang">
+					<span className="ako-language-row__lang">
 						<LanguageTag
 							code={ language.code }
 							name={ language.native }
@@ -430,24 +427,24 @@ function LanguageList( { languages, selected, onMove, onEdit } ) {
 						>
 							{ language.default && (
 								<Badge tone="linked">
-									{ __( 'Default', 'cedar-multilang' ) }
+									{ __( 'Default', 'ako-multilang' ) }
 								</Badge>
 							) }
 						</LanguageTag>
 					</span>
-					<code className="cedar-language-row__locale">
+					<code className="ako-language-row__locale">
 						{ language.locale } · { language.hreflang }
 					</code>
-					<span className="cedar-language-row__dir">
+					<span className="ako-language-row__dir">
 						<Badge
 							tone={ 'rtl' === language.dir ? 'info' : 'draft' }
 						>
 							{ 'rtl' === language.dir
-								? __( 'RTL', 'cedar-multilang' )
-								: __( 'LTR', 'cedar-multilang' ) }
+								? __( 'RTL', 'ako-multilang' )
+								: __( 'LTR', 'ako-multilang' ) }
 						</Badge>
 					</span>
-					<span className="cedar-language-row__count">
+					<span className="ako-language-row__count">
 						<span aria-hidden="true">{ language.count }</span>
 						<span className="screen-reader-text">
 							{ sprintf(
@@ -456,7 +453,7 @@ function LanguageList( { languages, selected, onMove, onEdit } ) {
 									'%d page',
 									'%d pages',
 									language.count,
-									'cedar-multilang'
+									'ako-multilang'
 								),
 								language.count
 							) }
@@ -468,12 +465,12 @@ function LanguageList( { languages, selected, onMove, onEdit } ) {
 						onClick={ () => onEdit( language.code ) }
 						aria-label={ sprintf(
 							/* translators: %s: Language name. */
-							__( 'Edit %s', 'cedar-multilang' ),
+							__( 'Edit %s', 'ako-multilang' ),
 							language.name
 						) }
 						aria-pressed={ selected === language.code }
 					>
-						{ __( 'Edit', 'cedar-multilang' ) }
+						{ __( 'Edit', 'ako-multilang' ) }
 					</Button>
 				</li>
 			) ) }
@@ -492,9 +489,9 @@ function LanguageList( { languages, selected, onMove, onEdit } ) {
 function Panel( { title, onClose, children } ) {
 	const headingId = useId();
 	return (
-		<section className="cedar-panel" aria-labelledby={ headingId }>
-			<div className="cedar-panel__head">
-				<h2 id={ headingId } className="cedar-panel__title">
+		<section className="ako-panel" aria-labelledby={ headingId }>
+			<div className="ako-panel__head">
+				<h2 id={ headingId } className="ako-panel__title">
 					{ title }
 				</h2>
 				<Button
@@ -503,7 +500,7 @@ function Panel( { title, onClose, children } ) {
 					icon="close"
 					onClick={ onClose }
 				>
-					{ __( 'Close', 'cedar-multilang' ) }
+					{ __( 'Close', 'ako-multilang' ) }
 				</Button>
 			</div>
 			{ children }
@@ -565,7 +562,7 @@ function AddPanel( {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'The language couldn’t be added.', 'cedar-multilang' )
+					__( 'The language couldn’t be added.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -590,12 +587,12 @@ function AddPanel( {
 
 	return (
 		<Panel
-			title={ __( 'Add a language', 'cedar-multilang' ) }
+			title={ __( 'Add a language', 'ako-multilang' ) }
 			onClose={ onClose }
 		>
-			<div className="cedar-field">
+			<div className="ako-field">
 				<label
-					className="cedar-field__label"
+					className="ako-field__label"
 					htmlFor={ `${ listId }-input` }
 				>
 					{ sprintf(
@@ -604,7 +601,7 @@ function AddPanel( {
 							'Search %d language',
 							'Search %d languages',
 							catalog.length,
-							'cedar-multilang'
+							'ako-multilang'
 						),
 						catalog.length
 					) }
@@ -628,19 +625,19 @@ function AddPanel( {
 						matches.length ? optionId( active ) : undefined
 					}
 				/>
-				<p className="cedar-field__help" id={ helpId }>
+				<p className="ako-field__help" id={ helpId }>
 					{ __(
 						'Type in English or in the language itself.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 				</p>
 			</div>
 
 			<ul
-				className="cedar-menu is-list is-static"
+				className="ako-menu is-list is-static"
 				id={ listId }
 				role="listbox"
-				aria-label={ __( 'Languages', 'cedar-multilang' ) }
+				aria-label={ __( 'Languages', 'ako-multilang' ) }
 				hidden={ ! matches.length }
 			>
 				{ matches.map( ( entry, index ) => {
@@ -654,32 +651,32 @@ function AddPanel( {
 							role="option"
 							aria-selected={ index === active }
 							aria-disabled={ isTaken || undefined }
-							className={ `cedar-menu__item ${ index === active ? 'is-active' : '' } ${ isTaken ? 'is-disabled' : '' }` }
+							className={ `ako-menu__item ${ index === active ? 'is-active' : '' } ${ isTaken ? 'is-disabled' : '' }` }
 							onMouseEnter={ () => setActive( index ) }
 							onMouseDown={ ( event ) => event.preventDefault() }
 							onClick={ () => add( entry ) }
 						>
 							<LanguageTag code={ entry.code } />
 							<span
-								className="cedar-menu__label"
+								className="ako-menu__label"
 								dir="auto"
 								lang={ entry.locale.replace( '_', '-' ) }
 							>
 								{ entry.native }
 							</span>
-							<span className="cedar-menu__meta">
+							<span className="ako-menu__meta">
 								{ entry.name } · { entry.locale }
 							</span>
-							<span className="cedar-menu__end">
+							<span className="ako-menu__end">
 								{ isTaken && (
 									<>
 										<Icon name="check" size={ 14 } />
-										{ __( 'Added', 'cedar-multilang' ) }
+										{ __( 'Added', 'ako-multilang' ) }
 									</>
 								) }
 								{ ! isTaken && index === active && (
 									<>
-										{ __( 'Enter', 'cedar-multilang' ) }
+										{ __( 'Enter', 'ako-multilang' ) }
 										<Icon
 											name="corner-down-left"
 											size={ 12 }
@@ -692,14 +689,10 @@ function AddPanel( {
 				} ) }
 			</ul>
 
-			<p className="cedar-panel__foot">
-				{ __( 'Not listed?', 'cedar-multilang' ) }{ ' ' }
-				<button
-					type="button"
-					className="cedar-link"
-					onClick={ onCustom }
-				>
-					{ __( 'Add a custom language', 'cedar-multilang' ) }
+			<p className="ako-panel__foot">
+				{ __( 'Not listed?', 'ako-multilang' ) }{ ' ' }
+				<button type="button" className="ako-link" onClick={ onCustom }>
+					{ __( 'Add a custom language', 'ako-multilang' ) }
 				</button>
 			</p>
 		</Panel>
@@ -744,10 +737,10 @@ function LanguageFields( {
 		<>
 			{ custom && (
 				<Field
-					label={ __( 'Code', 'cedar-multilang' ) }
+					label={ __( 'Code', 'ako-multilang' ) }
 					help={ __(
 						'Short and permanent, like “ar” or “pt-br”.',
-						'cedar-multilang'
+						'ako-multilang'
 					) }
 					error={ errors.code }
 				>
@@ -768,10 +761,10 @@ function LanguageFields( {
 				</Field>
 			) }
 			<Field
-				label={ __( 'Native name', 'cedar-multilang' ) }
+				label={ __( 'Native name', 'ako-multilang' ) }
 				help={ __(
 					'Shown in the switcher, written the way speakers write it.',
-					'cedar-multilang'
+					'ako-multilang'
 				) }
 				error={ errors.native }
 			>
@@ -789,7 +782,7 @@ function LanguageFields( {
 				) }
 			</Field>
 			<Field
-				label={ __( 'English name', 'cedar-multilang' ) }
+				label={ __( 'English name', 'ako-multilang' ) }
 				error={ errors.name }
 			>
 				{ ( { id, describedBy, invalid } ) => (
@@ -805,10 +798,10 @@ function LanguageFields( {
 				) }
 			</Field>
 			<Field
-				label={ __( 'WordPress locale', 'cedar-multilang' ) }
+				label={ __( 'WordPress locale', 'ako-multilang' ) }
 				help={ __(
 					'Loads WordPress and theme translations for these pages.',
-					'cedar-multilang'
+					'ako-multilang'
 				) }
 				error={ errors.locale }
 			>
@@ -839,10 +832,10 @@ function LanguageFields( {
 				}
 			</Field>
 			<Field
-				label={ __( 'hreflang code', 'cedar-multilang' ) }
+				label={ __( 'hreflang code', 'ako-multilang' ) }
 				help={ __(
 					'Add a region only if you target one, like ar-SA.',
-					'cedar-multilang'
+					'ako-multilang'
 				) }
 				error={ errors.hreflang }
 			>
@@ -858,20 +851,20 @@ function LanguageFields( {
 					/>
 				) }
 			</Field>
-			<div className="cedar-setting">
-				<span className="cedar-setting__copy">
-					<span className="cedar-setting__label" id={ dirLabelId }>
-						{ __( 'Right-to-left', 'cedar-multilang' ) }
+			<div className="ako-setting">
+				<span className="ako-setting__copy">
+					<span className="ako-setting__label" id={ dirLabelId }>
+						{ __( 'Right-to-left', 'ako-multilang' ) }
 					</span>
-					<span className="cedar-setting__help" id={ dirHelpId }>
+					<span className="ako-setting__help" id={ dirHelpId }>
 						{ custom
 							? __(
 									'For scripts such as Arabic or Hebrew.',
-									'cedar-multilang'
+									'ako-multilang'
 								)
 							: __(
 									'Detected from the locale.',
-									'cedar-multilang'
+									'ako-multilang'
 								) }
 					</span>
 				</span>
@@ -898,25 +891,25 @@ function validate( values, custom ) {
 	if ( custom && ! CODE_PATTERN.test( values.code ) ) {
 		errors.code = __(
 			'Use a language code like “ar” or “pt-br”.',
-			'cedar-multilang'
+			'ako-multilang'
 		);
 	}
 	if ( ! values.native.trim() ) {
-		errors.native = __( 'Enter the name speakers use.', 'cedar-multilang' );
+		errors.native = __( 'Enter the name speakers use.', 'ako-multilang' );
 	}
 	if ( ! values.name.trim() ) {
-		errors.name = __( 'Enter the English name.', 'cedar-multilang' );
+		errors.name = __( 'Enter the English name.', 'ako-multilang' );
 	}
 	if ( ! LOCALE_PATTERN.test( values.locale ) ) {
 		errors.locale = __(
 			'Use a WordPress locale like “ar” or “fa_IR”.',
-			'cedar-multilang'
+			'ako-multilang'
 		);
 	}
 	if ( ! HREFLANG_PATTERN.test( values.hreflang ) ) {
 		errors.hreflang = __(
 			'Use a code like “ar” or “ar-SA”.',
-			'cedar-multilang'
+			'ako-multilang'
 		);
 	}
 	return errors;
@@ -990,7 +983,7 @@ function EditPanel( {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'Your changes couldn’t be saved.', 'cedar-multilang' )
+					__( 'Your changes couldn’t be saved.', 'ako-multilang' )
 				),
 			} );
 		}
@@ -1008,19 +1001,19 @@ function EditPanel( {
 			}
 			onClose={ onClose }
 		>
-			<form className="cedar-panel__form" onSubmit={ save } noValidate>
+			<form className="ako-panel__form" onSubmit={ save } noValidate>
 				<LanguageFields
 					values={ values }
 					setValue={ setValue }
 					errors={ errors }
 					catalog={ catalog }
 				/>
-				<div className="cedar-panel__actions">
+				<div className="ako-panel__actions">
 					{ language.default ? (
-						<span className="cedar-panel__hint">
+						<span className="ako-panel__hint">
 							{ __(
 								'The default language can’t be removed.',
-								'cedar-multilang'
+								'ako-multilang'
 							) }
 						</span>
 					) : (
@@ -1029,7 +1022,7 @@ function EditPanel( {
 							icon="close"
 							onClick={ onRemove }
 						>
-							{ __( 'Remove language', 'cedar-multilang' ) }
+							{ __( 'Remove language', 'ako-multilang' ) }
 						</Button>
 					) }
 					<Button
@@ -1042,7 +1035,7 @@ function EditPanel( {
 						}
 						aria-busy={ saving || undefined }
 					>
-						{ __( 'Save', 'cedar-multilang' ) }
+						{ __( 'Save', 'ako-multilang' ) }
 					</Button>
 				</div>
 			</form>
@@ -1081,7 +1074,7 @@ function CustomPanel( { languages, onClose, onBack, onAdded, notify } ) {
 	) {
 		errors.code = __(
 			'Each language can only be added once.',
-			'cedar-multilang'
+			'ako-multilang'
 		);
 	}
 	const shown = touched ? errors : {};
@@ -1107,7 +1100,7 @@ function CustomPanel( { languages, onClose, onBack, onAdded, notify } ) {
 				tone: 'error',
 				message: errorMessage(
 					error,
-					__( 'The language couldn’t be added.', 'cedar-multilang' )
+					__( 'The language couldn’t be added.', 'ako-multilang' )
 				),
 			} );
 			setSaving( false );
@@ -1116,19 +1109,19 @@ function CustomPanel( { languages, onClose, onBack, onAdded, notify } ) {
 
 	return (
 		<Panel
-			title={ __( 'Add a custom language', 'cedar-multilang' ) }
+			title={ __( 'Add a custom language', 'ako-multilang' ) }
 			onClose={ onClose }
 		>
-			<form className="cedar-panel__form" onSubmit={ submit } noValidate>
+			<form className="ako-panel__form" onSubmit={ submit } noValidate>
 				<LanguageFields
 					values={ values }
 					setValue={ setValue }
 					errors={ shown }
 					custom
 				/>
-				<div className="cedar-panel__actions">
+				<div className="ako-panel__actions">
 					<Button variant="ghost" onClick={ onBack }>
-						{ __( 'Back to search', 'cedar-multilang' ) }
+						{ __( 'Back to search', 'ako-multilang' ) }
 					</Button>
 					<Button
 						variant="primary"
@@ -1136,7 +1129,7 @@ function CustomPanel( { languages, onClose, onBack, onAdded, notify } ) {
 						disabled={ saving }
 						aria-busy={ saving || undefined }
 					>
-						{ __( 'Add language', 'cedar-multilang' ) }
+						{ __( 'Add language', 'ako-multilang' ) }
 					</Button>
 				</div>
 			</form>

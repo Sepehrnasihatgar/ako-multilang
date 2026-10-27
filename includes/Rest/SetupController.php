@@ -1,17 +1,17 @@
 <?php
 /**
- * REST: /cedar/v1/setup and /cedar/v1/import
+ * REST: /ako/v1/setup and /ako/v1/import
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Rest;
+namespace Ako\Multilang\Rest;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Import\Importer;
-use Cedar\Multilang\Setup\Matcher;
-use Cedar\Multilang\Setup\Wizard;
-use Cedar\Multilang\Switcher\Profiles;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Import\Importer;
+use Ako\Multilang\Setup\Matcher;
+use Ako\Multilang\Setup\Wizard;
+use Ako\Multilang\Switcher\Profiles;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -268,7 +268,7 @@ final class SetupController {
 				$errors[] = array(
 					'source'  => $source,
 					'target'  => $target,
-					'message' => __( 'You can’t edit one of these pages.', 'cedar-multilang' ),
+					'message' => __( 'You can’t edit one of these pages.', 'ako-multilang' ),
 				);
 				continue;
 			}
@@ -343,7 +343,7 @@ final class SetupController {
 	public static function import( WP_REST_Request $request ) {
 		$source = Importer::source( (string) $request['source'] );
 		if ( ! $source || ! $source->has_data() ) {
-			return new WP_Error( 'cedar_ml_import_unavailable', __( 'There’s nothing to import from this plugin.', 'cedar-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ako_ml_import_unavailable', __( 'There’s nothing to import from this plugin.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 		$result = Importer::run( $source, (int) $request['offset'], (int) $request['limit'] );
 		if ( is_wp_error( $result ) ) {

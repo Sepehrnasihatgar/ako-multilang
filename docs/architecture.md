@@ -1,4 +1,4 @@
-# Cedar Multilang — Architecture (v1.0)
+# Ako Multilang — Architecture (v1.0)
 
 > Companion to [brief.md](brief.md). Source of truth for UI: the Figma file (Foundations, Components, Admin screens, Switcher). This doc decides **how** we build it so it is fast, secure, and passes the wordpress.org review on the first try.
 
@@ -6,25 +6,25 @@
 
 | | |
 |---|---|
-| Plugin slug / text domain | `cedar-multilang` |
+| Plugin slug / text domain | `ako-multilang` |
 | Requires WordPress | 6.6+ (block apiVersion 3, current editor plugin APIs, `react-jsx-runtime` used by @wordpress/scripts builds) |
 | Requires PHP | 7.4+ (tested on 7.4 → 8.4) |
 | Tested up to | latest stable WordPress at submission time |
 | License | GPLv2 or later — every bundled file GPL-compatible |
-| Prefix | PHP namespace `Cedar\Multilang`, functions/options/meta/hooks `cedar_ml_`, CSS `.cedar-`, JS globals none |
+| Prefix | PHP namespace `Ako\Multilang`, functions/options/meta/hooks `ako_ml_`, CSS `.ako-`, JS globals none |
 
 ## 2. Repository layout
 
 ```
-cedar-multilang/
-├─ cedar-multilang.php        # Header + bootstrap only (no logic)
+ako-multilang/
+├─ ako-multilang.php        # Header + bootstrap only (no logic)
 ├─ uninstall.php              # Deletes data only if the user opted in
 ├─ readme.txt                 # wordpress.org readme (changelog, FAQ, screenshots)
-├─ includes/                  # PHP, PSR-4 under Cedar\Multilang
+├─ includes/                  # PHP, PSR-4 under Ako\Multilang
 │  ├─ Plugin.php              # Wires modules; nothing runs at file load
 │  ├─ Settings.php            # Typed access to options + defaults
 │  ├─ Languages/Registry.php  # Languages: code, locale, hreflang, names, dir, order, default
-│  ├─ Content/Taxonomies.php  # Hidden taxonomies: cedar_ml_language, cedar_ml_group
+│  ├─ Content/Taxonomies.php  # Hidden taxonomies: ako_ml_language, ako_ml_group
 │  ├─ Content/Links.php       # Link / unlink / get translations (the core API)
 │  ├─ Content/Duplicate.php   # "Duplicate as draft" (content, meta allow-list, terms, thumbnail)
 │  ├─ Seo/Hreflang.php        # <link rel="alternate">, x-default, <html lang dir>
@@ -33,9 +33,9 @@ cedar-multilang/
 │  ├─ Rtl/Compat.php          # Theme fixes (assets/rtl/*.css), RTL pages only, when the theme is in use. Ships GeneratePress only
 │  ├─ Switcher/Renderer.php   # One renderer → block, shortcode, menu item, PHP tag
 │  ├─ Switcher/Profiles.php   # Saved switcher styles ("Header switcher", …)
-│  ├─ Switcher/Shortcode.php  # [cedar_switcher] + legacy [lang_switch]
+│  ├─ Switcher/Shortcode.php  # [ako_switcher] + legacy [lang_switch]
 │  ├─ Switcher/MenuItem.php   # Appearance → Menus integration
-│  ├─ Rest/*.php              # REST controllers (namespace cedar/v1)
+│  ├─ Rest/*.php              # REST controllers (namespace ako/v1)
 │  ├─ Admin/*.php             # Menu, assets, notices, plugin row links
 │  ├─ Migration/Legacy62.php  # Cedar 6.2 data, migrated once automatically
 │  ├─ Import/*.php            # WPML + Polylang: read straight from the database, batched, never write to their data
@@ -48,7 +48,7 @@ cedar-multilang/
 │  ├─ blocks/switcher/        # block.json + edit.js (dynamic block, PHP render)
 │  └─ tokens/                 # tokens.css generated from Figma variables
 ├─ build/                     # Compiled by @wordpress/scripts (git-ignored, in release zip)
-├─ templates/switcher.php     # Overridable via yourtheme/cedar-multilang/switcher.php
+├─ templates/switcher.php     # Overridable via yourtheme/ako-multilang/switcher.php
 ├─ assets/switcher.css        # Front-end CSS (< 3 KB), loaded only when a switcher renders
 ├─ languages/                 # .pot
 └─ tests/                     # PHPUnit + JS unit tests
@@ -60,12 +60,12 @@ The 6.2 file (`cedar-multilang-helper.php`) stays in git history only; its data 
 
 | What | Where | Why |
 |---|---|---|
-| Languages | option `cedar_ml_languages` (autoload) | Small, read on every request |
-| A post's language | hidden taxonomy `cedar_ml_language` (term = language code) | Indexed queries ("all Arabic pages"), cached by core |
-| Translation group | hidden taxonomy `cedar_ml_group` (one term per group) + term meta `cedar_ml_members` = `{lang: post_id}` | Linking by **ID**, so slug changes never break; one cached lookup per page |
-| Switcher styles | option `cedar_ml_switchers` (autoloaded, small) | The floating switcher is checked on every front-end request |
-| Settings | option `cedar_ml_settings` (autoload) | Modules, post types, RTL compat, fallback, uninstall choice |
-| Dismissed notices | user meta `cedar_ml_dismissed` | Per user, never global |
+| Languages | option `ako_ml_languages` (autoload) | Small, read on every request |
+| A post's language | hidden taxonomy `ako_ml_language` (term = language code) | Indexed queries ("all Arabic pages"), cached by core |
+| Translation group | hidden taxonomy `ako_ml_group` (one term per group) + term meta `ako_ml_members` = `{lang: post_id}` | Linking by **ID**, so slug changes never break; one cached lookup per page |
+| Switcher styles | option `ako_ml_switchers` (autoloaded, small) | The floating switcher is checked on every front-end request |
+| Settings | option `ako_ml_settings` (autoload) | Modules, post types, RTL compat, fallback, uninstall choice |
+| Dismissed notices | user meta `ako_ml_dismissed` | Per user, never global |
 
 Taxonomies are `public => false`, `show_ui => false`, `show_in_rest => false`, `rewrite => false` — they never create URLs. Front-end cost: one term-cache lookup on singular views, zero on archives.
 
@@ -81,14 +81,14 @@ No cookies, no redirects, no per-visitor output → full-page-cache safe.
 
 ## 5. Admin
 
-- One top-level menu **Cedar** with submenus Translations · Languages · Switcher · SEO · Settings · About (About is last). No duplicate in-page tabs.
+- One top-level menu **Ako** with submenus Translations · Languages · Switcher · SEO · Settings · About (About is last). No duplicate in-page tabs.
 - Screens are a React app (`@wordpress/element`, `@wordpress/api-fetch`, `@wordpress/i18n`, `@wordpress/data`). Components are built from our Figma components (same names, variants, states); styling only through `tokens.css` custom properties.
 - Editor panel: `PluginDocumentSettingPanel` (Block editor) and a classic metabox (Classic editor) render the **same** React component.
 - Switcher block: `block.json` (apiVersion 3), dynamic render in PHP via the shared renderer.
-- Notices: activation and migration only, dismissible, shown only to `manage_options` users, only on Dashboard / Plugins / Cedar screens.
+- Notices: activation and migration only, dismissible, shown only to `manage_options` users, only on Dashboard / Plugins / Ako screens.
 - Plugin row: Settings · Docs action links; "Get Pro" in row meta (allowed, not a nag).
 
-## 6. REST API — `cedar/v1`
+## 6. REST API — `ako/v1`
 
 | Route | Methods | Capability |
 |---|---|---|
@@ -110,8 +110,8 @@ Every route has a `permission_callback` (never `__return_true`), a JSON schema w
 
 ## 7. Extensibility (for Pro and theme developers)
 
-Actions: `cedar_ml_loaded`, `cedar_ml_linked`, `cedar_ml_unlinked`, `cedar_ml_duplicated`.
-Filters: `cedar_ml_hreflang_links`, `cedar_ml_switcher_items`, `cedar_ml_switcher_markup`, `cedar_ml_duplicate_meta_keys`, `cedar_ml_health_checks`, `cedar_ml_admin_screens`.
+Actions: `ako_ml_loaded`, `ako_ml_linked`, `ako_ml_unlinked`, `ako_ml_duplicated`.
+Filters: `ako_ml_hreflang_links`, `ako_ml_switcher_items`, `ako_ml_switcher_markup`, `ako_ml_duplicate_meta_keys`, `ako_ml_health_checks`, `ako_ml_admin_screens`.
 The free plugin contains **no** license checks, upsell locks, or Pro code paths — Pro is a separate plugin that uses these hooks.
 
 ## 8. Security & wordpress.org compliance (non-negotiable)
@@ -157,7 +157,7 @@ The free plugin contains **no** license checks, upsell locks, or Pro code paths 
 
 ## 10. Local development
 
-- WordPress Playground (no PHP/Docker needed): `npx @wp-playground/cli server --mount=.:/wordpress/wp-content/plugins/cedar-multilang --login`.
+- WordPress Playground (no PHP/Docker needed): `npx @wp-playground/cli server --mount=.:/wordpress/wp-content/plugins/ako-multilang --login`.
 - `npm run start` (watch) / `npm run build` / `npm run plugin-zip`.
 - PHP linting runs through Composer + PHPCS (PHP is needed for that step — install via Homebrew when we reach it).
 

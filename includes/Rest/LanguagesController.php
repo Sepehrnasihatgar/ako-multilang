@@ -1,16 +1,16 @@
 <?php
 /**
- * REST: /cedar/v1/languages
+ * REST: /ako/v1/languages
  *
- * @package Cedar\Multilang
+ * @package Ako\Multilang
  */
 
-namespace Cedar\Multilang\Rest;
+namespace Ako\Multilang\Rest;
 
-use Cedar\Multilang\Content\Links;
-use Cedar\Multilang\Content\Taxonomies;
-use Cedar\Multilang\Languages\Catalog;
-use Cedar\Multilang\Languages\Registry;
+use Ako\Multilang\Content\Links;
+use Ako\Multilang\Content\Taxonomies;
+use Ako\Multilang\Languages\Catalog;
+use Ako\Multilang\Languages\Registry;
 use WP_Error;
 use WP_Query;
 use WP_REST_Request;
@@ -188,7 +188,7 @@ final class LanguagesController {
 		);
 
 		if ( in_array( $language['code'], $taken, true ) ) {
-			return new WP_Error( 'cedar_ml_duplicate_language', __( 'Each language can only be added once.', 'cedar-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ako_ml_duplicate_language', __( 'Each language can only be added once.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		$result = Registry::add( $language );
@@ -234,10 +234,10 @@ final class LanguagesController {
 		$code = (string) $request['code'];
 
 		if ( ! Registry::exists( $code ) ) {
-			return new WP_Error( 'cedar_ml_unknown_language', __( 'That language isn’t set up yet.', 'cedar-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 		if ( Registry::default_code() === $code ) {
-			return new WP_Error( 'cedar_ml_remove_default', __( 'The default language can’t be removed.', 'cedar-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'ako_ml_remove_default', __( 'The default language can’t be removed.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		Links::detach_language( $code );
