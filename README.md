@@ -56,8 +56,6 @@ Copyright 2026 Sepehr Nasihatgar. Released under GPLv2 or later. See [LICENSE](L
 
 The GPL covers the code. It doesn't grant rights to the Ako Multilang name or logo.
 
-Ako Multilang was called Cedar Multilang before its first public release.
-
 The admin uses the Inter and Vazirmatn fonts (SIL Open Font License 1.1) and Lucide icons (ISC License). Their licenses ship with the plugin.
 
 Built by [Sepehr Nasihatgar](https://github.com/Sepehrnasihatgar).

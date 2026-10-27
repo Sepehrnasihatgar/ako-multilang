@@ -291,12 +291,13 @@ final class Admin {
 	}
 
 	/**
-	 * The Ako mark as a data URI (WordPress tints it to match the admin color scheme).
+	 * The Ako favicon mark (two short lines of dots) as a data URI. WordPress
+	 * tints it to match the admin color scheme.
 	 *
 	 * @return string
 	 */
 	private static function menu_icon() {
-		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="black" d="M16 5.5 10.5 12h3L9 17.5h3.5l-5 6h17l-5-6H23L18.5 12h3L16 5.5Z"/><path fill="black" d="M15.55 23.5h.9c.44 0 .8.36.8.8v1.9c0 .44-.36.8-.8.8h-.9a.8.8 0 0 1-.8-.8v-1.9c0-.44.36-.8.8-.8Z"/></svg>';
+		$svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="black" d="M2 12.902a4 4 0 1 0 8 0a4 4 0 1 0 -8 0ZM11.2 12.902a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0 -5.6 0ZM18 12.902a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0 -5.6 0ZM8.4 19.098a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0 -5.6 0ZM15.2 19.098a2.8 2.8 0 1 0 5.6 0a2.8 2.8 0 1 0 -5.6 0ZM22 19.098a4 4 0 1 0 8 0a4 4 0 1 0 -8 0Z"/></svg>';
 		// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode -- Encodes our own static SVG for the menu icon, as WordPress expects.
 		return 'data:image/svg+xml;base64,' . base64_encode( $svg );
 	}
