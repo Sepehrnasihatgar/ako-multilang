@@ -40,6 +40,8 @@ function cedar_ml_autoload( $class_name ) {
 }
 spl_autoload_register( 'cedar_ml_autoload' );
 
+require_once CEDAR_ML_PATH . 'includes/functions.php';
+
 register_activation_hook( __FILE__, array( 'Cedar\\Multilang\\Plugin', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'Cedar\\Multilang\\Plugin', 'deactivate' ) );
 

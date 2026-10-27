@@ -15,6 +15,10 @@ use Cedar\Multilang\Migration\Legacy62;
 use Cedar\Multilang\Rtl\Locale;
 use Cedar\Multilang\Rest\Rest;
 use Cedar\Multilang\Seo\Hreflang;
+use Cedar\Multilang\Switcher\Block;
+use Cedar\Multilang\Switcher\MenuItem;
+use Cedar\Multilang\Switcher\Renderer;
+use Cedar\Multilang\Switcher\Shortcode;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -63,6 +67,13 @@ final class Plugin {
 
 		if ( ! empty( $settings['modules']['seo'] ) ) {
 			Hreflang::register();
+		}
+
+		if ( ! empty( $settings['modules']['switcher'] ) ) {
+			Renderer::register();
+			Shortcode::register();
+			MenuItem::register();
+			Block::register();
 		}
 
 		Legacy62::register();

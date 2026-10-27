@@ -21,8 +21,17 @@ Done
 - Translations table: "Duplicate as draft" in the add-translation menu, bulk "Duplicate missing as drafts".
 - Link pickers: pages linked elsewhere are shown but can't be picked (no silent group changes).
 
+## Milestone 4a — Switcher front end (done)
+
+- Profiles (`cedar_ml_switchers`), items per request (only published translations are linked; missing → language home, hidden or disabled with a tooltip).
+- One renderer + overridable template (`your-theme/cedar-multilang/switcher.php`), output always through `wp_kses()`.
+- Five styles from Figma (Link with Plain/Outline/Soft/Solid, Inline, Segmented, Dropdown, Floating), shapes, show code/native/both, small-screen mode, "Inherit from theme".
+- `[cedar_switcher id type show]`, legacy `[lang_switch]`, `cedar_ml_switcher()` / `cedar_ml_get_switcher()`, block `cedar-multilang/switcher`, classic menu box + Navigation block links (`#cedar-switcher-{id}`).
+- CSS 2.0 KB and keyboard script 0.65 KB gzipped; dropdown works without JS.
+- Tested on PHP 7.4 with Twenty Twenty-Five: every style, RTL mirroring, keyboard (Enter, arrows, Escape), invalid shortcode values ignored, classic menu, Navigation block, block registration.
+
 Next
-1. Milestone 4 — Switcher: renderer, template, CSS, block, shortcode (+ legacy `[lang_switch]`), menu item, profiles, designer screen.
+1. Milestone 4b — Switcher designer screen (Figma: Configure / Switcher — *).
 2. PHPCS (WordPress, WordPress-Extra, WordPress-Docs, PHPCompatibilityWP 7.4+): 0 errors, 0 warnings — run `composer lint` before every commit.
 3. Later milestones add: Needs review tab + SEO health card (M5), Import / Link pages header buttons and first-run empty state (M6), Duplicate as draft (M3), Get Pro / Docs header links (when URLs exist).
 

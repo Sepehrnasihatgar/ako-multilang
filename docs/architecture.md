@@ -61,7 +61,7 @@ The 6.2 file (`cedar-multilang-helper.php`) stays in git history only; its data 
 | Languages | option `cedar_ml_languages` (autoload) | Small, read on every request |
 | A post's language | hidden taxonomy `cedar_ml_language` (term = language code) | Indexed queries ("all Arabic pages"), cached by core |
 | Translation group | hidden taxonomy `cedar_ml_group` (one term per group) + term meta `cedar_ml_members` = `{lang: post_id}` | Linking by **ID**, so slug changes never break; one cached lookup per page |
-| Switcher styles | option `cedar_ml_switchers` (not autoloaded) | Read only when a switcher renders |
+| Switcher styles | option `cedar_ml_switchers` (autoloaded, small) | The floating switcher is checked on every front-end request |
 | Settings | option `cedar_ml_settings` (autoload) | Modules, post types, RTL compat, fallback, uninstall choice |
 | Dismissed notices | user meta `cedar_ml_dismissed` | Per user, never global |
 
@@ -73,7 +73,7 @@ Taxonomies are `public => false`, `show_ui => false`, `show_in_rest => false`, `
 2. `switch_to_locale()` on `wp` (front end only) to that language's locale → `is_rtl()`, theme `rtl.css`, translations reload.
 3. `language_attributes`: `lang` + `dir` on `<html>`.
 4. `wp_head` (priority 1): hreflang cluster — published, indexable members only, self-reference, `x-default`. Skipped if an SEO plugin we integrate with already outputs hreflang.
-5. Switcher renders through **one** renderer (block, shortcode, menu item and PHP tag all call it); its stylesheet is enqueued only then. Zero JavaScript by default. The Dropdown and Floating styles are built on `<details>`/`<summary>` (work without JS) and load one < 1 KB progressive-enhancement script that adds ↑/↓ and Esc — accessibility wins over the zero-JS ideal, and only where it's needed.
+5. Switcher renders through **one** renderer (block, shortcode, menu item and PHP tag all call it) and its output passes `wp_kses()` with a strict allow-list. The stylesheet (2 KB gzipped, all rules inside `:where()`) is enqueued in `<head>` on the front end to avoid a flash of unstyled content; accent colors come through `wp_add_inline_style()`. Zero JavaScript by default. The Dropdown and Floating styles are built on `<details>`/`<summary>` (work without JS) and load one < 1 KB progressive-enhancement script that adds ↑/↓ and Esc — accessibility wins over the zero-JS ideal, and only where it's needed.
 
 No cookies, no redirects, no per-visitor output → full-page-cache safe.
 
@@ -97,7 +97,8 @@ No cookies, no redirects, no per-visitor output → full-page-cache safe.
 | `/links/{post_id}/duplicate` | POST | `edit_post` source + `create_posts` for the post type |
 | `/links/candidates` | GET | `edit_posts` for the post type; only editable posts listed |
 | `/suggestions` | GET | `manage_options` |
-| `/switchers` | GET, POST, PUT, DELETE | `manage_options` |
+| `/switchers` | GET | `edit_posts` (the block lists them) |
+| `/switchers`, `/switchers/{id}` | POST, PUT, DELETE | `manage_options` |
 | `/settings` | GET, PUT | `manage_options` |
 | `/health` | GET; POST `/health/fix` | `manage_options` |
 | `/import/{source}` | GET (preview), POST (run) | `manage_options` |
