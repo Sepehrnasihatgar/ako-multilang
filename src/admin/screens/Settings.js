@@ -29,7 +29,7 @@ const MODULES = [
 		label: () => __( 'SEO', 'cedar-multilang' ),
 		help: () =>
 			__(
-				'hreflang, lang/dir, og:locale and sitemap entries.',
+				'hreflang, lang and dir, og:locale, and sitemap entries.',
 				'cedar-multilang'
 			),
 	},
@@ -46,7 +46,10 @@ const MODULES = [
 		key: 'switcher',
 		label: () => __( 'Language switcher', 'cedar-multilang' ),
 		help: () =>
-			__( 'Block, menu item, shortcode and PHP tag.', 'cedar-multilang' ),
+			__(
+				'Block, menu item, shortcode, and PHP tag.',
+				'cedar-multilang'
+			),
 	},
 	{
 		key: 'import',
@@ -113,7 +116,7 @@ export default function Settings( { notify } ) {
 		<PageTitle
 			title={ __( 'Settings', 'cedar-multilang' ) }
 			description={ __(
-				'Turn off anything you don’t need — it then loads no code on your site.',
+				'Turn off anything you don’t need. Parts you turn off load no code on your site.',
 				'cedar-multilang'
 			) }
 		/>
@@ -419,7 +422,7 @@ export default function Settings( { notify } ) {
 								<p className="cedar-card__text">
 									{ draft.modules.rtl
 										? __(
-												'Small fixes for builders and popular themes. Only the ones you use load.',
+												'Small fixes for popular themes. Only the fix for your theme loads.',
 												'cedar-multilang'
 											)
 										: __(
@@ -482,7 +485,7 @@ export default function Settings( { notify } ) {
 								'cedar-multilang'
 							) }
 							help={ __(
-								'Links, languages and switcher styles. Your pages are never touched.',
+								'Links, languages, and switcher styles. Your pages are never touched.',
 								'cedar-multilang'
 							) }
 							checked={ draft.delete_on_uninstall }
@@ -554,7 +557,7 @@ export default function Settings( { notify } ) {
 					description={ sprintf(
 						/* translators: 1: File name, 2: Number of languages, 3: Number of switchers. */
 						__(
-							'%1$s has %2$d languages and %3$d switcher styles. Your current settings will be replaced; links between pages are kept.',
+							'%1$s has %2$d languages and %3$d switcher styles. Your current settings will be replaced. Links between pages stay.',
 							'cedar-multilang'
 						),
 						pending.name,

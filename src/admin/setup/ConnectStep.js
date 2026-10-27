@@ -139,7 +139,7 @@ export default function ConnectStep( {
 				<p>
 					{ nothing
 						? __(
-								'We looked for WPML, Polylang and Cedar 6.2 data, and for pages that look like translations of each other.',
+								'We looked for WPML, Polylang, and Cedar 6.2 data, and for pages that look like translations of each other.',
 								'cedar-multilang'
 							)
 						: __(
@@ -206,7 +206,7 @@ export default function ConnectStep( {
 					</h2>
 					<p className="cedar-empty__description">
 						{ __(
-							'That’s fine — your languages are saved. Set up the switcher now, or finish and link pages later from Translations or right inside the editor.',
+							'That’s fine. Your languages are saved. Add the switcher now, or finish and link pages later from Translations or right in the editor.',
 							'cedar-multilang'
 						) }
 					</p>

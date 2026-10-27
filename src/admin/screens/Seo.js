@@ -236,7 +236,7 @@ export default function Seo( { config, notify } ) {
 			<PageTitle
 				title={ __( 'SEO', 'cedar-multilang' ) }
 				description={ __(
-					'Cedar writes hreflang, lang and dir for you. Here’s exactly what search engines see.',
+					'Cedar adds hreflang, lang, and dir for you. Here’s exactly what search engines see.',
 					'cedar-multilang'
 				) }
 			/>
@@ -395,7 +395,7 @@ export default function Seo( { config, notify } ) {
 							</h2>
 							<p className="cedar-card__text">
 								{ __(
-									'Cedar fits in next to them — no duplicate tags.',
+									'Cedar works alongside them without adding duplicate tags.',
 									'cedar-multilang'
 								) }
 							</p>
@@ -450,7 +450,7 @@ export default function Seo( { config, notify } ) {
 								) }
 							>
 								{ __(
-									'Cedar prints hreflang, og:locale and the right lang and dir on every linked page.',
+									'Cedar adds hreflang, og:locale, and the right lang and dir to every linked page.',
 									'cedar-multilang'
 								) }
 							</Callout>
@@ -756,7 +756,7 @@ function HealthChecks( {
 						? sprintf(
 								/* translators: %s: Page title. */
 								__(
-									'“%s” — visitors get the language homepage instead.',
+									'Visitors to “%s” get the language homepage instead.',
 									'cedar-multilang'
 								),
 								example.title
@@ -805,7 +805,7 @@ function HealthChecks( {
 					health.excluded.count
 				) }
 				description={ __(
-					'Noindex, or a canonical that points to another page. That’s correct — just make sure it’s intended.',
+					'They’re set to noindex, or their canonical points to another page. That’s fine if you meant it.',
 					'cedar-multilang'
 				) }
 			/>

@@ -179,7 +179,7 @@ export default function Languages( { notify } ) {
 			<PageTitle
 				title={ __( 'Languages', 'cedar-multilang' ) }
 				description={ __(
-					'Drag to reorder — the switcher shows languages in this order.',
+					'Drag to reorder. The switcher shows languages in this order.',
 					'cedar-multilang'
 				) }
 				actions={
@@ -230,7 +230,7 @@ export default function Languages( { notify } ) {
 					) }
 					<p className="cedar-language-list__note">
 						{ __(
-							'Removing a language never deletes pages — it only unlinks them.',
+							'Removing a language never deletes pages. It only unlinks them.',
 							'cedar-multilang'
 						) }
 					</p>
@@ -732,7 +732,7 @@ function LanguageFields( {
 		}
 		const options = catalog.map( ( entry ) => ( {
 			value: entry.locale,
-			label: `${ entry.locale } — ${ entry.native }`,
+			label: `${ entry.locale } (${ entry.native })`,
 		} ) );
 		if ( ! catalog.some( ( entry ) => entry.locale === values.locale ) ) {
 			options.unshift( { value: values.locale, label: values.locale } );
@@ -746,7 +746,7 @@ function LanguageFields( {
 				<Field
 					label={ __( 'Code', 'cedar-multilang' ) }
 					help={ __(
-						'Short and permanent, e.g. “ar” or “pt-br”.',
+						'Short and permanent, like “ar” or “pt-br”.',
 						'cedar-multilang'
 					) }
 					error={ errors.code }
@@ -841,7 +841,7 @@ function LanguageFields( {
 			<Field
 				label={ __( 'hreflang code', 'cedar-multilang' ) }
 				help={ __(
-					'Add a region only if you target one, e.g. ar-SA.',
+					'Add a region only if you target one, like ar-SA.',
 					'cedar-multilang'
 				) }
 				error={ errors.hreflang }

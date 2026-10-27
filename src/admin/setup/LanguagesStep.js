@@ -80,7 +80,7 @@ export default function LanguagesStep( {
 			.sort( ( a, b ) => a.name.localeCompare( b.name ) )
 			.map( ( entry ) => ( {
 				value: entry.locale,
-				label: `${ entry.name } — ${ entry.locale }`,
+				label: `${ entry.name } (${ entry.locale })`,
 			} ) );
 		if (
 			savedDefault &&
@@ -88,7 +88,7 @@ export default function LanguagesStep( {
 		) {
 			options.unshift( {
 				value: savedDefault.locale,
-				label: `${ savedDefault.name } — ${ savedDefault.locale }`,
+				label: `${ savedDefault.name } (${ savedDefault.locale })`,
 			} );
 		}
 		return options;
@@ -218,7 +218,7 @@ export default function LanguagesStep( {
 				</h1>
 				<p>
 					{ __(
-						'Pick your default and add the others. Text direction is set automatically — Farsi and Arabic pages switch to right-to-left.',
+						'Pick your main language, then add the others. Text direction is automatic, so Farsi and Arabic pages switch to right-to-left.',
 						'cedar-multilang'
 					) }
 				</p>
@@ -246,7 +246,7 @@ export default function LanguagesStep( {
 									'cedar-multilang'
 								)
 							: __(
-									'Taken from Settings → General. Pages without a language are treated as this one.',
+									'From Settings → General. Pages without a language count as this one.',
 									'cedar-multilang'
 								) }
 					</span>
@@ -329,7 +329,7 @@ export default function LanguagesStep( {
 							aria-describedby={ searchHelpId }
 							aria-invalid={ showError || undefined }
 							placeholder={ __(
-								'Add a language — try “German” or “Deutsch”',
+								'Add a language, like “German” or “Deutsch”',
 								'cedar-multilang'
 							) }
 							value={ text }

@@ -101,12 +101,12 @@ final class Notices {
 				$pairs
 			);
 		} elseif ( 'start' === $variant ) {
-			$title  = __( 'Cedar is active — set it up in about 2 minutes', 'cedar-multilang' );
-			$text   = __( 'Pick your languages, connect existing translations and add a switcher. Nothing changes on your site until you finish.', 'cedar-multilang' );
+			$title  = __( 'Cedar is active. Set it up in about 2 minutes.', 'cedar-multilang' );
+			$text   = __( 'Pick your languages, connect the translations you already have, and add a switcher. Nothing on your site changes until you finish.', 'cedar-multilang' );
 			$action = array( $setup_url, __( 'Start setup', 'cedar-multilang' ) );
 		} else {
 			$title  = __( 'Cedar is almost ready', 'cedar-multilang' );
-			$text   = __( 'You haven’t finished setup. Hreflang and the switcher turn on once two pages are linked.', 'cedar-multilang' );
+			$text   = __( 'You haven’t finished setup. hreflang and the switcher turn on once two pages are linked.', 'cedar-multilang' );
 			$action = array( $setup_url, __( 'Continue setup', 'cedar-multilang' ) );
 		}
 

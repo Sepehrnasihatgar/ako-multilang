@@ -22,7 +22,7 @@ export function ImportDialog( { sources, onClose } ) {
 			icon="arrows-left-right"
 			title={ __( 'Import translations', 'cedar-multilang' ) }
 			description={ __(
-				'Cedar reads the links straight from the database. The other plugin’s data stays untouched.',
+				'Cedar reads the links straight from your database. The other plugin’s data isn’t changed.',
 				'cedar-multilang'
 			) }
 			busy={ busy }
