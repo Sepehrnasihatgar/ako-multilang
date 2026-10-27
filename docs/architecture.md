@@ -30,7 +30,7 @@ cedar-multilang/
 │  ├─ Seo/Hreflang.php        # <link rel="alternate">, x-default, <html lang dir>
 │  ├─ Seo/Integrations/*.php  # Yoast, Rank Math, AIOSEO, WP core sitemap
 │  ├─ Rtl/Locale.php          # Per-request locale → is_rtl(), theme rtl.css, .mo files
-│  ├─ Rtl/Compat.php          # Small CSS fixes (assets/rtl/*.css), loaded on RTL pages only when the builder/theme is in use
+│  ├─ Rtl/Compat.php          # Theme fixes (assets/rtl/*.css), RTL pages only, when the theme is in use. Ships GeneratePress only
 │  ├─ Switcher/Renderer.php   # One renderer → block, shortcode, menu item, PHP tag
 │  ├─ Switcher/Profiles.php   # Saved switcher styles ("Header switcher", …)
 │  ├─ Switcher/Shortcode.php  # [cedar_switcher] + legacy [lang_switch]

@@ -1,6 +1,6 @@
 <?php
 /**
- * Small RTL fixes for page builders and popular themes.
+ * Small RTL fixes for popular themes.
  *
  * @package Cedar\Multilang
  */
@@ -13,36 +13,23 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Each integration is one small stylesheet in assets/rtl/, loaded only on
- * right-to-left pages, only when its builder or theme is in use and only
+ * right-to-left pages, only when its theme is in use and only
  * when it's switched on in Settings (on by default when detected).
  */
 final class Compat {
 
 	/**
-	 * Known integrations: key => [ name, type (plugin|theme) ].
+	 * Integrations with fixes, each tested in its theme: key => [ name, type ].
+	 * Astra, Kadence, Hello Elementor, Twenty Twenty-Five and Elementor
+	 * render right-to-left pages correctly on their own once `is_rtl()` is
+	 * right, so they need no fixes.
 	 *
 	 * @return array<string,array{name:string,type:string}>
 	 */
 	public static function known() {
 		return array(
-			'elementor'       => array(
-				'name' => 'Elementor',
-				'type' => 'plugin',
-			),
-			'hello-elementor' => array(
-				'name' => 'Hello Elementor',
-				'type' => 'theme',
-			),
-			'astra'           => array(
-				'name' => 'Astra',
-				'type' => 'theme',
-			),
-			'generatepress'   => array(
+			'generatepress' => array(
 				'name' => 'GeneratePress',
-				'type' => 'theme',
-			),
-			'kadence'         => array(
-				'name' => 'Kadence',
 				'type' => 'theme',
 			),
 		);
@@ -62,9 +49,6 @@ final class Compat {
 	 * @return bool
 	 */
 	public static function detected( $key ) {
-		if ( 'elementor' === $key ) {
-			return defined( 'ELEMENTOR_VERSION' );
-		}
 		$known = self::known();
 		return isset( $known[ $key ] ) && 'theme' === $known[ $key ]['type'] && get_template() === $key;
 	}

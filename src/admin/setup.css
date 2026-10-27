@@ -380,7 +380,7 @@
 	min-inline-size: 0;
 }
 
-/* dir="auto" keeps each title readable; alignment follows the admin's direction. */
+/* dir="auto" keeps titles readable; alignment follows the admin. */
 .cedar-pair__title {
 	overflow: hidden;
 	font: var(--cedar-text-body-strong);

@@ -521,7 +521,7 @@ function LinkPicker( {
 			post_type: postType,
 			language: language.code,
 			search: term,
-			exclude: postId,
+			skip: postId,
 		} )
 			.then( ( list ) => {
 				if ( ! ignore ) {

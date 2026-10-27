@@ -73,8 +73,8 @@ final class Wpml extends Source {
 		if ( ! self::table_exists( $table ) ) {
 			return array();
 		}
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Reads WPML's own table; the name is built from $wpdb->prefix only.
-		$rows = $wpdb->get_results( "SELECT code, default_locale FROM `{$table}` WHERE active = 1 ORDER BY id", ARRAY_A );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Reads WPML's own table.
+		$rows = $wpdb->get_results( $wpdb->prepare( 'SELECT code, default_locale FROM %i WHERE active = 1 ORDER BY id', $table ), ARRAY_A );
 
 		$out = array();
 		foreach ( (array) $rows as $row ) {
@@ -97,17 +97,17 @@ final class Wpml extends Source {
 	}
 
 	/**
-	 * `post_{type}` element types and their placeholders.
+	 * `post_{type}` element types.
 	 *
 	 * @param string[] $post_types Post types.
-	 * @return array{0:string[],1:string}
+	 * @return string[]
 	 */
 	private static function element_types( array $post_types ) {
 		$types = array();
 		foreach ( $post_types as $post_type ) {
 			$types[] = 'post_' . sanitize_key( $post_type );
 		}
-		return array( $types, implode( ', ', array_fill( 0, count( $types ), '%s' ) ) );
+		return $types;
 	}
 
 	/**
@@ -121,14 +121,13 @@ final class Wpml extends Source {
 		if ( ! $post_types || ! $this->has_data() ) {
 			return 0;
 		}
-		list( $types, $placeholders ) = self::element_types( $post_types );
-		$table                        = self::table();
+		$types = self::element_types( $post_types );
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- WPML's table; values go through prepare().
 		return (int) $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM ( SELECT trid FROM `{$table}` WHERE element_type IN ( {$placeholders} ) AND element_id IS NOT NULL GROUP BY trid HAVING COUNT(*) > 1 ) AS cedar_groups",
-				$types
+				'SELECT COUNT(*) FROM ( SELECT trid FROM %i WHERE element_type IN ( ' . implode( ', ', array_fill( 0, count( $types ), '%s' ) ) . ' ) AND element_id IS NOT NULL GROUP BY trid HAVING COUNT(*) > 1 ) AS cedar_groups',
+				array_merge( array( self::table() ), $types )
 			)
 		);
 		// phpcs:enable
@@ -147,14 +146,13 @@ final class Wpml extends Source {
 		if ( ! $post_types || ! $this->has_data() ) {
 			return array();
 		}
-		list( $types, $placeholders ) = self::element_types( $post_types );
-		$table                        = self::table();
+		$types = self::element_types( $post_types );
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- WPML's table; values go through prepare().
 		$trids = $wpdb->get_col(
 			$wpdb->prepare(
-				"SELECT trid FROM `{$table}` WHERE element_type IN ( {$placeholders} ) AND element_id IS NOT NULL GROUP BY trid HAVING COUNT(*) > 1 ORDER BY trid LIMIT %d OFFSET %d",
-				array_merge( $types, array( absint( $limit ), absint( $offset ) ) )
+				'SELECT trid FROM %i WHERE element_type IN ( ' . implode( ', ', array_fill( 0, count( $types ), '%s' ) ) . ' ) AND element_id IS NOT NULL GROUP BY trid HAVING COUNT(*) > 1 ORDER BY trid LIMIT %d OFFSET %d',
+				array_merge( array( self::table() ), $types, array( absint( $limit ), absint( $offset ) ) )
 			)
 		);
 		if ( ! $trids ) {
@@ -163,8 +161,8 @@ final class Wpml extends Source {
 		$trids = array_map( 'absint', $trids );
 		$rows  = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT trid, element_id, language_code FROM `{$table}` WHERE element_type IN ( {$placeholders} ) AND element_id IS NOT NULL AND trid IN ( " . implode( ', ', array_fill( 0, count( $trids ), '%d' ) ) . ' )',
-				array_merge( $types, $trids )
+				'SELECT trid, element_id, language_code FROM %i WHERE element_type IN ( ' . implode( ', ', array_fill( 0, count( $types ), '%s' ) ) . ' ) AND element_id IS NOT NULL AND trid IN ( ' . implode( ', ', array_fill( 0, count( $trids ), '%d' ) ) . ' )',
+				array_merge( array( self::table() ), $types, $trids )
 			),
 			ARRAY_A
 		);

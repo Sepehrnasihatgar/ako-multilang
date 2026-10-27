@@ -1,0 +1,134 @@
+/**
+ * GeneratePress: mirror the layout on right-to-left pages.
+ *
+ * GeneratePress keeps "left" and "right" layout settings on the same
+ * physical side in right-to-left languages, while its mobile menu does
+ * mirror. On a bilingual site the right-to-left pages should mirror the
+ * left-to-right ones, so these rules put the header navigation and the
+ * sidebars back on their logical side.
+ *
+ * Loaded only on right-to-left pages when GeneratePress is the theme.
+ * Spacing uses GeneratePress's default separating space (20px).
+ */
+
+/* Header: navigation sits at the end of the row. */
+.nav-float-right #site-navigation {
+	order: 0;
+	margin-left: 0;
+	margin-right: auto;
+}
+
+.nav-float-right .header-widget {
+	order: 0;
+	margin-left: 0;
+	margin-right: 20px;
+}
+
+.nav-float-left #site-navigation {
+	order: -10;
+	margin-right: 0;
+	margin-left: auto;
+}
+
+.nav-float-left .header-widget {
+	order: -15;
+	margin-left: 20px;
+	margin-right: 0;
+}
+
+.nav-float-left .mobile-menu-control-wrapper {
+	order: -10;
+	margin-right: 0;
+	margin-left: auto;
+}
+
+/* Header and navigation alignment without floating navigation. */
+.header-aligned-right:not([class*="nav-float-"]) .inside-header {
+	justify-content: flex-end;
+}
+
+.header-aligned-left:not([class*="nav-float-"]) .inside-header {
+	justify-content: flex-start;
+}
+
+.header-aligned-right:not([class*="nav-float-"]) .header-widget {
+	order: -10;
+	margin-left: auto;
+	margin-right: 0;
+}
+
+.header-aligned-left:not([class*="nav-float-"]) .header-widget {
+	order: 0;
+}
+
+.nav-align-right .inside-navigation {
+	justify-content: flex-end;
+}
+
+.nav-align-left .inside-navigation {
+	justify-content: flex-start;
+}
+
+/* Sidebars: same order as on left-to-right pages, so the flex row mirrors. */
+.right-sidebar #right-sidebar {
+	order: 0;
+}
+
+.left-sidebar .sidebar,
+.both-left #left-sidebar,
+.both-sidebars #left-sidebar {
+	order: -10;
+}
+
+.both-left #right-sidebar {
+	order: -5;
+}
+
+.both-right #left-sidebar {
+	order: 5;
+}
+
+.both-right #right-sidebar,
+.both-sidebars #right-sidebar {
+	order: 10;
+}
+
+/* Content spacing follows the sidebar to the other side. */
+.separate-containers.right-sidebar .site-main,
+.separate-containers.both-right .site-main {
+	margin-left: 20px;
+	margin-right: 0;
+}
+
+.separate-containers.left-sidebar .site-main,
+.separate-containers.both-left .site-main {
+	margin-left: 0;
+	margin-right: 20px;
+}
+
+.one-container.right-sidebar .site-main,
+.one-container.both-right .site-main {
+	margin-left: 40px;
+	margin-right: 0;
+}
+
+.one-container.left-sidebar .site-main,
+.one-container.both-left .site-main {
+	margin-left: 0;
+	margin-right: 40px;
+}
+
+@media (max-width: 768px) {
+
+	.separate-containers.right-sidebar .site-main,
+	.separate-containers.both-right .site-main,
+	.separate-containers.left-sidebar .site-main,
+	.separate-containers.both-left .site-main,
+	.one-container.right-sidebar .site-main,
+	.one-container.both-right .site-main,
+	.one-container.left-sidebar .site-main,
+	.one-container.both-left .site-main {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
