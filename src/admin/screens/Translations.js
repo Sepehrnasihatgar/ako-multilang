@@ -492,7 +492,10 @@ export default function Translations( { config, notify } ) {
 										variant="primary"
 										onClick={ () => setDialog( 'link' ) }
 									>
-										{ __( 'Link pages', 'cedar-multilang' ) }
+										{ __(
+											'Link pages',
+											'cedar-multilang'
+										) }
 									</Button>
 								</>
 							)
@@ -1399,7 +1402,7 @@ function LinkSearch( { row, language, postType, onCancel, onLinked, notify } ) {
 			post_type: postType,
 			language: language.code,
 			search: term,
-			exclude: row.id,
+			skip: row.id,
 		} )
 			.then( ( list ) => {
 				if ( ! ignore ) {

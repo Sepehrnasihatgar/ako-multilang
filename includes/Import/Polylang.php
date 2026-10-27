@@ -93,16 +93,6 @@ final class Polylang extends Source {
 	}
 
 	/**
-	 * Post type placeholders.
-	 *
-	 * @param string[] $post_types Post types.
-	 * @return string
-	 */
-	private static function placeholders( array $post_types ) {
-		return implode( ', ', array_fill( 0, count( $post_types ), '%s' ) );
-	}
-
-	/**
 	 * Groups with at least two posts of the given types.
 	 *
 	 * @param string[] $post_types Post types.
@@ -113,12 +103,10 @@ final class Polylang extends Source {
 		if ( ! $post_types ) {
 			return 0;
 		}
-		$placeholders = self::placeholders( $post_types );
-
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- Core tables; values go through prepare().
 		return (int) $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT COUNT(*) FROM ( SELECT tt.term_taxonomy_id FROM {$wpdb->term_taxonomy} tt INNER JOIN {$wpdb->term_relationships} tr ON tr.term_taxonomy_id = tt.term_taxonomy_id INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id WHERE tt.taxonomy = %s AND p.post_type IN ( {$placeholders} ) GROUP BY tt.term_taxonomy_id HAVING COUNT(*) > 1 ) AS cedar_groups",
+				"SELECT COUNT(*) FROM ( SELECT tt.term_taxonomy_id FROM {$wpdb->term_taxonomy} tt INNER JOIN {$wpdb->term_relationships} tr ON tr.term_taxonomy_id = tt.term_taxonomy_id INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id WHERE tt.taxonomy = %s AND p.post_type IN ( " . implode( ', ', array_fill( 0, count( $post_types ), '%s' ) ) . ' ) GROUP BY tt.term_taxonomy_id HAVING COUNT(*) > 1 ) AS cedar_groups',
 				array_merge( array( 'post_translations' ), array_map( 'sanitize_key', $post_types ) )
 			)
 		);
@@ -138,12 +126,10 @@ final class Polylang extends Source {
 		if ( ! $post_types ) {
 			return array();
 		}
-		$placeholders = self::placeholders( $post_types );
-
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber -- Core tables; values go through prepare().
 		$descriptions = $wpdb->get_col(
 			$wpdb->prepare(
-				"SELECT tt.description FROM {$wpdb->term_taxonomy} tt INNER JOIN {$wpdb->term_relationships} tr ON tr.term_taxonomy_id = tt.term_taxonomy_id INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id WHERE tt.taxonomy = %s AND p.post_type IN ( {$placeholders} ) GROUP BY tt.term_taxonomy_id HAVING COUNT(*) > 1 ORDER BY tt.term_taxonomy_id LIMIT %d OFFSET %d",
+				"SELECT tt.description FROM {$wpdb->term_taxonomy} tt INNER JOIN {$wpdb->term_relationships} tr ON tr.term_taxonomy_id = tt.term_taxonomy_id INNER JOIN {$wpdb->posts} p ON p.ID = tr.object_id WHERE tt.taxonomy = %s AND p.post_type IN ( " . implode( ', ', array_fill( 0, count( $post_types ), '%s' ) ) . ' ) GROUP BY tt.term_taxonomy_id HAVING COUNT(*) > 1 ORDER BY tt.term_taxonomy_id LIMIT %d OFFSET %d',
 				array_merge( array( 'post_translations' ), array_map( 'sanitize_key', $post_types ), array( absint( $limit ), absint( $offset ) ) )
 			)
 		);

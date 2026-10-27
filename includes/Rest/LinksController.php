@@ -91,7 +91,7 @@ final class LinksController {
 						'maxLength'         => 200,
 						'sanitize_callback' => 'sanitize_text_field',
 					),
-					'exclude'   => array(
+					'skip'      => array(
 						'type'    => 'integer',
 						'default' => 0,
 						'minimum' => 0,
@@ -346,8 +346,8 @@ final class LinksController {
 			),
 		);
 
-		if ( $request['exclude'] ) {
-			$args['post__not_in'] = array( (int) $request['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- A single ID.
+		if ( $request['skip'] ) {
+			$args['post__not_in'] = array( (int) $request['skip'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- A single ID.
 		}
 
 		$search = trim( (string) $request['search'] );

@@ -17,10 +17,11 @@
 	},
 	"files": [
 		"assets",
+		"blocks",
 		"build",
 		"includes",
-		"languages",
 		"src",
+		"templates",
 		"cedar-multilang.php",
 		"uninstall.php",
 		"readme.txt"
