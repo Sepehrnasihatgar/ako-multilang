@@ -163,7 +163,7 @@
 	}
 }
 
-/* Classic metabox: tokens exist only inside .cedar-ml, so the panel owns its padding. */
+/* Classic metabox: tokens live on .cedar-ml, so the panel owns padding. */
 #cedar-ml-language .inside {
 	margin: 0;
 	padding: 0;
