@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Ako Multilang
  * Description:       Link your pages across languages with hreflang, right-to-left support, and a language switcher. Your URLs stay the same.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            Sepehr Nasihatgar
@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AKO_ML_VERSION', '1.0.0' );
+define( 'AKO_ML_VERSION', '1.0.1' );
 define( 'AKO_ML_FILE', __FILE__ );
 define( 'AKO_ML_PATH', plugin_dir_path( __FILE__ ) );
 define( 'AKO_ML_URL', plugin_dir_url( __FILE__ ) );

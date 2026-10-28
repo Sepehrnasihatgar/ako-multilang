@@ -4,7 +4,7 @@ Tags: multilingual, hreflang, rtl, language switcher, bilingual
 Requires at least: 6.6
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,6 +94,9 @@ Your pages stay exactly as they are. Ako's settings and links stay too, unless y
 5. Linking a translation from the editor.
 
 == Changelog ==
+
+= 1.0.1 =
+* The floating switcher’s arrow now points up, toward the menu it opens.
 
 = 1.0.0 =
 * First public release.

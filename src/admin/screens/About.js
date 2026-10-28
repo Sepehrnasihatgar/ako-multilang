@@ -15,6 +15,16 @@ const REVIEWS_URL =
 
 const CHANGELOG = [
 	{
+		version: '1.0.1',
+		date: '2026-10-27',
+		changes: () => [
+			__(
+				'The floating switcher’s arrow now points up, toward its menu',
+				'ako-multilang'
+			),
+		],
+	},
+	{
 		version: '1.0.0',
 		date: '2026-10-27',
 		changes: () => [
@@ -28,7 +38,10 @@ const CHANGELOG = [
 				'hreflang and og:locale that work with Yoast SEO, Rank Math, and AIOSEO',
 				'ako-multilang'
 			),
-			__( 'Import from WPML, Polylang, and version 6.2', 'ako-multilang' ),
+			__(
+				'Import from WPML, Polylang, and version 6.2',
+				'ako-multilang'
+			),
 		],
 	},
 	{

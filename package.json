@@ -1,6 +1,6 @@
 {
 	"name": "ako-multilang",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"private": true,
 	"description": "Link your pages across languages with hreflang, right-to-left support, and a language switcher. Your URLs stay the same.",
 	"license": "GPL-2.0-or-later",
