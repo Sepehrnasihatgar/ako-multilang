@@ -265,6 +265,15 @@
 	inset-inline: auto 0;
 }
 
+/* The floating menu opens upward, so its chevron points up. */
+:where(.ako-switcher--floating) :where(.ako-switcher__chevron) {
+	transform: rotate(180deg);
+}
+
+:where(.ako-switcher--floating) :where(details[open] .ako-switcher__chevron) {
+	transform: none;
+}
+
 /* Inherit from theme: structure only; theme colors and fonts show. */
 
 :where(.ako-switcher--inherit) {
