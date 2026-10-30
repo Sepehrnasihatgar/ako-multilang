@@ -1,17 +1,17 @@
 <?php
 /**
- * REST: /ako/v1/links
+ * REST: /akoml/v1/links
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Rest;
+namespace AkoMultilang\Rest;
 
-use Ako\Multilang\Content\Duplicate;
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Overview;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Registry;
+use AkoMultilang\Content\Duplicate;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Overview;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Registry;
 use WP_Error;
 use WP_Query;
 use WP_REST_Request;
@@ -264,32 +264,67 @@ final class LinksController {
 	}
 
 	/**
-	 * Linking changes both posts, so both must be editable.
+	 * Linking changes both posts, so both must be editable. A target that
+	 * leaves another group can leave one post there on its own, and that
+	 * post must be editable too.
 	 *
 	 * @param WP_REST_Request $request Request.
 	 * @return bool
 	 */
 	public static function can_link( WP_REST_Request $request ) {
-		return current_user_can( 'edit_post', (int) $request['id'] )
-			&& current_user_can( 'edit_post', (int) $request['target'] );
+		$id     = (int) $request['id'];
+		$target = (int) $request['target'];
+		if ( ! current_user_can( 'edit_post', $id ) || ! current_user_can( 'edit_post', $target ) ) {
+			return false;
+		}
+		if ( Links::get_group_id( $target ) === Links::get_group_id( $id ) ) {
+			return true;
+		}
+		return self::can_edit_all( self::affected_members( $target, false ) );
 	}
 
 	/**
-	 * Unlinking a whole group changes every member, so all must be editable.
+	 * Every post whose links change must be editable: the whole group, or
+	 * the one member left behind when an unlink leaves it on its own.
 	 *
 	 * @param WP_REST_Request $request Request.
 	 * @return bool
 	 */
 	public static function can_unlink( WP_REST_Request $request ) {
 		$id = (int) $request['id'];
-		if ( ! current_user_can( 'edit_post', $id ) ) {
-			return false;
+		return current_user_can( 'edit_post', $id )
+			&& self::can_edit_all( self::affected_members( $id, 'group' === $request['scope'] ) );
+	}
+
+	/**
+	 * Other posts whose links change when $post_id leaves its group: the
+	 * rest of the group for a group unlink, otherwise only a member that
+	 * would be left on its own.
+	 *
+	 * @param int  $post_id     Post leaving the group.
+	 * @param bool $whole_group Whether the whole group is unlinked.
+	 * @return int[]
+	 */
+	private static function affected_members( $post_id, $whole_group ) {
+		$group_id = Links::get_group_id( $post_id );
+		if ( ! $group_id ) {
+			return array();
 		}
-		if ( 'group' === $request['scope'] ) {
-			foreach ( Links::get_translations( $id ) as $member_id ) {
-				if ( ! current_user_can( 'edit_post', $member_id ) ) {
-					return false;
-				}
+		$members = get_objects_in_term( $group_id, Taxonomies::GROUP );
+		$others  = is_array( $members ) ? array_diff( array_map( 'absint', $members ), array( (int) $post_id ) ) : array();
+		return ( $whole_group || count( $others ) < 2 ) ? $others : array();
+	}
+
+	/**
+	 * Whether the current user can edit every post.
+	 *
+	 * @param int[] $post_ids Post IDs.
+	 * @return bool
+	 */
+	private static function can_edit_all( array $post_ids ) {
+		foreach ( $post_ids as $post_id ) {
+			if ( ! current_user_can( 'edit_post', $post_id ) ) {
+				return false;
 			}
 		}
 		return true;
@@ -394,7 +429,7 @@ final class LinksController {
 	public static function show( WP_REST_Request $request ) {
 		$post = get_post( (int) $request['id'] );
 		if ( ! $post || ! Taxonomies::supports( $post->post_type ) ) {
-			return new WP_Error( 'ako_ml_unsupported_type', __( 'Ako isn’t enabled for this content type.', 'ako-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'akoml_unsupported_type', __( 'Ako isn’t enabled for this content type.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 		return rest_ensure_response( Overview::detail( $post ) );
 	}
@@ -447,7 +482,7 @@ final class LinksController {
 	public static function unlink( WP_REST_Request $request ) {
 		$id = (int) $request['id'];
 		if ( ! get_post( $id ) ) {
-			return new WP_Error( 'ako_ml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'akoml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 
 		if ( 'group' === $request['scope'] ) {

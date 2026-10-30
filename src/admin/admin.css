@@ -6,24 +6,24 @@
 
 /* ---------- WordPress page integration (Ako screens only) ---------- */
 
-body.ako-ml-screen #wpcontent {
+body.akoml-screen #wpcontent {
 	padding-inline-start: 0;
 }
 
-body.ako-ml-screen #wpbody-content {
+body.akoml-screen #wpbody-content {
 	padding-block-end: 0;
 }
 
-body.ako-ml-screen,
-body.ako-ml-screen #wpwrap {
+body.akoml-screen,
+body.akoml-screen #wpwrap {
 	background: var(--ako-admin-bg-canvas);
 }
 
-.ako-ml-notices {
+.akoml-notices {
 	margin: 0 var(--ako-admin-space-5xl);
 }
 
-.ako-ml-notices:empty {
+.akoml-notices:empty {
 	display: none;
 }
 

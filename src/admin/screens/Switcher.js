@@ -18,7 +18,7 @@ import SwitcherMarkup from '../../components/SwitcherMarkup';
 import { errorMessage, getLanguages } from '../api';
 import apiFetch from '@wordpress/api-fetch';
 
-const BASE = '/ako/v1/switchers';
+const BASE = '/akoml/v1/switchers';
 
 const EDITABLE = [
 	'style',
@@ -965,12 +965,12 @@ function EmbedCard( { profile, notify } ) {
 				'Works in Elementor, widgets, and any text field.',
 				'ako-multilang'
 			),
-			code: `[ako_switcher id="${ profile.id }"]`,
+			code: `[akoml_switcher id="${ profile.id }"]`,
 		},
 		php: {
 			label: __( 'PHP', 'ako-multilang' ),
 			text: __( 'For theme templates.', 'ako-multilang' ),
-			code: `<?php ako_ml_switcher( '${ profile.id }' ); ?>`,
+			code: `<?php akoml_switcher( '${ profile.id }' ); ?>`,
 		},
 	};
 	const current = methods[ method ];

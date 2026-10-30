@@ -3,12 +3,12 @@
  * "Language · Ako" in the block editor (sidebar panel) and the classic
  * editor (metabox). Both render the same React panel.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Admin;
+namespace AkoMultilang\Admin;
 
-use Ako\Multilang\Content\Taxonomies;
+use AkoMultilang\Content\Taxonomies;
 use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
@@ -18,8 +18,8 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Editor {
 
-	const BLOCK_HANDLE   = 'ako-ml-editor';
-	const CLASSIC_HANDLE = 'ako-ml-classic';
+	const BLOCK_HANDLE   = 'akoml-editor';
+	const CLASSIC_HANDLE = 'akoml-classic';
 
 	/**
 	 * Hooks into both editors.
@@ -62,7 +62,7 @@ final class Editor {
 			return;
 		}
 		add_meta_box(
-			'ako-ml-language',
+			'akoml-language',
 			__( 'Language · Ako', 'ako-multilang' ),
 			array( self::class, 'render_meta_box' ),
 			$post_type,
@@ -79,7 +79,7 @@ final class Editor {
 	 */
 	public static function render_meta_box( $post ) {
 		printf(
-			'<div id="ako-ml-classic" data-post-id="%d"></div>',
+			'<div id="akoml-classic" data-post-id="%d"></div>',
 			(int) $post->ID
 		);
 		printf(
@@ -112,7 +112,7 @@ final class Editor {
 	 * @param string $handle Script and style handle.
 	 */
 	private static function enqueue( $entry, $handle ) {
-		$asset_file = AKO_ML_PATH . 'build/' . $entry . '/index.asset.php';
+		$asset_file = AKOML_PATH . 'build/' . $entry . '/index.asset.php';
 		if ( ! is_readable( $asset_file ) ) {
 			return;
 		}
@@ -120,14 +120,14 @@ final class Editor {
 
 		wp_enqueue_script(
 			$handle,
-			AKO_ML_URL . 'build/' . $entry . '/index.js',
+			AKOML_URL . 'build/' . $entry . '/index.js',
 			$asset['dependencies'],
 			$asset['version'],
 			array( 'in_footer' => true )
 		);
-		wp_set_script_translations( $handle, 'ako-multilang', AKO_ML_PATH . 'languages' );
+		wp_set_script_translations( $handle, 'ako-multilang', AKOML_PATH . 'languages' );
 
-		wp_enqueue_style( $handle, AKO_ML_URL . 'build/' . $entry . '/index.css', array(), $asset['version'] );
+		wp_enqueue_style( $handle, AKOML_URL . 'build/' . $entry . '/index.css', array(), $asset['version'] );
 		wp_style_add_data( $handle, 'rtl', 'replace' );
 	}
 }

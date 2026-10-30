@@ -3,15 +3,15 @@
  * Data for the Translations screen: one row per source page, one column per
  * other language.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Content;
+namespace AkoMultilang\Content;
 
-use Ako\Multilang\Languages\Registry;
-use Ako\Multilang\Rest\Rest;
-use Ako\Multilang\Seo\Health;
-use Ako\Multilang\Seo\Hreflang;
+use AkoMultilang\Languages\Registry;
+use AkoMultilang\Rest\Rest;
+use AkoMultilang\Seo\Health;
+use AkoMultilang\Seo\Hreflang;
 use WP_Post;
 use WP_Query;
 

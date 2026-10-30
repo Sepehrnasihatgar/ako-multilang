@@ -2,10 +2,10 @@
 /**
  * The switcher as a menu item (Appearance → Menus and the Navigation block).
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Switcher;
+namespace AkoMultilang\Switcher;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,7 +31,7 @@ final class MenuItem {
 	 */
 	public static function add_meta_box() {
 		add_meta_box(
-			'ako-ml-menu-switcher',
+			'akoml-menu-switcher',
 			__( 'Language switcher', 'ako-multilang' ),
 			array( self::class, 'render_meta_box' ),
 			'nav-menus',
@@ -47,7 +47,7 @@ final class MenuItem {
 	public static function render_meta_box() {
 		$index = -1;
 		?>
-		<div id="ako-ml-switcher-items" class="posttypediv">
+		<div id="akoml-switcher-items" class="posttypediv">
 			<div class="tabs-panel tabs-panel-active">
 				<ul class="categorychecklist form-no-clear">
 					<?php foreach ( Profiles::all() as $profile ) : ?>
@@ -66,7 +66,7 @@ final class MenuItem {
 			</div>
 			<p class="button-controls wp-clearfix">
 				<span class="add-to-menu">
-					<input type="submit" class="button submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'ako-multilang' ); ?>" name="add-ako-ml-switcher-menu-item" id="submit-ako-ml-switcher-items" />
+					<input type="submit" class="button submit-add-to-menu right" value="<?php esc_attr_e( 'Add to Menu', 'ako-multilang' ); ?>" name="add-akoml-switcher-menu-item" id="submit-akoml-switcher-items" />
 					<span class="spinner"></span>
 				</span>
 			</p>

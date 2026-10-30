@@ -16,7 +16,7 @@ import { Dialog } from '../../components/overlays';
 import { ToggleRow } from '../../components/rows';
 import { errorMessage } from '../api';
 
-const BASE = '/ako/v1/settings';
+const BASE = '/akoml/v1/settings';
 
 /**
  * Largest settings file accepted (they're a few KB).

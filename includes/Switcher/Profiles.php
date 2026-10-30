@@ -2,23 +2,23 @@
 /**
  * Saved switcher designs ("Header switcher", "Footer switcher", …).
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Switcher;
+namespace AkoMultilang\Switcher;
 
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Stores profiles in the option `ako_ml_switchers` as
+ * Stores profiles in the option `akoml_switchers` as
  * `array( 'profiles' => array( id => profile ) )`. Every value is
  * allow-listed; unknown keys are dropped.
  */
 final class Profiles {
 
-	const OPTION = 'ako_ml_switchers';
+	const OPTION = 'akoml_switchers';
 
 	const STYLES     = array( 'link', 'inline', 'segmented', 'dropdown', 'floating' );
 	const SHOW       = array( 'code', 'native', 'both' );
@@ -145,7 +145,7 @@ final class Profiles {
 
 		$id = isset( $raw['id'] ) ? sanitize_key( (string) $raw['id'] ) : '';
 		if ( '' === $id || strlen( $id ) > 40 ) {
-			return new WP_Error( 'ako_ml_invalid_switcher', __( 'Use a short ID with letters, numbers, and hyphens.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_invalid_switcher', __( 'Use a short ID with letters, numbers, and hyphens.', 'ako-multilang' ) );
 		}
 		$clean['id'] = $id;
 
@@ -195,7 +195,7 @@ final class Profiles {
 
 		$profiles = self::stored();
 		if ( ! isset( $profiles[ $profile['id'] ] ) && count( $profiles ) >= self::MAX ) {
-			return new WP_Error( 'ako_ml_too_many_switchers', __( 'You’ve reached the maximum number of switchers.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_too_many_switchers', __( 'You’ve reached the maximum number of switchers.', 'ako-multilang' ) );
 		}
 
 		$profiles[ $profile['id'] ] = $profile;
@@ -213,7 +213,7 @@ final class Profiles {
 		$id       = sanitize_key( (string) $id );
 		$profiles = self::stored();
 		if ( ! isset( $profiles[ $id ] ) ) {
-			return new WP_Error( 'ako_ml_unknown_switcher', __( 'That switcher doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'akoml_unknown_switcher', __( 'That switcher doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 		unset( $profiles[ $id ] );
 		self::write( $profiles );

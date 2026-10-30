@@ -18,6 +18,6 @@
 		"html": false,
 		"align": [ "left", "center", "right" ]
 	},
-	"editorScript": "ako-ml-switcher-block",
-	"style": "ako-ml-switcher"
+	"editorScript": "akoml-switcher-block",
+	"style": "akoml-switcher"
 }

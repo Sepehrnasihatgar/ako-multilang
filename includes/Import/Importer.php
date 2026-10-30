@@ -2,15 +2,15 @@
 /**
  * Imports translation links from WPML or Polylang, in batches.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Import;
+namespace AkoMultilang\Import;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Catalog;
-use Ako\Multilang\Languages\Registry;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Catalog;
+use AkoMultilang\Languages\Registry;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
@@ -26,7 +26,7 @@ final class Importer {
 	/**
 	 * Option with the last import per source (not autoloaded).
 	 */
-	const STATUS_OPTION = 'ako_ml_imports';
+	const STATUS_OPTION = 'akoml_imports';
 
 	/**
 	 * Largest batch per request.
@@ -164,7 +164,7 @@ final class Importer {
 		$total      = $source->count_groups( $post_types );
 		$map        = self::map_languages( $source );
 		if ( ! $map ) {
-			return new WP_Error( 'ako_ml_import_languages', __( 'Ako couldn’t read the languages from this plugin. Nothing was changed.', 'ako-multilang' ), array( 'status' => 500 ) );
+			return new WP_Error( 'akoml_import_languages', __( 'Ako couldn’t read the languages from this plugin. Nothing was changed.', 'ako-multilang' ), array( 'status' => 500 ) );
 		}
 
 		$limit   = max( 1, min( self::MAX_BATCH, absint( $limit ) ) );

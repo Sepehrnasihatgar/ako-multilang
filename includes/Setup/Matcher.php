@@ -2,16 +2,16 @@
 /**
  * Suggests page pairs that look like translations of each other.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Setup;
+namespace AkoMultilang\Setup;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Overview;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Registry;
-use Ako\Multilang\Rest\Rest;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Overview;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Registry;
+use AkoMultilang\Rest\Rest;
 use WP_Query;
 
 defined( 'ABSPATH' ) || exit;

@@ -3,10 +3,10 @@
  * The one renderer behind the block, shortcode, menu item, PHP tag and the
  * floating switcher.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Switcher;
+namespace AkoMultilang\Switcher;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -17,8 +17,8 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Renderer {
 
-	const STYLE_HANDLE  = 'ako-ml-switcher';
-	const SCRIPT_HANDLE = 'ako-ml-switcher';
+	const STYLE_HANDLE  = 'akoml-switcher';
+	const SCRIPT_HANDLE = 'akoml-switcher';
 
 	/**
 	 * Registers front-end assets and the floating switcher.
@@ -33,12 +33,12 @@ final class Renderer {
 	 * Registers the stylesheet (< 3 KB) and the keyboard enhancement (< 1 KB).
 	 */
 	public static function register_assets() {
-		wp_register_style( self::STYLE_HANDLE, AKO_ML_URL . 'assets/switcher.css', array(), AKO_ML_VERSION );
+		wp_register_style( self::STYLE_HANDLE, AKOML_URL . 'assets/switcher.css', array(), AKOML_VERSION );
 		wp_register_script(
 			self::SCRIPT_HANDLE,
-			AKO_ML_URL . 'assets/switcher.js',
+			AKOML_URL . 'assets/switcher.js',
 			array(),
-			AKO_ML_VERSION,
+			AKOML_VERSION,
 			array(
 				'in_footer' => true,
 				'strategy'  => 'defer',
@@ -134,7 +134,7 @@ final class Renderer {
 
 		$template = locate_template( 'ako-multilang/switcher.php' );
 		if ( '' === $template ) {
-			$template = AKO_ML_PATH . 'templates/switcher.php';
+			$template = AKOML_PATH . 'templates/switcher.php';
 		}
 
 		ob_start();
@@ -156,7 +156,7 @@ final class Renderer {
 		 * @param array  $profile Switcher profile.
 		 * @param string $context Where it renders.
 		 */
-		$html = (string) apply_filters( 'ako_ml_switcher_markup', $html, $profile, $context );
+		$html = (string) apply_filters( 'akoml_switcher_markup', $html, $profile, $context );
 
 		return wp_kses( $html, self::allowed_html() );
 	}

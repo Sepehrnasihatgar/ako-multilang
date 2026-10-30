@@ -5,12 +5,12 @@
  * Capability checks belong to the caller (REST controllers, admin screens);
  * this class validates data and keeps the model consistent.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Content;
+namespace AkoMultilang\Content;
 
-use Ako\Multilang\Languages\Registry;
+use AkoMultilang\Languages\Registry;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
@@ -18,12 +18,12 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Language assignment and translation groups.
  *
- * A group is one `ako_ml_group` term. Its members are stored in term meta
- * `ako_ml_members` as `array( language_code => post_id )` — IDs, never URLs.
+ * A group is one `akoml_group` term. Its members are stored in term meta
+ * `akoml_members` as `array( language_code => post_id )` — IDs, never URLs.
  */
 final class Links {
 
-	const MEMBERS_META = 'ako_ml_members';
+	const MEMBERS_META = 'akoml_members';
 
 	/**
 	 * Language code of a post, or null.
@@ -65,7 +65,7 @@ final class Links {
 		}
 
 		if ( ! Registry::exists( $code ) ) {
-			return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ) );
 		}
 
 		$members = self::get_translations( $post->ID );
@@ -139,24 +139,24 @@ final class Links {
 			return $target;
 		}
 		if ( $source->ID === $target->ID ) {
-			return new WP_Error( 'ako_ml_same_post', __( 'A page can’t be its own translation.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_same_post', __( 'A page can’t be its own translation.', 'ako-multilang' ) );
 		}
 		if ( $source->post_type !== $target->post_type ) {
-			return new WP_Error( 'ako_ml_type_mismatch', __( 'Only content of the same type can be linked.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_type_mismatch', __( 'Only content of the same type can be linked.', 'ako-multilang' ) );
 		}
 
 		$source_lang = self::get_language( $source->ID );
 		$target_lang = self::get_language( $target->ID );
 		if ( ! $source_lang || ! $target_lang ) {
-			return new WP_Error( 'ako_ml_missing_language', __( 'Set a language on both pages first.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_missing_language', __( 'Set a language on both pages first.', 'ako-multilang' ) );
 		}
 		if ( $source_lang === $target_lang ) {
-			return new WP_Error( 'ako_ml_same_language', __( 'Both pages are in the same language.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_same_language', __( 'Both pages are in the same language.', 'ako-multilang' ) );
 		}
 
 		$members = self::get_translations( $source->ID );
 		if ( isset( $members[ $target_lang ] ) && $members[ $target_lang ] !== $target->ID ) {
-			return new WP_Error( 'ako_ml_language_taken', __( 'This page already has a translation in that language. Unlink it first.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_language_taken', __( 'This page already has a translation in that language. Unlink it first.', 'ako-multilang' ) );
 		}
 
 		// A post belongs to one group only: detach the target from any other group.
@@ -188,7 +188,7 @@ final class Links {
 		 * @param int $target_id Target post ID.
 		 * @param int $group_id  Group term ID.
 		 */
-		do_action( 'ako_ml_linked', $source->ID, $target->ID, $source_group );
+		do_action( 'akoml_linked', $source->ID, $target->ID, $source_group );
 
 		return true;
 	}
@@ -213,15 +213,15 @@ final class Links {
 			return $target;
 		}
 		if ( $source->ID === $target->ID ) {
-			return new WP_Error( 'ako_ml_same_post', __( 'A page can’t be its own translation.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_same_post', __( 'A page can’t be its own translation.', 'ako-multilang' ) );
 		}
 		if ( $source->post_type !== $target->post_type ) {
-			return new WP_Error( 'ako_ml_type_mismatch', __( 'Only content of the same type can be linked.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_type_mismatch', __( 'Only content of the same type can be linked.', 'ako-multilang' ) );
 		}
 
 		$code = sanitize_key( (string) $code );
 		if ( ! Registry::exists( $code ) ) {
-			return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ) );
 		}
 
 		$source_lang = self::get_language( $source->ID );
@@ -230,18 +230,18 @@ final class Links {
 		if ( null !== $target_lang && $target_lang !== $code ) {
 			$found = Registry::get( $target_lang );
 			return new WP_Error(
-				'ako_ml_wrong_language',
+				'akoml_wrong_language',
 				/* translators: %s: Language name, e.g. "Arabic". */
 				sprintf( __( 'That page is in %s. Pick a page in this language.', 'ako-multilang' ), $found ? $found['name'] : $target_lang )
 			);
 		}
 		if ( ( null === $source_lang ? Registry::default_code() : $source_lang ) === $code ) {
-			return new WP_Error( 'ako_ml_same_language', __( 'Both pages are in the same language.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_same_language', __( 'Both pages are in the same language.', 'ako-multilang' ) );
 		}
 
 		$members = self::get_translations( $source->ID );
 		if ( isset( $members[ $code ] ) && $members[ $code ] !== $target->ID ) {
-			return new WP_Error( 'ako_ml_language_taken', __( 'This page already has a translation in that language. Unlink it first.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_language_taken', __( 'This page already has a translation in that language. Unlink it first.', 'ako-multilang' ) );
 		}
 
 		if ( null === $source_lang ) {
@@ -292,7 +292,7 @@ final class Links {
 		 * @param int $post_id  Post ID.
 		 * @param int $group_id Former group term ID.
 		 */
-		do_action( 'ako_ml_unlinked', $post_id, $group_id );
+		do_action( 'akoml_unlinked', $post_id, $group_id );
 
 		return true;
 	}
@@ -393,10 +393,10 @@ final class Links {
 	private static function valid_post( $post_id ) {
 		$post = get_post( absint( $post_id ) );
 		if ( ! $post ) {
-			return new WP_Error( 'ako_ml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ) );
 		}
 		if ( ! Taxonomies::supports( $post->post_type ) ) {
-			return new WP_Error( 'ako_ml_unsupported_type', __( 'Ako isn’t enabled for this content type.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_unsupported_type', __( 'Ako isn’t enabled for this content type.', 'ako-multilang' ) );
 		}
 		return $post;
 	}

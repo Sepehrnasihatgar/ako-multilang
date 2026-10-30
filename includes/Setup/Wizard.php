@@ -2,18 +2,18 @@
 /**
  * Setup steps: languages, switcher placement and the final summary.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Setup;
+namespace AkoMultilang\Setup;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Catalog;
-use Ako\Multilang\Languages\Registry;
-use Ako\Multilang\Seo\Health;
-use Ako\Multilang\Seo\Hreflang;
-use Ako\Multilang\Switcher\Profiles;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Catalog;
+use AkoMultilang\Languages\Registry;
+use AkoMultilang\Seo\Health;
+use AkoMultilang\Seo\Hreflang;
+use AkoMultilang\Switcher\Profiles;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
@@ -27,7 +27,7 @@ final class Wizard {
 	/**
 	 * Option set on first activation, removed when setup is finished.
 	 */
-	const NEEDS_SETUP_OPTION = 'ako_ml_needs_setup';
+	const NEEDS_SETUP_OPTION = 'akoml_needs_setup';
 
 	/**
 	 * Placements offered in setup.
@@ -103,11 +103,11 @@ final class Wizard {
 			} else {
 				$known = Catalog::get( $locale );
 				if ( ! $known ) {
-					return new WP_Error( 'ako_ml_unknown_locale', __( 'Pick languages from the list.', 'ako-multilang' ), array( 'status' => 400 ) );
+					return new WP_Error( 'akoml_unknown_locale', __( 'Pick languages from the list.', 'ako-multilang' ), array( 'status' => 400 ) );
 				}
 				$code = Catalog::code_for( $locale, array_merge( $taken, array_keys( $current ) ) );
 				if ( isset( $current[ $code ] ) ) {
-					return new WP_Error( 'ako_ml_duplicate_language', __( 'Each language can only be added once.', 'ako-multilang' ), array( 'status' => 400 ) );
+					return new WP_Error( 'akoml_duplicate_language', __( 'Each language can only be added once.', 'ako-multilang' ), array( 'status' => 400 ) );
 				}
 				$language = array_merge( $known, array( 'code' => $code ) );
 			}
@@ -117,7 +117,7 @@ final class Wizard {
 
 		$default_code = $list[0]['code'];
 		if ( '' !== Registry::default_code() && Registry::default_code() !== $default_code && self::has_tagged_posts() ) {
-			return new WP_Error( 'ako_ml_default_locked', __( 'Your pages already have languages, so you can’t change the default here. Pages without a language would move to the new default.', 'ako-multilang' ), array( 'status' => 409 ) );
+			return new WP_Error( 'akoml_default_locked', __( 'Your pages already have languages, so you can’t change the default here. Pages without a language would move to the new default.', 'ako-multilang' ), array( 'status' => 409 ) );
 		}
 
 		foreach ( array_keys( $current ) as $code ) {
@@ -403,17 +403,17 @@ final class Wizard {
 		if ( ! $menu ) {
 			// Turn WordPress's fallback (the page list) into a saved menu first.
 			if ( ! class_exists( 'WP_Navigation_Fallback' ) ) {
-				return new WP_Error( 'ako_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'ako-multilang' ), array( 'status' => 400 ) );
+				return new WP_Error( 'akoml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'ako-multilang' ), array( 'status' => 400 ) );
 			}
 			$fallback = \WP_Navigation_Fallback::get_fallback();
 			if ( ! $fallback instanceof \WP_Post ) {
-				return new WP_Error( 'ako_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'ako-multilang' ), array( 'status' => 400 ) );
+				return new WP_Error( 'akoml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'ako-multilang' ), array( 'status' => 400 ) );
 			}
 			$menu = (int) $fallback->ID;
 		}
 
 		if ( ! current_user_can( 'edit_post', $menu ) ) {
-			return new WP_Error( 'ako_ml_menu_forbidden', __( 'You can’t edit menus on this site. Pick another placement.', 'ako-multilang' ), array( 'status' => 403 ) );
+			return new WP_Error( 'akoml_menu_forbidden', __( 'You can’t edit menus on this site. Pick another placement.', 'ako-multilang' ), array( 'status' => 403 ) );
 		}
 
 		$post = get_post( $menu );
@@ -478,11 +478,11 @@ final class Wizard {
 		}
 
 		if ( ! current_user_can( 'edit_theme_options' ) ) {
-			return new WP_Error( 'ako_ml_menu_forbidden', __( 'You can’t edit menus on this site. Pick another placement.', 'ako-multilang' ), array( 'status' => 403 ) );
+			return new WP_Error( 'akoml_menu_forbidden', __( 'You can’t edit menus on this site. Pick another placement.', 'ako-multilang' ), array( 'status' => 403 ) );
 		}
 		$location = self::menu_location();
 		if ( ! $location ) {
-			return new WP_Error( 'ako_ml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'ako-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'akoml_no_menu', __( 'We couldn’t find a menu in your theme to add the switcher to.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		if ( 'block' === $location['type'] ) {

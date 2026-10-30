@@ -3,7 +3,7 @@
 ## Milestone 2 — REST + admin shell (done, merged to `main`)
 
 Done
-- `ako/v1` REST: `/languages` (GET, POST, PUT, DELETE, `/order`, `/catalog`), `/links` (overview), `/links/candidates`, `/links/{id}` (PUT link, DELETE unlink `scope=post|group`).
+- `akoml/v1` REST: `/languages` (GET, POST, PUT, DELETE, `/order`, `/catalog`), `/links` (overview), `/links/candidates`, `/links/{id}` (PUT link, DELETE unlink `scope=post|group`).
 - Permission matrix verified in Playground: anonymous 401, subscriber 403, editor can list links only, admin full; invalid params 400.
 - Admin menu "Ako" (Translations, Languages), assets load only on Ako screens, root config passed as an escaped data attribute (no inline script).
 - `src/tokens/tokens.css` generated from Figma variables; Inter + Vazirmatn bundled (OFL, `assets/fonts/OFL.txt`).
@@ -23,10 +23,10 @@ Done
 
 ## Milestone 4a — Switcher front end (done)
 
-- Profiles (`ako_ml_switchers`), items per request (only published translations are linked; missing → language home, hidden or disabled with a tooltip).
+- Profiles (`akoml_switchers`), items per request (only published translations are linked; missing → language home, hidden or disabled with a tooltip).
 - One renderer + overridable template (`your-theme/ako-multilang/switcher.php`), output always through `wp_kses()`.
 - Five styles from Figma (Link with Plain/Outline/Soft/Solid, Inline, Segmented, Dropdown, Floating), shapes, show code/native/both, small-screen mode, "Inherit from theme".
-- `[ako_switcher id type show]`, legacy `[lang_switch]`, `ako_ml_switcher()` / `ako_ml_get_switcher()`, block `ako-multilang/switcher`, classic menu box + Navigation block links (`#ako-switcher-{id}`).
+- `[akoml_switcher id type show]`, legacy `[lang_switch]`, `akoml_switcher()` / `akoml_get_switcher()`, block `ako-multilang/switcher`, classic menu box + Navigation block links (`#ako-switcher-{id}`).
 - CSS 2.0 KB and keyboard script 0.65 KB gzipped; dropdown works without JS.
 - Tested on PHP 7.4 with Twenty Twenty-Five: every style, RTL mirroring, keyboard (Enter, arrows, Escape), invalid shortcode values ignored, classic menu, Navigation block, block registration.
 
@@ -39,7 +39,7 @@ Done
 
 - Integrations: detects Yoast SEO, Rank Math, All in One SEO. Pages marked noindex or canonicalized elsewhere (Yoast, Rank Math) leave the hreflang cluster. og:locale printed only when no SEO plugin prints it; og:locale:alternate always. Yoast XML sitemap gets `xhtml:link` alternates (valid XML).
 - WordPress core sitemap can't carry hreflang (its renderer allows only loc/lastmod/changefreq/priority); without Yoast the toggle is disabled with an honest note — hreflang stays in each page's head.
-- Health checks (stored in `ako_ml_health`): one-way groups (stored members ≠ real members) with one-click repair, missing translations per language (Duplicate for a single page, Review otherwise), pages left out of hreflang.
+- Health checks (stored in `akoml_health`): one-way groups (stored members ≠ real members) with one-click repair, missing translations per language (Duplicate for a single page, Review otherwise), pages left out of hreflang.
 - SEO screen: x-default, per-language hreflang, toggles, SEO plugins, "What search engines see" preview, health checks, save bar.
 - Translations: Needs review tab (rows show the real pages with a One-way badge), SEO health card, `#missing` / `#review` / `#drafts` deep links.
 - Tested with Yoast SEO 28.7 in Playground.
@@ -83,7 +83,7 @@ Fixed along the way:
 
 ## Rename to Ako Multilang (October 27, 2026)
 
-"Cedar" is an AWS trademark and the name of a CNCF open source project, and wordpress.org refuses slugs that start with another project's name. Renamed before the first submission: plugin name, slug and text domain `ako-multilang`, PHP namespace `Ako\Multilang`, prefixes `ako_ml` and `AKO_ML`, REST namespace `ako/v1`, CSS classes and custom properties `ako-`, block `ako-multilang/switcher`, shortcode `[ako_switcher]`, template override folder `ako-multilang/`. Kept on purpose: the 6.2 option keys the migration reads, the legacy `[lang_switch]` shortcode, and the `cedar` green palette family name (matches Figma). Figma still needs the rename, a new logo, and the copy pass.
+"Cedar" is an AWS trademark and the name of a CNCF open source project, and wordpress.org refuses slugs that start with another project's name. Renamed before the first submission: plugin name, slug and text domain `ako-multilang`, PHP namespace `AkoMultilang`, prefixes `ako_ml` and `AKO_ML`, REST namespace `akoml/v1`, CSS classes and custom properties `ako-`, block `ako-multilang/switcher`, shortcode `[akoml_switcher]`, template override folder `ako-multilang/`. Kept on purpose: the 6.2 option keys the migration reads, the legacy `[lang_switch]` shortcode, and the `cedar` green palette family name (matches Figma). Figma still needs the rename, a new logo, and the copy pass.
 
 Next
 1. Before submitting: create the wp.org account's SVN assets from `.wordpress-org/`, run Plugin Check once more on the final zip, then submit at wordpress.org/plugins/developers/add/.

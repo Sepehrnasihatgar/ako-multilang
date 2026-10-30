@@ -2,15 +2,15 @@
 /**
  * The hreflang links and the <html lang dir> attributes.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Seo;
+namespace AkoMultilang\Seo;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Registry;
-use Ako\Multilang\Settings;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Registry;
+use AkoMultilang\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -92,7 +92,7 @@ final class Hreflang {
 		 * @param array<string,string> $out     hreflang => URL.
 		 * @param int                  $post_id Current post ID.
 		 */
-		return (array) apply_filters( 'ako_ml_hreflang_links', $out, $post_id );
+		return (array) apply_filters( 'akoml_hreflang_links', $out, $post_id );
 	}
 
 	/**
@@ -112,7 +112,7 @@ final class Hreflang {
 		 * @param bool $ok      Whether the post is indexable.
 		 * @param int  $post_id Post ID.
 		 */
-		return (bool) apply_filters( 'ako_ml_is_indexable', $ok, (int) $post_id );
+		return (bool) apply_filters( 'akoml_is_indexable', $ok, (int) $post_id );
 	}
 
 	/**
@@ -128,7 +128,7 @@ final class Hreflang {
 		 *
 		 * @param bool $handled Whether hreflang is handled by another plugin.
 		 */
-		return (bool) apply_filters( 'ako_ml_hreflang_handled_elsewhere', $handled );
+		return (bool) apply_filters( 'akoml_hreflang_handled_elsewhere', $handled );
 	}
 
 	/**

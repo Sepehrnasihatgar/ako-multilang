@@ -2,27 +2,26 @@
 /**
  * Plugin bootstrap: wires every module to WordPress hooks.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang;
+namespace AkoMultilang;
 
-use Ako\Multilang\Admin\Admin;
-use Ako\Multilang\Admin\Editor;
-use Ako\Multilang\Admin\Notices;
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Migration\Legacy62;
-use Ako\Multilang\Rtl\Compat;
-use Ako\Multilang\Rtl\Locale;
-use Ako\Multilang\Rest\Rest;
-use Ako\Multilang\Seo\Hreflang;
-use Ako\Multilang\Seo\Integrations;
-use Ako\Multilang\Setup\Wizard;
-use Ako\Multilang\Switcher\Block;
-use Ako\Multilang\Switcher\MenuItem;
-use Ako\Multilang\Switcher\Renderer;
-use Ako\Multilang\Switcher\Shortcode;
+use AkoMultilang\Admin\Admin;
+use AkoMultilang\Admin\Editor;
+use AkoMultilang\Admin\Notices;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Rtl\Compat;
+use AkoMultilang\Rtl\Locale;
+use AkoMultilang\Rest\Rest;
+use AkoMultilang\Seo\Hreflang;
+use AkoMultilang\Seo\Integrations;
+use AkoMultilang\Setup\Wizard;
+use AkoMultilang\Switcher\Block;
+use AkoMultilang\Switcher\MenuItem;
+use AkoMultilang\Switcher\Renderer;
+use AkoMultilang\Switcher\Shortcode;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -34,7 +33,7 @@ final class Plugin {
 	/**
 	 * Option that stores the installed data version (for migrations).
 	 */
-	const DB_VERSION_OPTION = 'ako_ml_db_version';
+	const DB_VERSION_OPTION = 'akoml_db_version';
 
 	/**
 	 * Current data version.
@@ -82,7 +81,6 @@ final class Plugin {
 			Block::register();
 		}
 
-		Legacy62::register();
 		Rest::register();
 
 		if ( is_admin() ) {
@@ -96,7 +94,7 @@ final class Plugin {
 		 *
 		 * Pro and other extensions should attach to this action.
 		 */
-		do_action( 'ako_ml_loaded' );
+		do_action( 'akoml_loaded' );
 	}
 
 	/**

@@ -136,7 +136,7 @@ export default function ConnectStep( {
 				<p>
 					{ nothing
 						? __(
-								'We looked for data from WPML, Polylang, and version 6.2, and for pages that look like translations of each other.',
+								'We looked for data from WPML and Polylang, and for pages that look like translations of each other.',
 								'ako-multilang'
 							)
 						: __(

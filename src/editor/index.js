@@ -9,7 +9,7 @@ import { registerPlugin } from '@wordpress/plugins';
 import LanguagePanel from './LanguagePanel';
 import './editor.css';
 
-const DIRECTION_SOURCE = 'ako-ml-direction';
+const DIRECTION_SOURCE = 'akoml-direction';
 
 function AkoLanguagePanel() {
 	const { postId, isSaving, isAutosaving } = useSelect( ( select ) => {
@@ -81,9 +81,9 @@ function AkoLanguagePanel() {
 
 	return (
 		<PluginDocumentSettingPanel
-			name="ako-ml-language"
+			name="akoml-language"
 			title={ __( 'Language · Ako', 'ako-multilang' ) }
-			className="ako-ml-document-panel"
+			className="akoml-document-panel"
 		>
 			<LanguagePanel
 				postId={ postId }
@@ -95,4 +95,4 @@ function AkoLanguagePanel() {
 	);
 }
 
-registerPlugin( 'ako-ml-language', { render: AkoLanguagePanel } );
+registerPlugin( 'akoml-language', { render: AkoLanguagePanel } );

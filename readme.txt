@@ -38,14 +38,13 @@ It's made for bilingual sites with a right-to-left language, like Farsi, Arabic,
 
 = Language switcher =
 
-* Add it as a block, a menu item, the `[ako_switcher]` shortcode, or a floating button. Setup can add it to your header menu for you, on classic and block themes.
+* Add it as a block, a menu item, the `[akoml_switcher]` shortcode, or a floating button. Setup can add it to your header menu for you, on classic and block themes.
 * Five looks: link, inline, segmented, dropdown, and floating, with a live preview in the admin.
 * Works with a keyboard and screen readers. When a page has no translation, it links to that language's homepage.
 
 = Switching from another plugin =
 
 * Imports linked pages from WPML and Polylang. Ako only reads their data and never changes it, so you can switch back anytime.
-* Keeps your page pairs and the `[lang_switch]` shortcode from version 6.2, the private plugin Ako grew out of.
 
 = Privacy =
 
@@ -75,7 +74,7 @@ Yes. Setup finds their data and imports your linked pages. Their own data isn't 
 
 = Does it work with Elementor? =
 
-Yes. Elementor pages link like any other page, and right-to-left pages load Elementor's right-to-left styles. To show the switcher in an Elementor layout, put the `[ako_switcher]` shortcode in a Shortcode widget.
+Yes. Elementor pages link like any other page, and right-to-left pages load Elementor's right-to-left styles. To show the switcher in an Elementor layout, put the `[akoml_switcher]` shortcode in a Shortcode widget.
 
 = The switcher doesn't show in my menu. What should I check? =
 

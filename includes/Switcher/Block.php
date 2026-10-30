@@ -2,10 +2,10 @@
 /**
  * The Language Switcher block (dynamic, rendered by the shared renderer).
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Switcher;
+namespace AkoMultilang\Switcher;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Block {
 
-	const EDITOR_HANDLE = 'ako-ml-switcher-block';
+	const EDITOR_HANDLE = 'akoml-switcher-block';
 
 	/**
 	 * Hooks block registration (after the switcher assets are registered).
@@ -43,21 +43,21 @@ final class Block {
 	 * Registers the editor script handle and the block type.
 	 */
 	public static function register_block() {
-		$asset_file = AKO_ML_PATH . 'build/block/index.asset.php';
+		$asset_file = AKOML_PATH . 'build/block/index.asset.php';
 		if ( is_readable( $asset_file ) ) {
 			$asset = include $asset_file;
 			wp_register_script(
 				self::EDITOR_HANDLE,
-				AKO_ML_URL . 'build/block/index.js',
+				AKOML_URL . 'build/block/index.js',
 				$asset['dependencies'],
 				$asset['version'],
 				array( 'in_footer' => true )
 			);
-			wp_set_script_translations( self::EDITOR_HANDLE, 'ako-multilang', AKO_ML_PATH . 'languages' );
+			wp_set_script_translations( self::EDITOR_HANDLE, 'ako-multilang', AKOML_PATH . 'languages' );
 		}
 
 		register_block_type(
-			AKO_ML_PATH . 'blocks/switcher',
+			AKOML_PATH . 'blocks/switcher',
 			array( 'render_callback' => array( self::class, 'render' ) )
 		);
 	}

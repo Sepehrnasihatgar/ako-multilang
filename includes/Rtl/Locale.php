@@ -2,12 +2,12 @@
 /**
  * Switches the WordPress locale to the language of the page being viewed.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Rtl;
+namespace AkoMultilang\Rtl;
 
-use Ako\Multilang\Seo\Hreflang;
+use AkoMultilang\Seo\Hreflang;
 
 defined( 'ABSPATH' ) || exit;
 

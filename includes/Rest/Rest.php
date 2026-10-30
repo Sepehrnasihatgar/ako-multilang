@@ -1,11 +1,11 @@
 <?php
 /**
- * REST API bootstrap (namespace ako/v1).
+ * REST API bootstrap (namespace akoml/v1).
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Rest;
+namespace AkoMultilang\Rest;
 
 use WP_Error;
 
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Rest {
 
-	const NAMESPACE = 'ako/v1';
+	const NAMESPACE = 'akoml/v1';
 
 	/**
 	 * Statuses shown in Ako's lists (never trash or auto-draft).

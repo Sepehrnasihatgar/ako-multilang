@@ -15,7 +15,7 @@ function Edit( { attributes, setAttributes } ) {
 	const blockProps = useBlockProps();
 
 	useEffect( () => {
-		apiFetch( { path: '/ako/v1/switchers' } )
+		apiFetch( { path: '/akoml/v1/switchers' } )
 			.then( ( response ) => setSwitchers( response.switchers ) )
 			.catch( () => setSwitchers( [] ) );
 	}, [] );

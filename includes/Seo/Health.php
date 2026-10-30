@@ -2,21 +2,21 @@
 /**
  * SEO health checks.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Seo;
+namespace AkoMultilang\Seo;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Overview;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Registry;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Overview;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Registry;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Scans translation groups and stores the result (option
- * `ako_ml_health`, not autoloaded) so screens can show it instantly.
+ * `akoml_health`, not autoloaded) so screens can show it instantly.
  *
  * Checks:
  * - one-way: a group's stored member list disagrees with the posts actually
@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Health {
 
-	const OPTION = 'ako_ml_health';
+	const OPTION = 'akoml_health';
 
 	/**
 	 * Per-request cache of real members, keyed by group ID.
@@ -69,7 +69,7 @@ final class Health {
 		 *
 		 * @param array $result Result.
 		 */
-		$result = (array) apply_filters( 'ako_ml_health_checks', $result );
+		$result = (array) apply_filters( 'akoml_health_checks', $result );
 
 		update_option( self::OPTION, $result, false );
 		return $result;

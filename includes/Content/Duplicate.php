@@ -2,12 +2,12 @@
 /**
  * "Duplicate as draft": copies a post into a new draft in another language.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Content;
+namespace AkoMultilang\Content;
 
-use Ako\Multilang\Languages\Registry;
+use AkoMultilang\Languages\Registry;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
@@ -48,25 +48,25 @@ final class Duplicate {
 	public static function create( $source_id, $code ) {
 		$source = get_post( absint( $source_id ) );
 		if ( ! $source || ! in_array( $source->post_status, array( 'publish', 'future', 'draft', 'pending', 'private' ), true ) ) {
-			return new WP_Error( 'ako_ml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ) );
 		}
 		if ( ! Taxonomies::supports( $source->post_type ) ) {
-			return new WP_Error( 'ako_ml_unsupported_type', __( 'Ako isn’t enabled for this content type.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_unsupported_type', __( 'Ako isn’t enabled for this content type.', 'ako-multilang' ) );
 		}
 
 		$code = sanitize_key( (string) $code );
 		if ( ! Registry::exists( $code ) ) {
-			return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ) );
 		}
 
 		$source_lang = Links::get_language( $source->ID );
 		if ( ( null === $source_lang ? Registry::default_code() : $source_lang ) === $code ) {
-			return new WP_Error( 'ako_ml_same_language', __( 'Both pages are in the same language.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_same_language', __( 'Both pages are in the same language.', 'ako-multilang' ) );
 		}
 
 		$translations = Links::get_translations( $source->ID );
 		if ( isset( $translations[ $code ] ) ) {
-			return new WP_Error( 'ako_ml_language_taken', __( 'This page already has a translation in that language. Unlink it first.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_language_taken', __( 'This page already has a translation in that language. Unlink it first.', 'ako-multilang' ) );
 		}
 
 		// wp_insert_post() expects slashed data; block markup and JSON contain backslashes.
@@ -109,7 +109,7 @@ final class Duplicate {
 		 * @param int    $source_id Source post ID.
 		 * @param string $code      Language code of the draft.
 		 */
-		do_action( 'ako_ml_duplicated', $new_id, $source->ID, $code );
+		do_action( 'akoml_duplicated', $new_id, $source->ID, $code );
 
 		return $new_id;
 	}
@@ -142,7 +142,7 @@ final class Duplicate {
 		 * @param string[] $keys    Meta keys.
 		 * @param int      $from    Source post ID.
 		 */
-		$skipped = (array) apply_filters( 'ako_ml_duplicate_skipped_meta_keys', self::SKIPPED_META, $from );
+		$skipped = (array) apply_filters( 'akoml_duplicate_skipped_meta_keys', self::SKIPPED_META, $from );
 
 		foreach ( get_post_meta( $from ) as $key => $values ) {
 			if ( in_array( $key, $skipped, true ) ) {

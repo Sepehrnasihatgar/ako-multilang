@@ -2,10 +2,10 @@
 /**
  * Template tags for theme developers.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-use Ako\Multilang\Switcher\Renderer;
+use AkoMultilang\Switcher\Renderer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  * @param array  $args Optional overrides: style, show.
  * @return string
  */
-function ako_ml_get_switcher( $id = '', $args = array() ) {
+function akoml_get_switcher( $id = '', $args = array() ) {
 	$overrides = array();
 	foreach ( array( 'style', 'show' ) as $key ) {
 		if ( isset( $args[ $key ] ) ) {
@@ -27,11 +27,11 @@ function ako_ml_get_switcher( $id = '', $args = array() ) {
 }
 
 /**
- * Prints a language switcher: `<?php ako_ml_switcher( 'header' ); ?>`.
+ * Prints a language switcher: `<?php akoml_switcher( 'header' ); ?>`.
  *
  * @param string $id   Switcher ID ('' for the first one).
  * @param array  $args Optional overrides: style, show.
  */
-function ako_ml_switcher( $id = '', $args = array() ) {
-	echo ako_ml_get_switcher( $id, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Passed through wp_kses() in Renderer::render().
+function akoml_switcher( $id = '', $args = array() ) {
+	echo akoml_get_switcher( $id, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Passed through wp_kses() in Renderer::render().
 }

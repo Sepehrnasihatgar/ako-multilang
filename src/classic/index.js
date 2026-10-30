@@ -29,7 +29,7 @@ function ClassicPanel( { postId } ) {
 }
 
 domReady( () => {
-	const root = document.getElementById( 'ako-ml-classic' );
+	const root = document.getElementById( 'akoml-classic' );
 	const postId = root ? parseInt( root.dataset.postId, 10 ) : 0;
 	if ( postId > 0 ) {
 		createRoot( root ).render( <ClassicPanel postId={ postId } /> );

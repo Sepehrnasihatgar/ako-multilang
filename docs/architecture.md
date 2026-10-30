@@ -11,7 +11,7 @@
 | Requires PHP | 7.4+ (tested on 7.4 → 8.4) |
 | Tested up to | latest stable WordPress at submission time |
 | License | GPLv2 or later — every bundled file GPL-compatible |
-| Prefix | PHP namespace `Ako\Multilang`, functions/options/meta/hooks `ako_ml_`, CSS `.ako-`, JS globals none |
+| Prefix | PHP namespace `AkoMultilang`, functions/options/meta/hooks `akoml_`, CSS `.ako-`, JS globals none |
 
 ## 2. Repository layout
 
@@ -20,11 +20,11 @@ ako-multilang/
 ├─ ako-multilang.php        # Header + bootstrap only (no logic)
 ├─ uninstall.php              # Deletes data only if the user opted in
 ├─ readme.txt                 # wordpress.org readme (changelog, FAQ, screenshots)
-├─ includes/                  # PHP, PSR-4 under Ako\Multilang
+├─ includes/                  # PHP, PSR-4 under AkoMultilang
 │  ├─ Plugin.php              # Wires modules; nothing runs at file load
 │  ├─ Settings.php            # Typed access to options + defaults
 │  ├─ Languages/Registry.php  # Languages: code, locale, hreflang, names, dir, order, default
-│  ├─ Content/Taxonomies.php  # Hidden taxonomies: ako_ml_language, ako_ml_group
+│  ├─ Content/Taxonomies.php  # Hidden taxonomies: akoml_language, akoml_group
 │  ├─ Content/Links.php       # Link / unlink / get translations (the core API)
 │  ├─ Content/Duplicate.php   # "Duplicate as draft" (content, meta allow-list, terms, thumbnail)
 │  ├─ Seo/Hreflang.php        # <link rel="alternate">, x-default, <html lang dir>
@@ -33,9 +33,9 @@ ako-multilang/
 │  ├─ Rtl/Compat.php          # Theme fixes (assets/rtl/*.css), RTL pages only, when the theme is in use. Ships GeneratePress only
 │  ├─ Switcher/Renderer.php   # One renderer → block, shortcode, menu item, PHP tag
 │  ├─ Switcher/Profiles.php   # Saved switcher styles ("Header switcher", …)
-│  ├─ Switcher/Shortcode.php  # [ako_switcher] + legacy [lang_switch]
+│  ├─ Switcher/Shortcode.php  # [akoml_switcher] + legacy [lang_switch]
 │  ├─ Switcher/MenuItem.php   # Appearance → Menus integration
-│  ├─ Rest/*.php              # REST controllers (namespace ako/v1)
+│  ├─ Rest/*.php              # REST controllers (namespace akoml/v1)
 │  ├─ Admin/*.php             # Menu, assets, notices, plugin row links
 │  ├─ Migration/Legacy62.php  # version 6.2 data, migrated once automatically
 │  ├─ Import/*.php            # WPML + Polylang: read straight from the database, batched, never write to their data
@@ -60,12 +60,12 @@ The 6.2 file (`cedar-multilang-helper.php`) stays in git history only; its data 
 
 | What | Where | Why |
 |---|---|---|
-| Languages | option `ako_ml_languages` (autoload) | Small, read on every request |
-| A post's language | hidden taxonomy `ako_ml_language` (term = language code) | Indexed queries ("all Arabic pages"), cached by core |
-| Translation group | hidden taxonomy `ako_ml_group` (one term per group) + term meta `ako_ml_members` = `{lang: post_id}` | Linking by **ID**, so slug changes never break; one cached lookup per page |
-| Switcher styles | option `ako_ml_switchers` (autoloaded, small) | The floating switcher is checked on every front-end request |
-| Settings | option `ako_ml_settings` (autoload) | Modules, post types, RTL compat, fallback, uninstall choice |
-| Dismissed notices | user meta `ako_ml_dismissed` | Per user, never global |
+| Languages | option `akoml_languages` (autoload) | Small, read on every request |
+| A post's language | hidden taxonomy `akoml_language` (term = language code) | Indexed queries ("all Arabic pages"), cached by core |
+| Translation group | hidden taxonomy `akoml_group` (one term per group) + term meta `akoml_members` = `{lang: post_id}` | Linking by **ID**, so slug changes never break; one cached lookup per page |
+| Switcher styles | option `akoml_switchers` (autoloaded, small) | The floating switcher is checked on every front-end request |
+| Settings | option `akoml_settings` (autoload) | Modules, post types, RTL compat, fallback, uninstall choice |
+| Dismissed notices | user meta `akoml_dismissed` | Per user, never global |
 
 Taxonomies are `public => false`, `show_ui => false`, `show_in_rest => false`, `rewrite => false` — they never create URLs. Front-end cost: one term-cache lookup on singular views, zero on archives.
 
@@ -88,7 +88,7 @@ No cookies, no redirects, no per-visitor output → full-page-cache safe.
 - Notices: activation and migration only, dismissible, shown only to `manage_options` users, only on Dashboard / Plugins / Ako screens.
 - Plugin row: Settings · Docs action links; "Get Pro" in row meta (allowed, not a nag).
 
-## 6. REST API — `ako/v1`
+## 6. REST API — `akoml/v1`
 
 | Route | Methods | Capability |
 |---|---|---|
@@ -110,8 +110,8 @@ Every route has a `permission_callback` (never `__return_true`), a JSON schema w
 
 ## 7. Extensibility (for Pro and theme developers)
 
-Actions: `ako_ml_loaded`, `ako_ml_linked`, `ako_ml_unlinked`, `ako_ml_duplicated`.
-Filters: `ako_ml_hreflang_links`, `ako_ml_switcher_items`, `ako_ml_switcher_markup`, `ako_ml_duplicate_meta_keys`, `ako_ml_health_checks`, `ako_ml_admin_screens`.
+Actions: `akoml_loaded`, `akoml_linked`, `akoml_unlinked`, `akoml_duplicated`.
+Filters: `akoml_hreflang_links`, `akoml_switcher_items`, `akoml_switcher_markup`, `akoml_duplicate_meta_keys`, `akoml_health_checks`, `akoml_admin_screens`.
 The free plugin contains **no** license checks, upsell locks, or Pro code paths — Pro is a separate plugin that uses these hooks.
 
 ## 8. Security & wordpress.org compliance (non-negotiable)

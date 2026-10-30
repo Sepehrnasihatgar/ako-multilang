@@ -2,13 +2,13 @@
 /**
  * Admin menu, screens and assets.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Admin;
+namespace AkoMultilang\Admin;
 
-use Ako\Multilang\Settings;
-use Ako\Multilang\Setup\Wizard;
+use AkoMultilang\Settings;
+use AkoMultilang\Setup\Wizard;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ final class Admin {
 
 	const SLUG = 'ako-multilang';
 
-	const SCRIPT = 'ako-ml-admin';
+	const SCRIPT = 'akoml-admin';
 
 	/**
 	 * Hook suffixes of Ako screens, keyed by screen ID.
@@ -37,7 +37,7 @@ final class Admin {
 		add_action( 'admin_enqueue_scripts', array( self::class, 'enqueue' ) );
 		add_filter( 'admin_body_class', array( self::class, 'body_class' ) );
 		add_action( 'admin_head', array( self::class, 'hide_setup_entry' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( AKO_ML_FILE ), array( self::class, 'action_links' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( AKOML_FILE ), array( self::class, 'action_links' ) );
 	}
 
 	/**
@@ -175,7 +175,7 @@ final class Admin {
 		$settings = Settings::get();
 		$config   = array(
 			'screen'     => $screen_id,
-			'version'    => AKO_ML_VERSION,
+			'version'    => AKOML_VERSION,
 			'urls'       => $nav,
 			'setupUrl'   => admin_url( 'admin.php?page=' . self::SLUG . '-setup' ),
 			'needsSetup' => Wizard::needs_setup(),
@@ -184,9 +184,9 @@ final class Admin {
 			'siteName'   => wp_strip_all_tags( get_bloginfo( 'name' ) ),
 		);
 
-		echo '<div class="wrap ako-ml-notices"><hr class="wp-header-end"></div>';
+		echo '<div class="wrap akoml-notices"><hr class="wp-header-end"></div>';
 		printf(
-			'<div id="ako-ml-root" class="ako-ml ako-ml-root" data-config="%s"></div>',
+			'<div id="akoml-root" class="ako-ml akoml-root" data-config="%s"></div>',
 			esc_attr( wp_json_encode( $config ) )
 		);
 		printf(
@@ -205,7 +205,7 @@ final class Admin {
 			return;
 		}
 
-		$asset_file = AKO_ML_PATH . 'build/admin/index.asset.php';
+		$asset_file = AKOML_PATH . 'build/admin/index.asset.php';
 		if ( ! is_readable( $asset_file ) ) {
 			add_action( 'admin_notices', array( self::class, 'missing_build_notice' ) );
 			return;
@@ -214,16 +214,16 @@ final class Admin {
 
 		wp_enqueue_script(
 			self::SCRIPT,
-			AKO_ML_URL . 'build/admin/index.js',
+			AKOML_URL . 'build/admin/index.js',
 			$asset['dependencies'],
 			$asset['version'],
 			array( 'in_footer' => true )
 		);
-		wp_set_script_translations( self::SCRIPT, 'ako-multilang', AKO_ML_PATH . 'languages' );
+		wp_set_script_translations( self::SCRIPT, 'ako-multilang', AKOML_PATH . 'languages' );
 
 		wp_enqueue_style(
 			self::SCRIPT,
-			AKO_ML_URL . 'build/admin/index.css',
+			AKOML_URL . 'build/admin/index.css',
 			array(),
 			$asset['version']
 		);
@@ -231,7 +231,7 @@ final class Admin {
 
 		// The designer and setup preview the real front-end stylesheet.
 		if ( in_array( array_search( $hook_suffix, self::$hooks, true ), array( 'switcher', 'setup' ), true ) ) {
-			wp_enqueue_style( 'ako-ml-switcher' );
+			wp_enqueue_style( 'akoml-switcher' );
 		}
 	}
 
@@ -253,7 +253,7 @@ final class Admin {
 	 */
 	public static function body_class( $classes ) {
 		if ( '' !== self::current_screen_id() ) {
-			$classes .= ' ako-ml-screen';
+			$classes .= ' akoml-screen';
 		}
 		return $classes;
 	}

@@ -2,19 +2,19 @@
 /**
  * Typed access to the plugin settings option.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang;
+namespace AkoMultilang;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Reads, sanitizes and saves `ako_ml_settings`.
+ * Reads, sanitizes and saves `akoml_settings`.
  */
 final class Settings {
 
-	const OPTION = 'ako_ml_settings';
+	const OPTION = 'akoml_settings';
 
 	/**
 	 * Allowed values for the "no translation" behavior.

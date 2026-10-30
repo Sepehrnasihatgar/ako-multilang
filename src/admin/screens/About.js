@@ -38,20 +38,7 @@ const CHANGELOG = [
 				'hreflang and og:locale that work with Yoast SEO, Rank Math, and AIOSEO',
 				'ako-multilang'
 			),
-			__(
-				'Import from WPML, Polylang, and version 6.2',
-				'ako-multilang'
-			),
-		],
-	},
-	{
-		version: '6.2',
-		date: '2026-07-21',
-		changes: () => [
-			__(
-				'Private release for one Persian/English site. Data migrates automatically.',
-				'ako-multilang'
-			),
+			__( 'Import from WPML and Polylang', 'ako-multilang' ),
 		],
 	},
 ];
@@ -100,7 +87,7 @@ export default function About( { config, notify } ) {
 
 	const load = useCallback( () => {
 		setLoadError( null );
-		apiFetch( { path: '/ako/v1/system' } )
+		apiFetch( { path: '/akoml/v1/system' } )
 			.then( setSystem )
 			.catch( ( error ) =>
 				setLoadError(

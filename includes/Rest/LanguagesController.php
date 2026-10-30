@@ -1,16 +1,16 @@
 <?php
 /**
- * REST: /ako/v1/languages
+ * REST: /akoml/v1/languages
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Rest;
+namespace AkoMultilang\Rest;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Catalog;
-use Ako\Multilang\Languages\Registry;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Catalog;
+use AkoMultilang\Languages\Registry;
 use WP_Error;
 use WP_Query;
 use WP_REST_Request;
@@ -188,7 +188,7 @@ final class LanguagesController {
 		);
 
 		if ( in_array( $language['code'], $taken, true ) ) {
-			return new WP_Error( 'ako_ml_duplicate_language', __( 'Each language can only be added once.', 'ako-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'akoml_duplicate_language', __( 'Each language can only be added once.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		$result = Registry::add( $language );
@@ -234,10 +234,10 @@ final class LanguagesController {
 		$code = (string) $request['code'];
 
 		if ( ! Registry::exists( $code ) ) {
-			return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'akoml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 		if ( Registry::default_code() === $code ) {
-			return new WP_Error( 'ako_ml_remove_default', __( 'The default language can’t be removed.', 'ako-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'akoml_remove_default', __( 'The default language can’t be removed.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		Links::detach_language( $code );

@@ -1,21 +1,21 @@
 <?php
 /**
- * REST: /ako/v1/settings and /ako/v1/system
+ * REST: /akoml/v1/settings and /akoml/v1/system
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Rest;
+namespace AkoMultilang\Rest;
 
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Import\Importer;
-use Ako\Multilang\Languages\Registry;
-use Ako\Multilang\Rtl\Compat;
-use Ako\Multilang\Seo\Health;
-use Ako\Multilang\Seo\Integrations;
-use Ako\Multilang\Settings;
-use Ako\Multilang\Setup\Wizard;
-use Ako\Multilang\Switcher\Profiles;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Import\Importer;
+use AkoMultilang\Languages\Registry;
+use AkoMultilang\Rtl\Compat;
+use AkoMultilang\Seo\Health;
+use AkoMultilang\Seo\Integrations;
+use AkoMultilang\Settings;
+use AkoMultilang\Setup\Wizard;
+use AkoMultilang\Switcher\Profiles;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -157,7 +157,7 @@ final class SettingsController {
 			$allowed = wp_list_pluck( self::post_types(), 'slug' );
 			foreach ( $request['post_types'] as $post_type ) {
 				if ( ! in_array( $post_type, $allowed, true ) ) {
-					return new WP_Error( 'ako_ml_invalid_post_type', __( 'That content type isn’t available.', 'ako-multilang' ), array( 'status' => 400 ) );
+					return new WP_Error( 'akoml_invalid_post_type', __( 'That content type isn’t available.', 'ako-multilang' ), array( 'status' => 400 ) );
 				}
 			}
 			$settings['post_types'] = $request['post_types'];
@@ -235,7 +235,7 @@ final class SettingsController {
 			array(
 				'plugin'    => 'ako-multilang',
 				'format'    => self::EXPORT_FORMAT,
-				'version'   => AKO_ML_VERSION,
+				'version'   => AKOML_VERSION,
 				'exported'  => gmdate( 'c' ),
 				'settings'  => Settings::get(),
 				'languages' => array(
@@ -258,7 +258,7 @@ final class SettingsController {
 	public static function import( WP_REST_Request $request ) {
 		$data = (array) $request['data'];
 		if ( ! isset( $data['plugin'], $data['format'] ) || 'ako-multilang' !== $data['plugin'] || self::EXPORT_FORMAT !== (int) $data['format'] ) {
-			return new WP_Error( 'ako_ml_invalid_import', __( 'This isn’t a Ako settings file.', 'ako-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'akoml_invalid_import', __( 'This isn’t a Ako settings file.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		if ( isset( $data['languages']['languages'] ) && is_array( $data['languages']['languages'] ) ) {
@@ -299,7 +299,7 @@ final class SettingsController {
 			}
 		}
 		if ( ! $list ) {
-			return new WP_Error( 'ako_ml_invalid_import', __( 'The file has no valid languages.', 'ako-multilang' ) );
+			return new WP_Error( 'akoml_invalid_import', __( 'The file has no valid languages.', 'ako-multilang' ) );
 		}
 
 		$tagged = Wizard::has_tagged_posts();
@@ -337,7 +337,7 @@ final class SettingsController {
 	public static function system() {
 		return rest_ensure_response(
 			array(
-				'version' => AKO_ML_VERSION,
+				'version' => AKOML_VERSION,
 				'update'  => self::update_status(),
 				'checks'  => self::checks(),
 			)
@@ -350,13 +350,13 @@ final class SettingsController {
 	 * @return array{version:string,notice:string,url:string}|null
 	 */
 	private static function update_status() {
-		$file    = plugin_basename( AKO_ML_FILE );
+		$file    = plugin_basename( AKOML_FILE );
 		$updates = get_site_transient( 'update_plugins' );
 		if ( ! is_object( $updates ) || empty( $updates->response[ $file ] ) ) {
 			return null;
 		}
 		$update = $updates->response[ $file ];
-		if ( empty( $update->new_version ) || version_compare( $update->new_version, AKO_ML_VERSION, '<=' ) ) {
+		if ( empty( $update->new_version ) || version_compare( $update->new_version, AKOML_VERSION, '<=' ) ) {
 			return null;
 		}
 

@@ -10,39 +10,39 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       ako-multilang
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'AKO_ML_VERSION', '1.0.1' );
-define( 'AKO_ML_FILE', __FILE__ );
-define( 'AKO_ML_PATH', plugin_dir_path( __FILE__ ) );
-define( 'AKO_ML_URL', plugin_dir_url( __FILE__ ) );
+define( 'AKOML_VERSION', '1.0.1' );
+define( 'AKOML_FILE', __FILE__ );
+define( 'AKOML_PATH', plugin_dir_path( __FILE__ ) );
+define( 'AKOML_URL', plugin_dir_url( __FILE__ ) );
 
 /**
- * PSR-4 autoloader for the Ako\Multilang namespace (includes/).
+ * PSR-4 autoloader for the AkoMultilang namespace (includes/).
  *
  * @param string $class_name Fully qualified class name.
  */
-function ako_ml_autoload( $class_name ) {
-	$prefix = 'Ako\\Multilang\\';
+function akoml_autoload( $class_name ) {
+	$prefix = 'AkoMultilang\\';
 	if ( 0 !== strpos( $class_name, $prefix ) ) {
 		return;
 	}
 
 	$relative = substr( $class_name, strlen( $prefix ) );
-	$file     = AKO_ML_PATH . 'includes/' . str_replace( '\\', '/', $relative ) . '.php';
+	$file     = AKOML_PATH . 'includes/' . str_replace( '\\', '/', $relative ) . '.php';
 
 	if ( is_readable( $file ) ) {
 		require_once $file;
 	}
 }
-spl_autoload_register( 'ako_ml_autoload' );
+spl_autoload_register( 'akoml_autoload' );
 
-require_once AKO_ML_PATH . 'includes/functions.php';
+require_once AKOML_PATH . 'includes/functions.php';
 
-register_activation_hook( __FILE__, array( 'Ako\\Multilang\\Plugin', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'Ako\\Multilang\\Plugin', 'deactivate' ) );
+register_activation_hook( __FILE__, array( 'AkoMultilang\\Plugin', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'AkoMultilang\\Plugin', 'deactivate' ) );
 
-add_action( 'plugins_loaded', array( 'Ako\\Multilang\\Plugin', 'boot' ) );
+add_action( 'plugins_loaded', array( 'AkoMultilang\\Plugin', 'boot' ) );

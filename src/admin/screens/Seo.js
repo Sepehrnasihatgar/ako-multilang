@@ -18,7 +18,7 @@ import { Menu } from '../../components/overlays';
 import { Row, ToggleRow } from '../../components/rows';
 import { duplicatePost, errorMessage } from '../api';
 
-const BASE = '/ako/v1/seo';
+const BASE = '/akoml/v1/seo';
 
 /**
  * Readable URL for the preview: site origin shortened to "…", path decoded

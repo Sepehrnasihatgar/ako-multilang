@@ -1,17 +1,17 @@
 <?php
 /**
- * REST: /ako/v1/setup and /ako/v1/import
+ * REST: /akoml/v1/setup and /akoml/v1/import
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Rest;
+namespace AkoMultilang\Rest;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Import\Importer;
-use Ako\Multilang\Setup\Matcher;
-use Ako\Multilang\Setup\Wizard;
-use Ako\Multilang\Switcher\Profiles;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Import\Importer;
+use AkoMultilang\Setup\Matcher;
+use AkoMultilang\Setup\Wizard;
+use AkoMultilang\Switcher\Profiles;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -343,7 +343,7 @@ final class SetupController {
 	public static function import( WP_REST_Request $request ) {
 		$source = Importer::source( (string) $request['source'] );
 		if ( ! $source || ! $source->has_data() ) {
-			return new WP_Error( 'ako_ml_import_unavailable', __( 'There’s nothing to import from this plugin.', 'ako-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'akoml_import_unavailable', __( 'There’s nothing to import from this plugin.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 		$result = Importer::run( $source, (int) $request['offset'], (int) $request['limit'] );
 		if ( is_wp_error( $result ) ) {

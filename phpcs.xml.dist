@@ -30,9 +30,9 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element value="ako_ml"/>
-				<element value="Ako\Multilang"/>
-				<element value="AKO_ML"/>
+				<element value="akoml"/>
+				<element value="AkoMultilang"/>
+				<element value="AKOML"/>
 			</property>
 		</properties>
 	</rule>

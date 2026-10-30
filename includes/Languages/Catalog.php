@@ -4,10 +4,10 @@
  *
  * Bundled on purpose: no request to api.wordpress.org is ever made.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Languages;
+namespace AkoMultilang\Languages;
 
 defined( 'ABSPATH' ) || exit;
 

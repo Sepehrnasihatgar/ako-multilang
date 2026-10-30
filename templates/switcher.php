@@ -12,37 +12,37 @@
  *            url, current and available.
  * - context: block|shortcode|menu|php|footer.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$ako_ml_profile = $args['profile'];
-$ako_ml_items   = $args['items'];
+$akoml_profile = $args['profile'];
+$akoml_items   = $args['items'];
 
-$ako_ml_classes = array(
+$akoml_classes = array(
 	'ako-switcher',
-	'ako-switcher--' . $ako_ml_profile['style'],
-	'ako-switcher--' . $ako_ml_profile['shape'],
-	'ako-switcher--show-' . $ako_ml_profile['show'],
-	'ako-switcher--sm-' . $ako_ml_profile['mobile'],
+	'ako-switcher--' . $akoml_profile['style'],
+	'ako-switcher--' . $akoml_profile['shape'],
+	'ako-switcher--show-' . $akoml_profile['show'],
+	'ako-switcher--sm-' . $akoml_profile['mobile'],
 );
-if ( 'inherit' === $ako_ml_profile['styling'] ) {
-	$ako_ml_classes[] = 'ako-switcher--inherit';
+if ( 'inherit' === $akoml_profile['styling'] ) {
+	$akoml_classes[] = 'ako-switcher--inherit';
 }
-if ( 'link' === $ako_ml_profile['style'] ) {
-	$ako_ml_classes[] = 'ako-switcher--look-' . $ako_ml_profile['linkLook'];
+if ( 'link' === $akoml_profile['style'] ) {
+	$akoml_classes[] = 'ako-switcher--look-' . $akoml_profile['linkLook'];
 }
 
-$ako_ml_globe   = '<svg class="ako-switcher__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>';
-$ako_ml_chevron = '<svg class="ako-switcher__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>';
+$akoml_globe   = '<svg class="ako-switcher__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>';
+$akoml_chevron = '<svg class="ako-switcher__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"/></svg>';
 
 /*
  * One language's label: optional globe, the native name (always read by
  * screen readers, hidden visually when only the code shows) and the code.
  */
-$ako_ml_label = static function ( $item, $with_icon ) use ( $ako_ml_globe ) {
-	$html  = $with_icon ? $ako_ml_globe : '';
+$akoml_label = static function ( $item, $with_icon ) use ( $akoml_globe ) {
+	$html  = $with_icon ? $akoml_globe : '';
 	$html .= sprintf(
 		'<span class="ako-switcher__name" lang="%1$s" dir="%2$s">%3$s</span>',
 		esc_attr( $item['hreflang'] ),
@@ -53,8 +53,8 @@ $ako_ml_label = static function ( $item, $with_icon ) use ( $ako_ml_globe ) {
 	return $html;
 };
 
-$ako_ml_item = static function ( $item, $with_icon ) use ( $ako_ml_label ) {
-	$label = $ako_ml_label( $item, $with_icon );
+$akoml_item = static function ( $item, $with_icon ) use ( $akoml_label ) {
+	$label = $akoml_label( $item, $with_icon );
 
 	if ( $item['current'] ) {
 		return sprintf( '<span class="ako-switcher__item is-current" aria-current="true">%s</span>', $label );
@@ -75,34 +75,34 @@ $ako_ml_item = static function ( $item, $with_icon ) use ( $ako_ml_label ) {
 	);
 };
 
-$ako_ml_current = null;
-foreach ( $ako_ml_items as $ako_ml_candidate ) {
-	if ( $ako_ml_candidate['current'] ) {
-		$ako_ml_current = $ako_ml_candidate;
+$akoml_current = null;
+foreach ( $akoml_items as $akoml_candidate ) {
+	if ( $akoml_candidate['current'] ) {
+		$akoml_current = $akoml_candidate;
 	}
 }
 ?>
-<nav class="<?php echo esc_attr( implode( ' ', $ako_ml_classes ) ); ?>" data-switcher="<?php echo esc_attr( $ako_ml_profile['id'] ); ?>" aria-label="<?php esc_attr_e( 'Language', 'ako-multilang' ); ?>">
-<?php if ( in_array( $ako_ml_profile['style'], array( 'dropdown', 'floating' ), true ) && $ako_ml_current ) : ?>
+<nav class="<?php echo esc_attr( implode( ' ', $akoml_classes ) ); ?>" data-switcher="<?php echo esc_attr( $akoml_profile['id'] ); ?>" aria-label="<?php esc_attr_e( 'Language', 'ako-multilang' ); ?>">
+<?php if ( in_array( $akoml_profile['style'], array( 'dropdown', 'floating' ), true ) && $akoml_current ) : ?>
 	<details class="ako-switcher__details">
 		<summary class="ako-switcher__toggle">
-			<?php echo $ako_ml_label( $ako_ml_current, $ako_ml_profile['icon'] ) . $ako_ml_chevron; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?>
+			<?php echo $akoml_label( $akoml_current, $akoml_profile['icon'] ) . $akoml_chevron; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?>
 		</summary>
 		<div class="ako-switcher__menu" role="list">
-			<?php foreach ( $ako_ml_items as $ako_ml_entry ) : ?>
-				<div class="ako-switcher__entry" role="listitem"><?php echo $ako_ml_item( $ako_ml_entry, false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></div>
+			<?php foreach ( $akoml_items as $akoml_entry ) : ?>
+				<div class="ako-switcher__entry" role="listitem"><?php echo $akoml_item( $akoml_entry, false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></div>
 			<?php endforeach; ?>
 		</div>
 	</details>
 <?php else : ?>
 	<div class="ako-switcher__list" role="list">
-		<?php foreach ( $ako_ml_items as $ako_ml_entry ) : ?>
+		<?php foreach ( $akoml_items as $akoml_entry ) : ?>
 			<?php
-			if ( 'link' === $ako_ml_profile['style'] && $ako_ml_entry['current'] ) {
+			if ( 'link' === $akoml_profile['style'] && $akoml_entry['current'] ) {
 				continue;
 			}
 			?>
-			<div class="ako-switcher__entry" role="listitem"><?php echo $ako_ml_item( $ako_ml_entry, $ako_ml_profile['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></div>
+			<div class="ako-switcher__entry" role="listitem"><?php echo $akoml_item( $akoml_entry, $akoml_profile['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></div>
 		<?php endforeach; ?>
 	</div>
 <?php endif; ?>

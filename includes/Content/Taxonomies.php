@@ -2,23 +2,23 @@
 /**
  * Hidden taxonomies that store a post's language and its translation group.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Content;
+namespace AkoMultilang\Content;
 
-use Ako\Multilang\Settings;
+use AkoMultilang\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Registers `ako_ml_language` and `ako_ml_group`. Neither has a UI,
+ * Registers `akoml_language` and `akoml_group`. Neither has a UI,
  * REST route, query var or rewrite rule — they never create URLs.
  */
 final class Taxonomies {
 
-	const LANGUAGE = 'ako_ml_language';
-	const GROUP    = 'ako_ml_group';
+	const LANGUAGE = 'akoml_language';
+	const GROUP    = 'akoml_group';
 
 	/**
 	 * Registers both taxonomies for every enabled post type.
@@ -57,7 +57,7 @@ final class Taxonomies {
 		 *
 		 * @param string[] $post_types Post type slugs.
 		 */
-		$enabled = (array) apply_filters( 'ako_ml_post_types', $enabled );
+		$enabled = (array) apply_filters( 'akoml_post_types', $enabled );
 
 		return array_values( array_filter( array_map( 'sanitize_key', $enabled ), 'post_type_exists' ) );
 	}

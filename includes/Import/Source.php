@@ -2,10 +2,10 @@
 /**
  * Base class for reading another multilingual plugin's links.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Import;
+namespace AkoMultilang\Import;
 
 defined( 'ABSPATH' ) || exit;
 

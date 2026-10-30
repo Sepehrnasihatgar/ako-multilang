@@ -2,10 +2,10 @@
 /**
  * Reads Polylang's translation groups.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Import;
+namespace AkoMultilang\Import;
 
 defined( 'ABSPATH' ) || exit;
 

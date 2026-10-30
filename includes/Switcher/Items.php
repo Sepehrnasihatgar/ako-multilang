@@ -2,14 +2,14 @@
 /**
  * Which languages a switcher shows on the current page, and where each goes.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Switcher;
+namespace AkoMultilang\Switcher;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Registry;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Registry;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -80,7 +80,7 @@ final class Items {
 		 * @param array $items   Items.
 		 * @param array $profile Switcher profile.
 		 */
-		return (array) apply_filters( 'ako_ml_switcher_items', $items, $profile );
+		return (array) apply_filters( 'akoml_switcher_items', $items, $profile );
 	}
 
 	/**

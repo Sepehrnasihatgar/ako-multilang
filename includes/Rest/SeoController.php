@@ -1,21 +1,21 @@
 <?php
 /**
- * REST: /ako/v1/seo
+ * REST: /akoml/v1/seo
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Rest;
+namespace AkoMultilang\Rest;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Overview;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Catalog;
-use Ako\Multilang\Languages\Registry;
-use Ako\Multilang\Seo\Health;
-use Ako\Multilang\Seo\Hreflang;
-use Ako\Multilang\Seo\Integrations;
-use Ako\Multilang\Settings;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Overview;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Catalog;
+use AkoMultilang\Languages\Registry;
+use AkoMultilang\Seo\Health;
+use AkoMultilang\Seo\Hreflang;
+use AkoMultilang\Seo\Integrations;
+use AkoMultilang\Settings;
 use WP_Error;
 use WP_Query;
 use WP_REST_Request;
@@ -138,13 +138,13 @@ final class SeoController {
 	public static function update( WP_REST_Request $request ) {
 		$x_default = $request['x_default'];
 		if ( null !== $x_default && '' !== $x_default && ! Registry::exists( $x_default ) ) {
-			return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'akoml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 
 		if ( is_array( $request['hreflang'] ) ) {
 			foreach ( $request['hreflang'] as $code => $value ) {
 				if ( ! Registry::exists( $code ) ) {
-					return new WP_Error( 'ako_ml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 400 ) );
+					return new WP_Error( 'akoml_unknown_language', __( 'That language isn’t set up yet.', 'ako-multilang' ), array( 'status' => 400 ) );
 				}
 				$result = Registry::update( $code, array( 'hreflang' => (string) $value ) );
 				if ( is_wp_error( $result ) ) {
@@ -174,7 +174,7 @@ final class SeoController {
 	public static function preview( WP_REST_Request $request ) {
 		$post = get_post( (int) $request['post'] );
 		if ( ! $post || ! Taxonomies::supports( $post->post_type ) ) {
-			return new WP_Error( 'ako_ml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'akoml_invalid_post', __( 'That page doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 
 		$code     = Links::get_language( $post->ID );

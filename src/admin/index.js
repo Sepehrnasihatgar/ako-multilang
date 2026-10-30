@@ -7,7 +7,7 @@ import App from './App';
 import './admin.css';
 
 domReady( () => {
-	const root = document.getElementById( 'ako-ml-root' );
+	const root = document.getElementById( 'akoml-root' );
 	if ( ! root ) {
 		return;
 	}

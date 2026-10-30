@@ -164,11 +164,11 @@
 }
 
 /* Classic metabox: tokens live on .ako-ml, so the panel owns padding. */
-#ako-ml-language .inside {
+#akoml-language .inside {
 	margin: 0;
 	padding: 0;
 }
 
-#ako-ml-classic .ako-lp {
+#akoml-classic .ako-lp {
 	padding: var(--ako-admin-space-md);
 }

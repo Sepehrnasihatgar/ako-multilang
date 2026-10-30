@@ -1,13 +1,13 @@
 <?php
 /**
- * REST: /ako/v1/switchers
+ * REST: /akoml/v1/switchers
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Rest;
+namespace AkoMultilang\Rest;
 
-use Ako\Multilang\Switcher\Profiles;
+use AkoMultilang\Switcher\Profiles;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
@@ -185,7 +185,7 @@ final class SwitchersController {
 	public static function update( WP_REST_Request $request ) {
 		$current = Profiles::get( (string) $request['id'] );
 		if ( ! $current ) {
-			return new WP_Error( 'ako_ml_unknown_switcher', __( 'That switcher doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
+			return new WP_Error( 'akoml_unknown_switcher', __( 'That switcher doesn’t exist.', 'ako-multilang' ), array( 'status' => 404 ) );
 		}
 
 		$saved = Profiles::save( array_merge( $current, self::fields( $request ), array( 'id' => $current['id'] ) ) );
@@ -208,7 +208,7 @@ final class SwitchersController {
 	 */
 	public static function delete( WP_REST_Request $request ) {
 		if ( count( Profiles::all() ) < 2 ) {
-			return new WP_Error( 'ako_ml_last_switcher', __( 'Keep at least one switcher.', 'ako-multilang' ), array( 'status' => 400 ) );
+			return new WP_Error( 'akoml_last_switcher', __( 'Keep at least one switcher.', 'ako-multilang' ), array( 'status' => 400 ) );
 		}
 		$result = Profiles::delete( (string) $request['id'] );
 		if ( is_wp_error( $result ) ) {

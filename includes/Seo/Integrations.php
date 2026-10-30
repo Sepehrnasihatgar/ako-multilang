@@ -2,15 +2,15 @@
 /**
  * Working next to SEO plugins: noindex, canonicals, og:locale and sitemaps.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Seo;
+namespace AkoMultilang\Seo;
 
-use Ako\Multilang\Content\Links;
-use Ako\Multilang\Content\Taxonomies;
-use Ako\Multilang\Languages\Registry;
-use Ako\Multilang\Settings;
+use AkoMultilang\Content\Links;
+use AkoMultilang\Content\Taxonomies;
+use AkoMultilang\Languages\Registry;
+use AkoMultilang\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,7 +29,7 @@ final class Integrations {
 		$settings = Settings::get();
 
 		if ( ! empty( $settings['skip_noindex'] ) ) {
-			add_filter( 'ako_ml_is_indexable', array( self::class, 'respect_seo_plugins' ), 10, 2 );
+			add_filter( 'akoml_is_indexable', array( self::class, 'respect_seo_plugins' ), 10, 2 );
 		}
 		if ( ! empty( $settings['og_locale'] ) ) {
 			add_action( 'wp_head', array( self::class, 'print_og_locale' ), 2 );
@@ -225,7 +225,7 @@ final class Integrations {
 	 */
 	public static function yoast_entry( $url, $type, $item ) {
 		if ( 'post' === $type && $item instanceof \WP_Post && Taxonomies::supports( $item->post_type ) && is_array( $url ) ) {
-			$url['ako_ml_hreflang'] = Hreflang::cluster( $item->ID );
+			$url['akoml_hreflang'] = Hreflang::cluster( $item->ID );
 		}
 		return $url;
 	}
@@ -238,11 +238,11 @@ final class Integrations {
 	 * @return string
 	 */
 	public static function yoast_url( $output, $url ) {
-		if ( empty( $url['ako_ml_hreflang'] ) || ! is_array( $url['ako_ml_hreflang'] ) ) {
+		if ( empty( $url['akoml_hreflang'] ) || ! is_array( $url['akoml_hreflang'] ) ) {
 			return $output;
 		}
 		$links = '';
-		foreach ( $url['ako_ml_hreflang'] as $hreflang => $href ) {
+		foreach ( $url['akoml_hreflang'] as $hreflang => $href ) {
 			$links .= sprintf(
 				"\t\t<xhtml:link rel=\"alternate\" hreflang=\"%1\$s\" href=\"%2\$s\" />\n",
 				esc_attr( $hreflang ),

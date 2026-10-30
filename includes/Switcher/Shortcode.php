@@ -1,33 +1,28 @@
 <?php
 /**
- * [ako_switcher] and the legacy [lang_switch] shortcode from version 6.2.
+ * The [akoml_switcher] shortcode.
  *
- * @package Ako\Multilang
+ * @package AkoMultilang
  */
 
-namespace Ako\Multilang\Switcher;
+namespace AkoMultilang\Switcher;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Shortcodes return the shared renderer's output.
+ * The shortcode returns the shared renderer's output.
  */
 final class Shortcode {
 
 	/**
-	 * Registers the shortcodes.
+	 * Registers the shortcode.
 	 */
 	public static function register() {
-		add_shortcode( 'ako_switcher', array( self::class, 'render' ) );
-
-		// Sites upgrading from 6.2 keep working; another plugin's [lang_switch] wins.
-		if ( ! shortcode_exists( 'lang_switch' ) ) {
-			add_shortcode( 'lang_switch', array( self::class, 'render_legacy' ) );
-		}
+		add_shortcode( 'akoml_switcher', array( self::class, 'render' ) );
 	}
 
 	/**
-	 * [ako_switcher id="header" type="segmented" show="code"]
+	 * [akoml_switcher id="header" type="segmented" show="code"]
 	 *
 	 * `type` (alias `style`) and `show` override the saved switcher; every
 	 * value is validated against the same allow-lists as the settings screen.
@@ -44,7 +39,7 @@ final class Shortcode {
 				'show'  => '',
 			),
 			is_array( $atts ) ? $atts : array(),
-			'ako_switcher'
+			'akoml_switcher'
 		);
 
 		$overrides = array();
@@ -57,22 +52,5 @@ final class Shortcode {
 		}
 
 		return Renderer::render( sanitize_key( $atts['id'] ), $overrides, 'shortcode' );
-	}
-
-	/**
-	 * [lang_switch] from version 6.2: a link to the other language.
-	 *
-	 * @return string
-	 */
-	public static function render_legacy() {
-		$id = Profiles::get( 'legacy' ) ? 'legacy' : '';
-		return Renderer::render(
-			$id,
-			'' === $id ? array(
-				'style' => 'link',
-				'show'  => 'native',
-			) : array(),
-			'shortcode'
-		);
 	}
 }
