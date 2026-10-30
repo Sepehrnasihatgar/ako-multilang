@@ -167,7 +167,7 @@ final class Renderer {
 	public static function print_floating() {
 		foreach ( Profiles::all() as $profile ) {
 			if ( 'floating' === $profile['style'] ) {
-				echo self::render( $profile['id'], array(), 'footer' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Passed through wp_kses() in render().
+				echo wp_kses( self::render( $profile['id'], array(), 'footer' ), self::allowed_html() );
 				return;
 			}
 		}

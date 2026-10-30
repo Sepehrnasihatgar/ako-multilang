@@ -86,11 +86,11 @@ foreach ( $akoml_items as $akoml_candidate ) {
 <?php if ( in_array( $akoml_profile['style'], array( 'dropdown', 'floating' ), true ) && $akoml_current ) : ?>
 	<details class="ako-switcher__details">
 		<summary class="ako-switcher__toggle">
-			<?php echo $akoml_label( $akoml_current, $akoml_profile['icon'] ) . $akoml_chevron; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?>
+			<?php echo wp_kses( $akoml_label( $akoml_current, $akoml_profile['icon'] ) . $akoml_chevron, \AkoMultilang\Switcher\Renderer::allowed_html() ); ?>
 		</summary>
 		<div class="ako-switcher__menu" role="list">
 			<?php foreach ( $akoml_items as $akoml_entry ) : ?>
-				<div class="ako-switcher__entry" role="listitem"><?php echo $akoml_item( $akoml_entry, false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></div>
+				<div class="ako-switcher__entry" role="listitem"><?php echo wp_kses( $akoml_item( $akoml_entry, false ), \AkoMultilang\Switcher\Renderer::allowed_html() ); ?></div>
 			<?php endforeach; ?>
 		</div>
 	</details>
@@ -102,7 +102,7 @@ foreach ( $akoml_items as $akoml_candidate ) {
 				continue;
 			}
 			?>
-			<div class="ako-switcher__entry" role="listitem"><?php echo $akoml_item( $akoml_entry, $akoml_profile['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Built from escaped parts above. ?></div>
+			<div class="ako-switcher__entry" role="listitem"><?php echo wp_kses( $akoml_item( $akoml_entry, $akoml_profile['icon'] ), \AkoMultilang\Switcher\Renderer::allowed_html() ); ?></div>
 		<?php endforeach; ?>
 	</div>
 <?php endif; ?>

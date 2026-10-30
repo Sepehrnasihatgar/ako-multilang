@@ -33,5 +33,5 @@ function akoml_get_switcher( $id = '', $args = array() ) {
  * @param array  $args Optional overrides: style, show.
  */
 function akoml_switcher( $id = '', $args = array() ) {
-	echo akoml_get_switcher( $id, $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Passed through wp_kses() in Renderer::render().
+	echo wp_kses( akoml_get_switcher( $id, $args ), \AkoMultilang\Switcher\Renderer::allowed_html() );
 }
