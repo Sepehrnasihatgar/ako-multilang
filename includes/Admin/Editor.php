@@ -125,7 +125,7 @@ final class Editor {
 			$asset['version'],
 			array( 'in_footer' => true )
 		);
-		wp_set_script_translations( $handle, 'ako-multilang', AKOML_PATH . 'languages' );
+		wp_set_script_translations( $handle, 'ako-multilang' );
 
 		wp_enqueue_style( $handle, AKOML_URL . 'build/' . $entry . '/index.css', array(), $asset['version'] );
 		wp_style_add_data( $handle, 'rtl', 'replace' );

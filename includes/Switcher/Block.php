@@ -53,7 +53,7 @@ final class Block {
 				$asset['version'],
 				array( 'in_footer' => true )
 			);
-			wp_set_script_translations( self::EDITOR_HANDLE, 'ako-multilang', AKOML_PATH . 'languages' );
+			wp_set_script_translations( self::EDITOR_HANDLE, 'ako-multilang' );
 		}
 
 		register_block_type(

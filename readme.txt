@@ -80,6 +80,10 @@ Yes. Elementor pages link like any other page, and right-to-left pages load Elem
 
 Make sure you added it to the menu your header actually uses. On classic themes, that's the menu assigned to the main location in Appearance → Menus. On block themes, open the header in the Site Editor and add the "Language Switcher" block to the navigation. You also need at least two languages, since the switcher hides itself when there's nothing to switch to.
 
+= Where is the source code? =
+
+The admin screens, editor panel, and block are built with `@wordpress/scripts`. Their source ships with the plugin in the `src` folder, and the full project, including build steps, is on GitHub: https://github.com/Sepehrnasihatgar/ako-multilang
+
 = What happens when I uninstall it? =
 
 Your pages stay exactly as they are. Ako's settings and links stay too, unless you turn on "Delete Ako data on uninstall" in Settings first.

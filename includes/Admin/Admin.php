@@ -219,7 +219,7 @@ final class Admin {
 			$asset['version'],
 			array( 'in_footer' => true )
 		);
-		wp_set_script_translations( self::SCRIPT, 'ako-multilang', AKOML_PATH . 'languages' );
+		wp_set_script_translations( self::SCRIPT, 'ako-multilang' );
 
 		wp_enqueue_style(
 			self::SCRIPT,
