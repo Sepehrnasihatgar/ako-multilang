@@ -15,6 +15,17 @@ const REVIEWS_URL =
 
 const CHANGELOG = [
 	{
+		version: '1.0.2',
+		date: '2026-10-29',
+		changes: () => [
+			__(
+				'Unlinking or relinking a page checks permission for every page it affects',
+				'ako-multilang'
+			),
+			__( 'The shortcode is now [akoml_switcher]', 'ako-multilang' ),
+		],
+	},
+	{
 		version: '1.0.1',
 		date: '2026-10-27',
 		changes: () => [
