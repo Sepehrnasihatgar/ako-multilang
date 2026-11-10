@@ -8,55 +8,44 @@ Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Link your pages across languages with hreflang, right-to-left support, and a language switcher. Your URLs stay the same.
+Link the pages you already have in each language. Get hreflang, right-to-left layouts, and a language switcher, with no URL changes.
 
 == Description ==
 
-Ako Multilang connects pages you already have in different languages. It doesn't translate anything, and it never changes your URLs, so it fits right into a site you've already built.
+Ako Multilang turns the pages you already have into a bilingual site. Link each page to its translation, and Ako handles the rest: hreflang for search engines, the right layout for right-to-left languages, and a switcher your visitors can actually find.
 
-It's made for bilingual sites with a right-to-left language, like Farsi, Arabic, or Hebrew next to English. It works just as well for any other pair of languages.
+No machine translation. No URL changes. Just your site, in two languages.
 
-= Link your pages =
+= Why Ako =
 
-* Link any post, page, or custom post type to its translations. Do it from the editor, the Translations screen, or the setup.
-* Setup finds the languages your site already uses and suggests page pairs from your URLs and titles, like `/about` and `/fa/about`. You check every pair before anything is saved.
-* Start a translation with one click: Ako copies a page into a draft in the other language.
-* Works with pages you built in Elementor or the block editor.
+* **Keeps your URLs.** Nothing moves, so your rankings and links stay intact.
+* **Right-to-left built in.** Farsi, Arabic, and Hebrew pages load your theme’s right-to-left styles, and the editor flips while you write.
+* **Set up in minutes.** Pick your languages, approve suggested page pairs, and drop the switcher into your menu.
+* **Everything included.** No add-ons, no subscription.
 
-= SEO =
+= Features =
 
-* `hreflang` tags for every linked page, including `x-default`.
-* The right `lang` and `dir` on every page, plus `og:locale` for social previews.
-* Works alongside Yoast SEO, Rank Math, and All in One SEO. Pages they mark noindex, or point elsewhere with a canonical, stay out of `hreflang`.
-* A health check that finds pages missing a translation and links that only go one way.
+* **Link anything.** Posts, pages, and custom post types, right from the editor or the Translations screen. Duplicate a page as a draft in the other language to start a translation.
+* **SEO handled.** `hreflang` with `x-default`, `lang`, `dir`, and `og:locale`. Works with Yoast SEO, Rank Math, and All in One SEO, and a health check flags missing or one-way links.
+* **Five switcher styles.** Link, inline, segmented, dropdown, or floating, with a live preview. Add it as a block, a menu item, a floating button, or the `[akoml_switcher]` shortcode.
+* **Accessible.** Works with a keyboard and screen readers. If a page has no translation yet, the switcher links to that language’s homepage.
+* **Easy to switch.** Imports your links from WPML and Polylang without touching their data.
 
-= Right-to-left =
+= Tested with =
 
-* Each page loads in its own language, so `is_rtl()` is correct and your theme's own `rtl.css` loads on right-to-left pages.
-* The block editor switches to right-to-left while you write a Farsi, Arabic, or Hebrew page.
-* Tested with Astra, Hello Elementor, GeneratePress, Kadence, OceanWP, Neve, Blocksy, Twenty Twenty-Five, Twenty Twenty-Four, Twenty Twenty-One, and Elementor. GeneratePress gets a small fix that mirrors its header and sidebar on right-to-left pages. You can turn it off in Settings.
-
-= Language switcher =
-
-* Add it as a block, a menu item, the `[akoml_switcher]` shortcode, or a floating button. Setup can add it to your header menu for you, on classic and block themes.
-* Five looks: link, inline, segmented, dropdown, and floating, with a live preview in the admin.
-* Works with a keyboard and screen readers. When a page has no translation, it links to that language's homepage.
-
-= Switching from another plugin =
-
-* Imports linked pages from WPML and Polylang. Ako only reads their data and never changes it, so you can switch back anytime.
+Astra, Hello Elementor, GeneratePress, Kadence, OceanWP, Neve, Blocksy, Twenty Twenty-One, Twenty Twenty-Four, Twenty Twenty-Five, and Elementor.
 
 = Privacy =
 
-Ako Multilang makes no external requests, adds no tracking, and collects no data. Its admin fonts and icons ship with the plugin.
+No external requests, no tracking, and no data collection.
 
 == Installation ==
 
-1. Install Ako Multilang from the Plugins screen, or upload the plugin folder to `/wp-content/plugins/`.
-2. Activate it.
-3. Follow the setup: pick your languages, connect your pages, and add the switcher.
+1. Go to **Plugins → Add New Plugin** and search for “Ako Multilang.”
+2. Install and activate it.
+3. Click **Start setup** and follow three quick steps: languages, pages, and switcher.
 
-You can change all of it later under Ako in the admin menu.
+Nothing on your site changes until you finish setup.
 
 == Frequently Asked Questions ==
 
@@ -100,7 +89,7 @@ Your pages stay exactly as they are. Ako's settings and links stay too, unless y
 
 = 1.0.2 =
 * Security: unlinking or relinking a page now also checks that you can edit any page it leaves without a translation.
-* The shortcode is now `[akoml_switcher]`, and all stored settings use the `akoml_` prefix.
+* The shortcode is now `[akoml_switcher]`.
 
 = 1.0.1 =
 * The floating switcher’s arrow now points up, toward the menu it opens.
